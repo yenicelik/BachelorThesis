@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.optimize import minimize
 
 class BasicGP:
 
@@ -19,7 +20,7 @@ class BasicGP:
 		"""
 			Squared exponential kernel
 		"""
-		sqdist = np.sum(x1**2,1).reshape(-1,1) + np.sum(x2**2,1) - 2*np.dot(x1, x2.T)
+		sqdist = np.sum(x1**2, 1).reshape(-1,1) + np.sum(x2**2, 1) - 2*np.dot(x1, x2.T)
 		return np.exp(-.5 * (1/self.kernel_param) * sqdist)
 
 	def set_datapoints(self, X, y):
@@ -47,21 +48,13 @@ class BasicGP:
 		solved = np.linalg.solve(lhs, rhs)
 		right_summand = self.kernel(self.x_star, self.X)
 		right_summand = np.dot(right_summand, solved)
-		
 		res = self.kernel(self.x_star, self.x_star) - right_summand 
 		return np.diagonal(np.sqrt(res)).reshape((-1,))
 
+	def predict_single(self, x):
+		#TODO: This is a duplicate of the above lines!
+		self.set_predictant(x) # Where x can be a scalar!
+		return self.predict_mean(), self.predict_stddev() 
 
-	#def predict_mean(self, x_star):
-	#	self.K_star_star = self.kernel(x_star, x_star)
-	#	self.K_star = self.kernel(x_star, self.X)
-#
-	#	self.Lk = np.linalg.solve(self.L, self.K_star)
-#
-	#	return np.dot(Lk.T, np.linalg.solve(L, ytrain)).reshape((n,))
-#
-	#def predict_stddev(self, x_star):
-	#	variance = np.diag(self.K_star_star) - np.sum(self.Lk**2, axis=0)
-	#	return np.sqrt(variance)
 
 
