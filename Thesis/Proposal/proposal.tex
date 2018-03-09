@@ -1,28 +1,5 @@
-\documentclass{NSF}
-
-\graphicspath{{figures/}}
-
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-\usepackage{listings}
-\usepackage{fancybox}
-\usepackage{tikz}
-
-\graphicspath{{figures/}}
-
-\begin{document}
-
-% A. Cover Sheet
-% A number of the boxes contained on the Cover Sheet are
-% electronically pre-filled as part of the FastLane login process
-% Complete the rest of your info there
-
-\pagestyle{headings}
-\markright{}
-
-% B. Project Summary
-\title{Parameter Optimization using high-dimensional Bayesian Optimization}
+% ************************** Thesis Abstract *****************************
+% Use `abstract' as an option in the document class to print only the titlepage and the abstract.
 \section{Project Proposal for Bachelor Thesis}
 \subsection{Motivation}
 
@@ -101,23 +78,10 @@ We now only need to optimize over all possible $y \in \mathbf{R}^d$, instead of 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.5\textwidth]{./src/Embedding_optimization.png}
+\includegraphics[width=0.5\textwidth]{./../src/Embedding_optimization.png}
 \caption{ This function in D=2 dimesions only has d=1 effective dimension. Hence, the 1-dimensional embedding includes the 2-dimensional function’s optimizer. It is more efficient to search for the optimum along the 1-dimensional random embedding than in the original 2-dimensional space}
 \end{figure}
 
 \end{enumerate}
 
 If, for some reason, finding an active subspace or an effective lower dimension is not possible, we are open to adapt the procedure of optimization.
-
-
-
-
-% E. References Cited
-\renewcommand\refname{References}
-\bibliography{references}
-% I prefer to use the IEEE bibliography style. 
-% That's  NOT required by the NSF guidelines. 
-% Feel Free to use whatever style you prefer
-\bibliographystyle{IEEEtran}
-
-\end{document}

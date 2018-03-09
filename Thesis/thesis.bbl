@@ -1,0 +1,39 @@
+\begin{thebibliography}{}
+
+\bibitem[Djolonga et~al., 2013]{Djolonga2013}
+Djolonga, J., Krause, A., and Cevher, V. (2013).
+\newblock {High-Dimensional Gaussian Process Bandits}.
+
+\bibitem[Gardner et~al., 2017]{Gardner2017}
+Gardner, J.~R., Guo, C., Weinberger, K.~Q., Garnett, R., and Grosse, R. (2017).
+\newblock {Discovering and Exploiting Additive Structure for Bayesian
+  Optimization}.
+
+\bibitem[Garnett et~al., 2013]{Garnett2013}
+Garnett, R., Osborne, M.~A., and Hennig, P. (2013).
+\newblock {Active Learning of Linear Embeddings for Gaussian Processes}.
+
+\bibitem[Li et~al., 2018]{Li2018}
+Li, C., Gupta, S., Rana, S., Nguyen, V., Venkatesh, S., and Shilton, A. (2018).
+\newblock {High Dimensional Bayesian Optimization Using Dropout}.
+
+\bibitem[Rana et~al., 2017]{Rana2017}
+Rana, S., Li, C., Gupta, S., Nguyen, V., and Venkatesh, S. (2017).
+\newblock {High Dimensional Bayesian Optimization with Elastic Gaussian
+  Process}.
+
+\bibitem[Rolland et~al., 2018]{Rolland}
+Rolland, P., Scarlett, J., Bogunovic, I., and Cevher, V. (2018).
+\newblock {High-Dimensional Bayesian Optimization via Additive Models with
+  Overlapping Groups}.
+
+\bibitem[Tripathy et~al., 2016]{Tripathy}
+Tripathy, R., Bilionis, I., and Gonzalez, M. (2016).
+\newblock {Gaussian processes with built-in dimensionality reduction:
+  Applications in high-dimensional uncertainty propagation}.
+
+\bibitem[Wang et~al., 2013]{Wang2013}
+Wang, Z., Hutter, F., Zoghi, M., Matheson, D., and De~Freitas, N. (2013).
+\newblock {Bayesian Optimization in High Dimensions via Random Embeddings}.
+
+\end{thebibliography}

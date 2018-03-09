@@ -1,0 +1,125 @@
+%!TEX root = ../thesis.tex
+%*******************************************************************************
+%****************************** Second Chapter *********************************
+%*******************************************************************************
+
+\chapter{Existing Approaches}
+
+\ifpdf
+    \graphicspath{{Chapter2/Figs/Raster/}{Chapter2/Figs/PDF/}{Chapter2/Figs/}}
+\else
+    \graphicspath{{Chapter2/Figs/Vector/}{Chapter2/Figs/}}
+\fi
+
+This section will cover approaches taken so far to solve the problem.
+We will present algorithms that solve the approach, and the dataset that the algorithm was evaluated on, as well as their effectiveness.
+
+\section{Using a projection matrix}
+
+\subsection{Active learning of linear subspace}
+
+\citep{Garnett2013} Assume $f$ depends only on $ u := xR^T $ with $ R \in \mathbf{R}^{d \times D}$ where $d << D$. 
+Learn an algorithm that learns $\hat{f}(u) = f(x)$ and $R$.
+
+Steps include: 1.) Create a probability distribution over possible embeddings to learn $R$ (Laplace approximation).
+2.) Use this to create a probability distribution over $f$.
+3.) Perform active selection over all possible points.
+
+3.) is done using using Bayesian Active Learning by disagreement, where the utility function is the expected reduction in entropy (equal to the mutual information), as opposed to uncertainty sampling, which simply minimizes the entropy. \\
+
+Tests are conducted on a real, and synthetic dataset with up to $D = 318$ and selecting $N = 100$ observations. 
+
+\subsection{High dimensional Gaussian bandits}
+
+\citep{Djolonga2013} Assume there exists a function $g : \mathbf{R}^k \implies [0, 1]$ and a matrix $A \in \mathbf{R}{d \times D}$ with orthogonal rows, such that $f(x) = g(Ax) $. Assume $g \in \mathcal{C}^2$. 
+Assume that $B = \mathbf{B}^D (1 + \epsilon ) $.
+We want to maximize $f: B \implies [0, 1] $.\\
+
+The SI-BO algorithm has a two-step approach:
+1.) subspace identification.
+2.) Bayesian Optimization on the learned subspace.
+
+
+\subsection{Random embeddings (REMBO)}
+\citep{Wang2013} Let $x \in \mathbb{R}^D$ and $y \in \mathbb{R}^d$. Assume, that $f(x) = f(Ax)$. We can generate $A \in \mathbb{R}^{D \times d}$ by randomly generating this matrix.
+
+\subsection{Applications to high-dimensional uncertainty propogation}
+\citep{Tripathy} Assume $f(x) \approx g( \mathbf{W}^T y)$ where $ \mathbf{W} \in \mathbb{R}^{D \times d} $ and $D >> d$.
+We assume that $ \mathbf{W} $ is orthogonal.
+
+This algorithm does not require gradient-information (thus, easier to implement, and robust to noise).
+The standard-deviation, kernel parameters and  $ \mathbf{W} $ can be found iteratively.
+First we fix $ \mathbf{W} $, and optimize over the standard-deviation, kernel parameters.
+Then we fix the standard-deviation, kernel parameters. and optimize over $ \mathbf{W} $.
+We repeat this procedure until the change of the log-likelihood between iterations is below some $ \epsilon_l $.
+
+\section{Exploiting additive structures within the function}
+
+\subsection{Independent additive structures within the target function}
+\citep{Gardner2017} Assume that $f(x) = \sum_{i=1}^{ |P| } f_i (x[P_i] )$, i.e. $f$ is fully additive, and can be represented as a sum of smaller-dimensional functions $f_i$, each of which accepts a subset of the input-variables.
+The kernel also results in an additive structure: $f(x) = \sum_{i=1}^{ |P| } k_i (x[P_i], x[P_i])$.
+The posterior is calculated usin ghte Metropolis Hastings algorithm.
+The two actions for the sampling algorithm are 'Merge two subsets', and 'Split one set into two subsets'.
+$k$ models are sampled, and we respectively approximate $p(f_* | D, x^*) = \frac{1}{k} \sum_{j=1}^{k} p( f(x^* | D, x, M_j) )$, where $M_j$ denotes the partition amongst all input-variables of the original function $f$.
+
+\subsection{Ideas}
+We could have a function sth like:
+$f(x) = g(Ax_1) + g(Bx_2) + ...$
+as this does not assume that the dimensions are directly correlated.
+We could also use PCA or anything similar to choose the axis (i.e. $A, B, C$..)
+
+
+\section{Other approaches}
+
+\subsection{Elastic Gaussian Processes}
+\citep{Rana2017} Use a process where the space is iteratively explored.
+The key insight here is that with low length-scales, the acquisition function is extremely flat, but with higher length-scales, the acquisition function starts to have significant gradients.
+The two key-steps is to 1.) additively increase the length-scale for the gaussian process if the length-scale is not maximal and if $|| x_{init} - x^* || = 0$.
+And 2.) exponentially decrease the length-scale for the gaussian process if the length-scale is below the optimum length-scale and if $|| x_{init} - x^* || = 0$.
+
+\subsection{Bayesian Optimization using Dropout}
+\citep{Li2018} propose that the assumption of an active subspace is restrictive and often not fulfilled in real-world applications.
+They propose three algorithms, to iteratively optimize amongst certain dimensions that are not within the $d$ 'most influential' dimensions: 1.) Dropout Random, which picks dimensions to be optimized at random, 2.) Dropout copy, which continuous optimizing the function values from the found local optimum configuration, and 3.) which does method 1. with probability $p$, and else method 2.
+The $d$ 'most influential' dimensions are picked at random at each iteration.
+
+
+\subsection{Ideas}
+I think optimizing the hyper-parameters of Gaussian processes, and also the kernel is a valueable insight not much explored.
+
+
+
+\section{Datasets for benchmarking}
+
+\begin{enumerate}
+\item \citep{Garnett2013} Synthetic in-model data matching the proposed model, with $d=2, 3$, and $D=10, 20$.
+\item \citep{Garnett2013} (Synthetic) Braning function, $d=2$, hidden in a higher dimensional space $D=10, 20$.
+\item \citep{Garnett2013} Temperature data $D=106$ and $d=2$.
+\item \citep{Garnett2013} Communities and Crime dataset $d=2$, and $D=96$. 
+\item \citep{Garnett2013} Relative location of CT slices on axial axis with $d = 2$ and $D=318$. 
+\item \citep{Djolonga2013} (Synthetic) Random GP samples from 2-dimensional Matern-Kernel-output, embedded within 100 dimensions
+\item \citep{Djolonga2013} Gabor Filters: Determine visual stimuli that maximally excite some neurons which reacts to edges in the image.
+We have $f(x) = \exp( -( \theta^T x - 1 )^2 )$. $\theta$ is of size 17x17, and the set of admissible signals is $d$.
+\item \citep{Wang2013} (Synthethic) $d=2$ and $D=1*10^9$.
+\item \citep{Wang2013} $D=47$ where each dimension is a parameter of a mixed integer linear programming solver.
+\item \citep{Wang2013} $D=14$ with $d$ for a random forest body part classifier.
+\item \citep{Tripathy}  (Synthetic) Use $d=1,10$ and $D=10$.
+\item \citep{Tripathy} (Half-synthetic) Stochastic elliptic partial differential equation, where $D=100$, and an assume value for $d$ of $1$ or $2$.
+\item \citep{Tripathy} Granular crystals $X \in \mathbb{R}^{1000 \times 2n_p +1}$, and $y \in \mathbb{R}^{1000}$.
+\item \citep{Gardner2017} (Synthetic) Styblinski–Tang function where $D$ is freely choosable.
+\item \citep{Gardner2017} (Synthetic) Michalewicz function where $D$ is freely choosable.
+\item \citep{Gardner2017} (Simulated) NASA cosmological constant data where $D=9$.
+\item \citep{Gardner2017} Simple matrix completion with $D=3$.
+\item \citep{Rana2017} (Synthetic) Hertmann6d in [0, 1].
+\item \citep{Rana2017} (Synthetic) Unnormalized Gaussian PDF with a maximum of 1 in $[-1, 1]^d$ for $D=20$ and $[-0.5, 0.5]^d$ for $D=50$
+\item \citep{Rana2017} (Synthetic) Generalized Rosenbrock function $[-5, 10]^d$
+\item \citep{Rana2017} Training cascade classifiers, with $D=10$ per group.
+\item \citep{Rana2017} Optimizing alloys $D=13$. 
+\item \citep{Li2018} (Synthetic) Gaussian mixture function
+\item \citep{Li2018} (Synthetic) Schwefel's 1.2 function.
+\item \citep{OptimizationTestFunctions} A list of optimiztation test functions can be found here.
+\item \citep{Jamil2013} A more comprehensive list of general functions can be found here.
+\end{enumerate}
+
+\section*{Enumeration}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae laoreet lectus. Donec lacus quam, malesuada ut erat vel, consectetur eleifend tellus. Aliquam non feugiat lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque a dolor sit amet dui malesuada malesuada id ac metus. Phasellus posuere egestas mauris, sed porta arcu vulputate ut.
+

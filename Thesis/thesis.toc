@@ -1,0 +1,28 @@
+\thispagestyle {empty}
+\contentsline {section}{\numberline {0.1}Project Proposal for Bachelor Thesis}{ii}{section.0.1}
+\contentsline {subsection}{\numberline {0.1.1}Motivation}{ii}{subsection.0.1.1}
+\contentsline {subsection}{\numberline {0.1.2}Background}{ii}{subsection.0.1.2}
+\contentsline {subsection}{\numberline {0.1.3}Scope of the Project}{iii}{subsection.0.1.3}
+\contentsline {chapter}{List of figures}{ix}{chapter*.4}
+\contentsline {chapter}{List of tables}{xi}{chapter*.5}
+\contentsline {chapter}{\numberline {1}Background}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}}{1}{section.1.1}
+\contentsline {chapter}{\numberline {2}Existing Approaches}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Using a projection matrix}{3}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Active learning of linear subspace}{3}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}High dimensional Gaussian bandits}{3}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Random embeddings (REMBO)}{4}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Applications to high-dimensional uncertainty propogation}{4}{subsection.2.1.4}
+\contentsline {section}{\numberline {2.2}Exploiting additive structures within the function}{4}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Independent additive structures within the target function}{4}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Ideas}{4}{subsection.2.2.2}
+\contentsline {section}{\numberline {2.3}Other approaches}{5}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Elastic Gaussian Processes}{5}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Bayesian Optimization using Dropout}{5}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Ideas}{5}{subsection.2.3.3}
+\contentsline {section}{\numberline {2.4}Datasets for benchmarking}{5}{section.2.4}
+\contentsline {chapter}{\numberline {3}Benchmarking methods}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}Methods from }{9}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}First subsection in the first section}{9}{subsection.3.1.1}
+\contentsline {chapter}{References}{11}{chapter*.7}
+\contentsline {chapter}{Appendix \numberline {A}How to install \LaTeX }{13}{Appendix.a.A}
