@@ -10,7 +10,9 @@ class BlackBoxFunction:
 		self.d = effective_dim
 		self.D = real_dim
 
-		if effective_dim is not None and real_dim is not None: 
+		self.randA = np.random.rand(real_dim, effective_dim)
+
+		if (effective_dim is not None) and (real_dim is not None): 
 
 			# Simple sine function
 			def g(x): return np.sum( np.sin( (x - 1) * 5.5) + 0.5 )
@@ -22,14 +24,16 @@ class BlackBoxFunction:
 			mu = np.random.rand(self.d) * 5
 
 			def h(x):
-				x_hat = x - mu
+				x_hat = x - mu 
 				out = np.linalg.solve(cov, x_hat)
 				out = np.dot(x_hat, out)
 				out = 3 * np.exp( -0.5 * out)
 				return out			
 			self.h = h
 
-			def f(x): return self.g(x) * self.h(x) - 1
+			def f(x): 
+				x_proj = np.dot(self.randA.T, x)
+				return np.dot(self.g( x_proj ), self.h( x_proj )) - 1
 			self.f = f
 
 
