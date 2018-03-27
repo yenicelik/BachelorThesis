@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  13 MAR 2018 12:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  20 MAR 2018 09:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1561,7 +1561,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 114.
 \PHD@crest=\box54
 
-<Figs/University_Crest.pdf, id=116, 59.22125pt x 69.25874pt>
+<Figs/University_Crest.pdf, id=120, 59.22125pt x 69.25874pt>
 File: Figs/University_Crest.pdf Graphic file (type pdf)
 
 <use Figs/University_Crest.pdf>
@@ -1631,7 +1631,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 Package natbib Warning: Citation `Wang' on page iii undefined on input line 69.
 
 
-<Figs/./../src/Embedding_optimization.png, id=140, 636.3775pt x 241.90375pt>
+<Figs/./../src/Embedding_optimization.png, id=144, 636.3775pt x 241.90375pt>
 File: Figs/./../src/Embedding_optimization.png Graphic file (type png)
 
 <use Figs/./../src/Embedding_optimization.png>
@@ -1653,7 +1653,7 @@ Package pdftex.def Info: Figs/./../src/Embedding_optimization.png used on input
 
 ]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 28.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 31.
 )
 \tf@toc=\write6
 \openout6 = `thesis.toc'.
@@ -1702,40 +1702,66 @@ Underfull \hbox (badness 10000) in paragraph at lines 34--37
 
  []
 
-[3] [4] [5]
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 50--55
 
-Package natbib Warning: Citation `OptimizationTestFunctions' on page 6 undefine
-d on input line 119.
+ []
 
 
-Package natbib Warning: Citation `Jamil2013' on page 6 undefined on input line 
-120.
+Underfull \hbox (badness 10000) in paragraph at lines 74--76
 
-[6]) [7]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 77--78
+
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 85--86
+
+ []
+
+
+Overfull \hbox (24.21904pt too wide) in paragraph at lines 121--121
+[] 
+ []
+
+[5] [6] [7] [8]
+
+Package natbib Warning: Citation `OptimizationTestFunctions' on page 9 undefine
+d on input line 208.
+
+
+Package natbib Warning: Citation `Jamil2013' on page 9 undefined on input line 
+209.
+
+) [9]
 \openout2 = `Chapter3/chapter3.aux'.
 
- (./Chapter3/chapter3.tex [8
+ (./Chapter3/chapter3.tex [10
 
 
 
 ]
 Chapter 3.
 
-Package natbib Warning: Citation `Rea85' on page 9 undefined on input line 17.
+Package natbib Warning: Citation `Rea85' on page 11 undefined on input line 17.
 
 
-Package natbib Warning: Citation `Ancey1996' on page 9 undefined on input line 
-17.
 
-) [9] [10
+Package natbib Warning: Citation `Ancey1996' on page 11 undefined on input line
+ 17.
+
+) [11] [12
 
 
-] (./thesis.bbl) [11
+] (./thesis.bbl) [13
 
 ]
 \openout2 = `Appendix1/appendix1.aux'.
 
- (./Appendix1/appendix1.tex [12
+ (./Appendix1/appendix1.tex [14
 
 
 ]
@@ -1746,7 +1772,7 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
-) [13] [14
+) [15] [16
 
 
 ] (./thesis.ind)
@@ -1761,14 +1787,14 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 201.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 201.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 201.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 55C5C2993DC1C0D69A671F3D5557CEAE;5600.
+(rerunfilecheck)             Checksum: A2128F8DCEF550606AB2BAB10A0DE45A;5712.
  ) 
 Here is how much of TeX's memory you used:
- 26248 strings out of 492995
- 460216 string characters out of 6132704
+ 26282 strings out of 492995
+ 460664 string characters out of 6132704
  539350 words of memory out of 5000000
- 29173 multiletter control sequences out of 15000+600000
- 68540 words of font info for 190 fonts, out of 8000000 for 9000
+ 29180 multiletter control sequences out of 15000+600000
+ 74126 words of font info for 197 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,12n,92p,10383b,850s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
@@ -1783,10 +1809,10 @@ st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
 mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on thesis.pdf (26 pages, 207740 bytes).
+Output written on thesis.pdf (28 pages, 217582 bytes).
 PDF statistics:
- 424 PDF objects out of 1000 (max. 8388607)
- 367 compressed objects within 4 object streams
- 101 named destinations out of 1000 (max. 500000)
- 36587 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 457 PDF objects out of 1000 (max. 8388607)
+ 398 compressed objects within 4 object streams
+ 120 named destinations out of 1000 (max. 500000)
+ 41715 words of extra memory for PDF output out of 42996 (max. 10000000)
 
