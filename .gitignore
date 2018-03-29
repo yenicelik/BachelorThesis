@@ -4,3 +4,6 @@ __pycache__/
 febo/
 code/.idea/
 ./code/.idea/*
+code/.pytest_cache/
+code/tripathy/.pytest_cache/
+code/tripathy/tests/.pytest_cache/

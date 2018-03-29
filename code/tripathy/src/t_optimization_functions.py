@@ -111,8 +111,8 @@ class t_WOptimizer:
     ###############################
     def _find_best_tau(self, W):
 
-        assert (isinstance(self.fix_s, float))
-        assert (self.fix_l.shape == (2,))  # TODO: what do I change this to?
+        assert isinstance(self.fix_s, float)
+        assert self.fix_l.shape == (2,)  # TODO: what do I change this to?
 
 
         def tau_manifold(self, tau):

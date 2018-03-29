@@ -130,21 +130,3 @@ def dloss_dW(kernel, W, fix_sn, fix_s, fix_l, X, Y, kernel_derivative):
 ################################
 # TODO: potentially just use the chain rule, and then multiple the vectors?
 # TODO: Do i need to create a function that creates a gram matrix for this? (for each pair of samples?)
-def dK_dW(self, x, y):
-    """
-    :param x: Is assumed to be a vector!
-    :param y: Is assumed to be a vector!
-    :param W:
-    :return:
-    """
-    a = np.dot(x, self.W)
-    b = np.dot(y, self.W)
-
-    W_grad = np.zeros((self.W.shape[0], self.W.shape[1]))
-
-    # How to vectorize this function!
-    for i in range(self.W.shape[0]):
-        for j in range(self.W.shape[1]):
-            W_grad[i, j] = 2 * (a[j] - b[j]) * (x[i] - y[i])
-
-        return W_grad

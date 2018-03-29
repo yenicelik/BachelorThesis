@@ -12,7 +12,7 @@ from paramz.transformations import Logexp
 from GPy.kern.src.stationary import Matern32
 from paramz.caching import Cache_this
 
-class TripathyMaternKernel(Matern32):
+class TripathyMaternKernel(Kern):
 
     """
     A kernel of the following form:
@@ -40,7 +40,9 @@ class TripathyMaternKernel(Matern32):
 
         # TODO: overwrite the kernel parameters!
 
-        super(TripathyMaternKernel, self).__init__(self.active_dim, self.s, self.l, ARD=True)
+        self.inner_kernel = Matern32(input_dim=self.active_dim, variance=self.s, lengthscale=self.l, ARD=True)
+
+        super(TripathyMaternKernel, self).__init__(input_dim=self.real_dim, active_dims=None, name="TripathyMaternKernel")
 
     ###############################
     #       SETTER FUNCTIONS      #
@@ -52,12 +54,12 @@ class TripathyMaternKernel(Matern32):
     def set_l(self, l):
         assert(l.shape == (self.active_dim,))
         self.l = l
-        self.lengthscale = Param("lengthscale", self.l, Logexp())
+        self.inner_kernel.lengthscale = Param("lengthscale", self.l, Logexp())
 
     def set_s(self, s):
         assert(isinstance(s, float))
         self.s = s
-        self.variance = Param("variance", self.s, Logexp())
+        self.inner_kernel.lengthscale = Param("variance", self.s, Logexp())
 
     ###############################
     #      SAMPLING FUNCTIONS     #
@@ -89,21 +91,20 @@ class TripathyMaternKernel(Matern32):
     ###############################
     #        KERNEL-FUNCTIONS     #
     ###############################
-    @Cache_this(limit=5, ignore_args=())
     def K(self, X1, X2):
         """
         :param X1: A vector (or is a matrix allowed?)
         :param X2:
         :return:
         """
-        print("I am being called!")
-        print("Input is: ", X1)
-#        assert X1.shape[1] == self.real_dim, (X1.shape, self.real_dim)
-#        assert X2.shape[1] == self.real_dim
+        print("K function called!")
+        print("K input is: ", X1)
+        assert X1.shape[1] == self.real_dim, (X1.shape, self.real_dim)
+        assert X2.shape[1] == self.real_dim
 
         Z1 = np.dot(X1, self.W)
         Z2 = np.dot(X2, self.W)
-        return super(TripathyMaternKernel, self).K(Z1, Z2)
+        return self.inner_kernel.K(Z1, Z2)
         # TODO: VERY IMPORTANT! does this calculate the gram-matrix (i.e. does this work also for matrix-inputs
 
     def Kdiag(self, X):
@@ -114,7 +115,7 @@ class TripathyMaternKernel(Matern32):
         assert(X.shape[1] == self.real_dim)
 
         Z = np.dot(X, self.W)
-        return super(TripathyMaternKernel, self).Kdiag(Z)
+        return self.inner_kernel.Kdiag(Z)
 
     # Oriented by
     # http: // gpy.readthedocs.io / en / deploy / _modules / GPy / kern / src / stationary.html  # Matern32.dK_dr
@@ -123,17 +124,36 @@ class TripathyMaternKernel(Matern32):
         :param r: The squared distance that one is to input
         :return:
         """
-        return self.variance * (1. + np.sqrt(3.) * r) * np.exp(-np.sqrt(3.) * r)
+        return self.inner_kernel.K_of_r(r)
 
     ###############################
     #          DERIVATIVES        #
     ###############################
+    def dK_dW(self, x, y):
+        """
+        :param x: Is assumed to be a vector!
+        :param y: Is assumed to be a vector!
+        :param W:
+        :return:
+        """
+        a = np.dot(x, self.W)
+        b = np.dot(y, self.W)
+
+        W_grad = np.zeros((self.W.shape[0], self.W.shape[1]))
+
+        # How to vectorize this function!
+        for i in range(self.W.shape[0]):
+            for j in range(self.W.shape[1]):
+                W_grad[i, j] = 2 * (a[j] - b[j]) * (x[i] - y[i])
+
+            return W_grad
+
     def dK_dr(self, r):
         """
         :param r: The
         :return:
         """
-        return -3. * self.variance * r * np.exp(-np.sqrt(3.) * r)
+        return self.inner_kernel.dK_dr(r)
 
     # TODO: we could use the function _squared_scaled_distance instead, which is inherited
     def r(self, x, y):
@@ -167,42 +187,3 @@ class TripathyMaternKernel(Matern32):
         :return:
         """
         return - 2 * np.divide(x-y, np.power(self.l, 2))
-
-    def check(self, X1, X2):
-        print("Checking..")
-        print(X1.shape)
-        print(X2.shape)
-
-
-if __name__ == "__main__":
-
-    real_dim = 4
-    active_dim = 3
-    no_samples = 5
-
-    sample = TripathyMaternKernel(real_dim, active_dim)
-    # print(sample.to_dict())
-    # print(sample.W)
-    # print(sample.l)
-    # print(sample.s)
-    #
-    # sample.set_l(np.random.rand(2,))
-    # sample.set_s(5.22)
-    # sample.set_W(np.random.rand(3, 2))
-    #
-    # print(sample.W)
-    # print(sample.l)
-    # print(sample.s)
-
-    # The second dimension must correspond with the 'real dimension'
-    A = np.random.rand(no_samples, real_dim)
-    B = np.random.rand(no_samples, real_dim)
-    print("Input is: ", A)
-    Z1 = np.dot(A, sample.W)
-    Z2 = np.dot(B, sample.W)
-    print(Z1)
-    sample.check(A, B)
-    print(sample.K(A, B))
-#    print(sample.K_of_r(np.random.rand(5)))
-#    print(sample.Kdiag(X1))
-
