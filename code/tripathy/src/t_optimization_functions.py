@@ -5,6 +5,8 @@ import math
 import numpy as np
 import scipy
 
+from .t_loss import loss, dloss_dK, dloss_dW, dK_dW
+
 class t_ParameterOptimizer:
     """
         This class includes all the logic to opimize both
@@ -50,7 +52,8 @@ class t_WOptimizer:
         This class includes all the logic
     """
 
-    def __init__(self, fix_sn, fix_s, fix_l, X, Y):
+    def __init__(self, kernel, fix_sn, fix_s, fix_l, X, Y):
+        self.kernel = kernel
         self.fix_sn = fix_sn
         self.fix_s = fix_s
         self.fix_l = fix_l
@@ -75,13 +78,13 @@ class t_WOptimizer:
     #      STIEFEL-OPTIMIZATION   #
     ###############################
     def optimize_stiefel_manifold(self, W, m):
-        F_1 = loss(W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
+        F_1 = loss(self.kernel, W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
         for i in range(m):
             tau = self._find_best_tau(W)
             self.W = self._gamma(tau, W)
             F_0 = F_1
-            F_1 = loss(self.W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
+            F_1 = loss(self.kernel, self.W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
             if np.abs((F_1 - F_0) / F_0) < self.gtol:
                 break
@@ -95,16 +98,26 @@ class t_WOptimizer:
             assert (tau >= 0)
             assert (tau <= self.tau_max)
 
+            real_dim = W.shape[0]
+            active_dim = W.shape[1]
+
             AW = self._A(W)
-            lhs = np.eye(self.real_dim) - 0.5 * tau * AW
-            rhs = np.eye(self.real_dim) + 0.5 * tau * AW
+            lhs = np.eye(real_dim) - 0.5 * tau * AW
+            rhs = np.eye(real_dim) + 0.5 * tau * AW
             out = np.linalg.solve(lhs, rhs)
             out = np.dot(out, W)
             return out
 
     def _A(self, W):
-        derivative = dloss_W(W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
-        return np.dot(derivative, W) - np.dot(W, derivative.T)
+        # TODO: the dimensions of X and Y are weird! (for dK_dW)
+        dK_grad_W = dloss_dW(self.kernel, W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
+
+        out = np.dot(dK_grad_W, W.T) # TODO: this does not fully conform with the equation!
+        out -= np.dot(W, dK_grad_W.T)
+
+        assert out.shape == (W.shape[0], W.shape[0])
+
+        return out
 
     ###############################
     #          BRANCH 2           #
@@ -114,25 +127,30 @@ class t_WOptimizer:
         assert isinstance(self.fix_s, float)
         assert self.fix_l.shape == (2,)  # TODO: what do I change this to?
 
+        # For the sake of debugging, we collect a loss-vector
+        self.all_losses = []
 
-        def tau_manifold(self, tau):
+
+        def tau_manifold(tau):
             # TODO: do i have to take the negative of the output?
             # TODO: check if the loss decreases!
             # TODO: should there be a "-1 * "or not?
 
             assert (not math.isnan(tau))
-            W_tau = self._gamma(tau, W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
-            return -1 * self._loss(W_tau, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
+            W_tau = self._gamma(tau, W)
+            loss_val = loss(self.kernel, W_tau, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
+            self.all_losses.append(loss_val)
+            return -1 * loss_val # -1 because scipy minimizes by convention (we want to maximize!)
 
 
         # Randomly sample tau!
         tau_0 = np.random.random_sample() * self.tau_max # TODO: only sample this the first time
 
         assert (tau_0 >= 0)
-        assert (tau_0 <= self.tau_max)
+        assert (tau_0 <= self.tau_max + self.tau_max / 100.)
 
         res = scipy.optimize.minimize(
-            tau_manifold, tau_0, method='BFGS', options={
+            tau_manifold, tau_0, method='L-BFGS-B', options={
                 'maxiter': 50,  # TODO: because we don't use the EGO scheme, we use this one...
                 'disp': False
             },

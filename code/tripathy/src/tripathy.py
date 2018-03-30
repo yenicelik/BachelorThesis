@@ -31,24 +31,18 @@ class GPConfig(ModelConfig):
 from febo.utils.config import Config, ConfigField, assign_config
 from febo.utils import locate
 
-class TripathyConfig(Config):
-    num_layers = ConfigField(4, comment="Number of layers used")
-    num_neurons = ConfigField([100,100,50, 50], comment="Number of units in each layer.")
-    learning_rate = ConfigField('deep.learning_rate', comment="Function providing the learning rate.")
-    _section = 'deep.model'
-
-@assign_config(TripathyConfig)
-class Tripathy(ConfidenceBoundModel):
-
-    def __init__(self):
-        print("Initializing Tripathy model")
-
+# class TripathyConfig(Config):
+#     num_layers = ConfigField(4, comment="Number of layers used")
+#     num_neurons = ConfigField([100,100,50, 50], comment="Number of units in each layer.")
+#     learning_rate = ConfigField('deep.learning_rate', comment="Function providing the learning rate.")
+#     _section = 'deep.model'
 
 def optimize_gp(experiment):
     experiment.algorithm.f.gp.kern.variance.fix()
     experiment.algorithm.f.gp.optimize()
     print(experiment.algorithm.f.gp)
 
+# TODO: how to update the kernel values?
 # TODO: Do the optimization here! Implement the specific functions somewhere else though!
 # TOOD: This is because we have to optimize both the kernel-parameters, as well as the Gaussian-prior parameters! (s_n, s, l)
 @assign_config(GPConfig)
@@ -81,32 +75,20 @@ class TripathyModel(ConfidenceBoundModel):
 
         # Prior parameters
         self.prior_mean = 0
+        self.t = 0
 
         # TODO: handle this kernel part somehow!
-        # the description of a kernel
-        self.kernel = None
-        for kernel_module, kernel_params in self.config.kernels:
-            kernel_part = locate(kernel_module)(input_dim=d, **kernel_params)
-            if self.kernel is None:
-                self.kernel = kernel_part
-            else:
-                self.kernel += kernel_part
-
-        # calling of the kernel
+        # TODO: put the active dimension etc. in a different file later
+        # TODO: make active and real dimension adaptable/altereable (i guess you just create a new GPRegression?)
+        self.kernel = TripathyMaternKernel(2, 2)
         self.gp = GPRegression(d, self.kernel, noise_var=self.config.noise_var)
         # number of data points
-        self.t = 0
 
     ###############################
     #      SAMPLING FUNCTIONS     #
     ###############################
     def sample_sn(self):
         return 2.
-
-    ###############################
-    #     INHERITED FUNCTIONS     #
-    ###############################
-
 
     ###############################
     #    DATA ADDERS & REMOVERS   #
@@ -186,14 +168,3 @@ class TripathyModel(ConfidenceBoundModel):
     @property
     def beta(self):
         return math.sqrt(math.log(max(self.t,2))) # TODO: we could use the theoretical bound calculated from the kernel matrix.
-
-
-#         # TODO: how to update the kernel values?
-#         self.kernel = sde_Matern32(input_dim=d, variance=self.sn, lengthscale=self.l, ARD=True)
-#         #self.kernel = RBF(input_dim=d, variance=self.sn, lengthscale=self.l, ARD=True)
-#
-#
-#         # calling of the kernel
-#         # TODO: change the kernel variance, and the kernel model!
-#         # TODO: we are supposed to work on this kernel variance s_n! ### J
-#         self.gp = GPRegression(d, self.kernel, noise_var=0.1)

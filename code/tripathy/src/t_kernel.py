@@ -97,8 +97,6 @@ class TripathyMaternKernel(Kern):
         :param X2:
         :return:
         """
-        print("K function called!")
-        print("K input is: ", X1)
         assert X1.shape[1] == self.real_dim, (X1.shape, self.real_dim)
         assert X2.shape[1] == self.real_dim
 
@@ -129,25 +127,6 @@ class TripathyMaternKernel(Kern):
     ###############################
     #          DERIVATIVES        #
     ###############################
-    def dK_dW(self, x, y):
-        """
-        :param x: Is assumed to be a vector!
-        :param y: Is assumed to be a vector!
-        :param W:
-        :return:
-        """
-        a = np.dot(x, self.W)
-        b = np.dot(y, self.W)
-
-        W_grad = np.zeros((self.W.shape[0], self.W.shape[1]))
-
-        # How to vectorize this function!
-        for i in range(self.W.shape[0]):
-            for j in range(self.W.shape[1]):
-                W_grad[i, j] = 2 * (a[j] - b[j]) * (x[i] - y[i])
-
-            return W_grad
-
     def dK_dr(self, r):
         """
         :param r: The

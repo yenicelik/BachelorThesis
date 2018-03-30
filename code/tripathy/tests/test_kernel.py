@@ -73,3 +73,7 @@ class TestKernel(object):
 
         assert kr.shape == (self.no_samples,), (kr.shape,)
 
+    def test_set_parameters_works(self):
+        # Test if set_W, set_l, set_s, (set_sn) work, and are applied on the correct kernel)
+        pass
+

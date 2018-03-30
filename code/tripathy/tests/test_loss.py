@@ -1,6 +1,7 @@
 import sys
 sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
 print(sys.path)
+
 import numpy as np
 from src.t_kernel import TripathyMaternKernel
 from src.t_loss import loss, dloss_dK, dloss_dW, dK_dW
@@ -44,30 +45,57 @@ class TestLoss(object):
         self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
 
         self.W = np.random.rand(self.real_dim, self.active_dim)
-        self.sn = np.random.rand(1)
-        self.s = np.random.rand(1)
+        self.sn = np.asscalar( np.random.rand(1) )
+        self.s = np.asscalar( np.random.rand(1) )
         self.l = np.random.rand(self.active_dim,)
 
         self.X = np.random.rand(self.no_samples, self.real_dim)
-        self.Y = np.random.rand(self.np_samples,)
+        self.Y = np.random.rand(self.no_samples,)
 
     def test_loss_returns_correct_dimensions(self):
         self.init()
 
-        loss(self.kernel, self.W, self.sn, self.s, self.l, self.X, self.Y)
+        res = loss(self.kernel, self.W, self.sn, self.s, self.l, self.X, self.Y)
 
+        # Should return a scalar, and run (not exit due to some false dimensions!
+        assert isinstance(res, float), str(res)
 
+class TestDerivatives(object):
 
+    def init(self):
+        self.real_dim = 3
+        self.active_dim = 2
+        self.no_samples = 5
+        self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
 
+        self.W = np.random.rand(self.real_dim, self.active_dim)
+        self.sn = np.asscalar( np.random.rand(1) )
+        self.s = np.asscalar( np.random.rand(1) )
+        self.l = np.random.rand(self.active_dim,)
 
-    def test_dK_dW(self):
+        self.X = np.random.rand(self.no_samples, self.real_dim)
+        self.Y = np.random.rand(self.no_samples,)
 
+    def test_dloss_dK_returns_correct_dimensions(self):
         self.init()
 
-        x = np.random.rand(self.real_dim)
-        y = np.random.rand(self.real_dim)
+        res = dloss_dK(self.kernel, self.W, self.sn, self.s, self.l, self.X, self.Y)
 
-        print("Input in dK_dW is: ")
-        print(x)
-        print(y)
+        # Should return a scalar, and run (not exit due to some false dimensions!
+        assert isinstance(res, float), str(res)
+
+    # TODO: figure out this thing!
+    def test_dK_dW_returns_correct_dimension(self):
+        self.init()
+
+        res = dK_dW(self.kernel, self.W, self.sn, self.s, self.l, self.X)
+
+        assert res.shape == (self.no_samples * self.real_dim, self.no_samples * self.active_dim)
+
+    def test_dloss_dW_returns_correct_dimension(self):
+        self.init()
+
+        res = dloss_dW(self.kernel, self.W, self.sn, self.s, self.l, self.X, self.Y)
+
+        assert res.shape == (self.real_dim, self.active_dim)
 
