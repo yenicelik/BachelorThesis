@@ -78,6 +78,8 @@ class TestSmallProcesses(object):
 
         # Maximizing/Increasing the loss is successful
         # TODO: think about how to have a good measure to see if it actually decreases!
+        print("All losses: ", self.w_optimizer.all_losses)
+        # maybe do np.sum( np.diff(self.w_optimizer.all_losses) ) > 0 ? to check if it generally increased?
         assert self.w_optimizer.all_losses[0] <= self.w_optimizer.all_losses[-1] + 1e-6, self.w_optimizer.all_losses
 
     def test_optimize_stiefel_manifold_doesnt_err(self):
@@ -85,6 +87,6 @@ class TestSmallProcesses(object):
         self.init()
 
         # For the sake of testing, do 10 iterations
-        self.w_optimizer.optimize_stiefel_manifold(self.W, 10)
+        self.w_optimizer.optimize_stiefel_manifold(self.W, 100)
 
 

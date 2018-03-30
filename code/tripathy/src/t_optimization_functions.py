@@ -64,8 +64,11 @@ class t_WOptimizer:
         self.tau_max = 1e-3
         self.gtol = 1e-6
 
+        self.tau = np.asscalar(np.random.rand(1)) * self.tau_max
+
         # FOR THE SAKE OF INCLUDING THIS WITHIN THE CLASS
         self.W = None
+        self.all_losses = []
 
     #########################################
     #                                       #
@@ -81,8 +84,9 @@ class t_WOptimizer:
         F_1 = loss(self.kernel, W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
         for i in range(m):
-            tau = self._find_best_tau(W)
-            self.W = self._gamma(tau, W)
+            self.tau = self._find_best_tau(W)
+            self.W = self._gamma(self.tau, W)
+            # TODO: update the kernel W here!
             F_0 = F_1
             F_1 = loss(self.kernel, self.W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
@@ -96,7 +100,7 @@ class t_WOptimizer:
     def _gamma(self, tau, W):
             print("Tau is: ", tau)
             assert (tau >= 0)
-            assert (tau <= self.tau_max)
+            assert (tau <= self.tau_max + self.tau_max / 100.)
 
             real_dim = W.shape[0]
             active_dim = W.shape[1]
@@ -127,10 +131,6 @@ class t_WOptimizer:
         assert isinstance(self.fix_s, float)
         assert self.fix_l.shape == (2,)  # TODO: what do I change this to?
 
-        # For the sake of debugging, we collect a loss-vector
-        self.all_losses = []
-
-
         def tau_manifold(tau):
             # TODO: do i have to take the negative of the output?
             # TODO: check if the loss decreases!
@@ -142,15 +142,11 @@ class t_WOptimizer:
             self.all_losses.append(loss_val)
             return -1 * loss_val # -1 because scipy minimizes by convention (we want to maximize!)
 
-
-        # Randomly sample tau!
-        tau_0 = np.random.random_sample() * self.tau_max # TODO: only sample this the first time
-
-        assert (tau_0 >= 0)
-        assert (tau_0 <= self.tau_max + self.tau_max / 100.)
+        assert (self.tau >= 0)
+        assert (self.tau <= self.tau_max + self.tau_max / 100.)
 
         res = scipy.optimize.minimize(
-            tau_manifold, tau_0, method='L-BFGS-B', options={
+            tau_manifold, self.tau, method='L-BFGS-B', options={
                 'maxiter': 50,  # TODO: because we don't use the EGO scheme, we use this one...
                 'disp': False
             },
