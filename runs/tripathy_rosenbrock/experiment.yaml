@@ -2,11 +2,11 @@ main:
   experiment_dir: ../runs/
   experiment: febo.experiment.SimpleExperiment  # Experiment
 experiment.simple:
-  environment: febo.environment.benchmarks.Camelback
+  environment: febo.environment.benchmarks.HiddenFunction
   controller: febo.controller.DataController
   algorithm: febo.algorithms.UCB
   T: 100  # Horizon
 experiment:
   log_level_console: INFO
-#algorithm:
-# model: tripathy.src.TripathyModel #febo.models.LinearLeastSquares
+algorithm:
+  model: tripathy.src.tripathy.TripathyModel #febo.models.LinearLeastSquares

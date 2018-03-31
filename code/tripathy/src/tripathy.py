@@ -22,6 +22,7 @@ from febo.models.gpy import GPRegression
 from febo.models import Model, ConfidenceBoundModel
 
 from .t_kernel import TripathyMaternKernel
+from .t_optimizer import TripathyOptimize
 
 class GPConfig(ModelConfig):
     kernels = ConfigField([('GPy.kern.RBF', {'variance': 2., 'lengthscale': 0.2 , 'ARD': True})])
@@ -102,7 +103,6 @@ class TripathyModel(ConfidenceBoundModel):
 
     def add_data(self, x, y):
         self.add_data_point_to_gps(x,y)
-
 #         # W update
 #         #self.run_two_step_optimization_once(2)
 #

@@ -30,6 +30,10 @@ class TripathyMaternKernel(Kern):
         # TODO: decide what file to put these values (this file is probably good, just check how to pass around stuff)
         # TODO: add these as priors
         self.W = self.sample_W()
+
+        # TODO: remove this line!!!
+        self.W = np.eye(self.real_dim)
+
         self.l = self.sample_lengthscale()
         self.s = self.sample_variance()
 
@@ -91,17 +95,18 @@ class TripathyMaternKernel(Kern):
     ###############################
     #        KERNEL-FUNCTIONS     #
     ###############################
-    def K(self, X1, X2):
+    def K(self, X1, X2=None):
         """
         :param X1: A vector (or is a matrix allowed?)
         :param X2:
         :return:
         """
         assert X1.shape[1] == self.real_dim, (X1.shape, self.real_dim)
-        assert X2.shape[1] == self.real_dim
+        if X2 is not None:
+            assert X2.shape[1] == self.real_dim
 
         Z1 = np.dot(X1, self.W)
-        Z2 = np.dot(X2, self.W)
+        Z2 = np.dot(X2, self.W) if X2 is not None else None
         return self.inner_kernel.K(Z1, Z2)
         # TODO: VERY IMPORTANT! does this calculate the gram-matrix (i.e. does this work also for matrix-inputs
 
@@ -166,3 +171,13 @@ class TripathyMaternKernel(Kern):
         :return:
         """
         return - 2 * np.divide(x-y, np.power(self.l, 2))
+
+    ################################
+    # INHERITING FROM INNER KERNEL #
+    ################################
+    def update_gradients_full(self, dL_dK, X, X2):
+        """Set the gradients of all parameters when doing full (N) inference."""
+        Z1 = np.dot(X, self.W)
+        Z2 = np.dot(X2, self.W) if X2 is not None else None
+
+        return self.inner_kernel.update_gradients_full(dL_dK, Z1, Z2)
