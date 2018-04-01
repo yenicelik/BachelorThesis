@@ -31,8 +31,8 @@ class TripathyMaternKernel(Kern):
         # TODO: add these as priors
         self.W = self.sample_W()
 
-        # TODO: remove this line!!!
-        self.W = np.eye(self.real_dim)
+        # # TODO: remove this line!!!
+        # self.W = np.eye(self.real_dim)
 
         self.l = self.sample_lengthscale()
         self.s = self.sample_variance()
@@ -54,16 +54,23 @@ class TripathyMaternKernel(Kern):
     def set_W(self, W):
         assert(W.shape == (self.real_dim, self.active_dim))
         self.W = W
+        self.parameters_changed()
 
     def set_l(self, l):
         assert(l.shape == (self.active_dim,))
         self.l = l
-        self.inner_kernel.lengthscale = Param("lengthscale", self.l, Logexp())
+        print("Updating l!")
+        self.inner_kernel.lengthscale = Param("lengthscale", l, Logexp())
+        self.parameters_changed()
+        self.inner_kernel.parameters_changed()
 
     def set_s(self, s):
         assert(isinstance(s, float))
         self.s = s
-        self.inner_kernel.lengthscale = Param("variance", self.s, Logexp())
+        print("Updating s!")
+        self.inner_kernel.lengthscale = Param("variance", np.asarray(s), Logexp())
+        self.parameters_changed()
+        self.inner_kernel.parameters_changed()
 
     ###############################
     #      SAMPLING FUNCTIONS     #
@@ -77,7 +84,9 @@ class TripathyMaternKernel(Kern):
             for j in range(self.active_dim):
                 A[i, j] = np.random.normal(0, 1)
         Q, R = np.linalg.qr(A)
-        assert (np.allclose(np.dot(Q.T, Q), np.eye(Q.shape[1])))
+        assert np.allclose(np.dot(Q.T, Q), np.eye(Q.shape[1]))
+        assert Q.shape[0] == self.real_dim
+        assert Q.shape[1] == self.active_dim
         return Q
 
     def sample_variance(self):

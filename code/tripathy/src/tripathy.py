@@ -22,7 +22,7 @@ from febo.models.gpy import GPRegression
 from febo.models import Model, ConfidenceBoundModel
 
 from .t_kernel import TripathyMaternKernel
-from .t_optimizer import TripathyOptimize
+from .t_optimizer import TripathyOptimizer
 
 class GPConfig(ModelConfig):
     kernels = ConfigField([('GPy.kern.RBF', {'variance': 2., 'lengthscale': 0.2 , 'ARD': True})])
@@ -81,9 +81,11 @@ class TripathyModel(ConfidenceBoundModel):
         # TODO: handle this kernel part somehow!
         # TODO: put the active dimension etc. in a different file later
         # TODO: make active and real dimension adaptable/altereable (i guess you just create a new GPRegression?)
-        self.kernel = TripathyMaternKernel(2, 2)
+        self.kernel = TripathyMaternKernel(self.real_dim, self.active_d)
         self.gp = GPRegression(d, self.kernel, noise_var=self.config.noise_var)
         # number of data points
+
+        self.t_optimizer = TripathyOptimizer()
 
     ###############################
     #      SAMPLING FUNCTIONS     #
@@ -103,19 +105,17 @@ class TripathyModel(ConfidenceBoundModel):
 
     def add_data(self, x, y):
         self.add_data_point_to_gps(x,y)
-#         # W update
-#         #self.run_two_step_optimization_once(2)
-#
-#         # TODO. updatemodel
-#         self.W = np.eye(self.real_dim)
-#         #self.W = np.rot90(self.W)
-#
-#         # Create everything new, that needs to be updated, including the dimension, etc.
-#         tmpX = self.gp.X
-#         tmpY = self.gp.Y
-#         self.kernel = sde_Matern32(input_dim=self.real_dim, variance=self.s, lengthscale=self.l, ARD=True)
-#         self.gp = GPRegression(self.real_dim, self.kernel, noise_var=self.sn)
-#         self.gp.set_XY(tmpX, tmpY)
+
+        print("Call 2-step-optimizer when t: ", self.t)
+
+        W = self.t_optimizer.run_two_step_optimization(
+            self.kernel,
+            self.config.noise_var,
+            self.gp.X,
+            self.gp.Y,
+            2
+        ) # right now, we assume that we know the active subdimension!
+        self.kernel.set_W(W)
 
     def add_data_point_to_gps(self, x, y):
         """

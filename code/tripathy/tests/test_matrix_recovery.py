@@ -72,6 +72,7 @@ class TestMatrixRecovery(object):
     def init(self):
 
         # Choose an arbitrary test function
+        self.m = 50
 
         self.real_dim = 3
         self.active_dim = 2

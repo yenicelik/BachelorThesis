@@ -9,12 +9,12 @@ import math
 from .t_loss import loss
 from .t_optimization_functions import t_ParameterOptimizer, t_WOptimizer
 
-class TripathyOptimize:
+class TripathyOptimizer:
 
     def __init__(self):
         # PARAMETERS
         self.d_max = 10
-        self.max_iter = 100
+        self.max_iter = 20
 
         self.stiefel_max_steps = 10
         self.param_max_steps = 10
@@ -41,26 +41,37 @@ class TripathyOptimize:
                 print("Best found dimension is: ", d, BIC1, BIC0)
                 break
 
-    #def run_two_step_optimization(self, d):
+    def run_two_step_optimization(self, t_kernel, sn, X, Y, d):
 
-    # def run_two_step_optimization(self, d):
-    #     L0 = loss(W, sn, s, l, X, Y)
-    #     L1 = L0 + self.ftol * 1e5
-    #
-    #     for i in range(self.max_iter):
-    #         print("Step " + str(i) + " within the two-step-optimizer ")
-    #
-    #         # Optimize over W (within the stiefel manifold)
-    #         w_optimizer = t_WOptimizer(
-    #             fix_sn=fix_sn,
-    #             fix_s=fix_s,
-    #             fix_l=fix_l,
-    #             X=X,
-    #             Y=Y)
-    #         W = w_optimizer.optimize_stiefel_manifold(
-    #             W=W,
-    #             m=self.stiefel_max_steps
-    #         )
+        L0 = loss(
+            t_kernel,
+            t_kernel.W,
+            sn,
+            t_kernel.s,
+            t_kernel.l,
+            X, Y
+        )
+
+        L1 = L0 + self.ftol * 1e5
+
+        for i in range(self.max_iter):
+            # Optimize over W (within the stiefel manifold)
+            w_optimizer = t_WOptimizer(
+                kernel=t_kernel,
+                fix_sn=sn,
+                fix_s=t_kernel.s,
+                fix_l=t_kernel.l,
+                X=X,
+                Y=Y)
+
+            W = w_optimizer.optimize_stiefel_manifold(
+                W=t_kernel.W,
+                m=self.stiefel_max_steps
+            )
+            # t_kernel.set_W(W)
+
+        return W
+
     #
     #         # TODO: here, we could simply call GP.optimize (with the correct kernel!)
     #         # TODO: we can then retrieve the variance and lengthscales using .variance, .lengthscales

@@ -60,6 +60,18 @@ class TestLoss(object):
         # Should return a scalar, and run (not exit due to some false dimensions!
         assert isinstance(res, float), str(res)
 
+    def test_loss_correctly_updates_parameters(self):
+        self.init()
+
+        loss(self.kernel, self.W, self.sn, self.s, self.l, self.X, self.Y)
+
+        assert (self.kernel.W == self.W).all()
+        assert self.kernel.inner_kernel.variance == self.s
+        assert self.kernel.inner_kernel.lengthscale == self.l
+
+
+
+
 class TestDerivatives(object):
 
     def init(self):

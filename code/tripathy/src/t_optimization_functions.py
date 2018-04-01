@@ -98,9 +98,9 @@ class t_WOptimizer:
     #          BRANCH 1           #
     ###############################
     def _gamma(self, tau, W):
-            print("Tau is: ", tau)
-            assert (tau >= 0)
-            assert (tau <= self.tau_max + self.tau_max / 100.)
+            # print("Tau is: ", tau)
+            assert (tau >= 0 - self.tau_max / 10.)
+            assert (tau <= self.tau_max + self.tau_max / 10.)
 
             real_dim = W.shape[0]
             active_dim = W.shape[1]
@@ -110,6 +110,9 @@ class t_WOptimizer:
             rhs = np.eye(real_dim) + 0.5 * tau * AW
             out = np.linalg.solve(lhs, rhs)
             out = np.dot(out, W)
+
+            # print("New A: ", W)
+
             return out
 
     def _A(self, W):
@@ -142,18 +145,17 @@ class t_WOptimizer:
             self.all_losses.append(loss_val)
             return -1 * loss_val # -1 because scipy minimizes by convention (we want to maximize!)
 
-        assert (self.tau >= 0)
+        assert (self.tau >= 0 - self.tau_max / 100.)
         assert (self.tau <= self.tau_max + self.tau_max / 100.)
 
         res = scipy.optimize.minimize(
             tau_manifold, self.tau, method='L-BFGS-B', options={
-                'maxiter': 50,  # TODO: because we don't use the EGO scheme, we use this one...
-                'disp': False
+                'maxiter': 20,  # TODO: because we don't use the EGO scheme, we use this one...
+                'disp': False,
+                'ftol': 1e-16
             },
             bounds=((0, self.tau_max),)
         )
-
-        print(res.message)
 
         assert (not math.isnan(res.x))
 

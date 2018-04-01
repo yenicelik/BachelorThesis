@@ -2,9 +2,11 @@ import sys
 sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
 print(sys.path)
 import numpy as np
+import warnings
 from src.t_kernel import TripathyMaternKernel
 
 from src.t_optimization_functions import t_WOptimizer
+from src.t_loss import loss
 
 class TestIndividualFunctions(object):
 
@@ -78,9 +80,46 @@ class TestSmallProcesses(object):
 
         # Maximizing/Increasing the loss is successful
         # TODO: think about how to have a good measure to see if it actually decreases!
-        print("All losses: ", self.w_optimizer.all_losses)
         # maybe do np.sum( np.diff(self.w_optimizer.all_losses) ) > 0 ? to check if it generally increased?
         assert self.w_optimizer.all_losses[0] <= self.w_optimizer.all_losses[-1] + 1e-6, self.w_optimizer.all_losses
+
+    def test_tau_trajectory_determines_W(self):
+        self.init()
+        no_samples = 20
+
+        W_init = self.kernel.sample_W()
+        all_Ws = []
+
+        tau_delta = 1e-5 #1e-4 is optimal!
+        tau_0 = 0
+        for i in range(no_samples):
+            inp_tau = min( tau_0+i*tau_delta, self.w_optimizer.tau_max)
+            new_W = self.w_optimizer._gamma(inp_tau, W_init)
+            all_Ws.append(new_W)
+
+        for i in range(no_samples-1):
+            assert ((all_Ws[i] - all_Ws[i+1])**2).mean() >= 1e-16
+
+    def test__find_best_tau_finds_a_better_tau(self):
+        self.init()
+
+        W_init = self.kernel.sample_W()
+
+        new_tau = self.w_optimizer._find_best_tau(np.copy(W_init))
+        new_W = self.w_optimizer._gamma(new_tau, W_init)
+
+        old_loss = loss(self.kernel, W_init, self.sn, self.kernel.s, self.kernel.l, self.X, self.Y)
+        new_loss = loss(self.kernel, new_W, self.sn, self.kernel.s, self.kernel.l, self.X, self.Y)
+
+        if old_loss == new_loss:
+            warnings.warn("Old loss equals new loss! The W has not improved!")
+            print("Changes in W!")
+            print(W_init)
+            print(new_W)
+            print("Losses")
+            print(old_loss - new_loss)
+#        assert abs(new_loss - old_loss) > 1e-12
+        assert new_loss > old_loss
 
     def test_optimize_stiefel_manifold_doesnt_err(self):
 
