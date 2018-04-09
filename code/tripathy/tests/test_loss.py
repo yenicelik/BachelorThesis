@@ -91,64 +91,6 @@ class TestLoss(object):
     #
     #     loss(self.kernel, self.W, self.sn, self.s, self.l, self.X, self.Y)
 
-class TestLossSemantics(object):
-    """
-        If you want to write this to wolfram alpha:
-        0.5 * (t) inv(K + sn^2 I) (t)
-        - 0.5 * log(K + sn^2 I)
-        - 0.5 * N * log2π
-    """
-
-    def init(self):
-        self.real_dim = 3
-        self.active_dim = 2
-        self.no_samples = 5
-        self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
-
-    def test_return_2_samples_zero_output(self):
-
-        self.init()
-
-        X = np.asarray([
-            [0, 0.5, 0],
-            [0, 0, 0.5]
-        ])
-        Y = np.asarray([
-            [0],
-            [0]
-        ])
-
-        W = np.asarray([
-            [0, 1],
-            [0, 0],
-            [1, 0]
-        ])
-
-        # After projection, we get
-        # X_new = [
-        #     [0, 0],
-        #     [0.5, 0]
-        # ]
-        # r = 0.25
-
-        # Confirmed from another test that this works!
-        K = self.kernel.K(X)
-        # with approximate output of
-        # np.asarray([
-        #     [1, 0.784888],
-        #     [0.784888, 1]
-        # ])
-
-        y_hat = loss(self.kernel, W, sn=2., s=1.,
-            l=np.asarray([1. for i in range(self.active_dim)]),
-            X=X,
-            Y=Y
-        )
-        # y =
-
-
-
-
 class TestDerivatives(object):
 
     def init(self):
