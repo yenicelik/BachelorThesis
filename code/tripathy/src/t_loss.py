@@ -6,6 +6,8 @@ import numpy as np
 import math
 import sys
 
+from GPy.models.gp_regression import GPRegression
+
 def loss(kernel, W, sn, s, l, X, Y):
     """
     :param W: The orthogonal projection matrix
@@ -16,37 +18,40 @@ def loss(kernel, W, sn, s, l, X, Y):
     :param Y: The data to optimize over (target values)
     :return: A scalar value describing the "loss" of the given model
     """
-    # TODO: check if the kernel inherits the correct methods
-    # TODO: I'm sure GPy has this already implemented
+    kernel.update_params(W, l, s)
+    new_gp_regression = GPRegression(X, Y, kernel, noise_var=sn)
 
-    # Set the weight of the kernel to W
-    # TODO: keep these auxiliary for now
-    kernel.set_W(W)
-    kernel.set_l(l)
-    kernel.set_s(s)
-    # TODO: also somehow set the variance!
-    # TODO: Apply these operations before calling this function!
+    return new_gp_regression.log_likelihood()
 
-    # The matrix we are going to invert
-    res_kernel = kernel.K(X, X)
-    K_sn = res_kernel + np.power(sn, 2) * np.eye(res_kernel.shape[0])
-
-    # Calculate the cholesky-decomposition for the matrix K_sn
-    L = np.linalg.cholesky(K_sn)
-
-    # Solve the system of equations K_sn^{-1} s1 = Y_hat
-    # Using the cholesky decomposition of K_sn = L^T L
-    # So the new system of equations becomes
-    lhs = np.linalg.solve(L, Y)
-    s1 = np.linalg.solve(L.T, lhs)
-    s1 = np.dot(Y.T, s1)
-    s2 = np.log(np.matrix.trace(L)) + X.shape[0] * np.log(2. * np.pi)
-
-    out = (-0.5 * (s1 + s2)).flatten()
-    out = np.asscalar(out)
-    assert isinstance(out, float), str(out)
-    assert not math.isnan(out), str(out)
-    return out
+    # Laziliy implementing GPy's function!
+    # # TODO: check if the kernel inherits the correct methods
+    # # TODO: I'm sure GPy has this already implemented
+    #
+    # # Set the weight of the kernel to W
+    # # TODO: keep these auxiliary for now
+    # # TODO: also somehow set the variance!
+    # # TODO: Apply these operations before calling this function!
+    #
+    # # The matrix we are going to invert
+    # res_kernel = kernel.K(X, X)
+    # K_sn = res_kernel + np.power(sn, 2) * np.eye(res_kernel.shape[0])
+    #
+    # # Calculate the cholesky-decomposition for the matrix K_sn
+    # L = np.linalg.cholesky(K_sn)
+    #
+    # # Solve the system of equations K_sn^{-1} s1 = Y_hat
+    # # Using the cholesky decomposition of K_sn = L^T L
+    # # So the new system of equations becomes
+    # lhs = np.linalg.solve(L, Y)
+    # s1 = np.linalg.solve(L.T, lhs)
+    # s1 = np.dot(Y.T, s1)
+    # s2 = np.log(np.matrix.trace(L)) + X.shape[0] * np.log(2. * np.pi)
+    #
+    # out = (-0.5 * (s1 + s2)).flatten()
+    # out = np.asscalar(out)
+    # assert isinstance(out, float), str(out)
+    # assert not math.isnan(out), str(out)
+    # return out
 
 # TODO: only calculate dloss_dW by hand, and finish it once and for all.
 
@@ -114,6 +119,8 @@ def dloss_dW(kernel, W, fix_sn, fix_s, fix_l, X, Y):
     for i in range(W.shape[0]):
         for j in range(W.shape[1]):
 
+            # TODO: we don't quite calculate for all pairs of X and Y!
+
             tmp = np.dot(naked_dloss_dK, full_K_W[i::real_dim, j::active_dim])
             grad_W[i, j] = 0.5 * np.matrix.trace(tmp)
 
@@ -143,6 +150,8 @@ def dK_dW(kernel, W, sn, s, l, X):
 
     real_dim = W.shape[0]
     active_dim = W.shape[1]
+
+    # TODO: this function is probably wrong!
 
     def dk_dw_ij(a, b):
         z1 = np.dot(a, W)

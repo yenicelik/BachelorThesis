@@ -3,6 +3,7 @@ sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
 print(sys.path)
 import numpy as np
 from src.t_kernel import TripathyMaternKernel
+from GPy.kern.src.stationary import Matern32
 
 class TestKernel(object):
 
@@ -73,7 +74,125 @@ class TestKernel(object):
 
         assert kr.shape == (self.no_samples,), (kr.shape,)
 
-    def test_set_parameters_works(self):
-        # Test if set_W, set_l, set_s, (set_sn) work, and are applied on the correct kernel)
-        pass
+class TestKernelSematics(object):
 
+    # To calculate each element by hand, type in the following into wolfram alpha
+    # f(x)=(1+sqrt(3)*x)exp(−sqrt(3)*x)
+    # And calculate each r individually
+    #
+
+    def init(self):
+        self.real_dim = 3
+        self.active_dim = 2
+        self.no_samples = 5
+        self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
+
+    def test_kernel_identity_W_zero_inp(self):
+        self.init()
+        X = np.asarray([
+            [0, 0, 0],
+            [0, 0, 0]
+        ])
+
+        W = np.asarray([
+            [1, 0],
+            [0, 1],
+            [0, 0]
+        ])
+        self.kernel.set_W(W)
+        self.kernel.set_s(1.)
+        self.kernel.set_l(np.asarray([1. for i in range(self.active_dim)]))
+        self.real_kernel = Matern32(self.active_dim, ARD=True, lengthscale=self.kernel.inner_kernel.lengthscale)
+
+        y_hat = self.kernel.K(X)
+
+        y = np.asarray([
+            [1, 1],
+            [1, 1]
+        ])
+
+        assert np.isclose(y, y_hat, rtol=1e-16).all()
+
+    def test_kernel_reverted_W(self):
+        self.init()
+        X = np.asarray([
+            [0, 0.5, 0],
+            [0, 0, 0.5]
+        ])
+
+        W = np.asarray([
+            [0, 1],
+            [0, 0],
+            [1, 0]
+        ])
+
+        # After projection, we get
+        # X_new = [
+        #     [0, 0],
+        #     [0.5, 0]
+        # ]
+        # r = 0.25
+
+        self.kernel.set_W(W)
+        self.kernel.set_s(1.)
+        self.kernel.set_l(np.asarray([1. for i in range(self.active_dim)]))
+
+        y_hat = self.kernel.K(X)
+
+        y = np.asarray([
+            [1, 0.784888],
+            [0.784888, 1]
+        ])
+
+        assert np.isclose(y, y_hat, rtol=1e-4).all()
+
+    def test_kernel_some_random_W(self):
+        self.init()
+
+        for i in range(100):
+            X = np.random.rand(5, self.real_dim)
+
+            # Sample and re-assign
+            W = self.kernel.sample_W()
+            self.kernel.set_W(W)
+
+            s = self.kernel.sample_variance()
+            self.kernel.set_s(s)
+
+            l = self.kernel.sample_lengthscale()
+            self.kernel.set_l(l)
+
+            y_hat = self.kernel.K(X)
+
+            y = self.kernel.inner_kernel.K(np.dot(X, W))
+
+            assert np.isclose(y, y_hat).all()
+
+    def test_kernel_some_random_W_independent_inner_kernel(self):
+        self.init()
+
+        for i in range(100):
+            X = np.random.rand(5, self.real_dim)
+
+            # Sample and re-assign
+            W = self.kernel.sample_W()
+            self.kernel.set_W(W)
+
+            s = self.kernel.sample_variance()
+            self.kernel.set_s(s)
+
+            l = self.kernel.sample_lengthscale()
+            self.kernel.set_l(l)
+
+            y_hat = self.kernel.K(X)
+
+            # Define the new kernel
+            real_kernel = Matern32(self.active_dim, variance=s, ARD=True, lengthscale=l)
+
+            y = real_kernel.K(np.dot(X, W))
+
+            assert np.isclose(y, y_hat).all()
+
+
+    def test_kernel_K(self):
+        self.init()

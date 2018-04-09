@@ -23,7 +23,7 @@ class t_ParameterOptimizer:
 
     def optimize_sn_l(self, sn, s, l, X, Y, n):
         assert (isinstance(sn, float))
-        assert (l.shape == (2,))
+        assert (l.shape == (self.fix_W.shape[1],))
 
         # The Function we want to optimize
         # TODO: jacobian could be added for even better values
@@ -40,7 +40,7 @@ class t_ParameterOptimizer:
         res = scipy.optimize.minimize(
             fnc, x0, method="BFGS", options={
                 "maxiter": n,
-                "disp": True
+                "disp": False
             }
         )
 
@@ -62,7 +62,7 @@ class t_WOptimizer:
 
         # TAKEN FROM CONFIG
         self.tau_max = 1e-3
-        self.gtol = 1e-6
+        self.gtol = 1e-10
 
         self.tau = np.asscalar(np.random.rand(1)) * self.tau_max
 
@@ -81,18 +81,21 @@ class t_WOptimizer:
     #      STIEFEL-OPTIMIZATION   #
     ###############################
     def optimize_stiefel_manifold(self, W, m):
-        F_1 = loss(self.kernel, W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
+
+        self.W = W
+
+        F_1 = loss(self.kernel, self.W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
         for i in range(m):
-            self.tau = self._find_best_tau(W)
-            self.W = self._gamma(self.tau, W)
-            # TODO: update the kernel W here!
+            self.tau = self._find_best_tau(self.W)
+            self.W = self._gamma(self.tau, self.W)
+            self.kernel.set_W(self.W)
             F_0 = F_1
             F_1 = loss(self.kernel, self.W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
-            if np.abs((F_1 - F_0) / F_0) < self.gtol:
+            if (F_1 - F_0) / F_0 < self.gtol:
                 break
-        return W
+        return self.W
 
     ###############################
     #          BRANCH 1           #
@@ -110,8 +113,6 @@ class t_WOptimizer:
             rhs = np.eye(real_dim) + 0.5 * tau * AW
             out = np.linalg.solve(lhs, rhs)
             out = np.dot(out, W)
-
-            # print("New A: ", W)
 
             return out
 
@@ -132,7 +133,7 @@ class t_WOptimizer:
     def _find_best_tau(self, W):
 
         assert isinstance(self.fix_s, float)
-        assert self.fix_l.shape == (2,)  # TODO: what do I change this to?
+        assert self.fix_l.shape == (W.shape[1],)  # TODO: what do I change this to?
 
         def tau_manifold(tau):
             # TODO: do i have to take the negative of the output?
@@ -149,10 +150,10 @@ class t_WOptimizer:
         assert (self.tau <= self.tau_max + self.tau_max / 100.)
 
         res = scipy.optimize.minimize(
-            tau_manifold, self.tau, method='L-BFGS-B', options={
+            tau_manifold, self.tau, method='SLSQP', options={
                 'maxiter': 20,  # TODO: because we don't use the EGO scheme, we use this one...
                 'disp': False,
-                'ftol': 1e-16
+                'ftol': 1e-24
             },
             bounds=((0, self.tau_max),)
         )

@@ -5,6 +5,8 @@ print(sys.path)
 import numpy as np
 from src.t_kernel import TripathyMaternKernel
 from src.t_optimization_functions import t_WOptimizer
+from febo.environment.benchmarks.functions import Rosenbrock
+from febo.environment.benchmarks.functions import Camelback
 
 class Metrics(object):
     """
@@ -13,7 +15,7 @@ class Metrics(object):
     """
 
     def __init__(self, sampling_points, seed=42):
-        self.samples = 1000
+        self.samples = 10
         np.random.seed(seed)
 
         self.tol_mean_diff = 1e-6 # TODO: set this to an ok value
@@ -28,10 +30,18 @@ class Metrics(object):
         """
         assert A.shape == A_hat.shape, str(A.shape, A_hat.shape)
 
-        X = np.random.rand(self.samples, A.shape)
+        X = np.random.rand(self.samples, A.shape[0])
 
-        t1 = fnc( np.dot(X, A) )
-        t2 = fnc( np.dot(X, A_hat) )
+
+        t1 = fnc( np.dot(X, A).T )
+        t2 = fnc( np.dot(X, A_hat).T )
+        print("T1 is: ")
+        print(t1)
+        print("T2 is: ")
+        print(t2)
+
+        print("Difference is: ")
+        print(t1 - t2)
 
         return np.mean( np.abs(t1 - t2) ) < self.tol_mean_diff
 
@@ -43,19 +53,29 @@ class Metrics(object):
         :param A_hat:
         :return:
         """
-        assert A.shape == A_hat.shape, str(A.shape, A_hat.shape)
-        X = np.random.rand(self.samples, A.shape)
+        # TODO: somehting is really funky here!
+        assert A.shape == A_hat.shape, str((A.shape, A_hat.shape))
+        X = np.random.rand(self.samples, A.shape[0])
 
         t1 = np.dot(A.T, X.T)
-        t1 = np.dot(A, t1)
+        t1 = np.dot(A, t1).T
 
         t2 = np.dot(A_hat.T, X.T)
-        t2 = np.dot(A_hat, t2)
+        t2 = np.dot(A_hat, t2).T
 
-        return np.mean(np.abs(t1 - t2)) < self.tol_mean_diff
+        print(t1.shape)
+        print(t2.shape)
 
+        out = []
+        for i in range(self.samples):
+            diff = np.abs(t1[i,:] - t2[i,:])
+            truth_val = np.mean(diff) < self.tol_mean_diff
+            out.append(truth_val)
+            # assert truth_val, str((t1[i,:], t2[i, :]))
 
-        # We randomly sample points, and check if they project to the same sapce
+        assert False
+
+        return np.asarray(out).all()
 
 
 class TestMatrixRecovery(object):
@@ -71,20 +91,24 @@ class TestMatrixRecovery(object):
 
     def init(self):
 
-        # Choose an arbitrary test function
-        self.m = 50
-
-        self.real_dim = 3
+        self.real_dim = 2
         self.active_dim = 2
-        self.no_samples = 5
+        self.no_samples = 25
         self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
+
+        # Hide the matrix over here!
+        self.function = Camelback()
+        self.real_W = np.asarray([
+            [0, 1],
+            [1, 0],
+#            [1, 0]
+        ])
 
         self.sn = 2.
 
-        self.W = np.random.rand(self.real_dim, self.active_dim)
-
         self.X = np.random.rand(self.no_samples, self.real_dim)
-        self.Y = np.random.rand(self.no_samples)
+        Z = np.dot(self.X, self.real_W)
+        self.Y = self.function._f(Z.T)
 
         self.w_optimizer = t_WOptimizer(
             self.kernel,
@@ -97,15 +121,56 @@ class TestMatrixRecovery(object):
         # We create the following kernel just to have access to the sample_W function!
         # TripathyMaternKernel(self.real_dim)
 
-        self.A = self.kernel.sample_W()
-        self.max_iter = 10000
+        self.tries = 1
+        self.max_iter = 20
+        self.m = 50
 
-    def test_if_hidden_matrix_is_found(self):
+        self.metrics = Metrics(self.no_samples)
+
+    def test_if_function_is_found(self):
         self.init()
 
-        # Start from random orthogonal matrix A
-        self.A_hat = self.kernel.sample_W()
+        print("Real matrix is: ", self.real_W)
 
-        print("Real matrix is: ", self.A)
-        self.w_optimizer.optimize_stiefel_manifold(self.A_hat, self.m)
+        all_tries = []
+        for i in range(self.tries):
+            # Initialize random guess
+            W_hat = self.kernel.sample_W()
 
+            # Find a good W!
+            for i in range(self.max_iter):
+                W_hat = self.w_optimizer.optimize_stiefel_manifold(W_hat, self.m)
+
+            print("Difference to real W is: ", (W_hat - self.real_W))
+
+            assert W_hat.shape == self.real_W.shape
+            res = self.metrics.mean_difference_points(self.function._f, self.real_W, W_hat)
+            all_tries.append(res)
+
+        print(all_tries)
+
+        assert np.asarray(all_tries).any()
+
+    def test_if_hidden_matrix_is_found_multiple_initializations(self):
+        self.init()
+
+        print("Real matrix is: ", self.real_W)
+
+        all_tries = []
+        for i in range(self.tries):
+            # Initialize random guess
+            W_hat = self.kernel.sample_W()
+
+            # Find a good W!
+            for i in range(self.max_iter):
+                W_hat = self.w_optimizer.optimize_stiefel_manifold(W_hat, self.m)
+
+            print("Difference to real W is: ", (W_hat - self.real_W))
+
+            assert W_hat.shape == self.real_W.shape
+            res = self.metrics.projects_into_same_original_point(self.real_W, W_hat)
+            all_tries.append(res)
+
+        assert np.asarray(all_tries).any()
+
+        # Check if projection is correct

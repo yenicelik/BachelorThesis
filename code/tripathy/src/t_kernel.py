@@ -20,7 +20,7 @@ class TripathyMaternKernel(Kern):
             k(x, x') = k_0(Wx, Wx')
     """
 
-    def __init__(self, real_dim, active_dim):
+    def __init__(self, real_dim, active_dim, variance=1., lengthscale=None):
 
         assert(real_dim >= active_dim)
 
@@ -31,11 +31,8 @@ class TripathyMaternKernel(Kern):
         # TODO: add these as priors
         self.W = self.sample_W()
 
-        # # TODO: remove this line!!!
-        # self.W = np.eye(self.real_dim)
-
-        self.l = self.sample_lengthscale()
-        self.s = self.sample_variance()
+        self.l = self.sample_lengthscale() if lengthscale is None else lengthscale
+        self.s = self.sample_variance() if variance is None else variance
 
         # TODO: find a way to change internal variables within the following object!
 
@@ -51,6 +48,11 @@ class TripathyMaternKernel(Kern):
     ###############################
     #       SETTER FUNCTIONS      #
     ###############################
+    def update_params(self, W, l, s):
+        self.set_l(l)
+        self.set_s(s)
+        self.set_W(W)
+
     def set_W(self, W):
         assert(W.shape == (self.real_dim, self.active_dim))
         self.W = W
@@ -59,16 +61,14 @@ class TripathyMaternKernel(Kern):
     def set_l(self, l):
         assert(l.shape == (self.active_dim,))
         self.l = l
-        print("Updating l!")
-        self.inner_kernel.lengthscale = Param("lengthscale", l, Logexp())
+        self.inner_kernel.lengthscale = l
         self.parameters_changed()
         self.inner_kernel.parameters_changed()
 
     def set_s(self, s):
         assert(isinstance(s, float))
         self.s = s
-        print("Updating s!")
-        self.inner_kernel.lengthscale = Param("variance", np.asarray(s), Logexp())
+        self.inner_kernel.variance = s
         self.parameters_changed()
         self.inner_kernel.parameters_changed()
 
@@ -138,6 +138,7 @@ class TripathyMaternKernel(Kern):
         """
         return self.inner_kernel.K_of_r(r)
 
+    # TODO: test kernel derivatives, and delete the functions that are not necessary!
     ###############################
     #          DERIVATIVES        #
     ###############################
@@ -188,5 +189,7 @@ class TripathyMaternKernel(Kern):
         """Set the gradients of all parameters when doing full (N) inference."""
         Z1 = np.dot(X, self.W)
         Z2 = np.dot(X2, self.W) if X2 is not None else None
+
+        # TODO: is this function correct??? Looks terribly wrong!
 
         return self.inner_kernel.update_gradients_full(dL_dK, Z1, Z2)
