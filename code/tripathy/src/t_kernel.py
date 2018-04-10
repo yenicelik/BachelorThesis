@@ -190,8 +190,26 @@ class TripathyMaternKernel(Kern):
     ################################
     # INHERITING FROM INNER KERNEL #
     ################################
+    def gradients_X(self, dL_dK, X, X2=None):
+        Z = np.dot(X, self.W)
+        Z2 = np.dot(X2, self.W) if X2 is not None else Z
+        tmp = self.inner_kernel.gradients_X(dL_dK, Z, Z2)
+        return np.einsum('ik,jk->ij', tmp, self.W)
+
     def update_gradients_full(self, dL_dK, X, X2):
-        pass
+        assert X2 is None
+        Z = np.dot(X, self.W)
+        # For all parameters that are also contained in the inner kernel,
+        # i.e. lengthscale and variance
+        self.inner_kernel.update_gradients_full(dL_dK, Z)
+
+    def get_W_gradients(self, dL_dK, X, X2):
+        assert X2 is None
+        Z = np.dot(X, self.W)
+        dL_dZ = self.inner_kernel.gradients_X(dL_dK, Z)
+        W_grad = np.einsum('ij,ik->kj', dL_dZ, X)
+
+
 #         if X2 is None: X2 = X
 #
 #         # Project the matrices
