@@ -25,9 +25,15 @@ class TestKernel(object):
         l1 = l1.copy()
         s1 = s1.copy()
 
+        new_W = np.zeros((self.real_dim, self.active_dim), dtype=np.float64)
+        for i in range(self.real_dim):
+            for j in range(self.active_dim):
+                new_W[i, j] = np.random.normal(0, 1)
+        Q, R = np.linalg.qr(new_W)
+
         # Set new parameters
         self.kernel.update_params(
-            W=np.random.rand(self.real_dim, self.active_dim),
+            W=Q,
             l=np.random.rand(self.active_dim,),
             s=5.22
         )

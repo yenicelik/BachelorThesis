@@ -7,9 +7,9 @@ print(sys.path)
 
 import numpy as np
 from src.t_kernel import TripathyMaternKernel
-from src.t_loss import loss, dloss_dK, dloss_dW, dK_dW
+from src.t_loss import loss, dloss_dK, dloss_dW, dK_dW, dloss_ds
 
-def eval_numerical_gradient(f, x, verbose=False, h=0.00001):
+def eval_numerical_gradient(f, x, verbose=False, h=1.e-7):
   """
   a naive implementation of numerical gradient of f at x
   - f should be a function that takes a single argument
@@ -38,6 +38,14 @@ def eval_numerical_gradient(f, x, verbose=False, h=0.00001):
     it.iternext() # step to next dimension
 
   return grad
+
+def eval_numerical_gradient_scalar(f, x, verbose=False, h=1.e-7):
+    assert isinstance(x, float)
+    fx = f(x)
+
+    high = f(x + h)
+    low = f(x - h)
+    return (high - low) / (2*h)
 
 class TestLoss(object):
 
@@ -79,17 +87,6 @@ class TestLoss(object):
         assert self.kernel.inner_kernel.variance == self.s
         assert (self.kernel.inner_kernel.lengthscale == self.l).all()
 
-    # def init_calculation_by_hand(self):
-    #     self.W = np.asarray([
-    #         [],
-    #         [],
-    #         []
-    #     ])
-    #
-    # def test_loss_returns_correct_value(self):
-    #     self.init()
-    #
-    #     loss(self.kernel, self.W, self.sn, self.s, self.l, self.X, self.Y)
 
 class TestDerivatives(object):
 
@@ -169,13 +166,69 @@ class TestDerivativesW(object):
     def loss_function_s(self, s):
         return loss(self.kernel, self.W, self.sn, s, self.l, self.X, self.Y)
 
-    def test_dloss_dK_naked(self):
+    def test_numerical_evaluator(self):
+
+        for i in range(100):
+            X = np.random.rand(1)
+
+            def real_sin(x):
+                return np.sin(x)
+
+            def real_sin_deriv(x):
+                return np.cos(x)
+
+            # Test on cosine
+            X_grad_hat = eval_numerical_gradient(real_sin, X)
+            X_grad = real_sin_deriv(X)
+
+            assert np.allclose(X_grad, X_grad_hat)
+
+            # Test on polynomial
+            def poly(x):
+                return x ** 2
+
+            def poly_deriv(x):
+                return 2 * x
+
+            X_grad_hat = eval_numerical_gradient(poly, X)
+            X_grad = poly_deriv(X)
+
+            assert np.allclose(X_grad, X_grad_hat), (X_grad, X_grad_hat)
+
+
+    def test_dloss_dW(self):
         self.init()
+
+        def grad_W(W):
+            return dloss_dW(self.kernel, W, self.sn, self.s, self.l, self.X, self.Y)
 
         # Test the gradient at a few points of W (sample W a few times)
         for i in range(10):
             W = self.kernel.sample_W()
+            self.kernel.update_params(W=W, l=self.l, s=self.s)
             grad_numeric = eval_numerical_gradient(self.loss_function_W, W)
+            grad_analytical = grad_W(W)
 
+            print("WEIGHTS: Analytical and numeric gradients")
+            print(grad_numeric)
+            print(grad_analytical)
 
+            assert np.allclose(grad_numeric, grad_analytical, atol=1.e-6)
 
+    def test_dloss_dvariance(self):
+        self.init()
+
+        def grad_variance(s):
+            return dloss_ds(self.kernel, self.W, self.sn, s, self.l, self.X, self.Y)
+
+        for i in range(10):
+            s = np.asscalar( np.random.rand(1) )
+            self.kernel.update_params(W=self.W, l=self.l, s=s)
+            grad_numeric = eval_numerical_gradient_scalar(self.loss_function_s, s)
+            grad_analytical = grad_variance(s)
+
+            print("VARIANCE: Analytical and numeric gradients")
+            print(grad_numeric)
+            print(grad_analytical)
+
+            assert np.allclose(grad_numeric, grad_analytical, atol=1.e-6)

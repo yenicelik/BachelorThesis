@@ -47,6 +47,9 @@ class TripathyMaternKernel(Kern):
 
         # TODO: overwrite the kernel parameters!
 
+        # TODO: write W as a kernel parameter!
+        self.W_grad = np.zeros_like(self.W)
+
         super(TripathyMaternKernel, self).__init__(input_dim=self.real_dim, active_dims=None, name="TripathyMaternKernel")
 
     ###############################
@@ -61,7 +64,8 @@ class TripathyMaternKernel(Kern):
 
     def set_W(self, W, safe=False):
         assert safe
-        assert(W.shape == (self.real_dim, self.active_dim))
+        assert W.shape == (self.real_dim, self.active_dim)
+        assert np.allclose( np.dot(W.T, W), np.eye(self.active_dim), atol=1.e-6), (W, np.dot(W.T, W), np.eye(self.active_dim))
         self.W = W
         self.parameters_changed()
 
@@ -203,11 +207,17 @@ class TripathyMaternKernel(Kern):
         # i.e. lengthscale and variance
         self.inner_kernel.update_gradients_full(dL_dK, Z)
 
-    def get_W_gradients(self, dL_dK, X, X2):
-        assert X2 is None
-        Z = np.dot(X, self.W)
+        # Setting the W gradients
         dL_dZ = self.inner_kernel.gradients_X(dL_dK, Z)
-        W_grad = np.einsum('ij,ik->kj', dL_dZ, X)
+        self.W_grad = np.einsum('ij,ik->kj', dL_dZ, X)
+
+    # def get_W_gradients(self, dL_dK, X, X2):
+    #     assert X2 is None
+    #     Z = np.dot(X, self.W)
+    #     dL_dZ = self.inner_kernel.gradients_X(dL_dK, Z)
+    #     self.W_grad = np.einsum('ij,ik->kj', dL_dZ, X)
+
+#        return W_grad
 
 
 #         if X2 is None: X2 = X

@@ -55,6 +55,11 @@ class Metrics(object):
         """
         # TODO: somehting is really funky here!
         assert A.shape == A_hat.shape, str((A.shape, A_hat.shape))
+        print("A and other A are: ")
+        print(A)
+        print(A_hat)
+        print()
+        assert not (A == A_hat).all()
         X = np.random.rand(self.samples, A.shape[0])
 
         t1 = np.dot(A.T, X.T)
@@ -69,13 +74,14 @@ class Metrics(object):
         out = []
         for i in range(self.samples):
             diff = np.abs(t1[i,:] - t2[i,:])
+            print(t1[i,:], t2[i,:])
             truth_val = np.mean(diff) < self.tol_mean_diff
             out.append(truth_val)
             # assert truth_val, str((t1[i,:], t2[i, :]))
 
-        assert False
-
-        return np.asarray(out).all()
+#        assert False
+        assert len(out) == self.samples
+        return all(out)
 
 
 class TestMatrixRecovery(object):
@@ -91,7 +97,7 @@ class TestMatrixRecovery(object):
 
     def init(self):
 
-        self.real_dim = 2
+        self.real_dim = 3
         self.active_dim = 2
         self.no_samples = 25
         self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
@@ -101,7 +107,7 @@ class TestMatrixRecovery(object):
         self.real_W = np.asarray([
             [0, 1],
             [1, 0],
-#            [1, 0]
+            [0, 0]
         ])
 
         self.sn = 2.
@@ -157,6 +163,7 @@ class TestMatrixRecovery(object):
         print("Real matrix is: ", self.real_W)
 
         all_tries = []
+
         for i in range(self.tries):
             # Initialize random guess
             W_hat = self.kernel.sample_W()
@@ -165,12 +172,13 @@ class TestMatrixRecovery(object):
             for i in range(self.max_iter):
                 W_hat = self.w_optimizer.optimize_stiefel_manifold(W_hat, self.m)
 
-            print("Difference to real W is: ", (W_hat - self.real_W))
+            print("Difference to real (AA.T) W is: ", (W_hat - self.real_W))
 
             assert W_hat.shape == self.real_W.shape
+            assert not (W_hat == self.real_W).all()
             res = self.metrics.projects_into_same_original_point(self.real_W, W_hat)
             all_tries.append(res)
 
-        assert np.asarray(all_tries).any()
+        assert True in all_tries
 
         # Check if projection is correct
