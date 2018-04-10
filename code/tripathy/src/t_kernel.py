@@ -7,6 +7,7 @@ import scipy
 from GPy.kern.src.kern import Kern
 from GPy.kern.src.stationary import Matern32
 from GPy.core.parameterization import Param
+# from GPy.core.parameterization import param.Param
 from paramz.transformations import Logexp
 
 from GPy.kern.src.stationary import Matern32
@@ -20,7 +21,7 @@ class TripathyMaternKernel(Kern):
             k(x, x') = k_0(Wx, Wx')
     """
 
-    def __init__(self, real_dim, active_dim, variance=1., lengthscale=None):
+    def __init__(self, real_dim, active_dim, variance=None, lengthscale=None):
 
         assert(real_dim >= active_dim)
 
@@ -31,8 +32,13 @@ class TripathyMaternKernel(Kern):
         # TODO: add these as priors
         self.W = self.sample_W()
 
-        self.l = self.sample_lengthscale() if lengthscale is None else lengthscale
-        self.s = self.sample_variance() if variance is None else variance
+        self.inner_kernel = Matern32(
+            input_dim=self.active_dim,
+            variance=self.sample_variance() if variance is None else variance,
+            lengthscale=self.sample_lengthscale() if lengthscale is None else lengthscale,
+            ARD=True)
+
+        self.update_params(self.W, self.inner_kernel.lengthscale, self.inner_kernel.variance)
 
         # TODO: find a way to change internal variables within the following object!
 
@@ -41,35 +47,34 @@ class TripathyMaternKernel(Kern):
 
         # TODO: overwrite the kernel parameters!
 
-        self.inner_kernel = Matern32(input_dim=self.active_dim, variance=self.s, lengthscale=self.l, ARD=True)
-
         super(TripathyMaternKernel, self).__init__(input_dim=self.real_dim, active_dims=None, name="TripathyMaternKernel")
 
     ###############################
     #       SETTER FUNCTIONS      #
     ###############################
+    # TODO: link parameters with the kernel using param_link or so
     def update_params(self, W, l, s):
-        self.set_l(l)
-        self.set_s(s)
-        self.set_W(W)
+        self.set_l(l, True)
+        self.set_s(s, True)
+        # We will not include W as a parameter, as we want to call the derivatives etc. separatedly
+        self.set_W(W, True)
 
-    def set_W(self, W):
+    def set_W(self, W, safe=False):
+        assert safe
         assert(W.shape == (self.real_dim, self.active_dim))
         self.W = W
         self.parameters_changed()
 
-    def set_l(self, l):
-        assert(l.shape == (self.active_dim,))
-        self.l = l
+    def set_l(self, l, safe=False):
+        assert safe
+        assert l.shape == (self.active_dim,)
         self.inner_kernel.lengthscale = l
-        self.parameters_changed()
         self.inner_kernel.parameters_changed()
 
-    def set_s(self, s):
-        assert(isinstance(s, float))
-        self.s = s
+    def set_s(self, s, safe=False):
+        assert safe
+        assert isinstance(s, float) or isinstance(s, Param), type(s)
         self.inner_kernel.variance = s
-        self.parameters_changed()
         self.inner_kernel.parameters_changed()
 
     ###############################
@@ -186,10 +191,56 @@ class TripathyMaternKernel(Kern):
     # INHERITING FROM INNER KERNEL #
     ################################
     def update_gradients_full(self, dL_dK, X, X2):
-        """Set the gradients of all parameters when doing full (N) inference."""
-        Z1 = np.dot(X, self.W)
-        Z2 = np.dot(X2, self.W) if X2 is not None else None
+        pass
+#         if X2 is None: X2 = X
+#
+#         # Project the matrices
+#         Z = np.dot(X, self.W)
+#         Z2 = np.dot(X2, self.W)
+#
+#         # TODO: is Z and Z2 the vectors or matrices?
+#         # TODO: change the following to calculate all pairs of Z and Z2 if it is a matrix!
+#
+#         # First of all, update inner_kernel's gradients
+#         self.inner_kernel.update_gradients_full(dL_dK, Z, Z2)
+#
+# #        r = np.square(Z-Z2.T / self.l)
+#
+#
+#         # Calculate the derivatives for the variance
+#         # TODO: should it be "*" or "np.dot"
+#         dK_dvar = self.inner_kernel.variance.gradient
+#         self.s.gradient = 0.5 * np.matrix.trace(dL_dK * dK_dvar)
+#
+#         # Calculate the derivatives for the lengthscale
+#         for i in range(self.l.shape[0]):
+#             dK_dli = self.inner_kernel.lengthscale.gradient[i] # Should be a vector
+#             self.l.gradient[i] = 0.5 * np.matrix.trace(dL_dK * dK_dli)
 
-        # TODO: is this function correct??? Looks terribly wrong!
 
-        return self.inner_kernel.update_gradients_full(dL_dK, Z1, Z2)
+
+
+
+
+        # dist2 = np.square((Z - Z2.T) / self.l)
+        #
+        #
+        # dvar = (1 + dist2 / 2.) ** (-self.power)
+        # dl = self.power * self.variance * dist2 * self.lengthscale ** (-3) * (1 + dist2 / 2. / self.power) ** (
+        #             -self.power - 1)
+        # dp = - self.variance * np.log(1 + dist2 / 2.) * (1 + dist2 / 2.) ** (-self.power)
+
+
+
+        # self.variance.gradient = np.sum(dvar * dL_dK)
+        # self.lengthscale.gradient = np.sum(dl * dL_dK)
+        # self.power.gradient = np.sum(dp * dL_dK)
+
+    # def update_gradients_full(self, dL_dK, X, X2):
+    #     """Set the gradients of all parameters when doing full (N) inference."""
+    #     Z1 = np.dot(X, self.W)
+    #     Z2 = np.dot(X2, self.W) if X2 is not None else None
+    #
+    #     # TODO: is this function correct??? Looks terribly wrong!
+    #
+    #     return self.inner_kernel.update_gradients_full(dL_dK, Z1, Z2)

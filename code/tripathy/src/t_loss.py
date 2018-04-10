@@ -36,38 +36,35 @@ def loss(kernel, W, sn, s, l, X, Y):
 #############################
 def dloss_dK_naked(kernel, W, sn, s, l, X, Y):
     kernel.update_params(W, l, s)
-    Y = Y.reshape((-1, 1))
-    gp_reg = GPRegression(X, Y, kernel, noise_var=sn)
-
+    # Y = Y.reshape((-1, 1))
+    # gp_reg = GPRegression(X, Y, kernel, noise_var=sn)
+    #
     # return gp_reg._log_likelihood_gradients()
+    # TODO: Apply these operations before calling this function!
+    kernel.update_params(W=W, l=l, s=s)
 
-    # kernel.set_W(W)
-    # kernel.set_l(l)
-    # kernel.set_s(s)
-    # # TODO: Apply these operations before calling this function!
-    #
-    # # The matrix we are going to invert
-    # res_kernel = kernel.K(X, X) # TODO: check or create a function that calculates the gram-matrix
-    #
-    # K_sn = res_kernel + np.power(sn, 2) + np.eye(res_kernel.shape[0])
-    #
-    # # Calculate the cholesky-decomposition for the matrix K_sn
-    # L = np.linalg.cholesky(K_sn)
-    #
-    # K_ss_inv = np.dot(np.linalg.inv(L.T), np.linalg.inv(L))
-    # # K_ss_inv = np.linalg.inv(K_sn)
-    #
-    # # Calculate the displaced output
-    #
-    # # Calculate the first term
-    # tmp_cholesky_inv = np.linalg.solve(L, Y)
-    # lhs_rhs = np.linalg.solve(L.T, tmp_cholesky_inv)
-    # #        lhs_rhs = np.linalg.solve(K_sn, Y_hat)
-    #
-    # s1 = np.dot(lhs_rhs, lhs_rhs.T)
-    # s1 -= K_ss_inv
-    #
-    # return s1
+    # The matrix we are going to invert
+    res_kernel = kernel.K(X, X) # TODO: check or create a function that calculates the gram-matrix
+
+    K_sn = res_kernel + np.power(sn, 2) + np.eye(res_kernel.shape[0])
+
+    # Calculate the cholesky-decomposition for the matrix K_sn
+    L = np.linalg.cholesky(K_sn)
+
+    K_ss_inv = np.dot(np.linalg.inv(L.T), np.linalg.inv(L))
+    # K_ss_inv = np.linalg.inv(K_sn)
+
+    # Calculate the displaced output
+
+    # Calculate the first term
+    tmp_cholesky_inv = np.linalg.solve(L, Y)
+    lhs_rhs = np.linalg.solve(L.T, tmp_cholesky_inv)
+    #        lhs_rhs = np.linalg.solve(K_sn, Y_hat)
+
+    s1 = np.dot(lhs_rhs, lhs_rhs.T)
+    s1 -= K_ss_inv
+
+    return s1
 
 def dloss_dK(kernel, W, sn, s, l, X, Y):
     loss_matrix = dloss_dK_naked(kernel, W, sn, s, l, X, Y)
@@ -124,10 +121,7 @@ def dK_dW(kernel, W, sn, s, l, X):
     # TODO: ask about this on stackoverflow!
     # kernel.inner_kernel.
     # TODO: check it in the code
-
-    kernel.set_W(W)
-    kernel.set_l(l)
-    kernel.set_s(s)
+    kernel.update_params(W, l, s)
 
     real_dim = W.shape[0]
     active_dim = W.shape[1]

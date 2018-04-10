@@ -13,7 +13,6 @@ class TestKernel(object):
         self.no_samples = 5
         self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
 
-
     def test_parameters_are_set_successfully(self):
         """
         Check if parameters are set successfully / setters work correctly
@@ -21,15 +20,20 @@ class TestKernel(object):
         """
         self.init()
 
-        W1, l1, s1 = self.kernel.W, self.kernel.l, self.kernel.s
+        W1, l1, s1 = self.kernel.W, self.kernel.inner_kernel.lengthscale, self.kernel.inner_kernel.variance
+        W1 = W1.copy()
+        l1 = l1.copy()
+        s1 = s1.copy()
 
         # Set new parameters
-        self.kernel.set_l(np.random.rand(self.active_dim,))
-        self.kernel.set_s(5.22)
-        self.kernel.set_W(np.random.rand(self.real_dim, self.active_dim))
+        self.kernel.update_params(
+            W=np.random.rand(self.real_dim, self.active_dim),
+            l=np.random.rand(self.active_dim,),
+            s=5.22
+        )
 
-        assert not np.isclose(self.kernel.l, l1).all()
-        assert not self.kernel.s == s1
+        assert not np.isclose(np.asarray(self.kernel.inner_kernel.lengthscale), np.asarray(l1)).all()
+        assert not np.isclose(np.asarray(self.kernel.inner_kernel.variance), np.asarray(s1))
         assert not np.isclose(self.kernel.W, W1).all()
 
     def test_kernel_returns_gram_matrix_correct_shape(self):
@@ -99,9 +103,13 @@ class TestKernelSematics(object):
             [0, 1],
             [0, 0]
         ])
-        self.kernel.set_W(W)
-        self.kernel.set_s(1.)
-        self.kernel.set_l(np.asarray([1. for i in range(self.active_dim)]))
+
+        self.kernel.update_params(
+            W=W,
+            l=np.asarray([1. for i in range(self.active_dim)]),
+            s=1.
+        )
+
         self.real_kernel = Matern32(self.active_dim, ARD=True, lengthscale=self.kernel.inner_kernel.lengthscale)
 
         y_hat = self.kernel.K(X)
@@ -133,9 +141,11 @@ class TestKernelSematics(object):
         # ]
         # r = 0.25
 
-        self.kernel.set_W(W)
-        self.kernel.set_s(1.)
-        self.kernel.set_l(np.asarray([1. for i in range(self.active_dim)]))
+        self.kernel.update_params(
+            W=W,
+            l=np.asarray([1. for i in range(self.active_dim)]),
+            s=1.
+        )
 
         y_hat = self.kernel.K(X)
 
@@ -153,14 +163,12 @@ class TestKernelSematics(object):
             X = np.random.rand(5, self.real_dim)
 
             # Sample and re-assign
+            # TODO: just let the kernel resample all parameters
             W = self.kernel.sample_W()
-            self.kernel.set_W(W)
-
             s = self.kernel.sample_variance()
-            self.kernel.set_s(s)
-
             l = self.kernel.sample_lengthscale()
-            self.kernel.set_l(l)
+
+            self.kernel.update_params(W=W, l=l, s=s)
 
             y_hat = self.kernel.K(X)
 
@@ -175,14 +183,12 @@ class TestKernelSematics(object):
             X = np.random.rand(5, self.real_dim)
 
             # Sample and re-assign
+            # TODO: change this by just resampling using a function within the kernel
             W = self.kernel.sample_W()
-            self.kernel.set_W(W)
-
             s = self.kernel.sample_variance()
-            self.kernel.set_s(s)
-
             l = self.kernel.sample_lengthscale()
-            self.kernel.set_l(l)
+
+            self.kernel.update_params(W=W, l=l, s=s)
 
             y_hat = self.kernel.K(X)
 

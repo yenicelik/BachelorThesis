@@ -89,7 +89,9 @@ class t_WOptimizer:
         for i in range(m):
             self.tau = self._find_best_tau(self.W)
             self.W = self._gamma(self.tau, self.W)
-            self.kernel.set_W(self.W)
+
+            self.kernel.update_params(W=self.W, l=self.fix_l, s=self.fix_s)
+
             F_0 = F_1
             F_1 = loss(self.kernel, self.W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 

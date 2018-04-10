@@ -130,8 +130,24 @@ class TestSmallProcesses(object):
         new_tau = self.w_optimizer._find_best_tau(np.copy(W_init))
         new_W = self.w_optimizer._gamma(new_tau, W_init)
 
-        old_loss = loss(self.kernel, W_init, self.sn, self.kernel.s, self.kernel.l, self.X, self.Y)
-        new_loss = loss(self.kernel, new_W, self.sn, self.kernel.s, self.kernel.l, self.X, self.Y)
+        old_loss = loss(
+            self.kernel,
+            W_init,
+            self.sn,
+            self.kernel.inner_kernel.variance,
+            self.kernel.inner_kernel.lengthscale,
+            self.X,
+            self.Y
+        )
+        new_loss = loss(
+            self.kernel,
+            new_W,
+            self.sn,
+            self.kernel.inner_kernel.variance,
+            self.kernel.inner_kernel.lengthscale,
+            self.X,
+            self.Y
+        )
 
         if old_loss == new_loss:
             warnings.warn("Old loss equals new loss! The W has not improved!")
