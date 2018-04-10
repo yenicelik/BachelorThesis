@@ -43,11 +43,9 @@ class TripathyMaternKernel(Kern):
         # TODO: find a way to change internal variables within the following object!
 
         # TODO: incorporate a way to include W as the kernel-parameter (e.g. call parent function, where x = W.T x)
-        # TODO: incorporate a way to easily switch out all kernel-parameters (variance and lengthscale)
 
         # TODO: overwrite the kernel parameters!
 
-        # TODO: write W as a kernel parameter!
         self.W_grad = np.zeros_like(self.W)
 
         super(TripathyMaternKernel, self).__init__(input_dim=self.real_dim, active_dims=None, name="TripathyMaternKernel")

@@ -29,8 +29,6 @@ def loss(kernel, W, sn, s, l, X, Y):
 
     return gp_reg.log_likelihood()
 
-# TODO: only calculate dloss_dW by hand, and finish it once and for all.
-
 #############################
 # LOSS-FUNCTION-DERIVATIVES #
 #############################
@@ -41,11 +39,10 @@ def dloss_dK_naked(kernel, W, sn, s, l, X, Y):
     # gp_reg = GPRegression(X, Y, kernel, noise_var=sn)
     #
     # return gp_reg._log_likelihood_gradients()
-    # # TODO: Apply these operations before calling this function!
     # kernel.update_params(W=W, l=l, s=s)
     #
     # # The matrix we are going to invert
-    # res_kernel = kernel.K(X, X) # TODO: check or create a function that calculates the gram-matrix
+    # res_kernel = kernel.K(X, X)
     #
     # K_sn = res_kernel + np.power(sn, 2) + np.eye(res_kernel.shape[0])
     #
@@ -86,8 +83,10 @@ def dloss_dK(kernel, W, sn, s, l, X, Y):
 
 def dloss_ds(kernel, fix_W, fix_sn, s, fix_l, X, Y):
     kernel.update_params(W=fix_W, s=s, l=fix_l)
-    dL_dK = dloss_dK_naked(kernel, fix_W, fix_sn, s, fix_l, X, Y)
-    grads = kernel.inner_kernel.variance.gradient #(dL_dK, X, None)
+    Y = Y.reshape((-1, 1))
+    gp_reg = GPRegression(X, Y, kernel, noise_var=fix_sn)
+    grads = kernel.inner_kernel.variance.gradient
+
     return grads
 
 def dloss_dW(kernel, W, fix_sn, fix_s, fix_l, X, Y):
@@ -102,14 +101,12 @@ def dloss_dW(kernel, W, fix_sn, fix_s, fix_l, X, Y):
     :param Y:
     :return:
     """
-    # TODO: make sure sn and X, Y are actually updated! currently, they're ignored!
     kernel.update_params(W=W, l=fix_l, s=fix_s)
-    # TODO: check this mathematically again!
-    # Currently we're taking out the loss-term away from the trace term!
-#    dL_dK = dloss_dK_naked(kernel, W, fix_sn, fix_s, fix_l, X, Y)
+    Y = Y.reshape((-1, 1))
+    gp_reg = GPRegression(X, Y, kernel, noise_var=fix_sn)
 
-#    grads = kernel.get_W_gradients(dL_dK, X, None)
-
+    # return gp_reg.log_likelihood()
+    print("Gradient dictionary is: ", [ key for key, value in gp_reg.grad_dict.items() ])
 
     assert kernel.W_grad.shape == W.shape
 
@@ -139,9 +136,6 @@ def dloss_dW(kernel, W, fix_sn, fix_s, fix_l, X, Y):
 ################################
 #   DERIVATIVE w.r.t. KERNEL   #
 ################################
-# TODO: potentially just use the chain rule, and then multiple the vectors?
-# TODO: Do i need to create a function that creates a gram matrix for this? (for each pair of samples?)
-
 def dK_dW(kernel, W, sn, s, l, X):
     """
     :param x: Is assumed to be a vector!
@@ -149,16 +143,11 @@ def dK_dW(kernel, W, sn, s, l, X):
     :param W:
     :return:
     """
-    # TODO: instead of the following, rather create a gram-matrix with the correct dimensions!
-    # TODO: ask about this on stackoverflow!
-    # kernel.inner_kernel.
-    # TODO: check it in the code
+    # TODO: remove this function!
     kernel.update_params(W, l, s)
 
     real_dim = W.shape[0]
     active_dim = W.shape[1]
-
-    # TODO: this function is probably wrong!
 
     def dk_dw_ij(a, b):
         z1 = np.dot(a, W)

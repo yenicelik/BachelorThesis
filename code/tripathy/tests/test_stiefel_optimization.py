@@ -116,7 +116,7 @@ class TestSmallProcesses(object):
             all_Ws.append(new_W)
 
         for i in range(no_samples-1):
-            assert ((all_Ws[i] - all_Ws[i+1])**2).mean() >= 1e-16
+            assert ((all_Ws[i] - all_Ws[i+1])**2).mean() >= 1e-16, str((i, all_Ws[i], all_Ws[i+1]))
 
     def test__find_best_tau_finds_a_better_tau(self):
         # TODO: semi-flaky test!
