@@ -76,14 +76,11 @@ def dloss_dK_naked(kernel, W, sn, s, l, X, Y):
     return summand1 - summand2
 
 
-
-def dloss_dK(kernel, W, sn, s, l, X, Y):
-    loss_matrix = dloss_dK_naked(kernel, W, sn, s, l, X, Y)
-    return 0.5 * np.matrix.trace(loss_matrix)
-
 def dloss_ds(kernel, fix_W, fix_sn, s, fix_l, X, Y):
+    # TODO: write some tests that check if changeing X or Y affect this derivative correctly!
     kernel.update_params(W=fix_W, s=s, l=fix_l)
     Y = Y.reshape((-1, 1))
+    # The following line modifies `kernel`, so don't remove it
     gp_reg = GPRegression(X, Y, kernel, noise_var=fix_sn)
     grads = kernel.inner_kernel.variance.gradient
 
@@ -106,7 +103,8 @@ def dloss_dW(kernel, W, fix_sn, fix_s, fix_l, X, Y):
     gp_reg = GPRegression(X, Y, kernel, noise_var=fix_sn)
 
     # return gp_reg.log_likelihood()
-    print("Gradient dictionary is: ", [ key for key, value in gp_reg.grad_dict.items() ])
+    # print("Gradient dictionary is: ", [ key for key, value in gp_reg.grad_dict.items() ])
+    # This outputs ['dL_dK', 'dL_dthetaL', 'dL_dm']
 
     assert kernel.W_grad.shape == W.shape
 

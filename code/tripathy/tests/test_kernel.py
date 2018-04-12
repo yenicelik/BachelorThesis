@@ -204,7 +204,3 @@ class TestKernelSematics(object):
             y = real_kernel.K(np.dot(X, W))
 
             assert np.isclose(y, y_hat).all()
-
-
-    def test_kernel_K(self):
-        self.init()

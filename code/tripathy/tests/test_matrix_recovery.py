@@ -8,6 +8,9 @@ from src.t_optimization_functions import t_WOptimizer
 from febo.environment.benchmarks.functions import Rosenbrock
 from febo.environment.benchmarks.functions import Camelback
 
+from GPy.models.gp_regression import GPRegression
+
+
 class Metrics(object):
     """
         We will use different metrics to check if our algorithm can successfully
@@ -20,7 +23,15 @@ class Metrics(object):
 
         self.tol_mean_diff = 1e-6 # TODO: set this to an ok value
 
-    def mean_difference_points(self, fnc, A, A_hat):
+    # TODO: visualization of embedded function
+    # TODO: use utils - cartesian
+    # TODO: optimizers cadidate GridOptimizer
+    # TODO: plot(grid, f(grid))
+    # TODO: plot gamma function
+    # TODO: implement x^2 in 1D
+    # TODO: simulate the real projection by 37-39
+
+    def mean_difference_points(self, fnc, fnc_hat, A, A_hat, X):
         """
             ∀x in real_dim. E_x [ f(A x) - f(A_hat x) ] < tolerance
         :param fnc:
@@ -28,17 +39,21 @@ class Metrics(object):
         :param A_hat:
         :return:
         """
+        # TODO: change f to f_hat (from gaussian process)
+        # TODO:
+
         assert A.shape == A_hat.shape, str(A.shape, A_hat.shape)
+
+        # gp_reg = GPRegression(X, Y, kernel, sn)
+        # y_hat = gp_reg.predict(X)
+        # y = np.dot(X, A)
+
 
         X = np.random.rand(self.samples, A.shape[0])
 
 
         t1 = fnc( np.dot(X, A).T )
         t2 = fnc( np.dot(X, A_hat).T )
-        print("T1 is: ")
-        print(t1)
-        print("T2 is: ")
-        print(t2)
 
         print("Difference is: ")
         print(t1 - t2)
@@ -55,11 +70,7 @@ class Metrics(object):
         """
         # TODO: somehting is really funky here!
         assert A.shape == A_hat.shape, str((A.shape, A_hat.shape))
-        print("A and other A are: ")
-        print(A)
-        print(A_hat)
-        print()
-        assert not (A == A_hat).all()
+        assert not np.equal(A, A_hat)
         X = np.random.rand(self.samples, A.shape[0])
 
         t1 = np.dot(A.T, X.T)
@@ -68,18 +79,13 @@ class Metrics(object):
         t2 = np.dot(A_hat.T, X.T)
         t2 = np.dot(A_hat, t2).T
 
-        print(t1.shape)
-        print(t2.shape)
-
         out = []
         for i in range(self.samples):
             diff = np.abs(t1[i,:] - t2[i,:])
             print(t1[i,:], t2[i,:])
             truth_val = np.mean(diff) < self.tol_mean_diff
             out.append(truth_val)
-            # assert truth_val, str((t1[i,:], t2[i, :]))
 
-#        assert False
         assert len(out) == self.samples
         return all(out)
 
@@ -97,18 +103,27 @@ class TestMatrixRecovery(object):
 
     def init(self):
 
-        self.real_dim = 3
-        self.active_dim = 2
+        self.real_dim = 2
+        self.active_dim = 1
         self.no_samples = 25
         self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
 
         # Hide the matrix over here!
-        self.function = Camelback()
-        self.real_W = np.asarray([
-            [0, 1],
-            [1, 0],
-            [0, 0]
-        ])
+        if self.real_dim == 3 and self.active_dim == 2:
+            self.function = Camelback()
+            self.real_W = np.asarray([
+                [0, 1],
+                [1, 0],
+                [0, 0]
+            ])
+        elif self.real_dim == 2 and self.active_dim == 1:
+#            self.function =
+            self.real_W = np.asarray([
+                [0],
+                [1],
+            ])
+        else:
+            assert False, "W was not set!"
 
         self.sn = 2.
 

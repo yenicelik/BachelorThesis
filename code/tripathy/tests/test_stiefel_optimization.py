@@ -45,9 +45,6 @@ class TestIndividualFunctions(object):
     def test__A_fnc(self):
         self.init()
 
-        print("X value is: ", self.w_optimizer.X.shape)
-        print(self.w_optimizer)
-
         res = self.w_optimizer._A(self.W)
 
         # TODO: check what dimension this is supposed to have!
@@ -61,7 +58,7 @@ class TestIndividualFunctions(object):
         assert res.shape == (self.W.shape[0], self.W.shape[1])
 
 
-class TestSmallProcesses(object):
+class TestTauProcesses(object):
 
     def init(self):
         self.real_dim = 3
@@ -118,6 +115,22 @@ class TestSmallProcesses(object):
         for i in range(no_samples-1):
             assert ((all_Ws[i] - all_Ws[i+1])**2).mean() >= 1e-16, str((i, all_Ws[i], all_Ws[i+1]))
 
+    def test_tau_trajectory_determines_W_static(self):
+        """
+            Not changing tau keeps W the same
+        :return:
+        """
+        self.init()
+        no_samples = 20
+
+        tau_0 = np.random.rand(1) * self.w_optimizer.tau_max
+
+        for i in range(no_samples):
+            W_init = self.kernel.sample_W()
+            new_W1 = self.w_optimizer._gamma(tau_0, W_init)
+            new_W2 = self.w_optimizer._gamma(tau_0, W_init)
+            assert (new_W1 == new_W2).all()
+
     def test__find_best_tau_finds_a_better_tau(self):
         # TODO: semi-flaky test!
         self.init()
@@ -158,7 +171,7 @@ class TestSmallProcesses(object):
             print("Losses")
             print(old_loss - new_loss)
 #        assert abs(new_loss - old_loss) > 1e-12
-        assert new_loss >= old_loss # TODO: is this ok? It looks like it heavily depends on how W is initialized!
+        assert new_loss > old_loss # TODO: is this ok? It looks like it heavily depends on how W is initialized!
 
     def test_optimize_stiefel_manifold_doesnt_err(self):
 
@@ -166,5 +179,51 @@ class TestSmallProcesses(object):
 
         # For the sake of testing, do 10 iterations
         self.w_optimizer.optimize_stiefel_manifold(self.W, 100)
+
+
+class TestAProcesses(object):
+
+    def init(self):
+        self.real_dim = 3
+        self.active_dim = 2
+        self.no_samples = 5
+        self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
+
+        self.W = self.kernel.sample_W()
+        self.sn = 2.
+
+        self.function = Rosenbrock()
+        self.real_W = np.asarray([
+            [0, 0],
+            [0, 1],
+            [1, 0]
+        ])
+        self.function = Rosenbrock()
+        self.X = np.random.rand(self.no_samples, self.real_dim)
+        Z = np.dot(self.X, self.real_W)
+        self.Y = self.function._f(Z.T)
+
+        self.w_optimizer = t_WOptimizer(
+            self.kernel,
+            self.sn,
+            np.asscalar(self.kernel.inner_kernel.variance),
+            self.kernel.inner_kernel.lengthscale,
+            self.X, self.Y
+        )
+
+    def test__A_returns_correct_values(self):
+        """
+            Calculate this example by hand
+        :return:
+        """
+
+        pass
+
+    def test__gamma_returns_correct_values(self):
+        """
+            Calculate this example by hand
+        :return:
+        """
+        pass
 
 

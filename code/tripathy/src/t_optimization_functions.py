@@ -5,7 +5,7 @@ import math
 import numpy as np
 import scipy
 
-from .t_loss import loss, dloss_dK, dloss_dW, dK_dW
+from .t_loss import loss, dloss_dW, dK_dW
 
 class t_ParameterOptimizer:
     """
@@ -120,10 +120,10 @@ class t_WOptimizer:
 
     def _A(self, W):
         # TODO: the dimensions of X and Y are weird! (for dK_dW)
-        dK_grad_W = dloss_dW(self.kernel, W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
+        dL_dW = dloss_dW(self.kernel, W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
-        out = np.dot(dK_grad_W, W.T) # TODO: this does not fully conform with the equation!
-        out -= np.dot(W, dK_grad_W.T)
+        out = np.dot(dL_dW, W.T) # TODO: this does not fully conform with the equation!
+        out -= np.dot(W, dL_dW.T)
 
         assert out.shape == (W.shape[0], W.shape[0])
 
@@ -151,9 +151,10 @@ class t_WOptimizer:
         assert (self.tau >= 0 - self.tau_max / 100.)
         assert (self.tau <= self.tau_max + self.tau_max / 100.)
 
+        # TODO: grid search (is there a halting condition)
         res = scipy.optimize.minimize(
             tau_manifold, self.tau, method='SLSQP', options={
-                'maxiter': 20,  # TODO: because we don't use the EGO scheme, we use this one...
+                'maxiter': 20,
                 'disp': False,
                 'ftol': 1e-24
             },

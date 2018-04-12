@@ -7,7 +7,7 @@ print(sys.path)
 
 import numpy as np
 from src.t_kernel import TripathyMaternKernel
-from src.t_loss import loss, dloss_dK, dloss_dW, dK_dW, dloss_ds
+from src.t_loss import loss, dloss_dW, dK_dW, dloss_ds
 
 def eval_numerical_gradient(f, x, verbose=False, h=1.e-7):
   """
@@ -111,14 +111,6 @@ class TestDerivatives(object):
         Z = np.dot(self.X, self.real_W)
         self.Y = self.function._f(Z.T)
 
-    def test_dloss_dK_returns_correct_dimensions(self):
-        self.init()
-
-        res = dloss_dK(self.kernel, self.W, self.sn, self.s, self.l, self.X, self.Y)
-
-        # Should return a scalar, and run (not exit due to some false dimensions!
-        assert isinstance(res, float), str(res)
-
     # TODO: figure out this thing!
     def test_dK_dW_returns_correct_dimension(self):
         self.init()
@@ -135,6 +127,11 @@ class TestDerivatives(object):
         assert res.shape == (self.real_dim, self.active_dim)
 
 class TestDerivativesW(object):
+
+    def init_XY(self):
+        self.X = np.random.rand(self.no_samples, self.real_dim)
+        Z = np.dot(self.X, self.real_W)
+        self.Y = self.function._f(Z.T)
 
     def init(self):
         self.real_dim = 3
@@ -153,9 +150,8 @@ class TestDerivativesW(object):
             [0, 1],
             [1, 0]
         ])
-        self.X = np.random.rand(self.no_samples, self.real_dim)
-        Z = np.dot(self.X, self.real_W)
-        self.Y = self.function._f(Z.T)
+
+        self.init_XY()
 
     def loss_function_W(self, W):
         return loss(self.kernel, W, self.sn, self.s, self.l, self.X, self.Y)
@@ -209,9 +205,25 @@ class TestDerivativesW(object):
             grad_numeric = eval_numerical_gradient(self.loss_function_W, W)
             grad_analytical = grad_W(W)
 
-            print("WEIGHTS: Analytical and numeric gradients")
-            print(grad_numeric)
-            print(grad_analytical)
+            assert np.allclose(grad_numeric, grad_analytical, atol=1.e-6)
+
+    def test_dloss_dW_changingXY(self):
+        """
+            Test if the loss predictions still works
+            if we change the data X or Y
+        :return:
+        """
+        self.init()
+
+        def grad_W(W):
+            return dloss_dW(self.kernel, W, self.sn, self.s, self.l, self.X, self.Y)
+
+        # Test the gradient at a few points of W (sample W a few times)
+        for i in range(10):
+            W = self.kernel.sample_W()
+            self.kernel.update_params(W=W, l=self.l, s=self.s)
+            grad_numeric = eval_numerical_gradient(self.loss_function_W, W)
+            grad_analytical = grad_W(W)
 
             assert np.allclose(grad_numeric, grad_analytical, atol=1.e-6)
 
@@ -227,8 +239,5 @@ class TestDerivativesW(object):
             grad_numeric = eval_numerical_gradient_scalar(self.loss_function_s, s)
             grad_analytical = grad_variance(s)
 
-            print("VARIANCE: Analytical and numeric gradients")
-            print(grad_numeric)
-            print(grad_analytical)
-
             assert np.allclose(grad_numeric, grad_analytical, atol=1.e-6)
+
