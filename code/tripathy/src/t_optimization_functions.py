@@ -61,7 +61,8 @@ class t_WOptimizer:
         self.Y = Y
 
         # TAKEN FROM CONFIG
-        self.tau_max = 1e-3
+        self.tau_max = 1e1 # 1e-3 :: this value finally seems to considerably change the loss!
+        # TODO: check if any tau_delta does not depend on tau_max!
         self.gtol = 1e-10
 
         self.tau = np.asscalar(np.random.rand(1)) * self.tau_max

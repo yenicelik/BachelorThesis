@@ -27,7 +27,6 @@ class Metrics(object):
     # TODO: use utils - cartesian
     # TODO: optimizers cadidate GridOptimizer
     # TODO: plot(grid, f(grid))
-    # TODO: plot gamma function
     # TODO: implement x^2 in 1D
     # TODO: simulate the real projection by 37-39
 
