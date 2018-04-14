@@ -27,5 +27,9 @@
 \contentsline {chapter}{\numberline {3}Benchmarking methods}{11}{chapter.3}
 \contentsline {section}{\numberline {3.1}Methods from }{11}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}First subsection in the first section}{11}{subsection.3.1.1}
-\contentsline {chapter}{References}{13}{chapter*.9}
-\contentsline {chapter}{Appendix \numberline {A}How to install \LaTeX }{15}{Appendix.a.A}
+\contentsline {chapter}{\numberline {4}Implementing methods}{13}{chapter.4}
+\contentsline {section}{\numberline {4.1}Difficulties when implementing models}{13}{section.4.1}
+\contentsline {section}{\numberline {4.2}Methods from }{13}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}First subsection in the first section}{13}{subsection.4.2.1}
+\contentsline {chapter}{References}{15}{chapter*.9}
+\contentsline {chapter}{Appendix \numberline {A}How to install \LaTeX }{17}{Appendix.a.A}

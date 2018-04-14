@@ -108,13 +108,8 @@ class TripathyModel(ConfidenceBoundModel):
 
         print("Call 2-step-optimizer when t: ", self.t)
 
-        W = self.t_optimizer.run_two_step_optimization(
-            self.kernel,
-            self.config.noise_var,
-            self.gp.X,
-            self.gp.Y,
-            2
-        ) # right now, we assume that we know the active subdimension!
+        W = self.t_optimizer.run_two_step_optimization(self.kernel, self.config.noise_var, self.gp.X,
+                                                       self.gp.Y)  # right now, we assume that we know the active subdimension!
         self.kernel.set_W(W)
 
     def add_data_point_to_gps(self, x, y):

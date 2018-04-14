@@ -8,69 +8,95 @@ import math
 
 from .t_loss import loss
 from .t_optimization_functions import t_ParameterOptimizer, t_WOptimizer
+from GPy.core.parameterization import Param
+
 
 class TripathyOptimizer:
 
     def __init__(self):
         # PARAMETERS
         self.d_max = 10
-        self.max_iter = 20
+        self.M_l = 10000
 
-        self.stiefel_max_steps = 10
-        self.param_max_steps = 10
-
-        self.btol = 1e-6
-        self.ftol = 1e-6
+        self.leps = 10.e-16
+        self.m = 1
 
     ###############################
     #      GENERAL-OPTIMIZATION   #
     ###############################
     # TODO: instead of taking sn, s, and l, simply take the gaussian process.
     # then we can also simply call the 'optimize' function over it!
-    def find_active_subspace(self, init_W, init_sn, init_s, init_l, X, Y):
-        BIC1 = -100000
-        for d in range(self.d_max):
+    # def find_active_subspace(self, init_W, init_sn, init_s, init_l, X, Y):
+    #     BIC1 = -100000
+    #     for d in range(self.d_max):
+    #
+    #         BIC0 = BIC1
+    #         BIC1 = self.bic(d, init_W, init_sn, init_s, init_l, X, Y)
+    #
+    #         # Run entire optimize-code
+    #         self.run_two_step_optimization_once(d)
+    #
+    #         if BIC1 - BIC0 / BIC0 < self.btol:
+    #             print("Best found dimension is: ", d, BIC1, BIC0)
+    #             break
 
-            BIC0 = BIC1
-            BIC1 = self.bic(d, init_W, init_sn, init_s, init_l, X, Y)
+    def run_two_step_optimization(self, t_kernel, sn, X, Y):
 
-            # Run entire optimize-code
-            self.run_two_step_optimization_once(d)
+        for i in range(self.M_l):
+            print("Alg. 1 Progress: ", str((i*100)/self.M_l) + "%")
 
-            if BIC1 - BIC0 / BIC0 < self.btol:
-                print("Best found dimension is: ", d, BIC1, BIC0)
-                break
-
-    def run_two_step_optimization(self, t_kernel, sn, X, Y, d):
-
-        L0 = loss(
-            t_kernel,
-            t_kernel.W,
-            sn,
-            t_kernel.s,
-            t_kernel.l,
-            X, Y
-        )
-
-        L1 = L0 + self.ftol * 1e5
-
-        for i in range(self.max_iter):
-            # Optimize over W (within the stiefel manifold)
+            #################################################################################
+            # PERFORM m ITERATIONS TOWARDS THE SOLUTION OF THE STIEFEL OPTIMIZATION PROBLEM #
+            #################################################################################
             w_optimizer = t_WOptimizer(
                 kernel=t_kernel,
                 fix_sn=sn,
-                fix_s=t_kernel.s,
-                fix_l=t_kernel.l,
+                fix_s=t_kernel.inner_kernel.variance,
+                fix_l=t_kernel.inner_kernel.lengthscale,
                 X=X,
                 Y=Y)
 
-            W = w_optimizer.optimize_stiefel_manifold(
-                W=t_kernel.W,
-                m=self.stiefel_max_steps
-            )
-            # t_kernel.set_W(W)
+            W = w_optimizer.kernel.W
 
-        return W
+            L0 = loss(
+                w_optimizer.kernel,
+                W,
+                sn,
+                w_optimizer.kernel.inner_kernel.variance,
+                w_optimizer.kernel.inner_kernel.lengthscale,
+                X,
+                Y
+            )
+
+            for i in range(self.m):
+                # TODO: the following optimizer should return the W for which the Loss is optimized.
+                # NOT the W which was found at last
+                W = w_optimizer.optimize_stiefel_manifold(W=W)
+                t_kernel.update_params(W=W, l=t_kernel.inner_kernel.lengthscale, s=t_kernel.inner_kernel.variance)
+                w_optimizer.kernel.update_params(
+                    W=W,
+                    l=w_optimizer.kernel.inner_kernel.lengthscale,
+                    s=w_optimizer.kernel.inner_kernel.variance
+                )
+
+            #################################################################################
+            #  PERFORM n ITERATIONS TOWARDS THE SOLUTION OF PARAMETER OPTIMIZATION PROBLEM  #
+            #################################################################################
+            L1 = loss(
+                w_optimizer.kernel,
+                W,
+                sn,
+                w_optimizer.kernel.inner_kernel.variance,
+                w_optimizer.kernel.inner_kernel.lengthscale,
+                X,
+                Y
+            )
+
+            if abs(L1 - L0) / L0 < self.leps:
+                print("Break Alg. 1", (L1, L0))
+                break
+
+        return W, sn, t_kernel.inner_kernel.lengthscale, t_kernel.inner_kernel.variance
 
     #
     #         # TODO: here, we could simply call GP.optimize (with the correct kernel!)

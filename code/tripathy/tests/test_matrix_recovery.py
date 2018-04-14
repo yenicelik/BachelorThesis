@@ -6,10 +6,12 @@ import numpy as np
 from src.t_kernel import TripathyMaternKernel
 from src.t_optimization_functions import t_WOptimizer
 from febo.environment.benchmarks.functions import Rosenbrock
-from febo.environment.benchmarks.functions import Camelback
+from febo.environment.benchmarks.functions import Camelback, Parabola
 
 from GPy.models.gp_regression import GPRegression
 
+
+# TODO: check if the same value is attained as the maximum
 
 class Metrics(object):
     """
@@ -27,37 +29,36 @@ class Metrics(object):
     # TODO: use utils - cartesian
     # TODO: optimizers cadidate GridOptimizer
     # TODO: plot(grid, f(grid))
-    # TODO: implement x^2 in 1D
     # TODO: simulate the real projection by 37-39
 
     def mean_difference_points(self, fnc, fnc_hat, A, A_hat, X):
         """
             ∀x in real_dim. E_x [ f(A x) - f(A_hat x) ] < tolerance
         :param fnc:
+        :param fnc_hat: is the prediction function of the GPregression
         :param A:
         :param A_hat:
         :return:
         """
         # TODO: change f to f_hat (from gaussian process)
-        # TODO:
+        # TODO: call this only for points that we already have tested!
 
         assert A.shape == A_hat.shape, str(A.shape, A_hat.shape)
+        assert X.shape[1] == A.shape[0], (X.shape, A.shape)
 
-        # gp_reg = GPRegression(X, Y, kernel, sn)
-        # y_hat = gp_reg.predict(X)
-        # y = np.dot(X, A)
+        # TODO: update the gaussian process with the new kernels parameters! (i.e. W_hat)
 
+        y_hat = fnc( np.dot(X, A).T )
+        # TODO: The next formula is fundamentally wrong! the gp_regression indludes the kernel whith includes the W when predicting!
+        y = fnc_hat( np.dot(X, A_hat).T )[0] # TODO: check if fnc_hat has the same input dimensions as the normal function
 
-        X = np.random.rand(self.samples, A.shape[0])
+        print("MEAN_DIFF_POINTS: Difference is: ")
+        print(y - y_hat)
+        print("END OF MEAN_DIFF_POINTS")
+        print(y)
+        print(y_hat)
 
-
-        t1 = fnc( np.dot(X, A).T )
-        t2 = fnc( np.dot(X, A_hat).T )
-
-        print("Difference is: ")
-        print(t1 - t2)
-
-        return np.mean( np.abs(t1 - t2) ) < self.tol_mean_diff
+        return np.mean( np.abs(y - y_hat) ) < self.tol_mean_diff
 
 
     def projects_into_same_original_point(self, A, A_hat):
@@ -116,11 +117,12 @@ class TestMatrixRecovery(object):
                 [0, 0]
             ])
         elif self.real_dim == 2 and self.active_dim == 1:
-#            self.function =
+            self.function = Parabola()
             self.real_W = np.asarray([
-                [0],
+                [1],
                 [1],
             ])
+            self.real_W = self.real_W / np.linalg.norm(self.real_W)
         else:
             assert False, "W was not set!"
 
@@ -128,7 +130,7 @@ class TestMatrixRecovery(object):
 
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W)
-        self.Y = self.function._f(Z.T)
+        self.Y = self.function._f(Z.T).reshape(-1, 1)
 
         self.w_optimizer = t_WOptimizer(
             self.kernel,
@@ -142,12 +144,15 @@ class TestMatrixRecovery(object):
         # TripathyMaternKernel(self.real_dim)
 
         self.tries = 1
-        self.max_iter = 20
-        self.m = 50
+        self.max_iter =  1 # 150
 
         self.metrics = Metrics(self.no_samples)
 
     def test_if_function_is_found(self):
+        """
+            Replace these tests by the actual optimizer function!
+        :return:
+        """
         self.init()
 
         print("Real matrix is: ", self.real_W)
@@ -159,12 +164,24 @@ class TestMatrixRecovery(object):
 
             # Find a good W!
             for i in range(self.max_iter):
-                W_hat = self.w_optimizer.optimize_stiefel_manifold(W_hat, self.m)
+                W_hat = self.w_optimizer.optimize_stiefel_manifold(W_hat)
 
             print("Difference to real W is: ", (W_hat - self.real_W))
 
             assert W_hat.shape == self.real_W.shape
-            res = self.metrics.mean_difference_points(self.function._f, self.real_W, W_hat)
+
+            # TODO: update the gaussian process with the new kernels parameters! (i.e. W_hat)
+
+            # Create the gp_regression function and pass in the predictor function as f_hat
+            gp_reg = GPRegression(self.X, self.Y, self.kernel, noise_var=self.sn)
+            res = self.metrics.mean_difference_points(
+                fnc=self.function._f,
+                fnc_hat=gp_reg.predict,
+                A=self.real_W,
+                A_hat=W_hat,
+                X=self.X
+            )
+
             all_tries.append(res)
 
         print(all_tries)
@@ -184,7 +201,7 @@ class TestMatrixRecovery(object):
 
             # Find a good W!
             for i in range(self.max_iter):
-                W_hat = self.w_optimizer.optimize_stiefel_manifold(W_hat, self.m)
+                W_hat = self.w_optimizer.optimize_stiefel_manifold(W_hat)
 
             print("Difference to real (AA.T) W is: ", (W_hat - self.real_W))
 

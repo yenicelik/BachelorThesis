@@ -1,0 +1,35 @@
+%!TEX root = ../thesis.tex
+%*******************************************************************************
+%****************************** Third Chapter **********************************
+%*******************************************************************************
+\chapter{Implementing methods}
+
+% **************************** Define Graphics Path **************************
+\ifpdf
+    \graphicspath{{Chapter3/Figs/Raster/}{Chapter3/Figs/PDF/}{Chapter3/Figs/}}
+\else
+    \graphicspath{{Chapter3/Figs/Vector/}{Chapter3/Figs/}}
+\fi
+
+\section{Difficulties when implementing models}
+When implementing models, the following difficulties may arise:
+
+\begin{itemize}
+\item Making sure the numerical examples are correct
+\item Making sure the differentiations are correct (use finite differences for matrices in this example)
+\item Write theoretical tests of the entire results
+\item test individual parts
+\item Test if the expectation $$ E[ f(A x) - f_hat(A_hat x) ] $$ approaches zero
+\item Visualize the individual functions
+\item write a very simple test case of a parabola, and check where the points project to
+\end{itemize}
+
+\section{Methods from }
+And now I begin my third chapter here \dots
+
+And now to cite some more people~\citet{Rea85,Ancey1996}
+
+\subsection{First subsection in the first section}
+\dots and some more 
+
+

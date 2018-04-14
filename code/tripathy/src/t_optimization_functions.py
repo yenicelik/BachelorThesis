@@ -5,6 +5,7 @@ import math
 import numpy as np
 import scipy
 
+from GPy.core.parameterization import Param
 from .t_loss import loss, dloss_dW, dK_dW
 
 class t_ParameterOptimizer:
@@ -61,15 +62,16 @@ class t_WOptimizer:
         self.Y = Y
 
         # TAKEN FROM CONFIG
-        self.tau_max = 1e1 # 1e-3 :: this value finally seems to considerably change the loss!
+        self.tau_max = 1 #0.1 # 1e-3 :: this value finally seems to considerably change the loss!
         # TODO: check if any tau_delta does not depend on tau_max!
-        self.gtol = 1e-10
+        self.stol = 1e-16
 
         self.tau = np.asscalar(np.random.rand(1)) * self.tau_max
 
         # FOR THE SAKE OF INCLUDING THIS WITHIN THE CLASS
         self.W = None
         self.all_losses = []
+        self.M_s = 10000
 
     #########################################
     #                                       #
@@ -81,13 +83,13 @@ class t_WOptimizer:
     ###############################
     #      STIEFEL-OPTIMIZATION   #
     ###############################
-    def optimize_stiefel_manifold(self, W, m):
+    def optimize_stiefel_manifold(self, W):
 
         self.W = W
 
         F_1 = loss(self.kernel, self.W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
-        for i in range(m):
+        for i in range(self.M_s):
             self.tau = self._find_best_tau(self.W)
             self.W = self._gamma(self.tau, self.W)
 
@@ -96,7 +98,7 @@ class t_WOptimizer:
             F_0 = F_1
             F_1 = loss(self.kernel, self.W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
-            if (F_1 - F_0) / F_0 < self.gtol:
+            if (F_1 - F_0) / F_0 < self.stol:
                 break
         return self.W
 
@@ -105,8 +107,8 @@ class t_WOptimizer:
     ###############################
     def _gamma(self, tau, W):
             # print("Tau is: ", tau)
-            assert (tau >= 0 - self.tau_max / 10.)
-            assert (tau <= self.tau_max + self.tau_max / 10.)
+            assert (tau >= 0 - self.tau_max / 10.), (tau, self.tau_max)
+            assert (tau <= self.tau_max + self.tau_max / 10.), (tau, self.tau_max)
 
             real_dim = W.shape[0]
             active_dim = W.shape[1]
@@ -120,7 +122,6 @@ class t_WOptimizer:
             return out
 
     def _A(self, W):
-        # TODO: the dimensions of X and Y are weird! (for dK_dW)
         dL_dW = dloss_dW(self.kernel, W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
         out = np.dot(dL_dW, W.T) # TODO: this does not fully conform with the equation!
@@ -135,33 +136,38 @@ class t_WOptimizer:
     ###############################
     def _find_best_tau(self, W):
 
-        assert isinstance(self.fix_s, float)
-        assert self.fix_l.shape == (W.shape[1],)  # TODO: what do I change this to?
+        assert isinstance(self.fix_s, float) or isinstance(self.fix_s, Param), type(self.fix_s)
+        assert self.fix_l.shape == (W.shape[1],)
 
         def tau_manifold(tau):
-            # TODO: do i have to take the negative of the output?
-            # TODO: check if the loss decreases!
-            # TODO: should there be a "-1 * "or not?
-
             assert (not math.isnan(tau))
             W_tau = self._gamma(tau, W)
             loss_val = loss(self.kernel, W_tau, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
             self.all_losses.append(loss_val)
-            return -1 * loss_val # -1 because scipy minimizes by convention (we want to maximize!)
+            return loss_val
 
         assert (self.tau >= 0 - self.tau_max / 100.)
         assert (self.tau <= self.tau_max + self.tau_max / 100.)
 
-        # TODO: grid search (is there a halting condition)
-        res = scipy.optimize.minimize(
-            tau_manifold, self.tau, method='SLSQP', options={
-                'maxiter': 20,
-                'disp': False,
-                'ftol': 1e-24
-            },
-            bounds=((0, self.tau_max),)
+        tau_arr = np.append(
+            np.linspace(0., self.tau_max, num=50),
+            np.logspace(0., self.tau_max, num=100)
         )
+        tau_arr[tau_arr > self.tau_max] = self.tau_max
+        tau_arr = np.unique(tau_arr)
 
-        assert (not math.isnan(res.x))
+        assert len(tau_arr) > 20
 
-        return res.x
+        best_loss = -np.inf
+        best_tau = 0.
+        for cur_tau in tau_arr:
+            cur_loss = tau_manifold(cur_tau)
+            if cur_loss > best_loss:
+                best_loss = cur_loss
+                best_tau = cur_tau
+
+        print("New best tau and loss are: ", (best_tau, best_loss))
+
+        assert (not math.isnan(best_tau))
+
+        return best_tau
