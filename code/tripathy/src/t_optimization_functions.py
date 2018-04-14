@@ -98,7 +98,7 @@ class t_WOptimizer:
             F_0 = F_1
             F_1 = loss(self.kernel, self.W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
-            if (F_1 - F_0) / F_0 < self.stol:
+            if abs( (F_1 - F_0) / F_0) < self.stol:
                 break
         return self.W
 

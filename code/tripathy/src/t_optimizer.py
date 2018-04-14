@@ -92,8 +92,8 @@ class TripathyOptimizer:
                 Y
             )
 
-            if abs(L1 - L0) / L0 < self.leps:
-                print("Break Alg. 1", (L1, L0))
+            if abs( (L1 - L0) / L0) < self.leps:
+                print("Break Alg. 1", abs(L1 - L0) / L0)
                 break
 
         return W, sn, t_kernel.inner_kernel.lengthscale, t_kernel.inner_kernel.variance
