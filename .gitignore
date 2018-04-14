@@ -7,3 +7,5 @@ code/.idea/
 code/.pytest_cache/
 code/tripathy/.pytest_cache/
 code/tripathy/tests/.pytest_cache/
+*.txt
+*.png
