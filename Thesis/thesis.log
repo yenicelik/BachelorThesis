@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  14 APR 2018 12:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  15 APR 2018 11:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1768,17 +1768,16 @@ LaTeX Font Info:    Try loading font information for TS1+ptm on input line 18.
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 
-Package natbib Warning: Citation `Rea85' on page 13 undefined on input line 28.
+Package natbib Warning: Citation `Rea85' on page 13 undefined on input line 30.
 
 
 
 Package natbib Warning: Citation `Ancey1996' on page 13 undefined on input line
- 28.
+ 30.
 
-) [13] [14
+) [13] [14] (./thesis.bbl) [15
 
 
-] (./thesis.bbl) [15
 
 ]
 \openout2 = `Appendix1/appendix1.aux'.
@@ -1831,7 +1830,7 @@ st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
 mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on thesis.pdf (30 pages, 220002 bytes).
+Output written on thesis.pdf (30 pages, 220270 bytes).
 PDF statistics:
  487 PDF objects out of 1000 (max. 8388607)
  425 compressed objects within 5 object streams
