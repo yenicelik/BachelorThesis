@@ -26,12 +26,13 @@ class Metrics(object):
         np.random.seed(seed)
 
         self.tol_mean_diff = 1e-6 # TODO: set this to an ok value
+        # TODO: set noise to 0
 
     # TODO: simulate the real projection by 37-39
 
     def mean_difference_points(self, fnc, fnc_hat, A, A_hat, X):
         """
-            ∀x in real_dim. E_x [ f(A x) - f(A_hat x) ] < tolerance
+            ∀x in real_dim. E_x [ f(A x) - f_hat(A_hat x) ] < tolerance
         :param fnc:
         :param fnc_hat: is the prediction function of the GPregression
         :param A:
@@ -46,9 +47,11 @@ class Metrics(object):
 
         # TODO: update the gaussian process with the new kernels parameters! (i.e. W_hat)
 
-        y_hat = fnc( np.dot(X, A).T )
+        y_hat = np.asarray(fnc( np.dot(X, A).T )[0])
         # TODO: The next formula is fundamentally wrong! the gp_regression indludes the kernel whith includes the W when predicting!
-        y = fnc_hat( np.dot(X, A_hat).T )[0] # TODO: check if fnc_hat has the same input dimensions as the normal function
+        y = np.asarray(fnc_hat( np.dot(X, A_hat).T )) # TODO: check if fnc_hat has the same input dimensions as the normal function
+
+        assert y_hat.shape == y.shape, (y_hat.shape, y.shape)
 
         print("MEAN_DIFF_POINTS: Difference is: ")
         print(y - y_hat)
@@ -89,11 +92,15 @@ class Metrics(object):
 
 class TestMatrixRecoveryNaive(object):
 
+    def __init__(self):
+        pass
+        # This skips the test
+
     def init(self):
         self.real_dim = 3
         self.active_dim = 2
 
-        self.no_samples = 50
+        self.no_samples = 20 # 50
         self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
 
         # Parameters
@@ -117,7 +124,7 @@ class TestMatrixRecoveryNaive(object):
         print(Z.shape)
         self.Y = self.function._f(Z.T).reshape(-1, 1)
 
-        self.no_tries = 50
+        self.no_tries = 2
 
     def test_visualize_augmented_sinusoidal_function(self):
 
@@ -228,45 +235,45 @@ class TestMatrixRecovery(object):
 
         self.metrics = Metrics(self.no_samples)
 
-    # def test_if_function_is_found(self):
-    #     """
-    #         Replace these tests by the actual optimizer function!
-    #     :return:
-    #     """
-    #     self.init()
-    #
-    #     print("Real matrix is: ", self.real_W)
-    #
-    #     all_tries = []
-    #     for i in range(self.tries):
-    #         # Initialize random guess
-    #         W_hat = self.kernel.sample_W()
-    #
-    #         # Find a good W!
-    #         for i in range(self.max_iter):
-    #             W_hat = self.w_optimizer.optimize_stiefel_manifold(W_hat)
-    #
-    #         print("Difference to real W is: ", (W_hat - self.real_W))
-    #
-    #         assert W_hat.shape == self.real_W.shape
-    #
-    #         # TODO: update the gaussian process with the new kernels parameters! (i.e. W_hat)
-    #
-    #         # Create the gp_regression function and pass in the predictor function as f_hat
-    #         gp_reg = GPRegression(self.X, self.Y, self.kernel, noise_var=self.sn)
-    #         res = self.metrics.mean_difference_points(
-    #             fnc=self.function._f,
-    #             fnc_hat=gp_reg.predict,
-    #             A=self.real_W,
-    #             A_hat=W_hat,
-    #             X=self.X
-    #         )
-    #
-    #         all_tries.append(res)
-    #
-    #     print(all_tries)
-    #
-    #     assert np.asarray(all_tries).any()
+    def test_if_function_is_found(self):
+        """
+            Replace these tests by the actual optimizer function!
+        :return:
+        """
+        self.init()
+
+        print("Real matrix is: ", self.real_W)
+
+        all_tries = []
+        for i in range(self.tries):
+            # Initialize random guess
+            W_hat = self.kernel.sample_W()
+
+            # Find a good W!
+            for i in range(self.max_iter):
+                W_hat = self.w_optimizer.optimize_stiefel_manifold(W_hat)
+
+            print("Difference to real W is: ", (W_hat - self.real_W))
+
+            assert W_hat.shape == self.real_W.shape
+
+            # TODO: update the gaussian process with the new kernels parameters! (i.e. W_hat)
+
+            # Create the gp_regression function and pass in the predictor function as f_hat
+            gp_reg = GPRegression(self.X, self.Y, self.kernel, noise_var=self.sn)
+            res = self.metrics.mean_difference_points(
+                fnc=self.function._f,
+                fnc_hat=gp_reg.predict,
+                A=self.real_W,
+                A_hat=W_hat,
+                X=self.X
+            )
+
+            all_tries.append(res)
+
+        print(all_tries)
+
+        assert np.asarray(all_tries).any()
 
     # def test_if_hidden_matrix_is_found_multiple_initializations(self):
     #     self.init()

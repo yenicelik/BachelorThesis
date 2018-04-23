@@ -217,11 +217,11 @@ class VisualizedTestingWAugmentedSinusoidal:
         self.real_dim = 2
         self.active_dim = 1
 
-        self.no_samples = 50
+        self.no_samples = 100
         self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
 
         # Parameters
-        self.sn = 0.1
+        self.sn = 0.1 # 1e-7 # 0.1
         self.W = self.kernel.sample_W()
 
         self.function = AugmentedSinusoidal()
@@ -234,7 +234,11 @@ class VisualizedTestingWAugmentedSinusoidal:
         # [[0.9486833]
         #  [0.31622777]]
 
-        self.X = np.random.rand(self.no_samples, self.real_dim)
+        x_range = np.linspace(0., 1., int(np.sqrt(self.no_samples)))
+        y_range = np.linspace(0., 1., int(np.sqrt(self.no_samples)))
+        self.X = cartesian([x_range, y_range])
+
+        #self.X = np.random.rand(self.no_samples, self.real_dim)
         print(self.X.shape)
         Z = np.dot(self.X, self.real_W).reshape(-1, 1)
         print(Z.shape)
@@ -249,6 +253,7 @@ class VisualizedTestingWAugmentedSinusoidal:
         )
 
         self.no_tries = 1000
+        self.PLOT_MEAN = True
 
     def visualize_augmented_sinusoidal_function(self):
         x_range = np.linspace(0., 1., 80)
@@ -284,7 +289,11 @@ class VisualizedTestingWAugmentedSinusoidal:
             gp_reg = GPRegression(self.X, self.Y, self.kernel, noise_var=sn)
 
             y = self.function._f( np.dot(X, self.real_W).T )
-            y_hat = gp_reg.predict(self.X)[0].squeeze()
+
+            if self.PLOT_MEAN:
+                y_hat = gp_reg.predict(X)[0].squeeze()
+            else:
+                y_hat = gp_reg.predict(self.X)[0].squeeze()
 
             #################################
             #   END TRAIN THE W_OPTIMIZER   #
@@ -295,7 +304,13 @@ class VisualizedTestingWAugmentedSinusoidal:
 
             # First plot the real function
             ax.scatter(X[:,0], X[:, 1], y, s=1)
-            ax.scatter(self.X[:,0], self.X[:, 1], y_hat, cmap=plt.cm.jet)
+
+            if self.PLOT_MEAN:
+                ax.scatter(X[:, 0], X[:, 1], y_hat, cmap=plt.cm.jet)
+            else:
+                ax.scatter(self.X[:,0], self.X[:, 1], y_hat, cmap=plt.cm.jet)
+
+
             fig.savefig('./pics/Iter_' + str(j) + '.png', )
             # plt.show()
             plt.close(fig)

@@ -6,6 +6,8 @@ import numpy as np
 import scipy
 
 from GPy.core.parameterization import Param
+from GPy.models import GPRegression
+
 from .t_loss import loss, dloss_dW, dK_dW
 
 class t_ParameterOptimizer:
@@ -15,37 +17,41 @@ class t_ParameterOptimizer:
         and the hyperparameter of the GP-regression (sn, )
     """
 
-    def __init__(self, fix_W, kernel):
+    def __init__(self, fix_W, kernel, X, Y):
         ###############################
         #    PARAMETER-OPTIMIZATION   #
         ###############################
         self.fix_W = fix_W
         self.kernel = kernel
+        self.X = X
+        self.Y = Y
 
-    def optimize_sn_l(self, sn, s, l, X, Y, n):
+    def optimize_s_sn_l(self, sn, s, l, n):
         assert (isinstance(sn, float))
         assert (l.shape == (self.fix_W.shape[1],))
 
-        # The Function we want to optimize
-        # TODO: jacobian could be added for even better values
-        def fnc(x):
-            if x.shape != (4,):
-                print("Shape does not conform!!", x.shape)
-                assert (x.shape == (4,))
-            x = x.flatten()
-            return self._loss(W, x[0], x[1], x[2:], X, Y)
+        # Create a GP
+        self.kernel.update_params(W=self.fix_W, s=s, l=l)
+        gp_reg = GPRegression(self.X, self.Y.reshape(-1, 1), self.kernel, noise_var=sn)
+        gp_reg.optimize("lbfgs")
+        gp_reg['']
+        self.kernel.variance
 
-        x0 = np.insert(l, 0, s, axis=0).reshape((-1))
-        x0 = np.insert(x0, 0, sn, axis=0).reshape((-1))
+        new_variance = gp_reg.kern.inner_kernel.variance
+        new_sn = None
+        print("Parameters")
+        print( gp_reg.parameters[0] )
+        print( gp_reg.parameters[1] )
+        asd
+        new_lengthscale = gp_reg.kern.inner_kernel.lengthscale
 
-        res = scipy.optimize.minimize(
-            fnc, x0, method="BFGS", options={
-                "maxiter": n,
-                "disp": False
-            }
-        )
+        # TODO: how to access optimized parameters
 
-        return res.x.flatten()[0], res.x.flatten()[1:]
+        return new_variance, new_lengthscale, new_sn
+
+
+        # Return variance, noise_var (GP), and lengthscale
+#        return res.x.flatten()[0], res.x.flatten()[1], res.x.flatten()[2:]
 
 
 class t_WOptimizer:
