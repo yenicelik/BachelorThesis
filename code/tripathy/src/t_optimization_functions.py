@@ -34,18 +34,11 @@ class t_ParameterOptimizer:
         self.kernel.update_params(W=self.fix_W, s=s, l=l)
         gp_reg = GPRegression(self.X, self.Y.reshape(-1, 1), self.kernel, noise_var=sn)
         gp_reg.optimize("lbfgs")
-        gp_reg['']
-        self.kernel.variance
+        # gp_reg['']
 
-        new_variance = gp_reg.kern.inner_kernel.variance
-        new_sn = None
-        print("Parameters")
-        print( gp_reg.parameters[0] )
-        print( gp_reg.parameters[1] )
-        asd
-        new_lengthscale = gp_reg.kern.inner_kernel.lengthscale
-
-        # TODO: how to access optimized parameters
+        new_variance = np.asarray(gp_reg.kern.inner_kernel.variance)
+        new_lengthscale = np.asarray(gp_reg.kern.inner_kernel.lengthscale)
+        new_sn = np.asarray( gp_reg['Gaussian_noise.variance'] )
 
         return new_variance, new_lengthscale, new_sn
 

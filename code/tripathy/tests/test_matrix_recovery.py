@@ -25,8 +25,8 @@ class Metrics(object):
         self.samples = 10
         np.random.seed(seed)
 
-        self.tol_mean_diff = 1e-6 # TODO: set this to an ok value
-        # TODO: set noise to 0
+        self.tol_mean_diff = 1e-3 # TODO: set this to an ok value
+        self.tol_abs_diff = 1e-2
 
     # TODO: simulate the real projection by 37-39
 
@@ -39,27 +39,30 @@ class Metrics(object):
         :param A_hat:
         :return:
         """
-        # TODO: change f to f_hat (from gaussian process)
-        # TODO: call this only for points that we already have tested!
 
         assert A.shape == A_hat.shape, str(A.shape, A_hat.shape)
         assert X.shape[1] == A.shape[0], (X.shape, A.shape)
 
         # TODO: update the gaussian process with the new kernels parameters! (i.e. W_hat)
 
-        y_hat = np.asarray(fnc( np.dot(X, A).T )[0])
-        # TODO: The next formula is fundamentally wrong! the gp_regression indludes the kernel whith includes the W when predicting!
-        y = np.asarray(fnc_hat( np.dot(X, A_hat).T )) # TODO: check if fnc_hat has the same input dimensions as the normal function
+        Z = np.dot(X, A).T
+        y = fnc( Z ).T
+
+        # The projection of X to the subspace happens within the gaussian process (due to the kernel)
+        y_hat = fnc_hat( X )[0]
 
         assert y_hat.shape == y.shape, (y_hat.shape, y.shape)
 
         print("MEAN_DIFF_POINTS: Difference is: ")
-        print(y - y_hat)
+        print(np.sort(np.abs(y - y_hat))[:3])
+        print(np.sort(np.abs(y - y_hat))[-3:])
         print("END OF MEAN_DIFF_POINTS")
-        print(y)
-        print(y_hat)
 
-        return np.mean( np.abs(y - y_hat) ) < self.tol_mean_diff
+        # Absolute error should be smaller than 1e-2
+        # return np.max(y - y_hat) < self.tol_abs_diff
+
+        return (np.abs( (y - y_hat) / y_hat) < self.tol_mean_diff).all()
+        # return np.mean( np.abs(y - y_hat) ) < self.tol_mean_diff
 
 
     def projects_into_same_original_point(self, A, A_hat):
@@ -192,7 +195,7 @@ class TestMatrixRecovery(object):
 
         self.real_dim = 2
         self.active_dim = 1
-        self.no_samples = 25
+        self.no_samples = 75
         self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
 
         # Hide the matrix over here!
@@ -213,7 +216,7 @@ class TestMatrixRecovery(object):
         else:
             assert False, "W was not set!"
 
-        self.sn = 2.
+        self.sn = 0.1
 
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W)
@@ -230,8 +233,10 @@ class TestMatrixRecovery(object):
         # We create the following kernel just to have access to the sample_W function!
         # TripathyMaternKernel(self.real_dim)
 
-        self.tries = 1
+        self.tries = 10
         self.max_iter =  1 # 150
+
+        assert False
 
         self.metrics = Metrics(self.no_samples)
 
@@ -256,6 +261,11 @@ class TestMatrixRecovery(object):
             print("Difference to real W is: ", (W_hat - self.real_W))
 
             assert W_hat.shape == self.real_W.shape
+            self.kernel.update_params(
+                W=W_hat,
+                l=self.kernel.inner_kernel.lengthscale,
+                s=self.kernel.inner_kernel.variance
+            )
 
             # TODO: update the gaussian process with the new kernels parameters! (i.e. W_hat)
 
@@ -275,26 +285,26 @@ class TestMatrixRecovery(object):
 
         assert np.asarray(all_tries).any()
 
-    # def test_if_hidden_matrix_is_found_multiple_initializations(self):
-    #     self.init()
-    #
-    #     print("Real matrix is: ", self.real_W)
-    #
-    #     all_tries = []
-    #
-    #     for i in range(self.tries):
-    #         # Initialize random guess
-    #         W_hat = self.kernel.sample_W()
-    #
-    #         # Find a good W!
-    #         for i in range(self.max_iter):
-    #             W_hat = self.w_optimizer.optimize_stiefel_manifold(W_hat)
-    #
-    #         print("Difference to real (AA.T) W is: ", (W_hat - self.real_W))
-    #
-    #         assert W_hat.shape == self.real_W.shape
-    #         assert not (W_hat == self.real_W).all()
-    #         res = self.metrics.projects_into_same_original_point(self.real_W, W_hat)
-    #         all_tries.append(res)
-    #
-    #     assert True in all_tries
+    def test_if_hidden_matrix_is_found_multiple_initializations(self):
+        self.init()
+
+        print("Real matrix is: ", self.real_W)
+
+        all_tries = []
+
+        for i in range(self.tries):
+            # Initialize random guess
+            W_hat = self.kernel.sample_W()
+
+            # Find a good W!
+            for i in range(self.max_iter):
+                W_hat = self.w_optimizer.optimize_stiefel_manifold(W_hat)
+
+            print("Difference to real (AA.T) W is: ", (W_hat - self.real_W))
+
+            assert W_hat.shape == self.real_W.shape
+            assert not (W_hat == self.real_W).all()
+            res = self.metrics.projects_into_same_original_point(self.real_W, W_hat)
+            all_tries.append(res)
+
+        assert True in all_tries

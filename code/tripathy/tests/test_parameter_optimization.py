@@ -18,6 +18,7 @@ class TestParameterOptimization(object):
         self.real_dim = 3
         self.active_dim = 2
         self.no_samples = 5
+
         self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
 
         self.real_sn = 0.01
@@ -47,6 +48,7 @@ class TestParameterOptimization(object):
         )
 
     def test_parameter_opt_does_not_err(self):
+
         self.init()
 
         # Have some initial guesses for sn, s, l
@@ -57,12 +59,13 @@ class TestParameterOptimization(object):
         GPRegression(self.X, self.Y)
 
         self.kernel.update_params(W=self.fix_W, s=s, l=l)
+
         print("Got this far!")
         print("Previous parameters")
         print(s)
         print(l)
         print(sn)
-        s, l, sn = self.parameter_optimizer.optimize_s_sn_l(sn, s, l, n=100)
+        s, l, sn = self.parameter_optimizer.optimize_s_sn_l(sn, s, l, n=1)
         print("Got new parameters: ")
         print(s)
         print(l)

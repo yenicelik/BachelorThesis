@@ -49,11 +49,19 @@ class TripathyMaternKernel(Kern):
         self.W_grad = np.zeros_like(self.W)
 
         super(TripathyMaternKernel, self).__init__(input_dim=self.real_dim, active_dims=None, name="TripathyMaternKernel")
+        self.link_parameters(self.inner_kernel)
+
+        # Add parameters
+        # l = Param('outerKernel.lengthscale', self.inner_kernel.lengthscale)
+        # self.link_parameters(l)
+
+        # s = Param('outerKernel.variance', self.inner_kernel.variance)
+        # self.link_parameters(s)
+        # self.add_parameter(s, l)
 
     ###############################
     #       SETTER FUNCTIONS      #
     ###############################
-    # TODO: link parameters with the kernel using param_link or so
     def update_params(self, W, l, s):
         self.set_l(l, True)
         self.set_s(s, True)
@@ -71,13 +79,13 @@ class TripathyMaternKernel(Kern):
         assert safe
         assert l.shape == (self.active_dim,)
         self.inner_kernel.lengthscale = l
-        self.inner_kernel.parameters_changed()
+        # TODO: do we have to link parameters here somehow? (with this kernel, NOT the inner kernel?)
+
 
     def set_s(self, s, safe=False):
         assert safe
         assert isinstance(s, float) or isinstance(s, Param), type(s)
         self.inner_kernel.variance = s
-        self.inner_kernel.parameters_changed()
 
     ###############################
     #      SAMPLING FUNCTIONS     #
