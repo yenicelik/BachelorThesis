@@ -23,24 +23,34 @@ class t_ParameterOptimizer:
         ###############################
         self.fix_W = fix_W
         self.kernel = kernel
+        self.kernel.update_params(
+            W=self.fix_W,
+            s=self.kernel.inner_kernel.variance,
+            l=self.kernel.inner_kernel.lengthscale
+        )
         self.X = X
         self.Y = Y
 
-    def optimize_s_sn_l(self, sn, s, l, n):
+    def optimize_s_sn_l(self, sn, s, l):
         assert (isinstance(sn, float))
         assert (l.shape == (self.fix_W.shape[1],))
 
         # Create a GP
         self.kernel.update_params(W=self.fix_W, s=s, l=l)
         gp_reg = GPRegression(self.X, self.Y.reshape(-1, 1), self.kernel, noise_var=sn)
-        gp_reg.optimize("lbfgs")
-        # gp_reg['']
+        gp_reg.optimize(optimizer="lbfgs")
 
-        new_variance = np.asarray(gp_reg.kern.inner_kernel.variance)
-        new_lengthscale = np.asarray(gp_reg.kern.inner_kernel.lengthscale)
-        new_sn = np.asarray( gp_reg['Gaussian_noise.variance'] )
+        # TODO: does this optimization work in the correct direction?
 
-        return new_variance, new_lengthscale, new_sn
+        new_variance = gp_reg.kern.inner_kernel.variance
+        new_lengthscale = gp_reg.kern.inner_kernel.lengthscale
+        new_sn = gp_reg['Gaussian_noise.variance']
+
+        assert gp_reg.kern.inner_kernel.lengthscale is not None
+        assert gp_reg.kern.inner_kernel.variance is not None
+        assert not np.isclose(new_lengthscale, np.zeros_like(new_lengthscale) ).all(), new_lengthscale
+
+        return float(new_variance), new_lengthscale.copy(), float(new_sn)
 
 
         # Return variance, noise_var (GP), and lengthscale
@@ -63,7 +73,7 @@ class t_WOptimizer:
         # TAKEN FROM CONFIG
         self.tau_max = 1 #0.1 # 1e-3 :: this value finally seems to considerably change the loss!
         # TODO: check if any tau_delta does not depend on tau_max!
-        self.stol = 1e-16
+        self.stol = 1e-12
 
         self.tau = np.asscalar(np.random.rand(1)) * self.tau_max
 
@@ -71,6 +81,8 @@ class t_WOptimizer:
         self.W = None
         self.all_losses = []
         self.M_s = 10000
+
+        self.number_of_taus_to_search_through = 20
 
     #########################################
     #                                       #
@@ -149,13 +161,13 @@ class t_WOptimizer:
         assert (self.tau <= self.tau_max + self.tau_max / 100.)
 
         tau_arr = np.append(
-            np.linspace(0., self.tau_max, num=50),
-            np.logspace(0., self.tau_max, num=100)
+            np.linspace(0., self.tau_max, num=self.number_of_taus_to_search_through//2),
+            np.logspace(0., self.tau_max, num=self.number_of_taus_to_search_through//2)
         )
         tau_arr[tau_arr > self.tau_max] = self.tau_max
         tau_arr = np.unique(tau_arr)
 
-        assert len(tau_arr) > 20
+        assert len(tau_arr) >= 5, len(tau_arr)
 
         best_loss = -np.inf
         best_tau = 0.

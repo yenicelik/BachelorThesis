@@ -327,11 +327,132 @@ class VisualizedTestingWAugmentedSinusoidal:
             )
             np.savetxt("./pics/Iter_" + str(j) + "__" + "Loss_" + str(l) + ".txt", W_hat)
 
+class VisualizeTwoStepOptimization:
+
+    def __init__(self):
+        self.real_dim = 2
+        self.active_dim = 1
+
+        self.no_samples = 100
+        self.kernel = TripathyMaternKernel(self.real_dim, self.active_dim)
+
+        # Parameters
+        self.sn = 0.1 # 1e-7 # 0.1
+        self.W = self.kernel.sample_W()
+
+        self.function = AugmentedSinusoidal()
+        self.real_W = np.asarray([
+            [3],
+            [1]
+        ])
+        self.real_W = self.real_W / np.linalg.norm(self.real_W)
+
+        # [[0.9486833]
+        #  [0.31622777]]
+
+        x_range = np.linspace(0., 1., int(np.sqrt(self.no_samples)))
+        y_range = np.linspace(0., 1., int(np.sqrt(self.no_samples)))
+        self.X = cartesian([x_range, y_range])
+
+        #self.X = np.random.rand(self.no_samples, self.real_dim)
+        print(self.X.shape)
+        Z = np.dot(self.X, self.real_W).reshape(-1, 1)
+        print(Z.shape)
+        self.Y = self.function._f(Z.T).reshape(-1, 1)
+
+        self.optimizer = TripathyOptimizer()
+
+        # self.w_optimizer = t_WOptimizer(
+        #     self.kernel, # TODO: does the kernel take over the W?
+        #     self.sn,
+        #     np.asscalar(self.kernel.inner_kernel.variance),
+        #     self.kernel.inner_kernel.lengthscale,
+        #     self.X, self.Y
+        # )
+
+        self.no_tries = 1
+        self.PLOT_MEAN = True
+
+    def visualize_augmented_sinusoidal_function(self):
+        x_range = np.linspace(0., 1., 80)
+        y_range = np.linspace(0., 1., 80)
+        X = cartesian([x_range, y_range])
+
+        import os
+        if not os.path.exists("./pics-twostep/"):
+            os.makedirs("./pics-twostep/")
+
+        #################################
+        #     TRAIN THE W_OPTIMIZER     #
+        #################################
+
+        Opt = TripathyOptimizer()
+
+        print("Real hidden matrix is: ", self.real_W)
+
+        for j in range(self.no_tries):
+            print("Try number : ", j)
+
+            W_hat = self.kernel.sample_W()
+            self.kernel.update_params(
+                W=W_hat,
+                s=self.kernel.inner_kernel.variance,
+                l=self.kernel.inner_kernel.lengthscale
+            )
+
+            W_hat, sn, l, s = Opt.run_two_step_optimization(self.kernel, self.sn, self.X, self.Y)
+
+            # TODO: Check if these values are attained over multiple iterations (check if assert otherwise fails)
+
+            # Create the gp_regression function and pass in the predictor function as f_hat
+            self.kernel.update_params(W=W_hat, l=l, s=s)
+            gp_reg = GPRegression(self.X, self.Y, self.kernel, noise_var=sn)
+
+            y = self.function._f( np.dot(X, self.real_W).T )
+
+            if self.PLOT_MEAN:
+                y_hat = gp_reg.predict(X)[0].squeeze()
+            else:
+                y_hat = gp_reg.predict(self.X)[0].squeeze()
+
+            #################################
+            #   END TRAIN THE W_OPTIMIZER   #
+            #################################
+
+            fig = plt.figure()
+            ax = Axes3D(fig)
+
+            # First plot the real function
+            ax.scatter(X[:,0], X[:, 1], y, s=1)
+
+            if self.PLOT_MEAN:
+                ax.scatter(X[:, 0], X[:, 1], y_hat, cmap=plt.cm.jet)
+            else:
+                ax.scatter(self.X[:,0], self.X[:, 1], y_hat, cmap=plt.cm.jet)
+
+
+            fig.savefig('./pics-twostep/Iter_' + str(j) + '.png', )
+            # plt.show()
+            plt.close(fig)
+
+            # Save the W just in case
+            l = loss(
+                self.kernel,
+                W_hat,
+                sn,
+                s,
+                l,
+                self.X,
+                self.Y
+            )
+            np.savetxt("./pics-twostep/Iter_" + str(j) + "__" + "Loss_" + str(l) + ".txt", W_hat)
+
+
 if __name__ == "__main__":
     # First, visualize the tau trajectory
     # viz_tau = VisualizedTestingTau()
     # viz_tau.visualize_tau_trajectory_for_random_W()
     # viz_tau.visualize_tau_trajectory_for_identity_W()
 
-    viz_w = VisualizedTestingWAugmentedSinusoidal()
+    viz_w = VisualizeTwoStepOptimization()
     viz_w.visualize_augmented_sinusoidal_function()

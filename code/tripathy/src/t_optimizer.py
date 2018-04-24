@@ -16,10 +16,20 @@ class TripathyOptimizer:
     def __init__(self):
         # PARAMETERS
         self.d_max = 10
-        self.M_l = 10000
+        self.M_l = 1000
 
-        self.leps = 10.e-16
+        self.leps = 10.e-3
         self.m = 1
+        self.n = 1
+
+        # For debugging / testing only
+        self.losses = []
+
+        # Everything should work through these values
+        self.W = None
+        self.sn = None
+        self.l = None
+        self.s = None
 
     ###############################
     #      GENERAL-OPTIMIZATION   #
@@ -42,28 +52,35 @@ class TripathyOptimizer:
 
     def run_two_step_optimization(self, t_kernel, sn, X, Y):
 
+        # Initial values
+        self.W = t_kernel.W
+        self.sn = sn
+        self.s = t_kernel.inner_kernel.variance
+        self.l = t_kernel.inner_kernel.lengthscale
+
         for i in range(self.M_l):
             print("Alg. 1 Progress: ", str((i*100)/self.M_l) + "%")
 
             #################################################################################
             # PERFORM m ITERATIONS TOWARDS THE SOLUTION OF THE STIEFEL OPTIMIZATION PROBLEM #
             #################################################################################
+            # Create the optimizers
+            t_kernel.update_params(W=self.W, s=self.s, l=self.l)
             w_optimizer = t_WOptimizer(
                 kernel=t_kernel,
-                fix_sn=sn,
-                fix_s=t_kernel.inner_kernel.variance,
-                fix_l=t_kernel.inner_kernel.lengthscale,
+                fix_sn=self.sn,
+                fix_s=self.s,
+                fix_l=self.l,
                 X=X,
-                Y=Y)
-
-            W = w_optimizer.kernel.W
+                Y=Y
+            )
 
             L0 = loss(
-                w_optimizer.kernel,
-                W,
-                sn,
-                w_optimizer.kernel.inner_kernel.variance,
-                w_optimizer.kernel.inner_kernel.lengthscale,
+                t_kernel,
+                self.W,
+                self.sn,
+                self.s,
+                self.l,
                 X,
                 Y
             )
@@ -71,61 +88,85 @@ class TripathyOptimizer:
             for i in range(self.m):
                 # TODO: the following optimizer should return the W for which the Loss is optimized.
                 # NOT the W which was found at last
-                W = w_optimizer.optimize_stiefel_manifold(W=W)
-                t_kernel.update_params(W=W, l=t_kernel.inner_kernel.lengthscale, s=t_kernel.inner_kernel.variance)
-                w_optimizer.kernel.update_params(
-                    W=W,
-                    l=w_optimizer.kernel.inner_kernel.lengthscale,
-                    s=w_optimizer.kernel.inner_kernel.variance
+                print("Old W: ", self.W)
+                W = w_optimizer.optimize_stiefel_manifold(W=self.W.copy())
+                print("New W: ", W)
+                self.W = W
+                t_kernel.update_params(
+                    W=self.W,
+                    l=self.l,
+                    s=self.s
                 )
+            #################################################################################
+            #  INTERMEDIATE LOSS
+            ##################################################################################
+            L01 = loss(
+                t_kernel,
+                self.W,
+                self.sn,
+                self.s,
+                self.l,
+                X,
+                Y
+            )
 
             #################################################################################
             #  PERFORM n ITERATIONS TOWARDS THE SOLUTION OF PARAMETER OPTIMIZATION PROBLEM  #
             #################################################################################
+
+            parameter_optimizer = t_ParameterOptimizer(
+                fix_W=self.W,
+                kernel=t_kernel,
+                X=X,
+                Y=Y
+            )
+
+            # TODO: Check if instances (not that sth is copied wrongly etc. comply!
+            for i in range(self.n):
+                print("\n\n\nOld s, l, sn", (self.s, self.l, self.sn))
+                self.s, self.l, self.sn = parameter_optimizer.optimize_s_sn_l(
+                    sn=self.sn,
+                    s=self.s,
+                    l=self.l.copy()
+                )
+                print("\n\n\nNew s, l, sn", (self.s, self.l, self.sn))
+                print("self.l is: ", self.l)
+                t_kernel.update_params(
+                    W=self.W,
+                    s=self.s,
+                    l=self.l
+                )
+
+
+            t_kernel.update_params(W=self.W, s=self.s, l=self.l)
             L1 = loss(
-                w_optimizer.kernel,
-                W,
-                sn,
-                w_optimizer.kernel.inner_kernel.variance,
-                w_optimizer.kernel.inner_kernel.lengthscale,
+                t_kernel,
+                self.W,
+                self.sn,
+                self.s,
+                self.l,
                 X,
                 Y
             )
+
+            print("Tuples is: ", (self.W, self.s, self.l, self.sn))
+
+            self.losses.append(L1)
+
+            # assert L0 < L01, (L0, L01)
+            # assert L01 > L1, (L01, L1)
+            # if len(self.losses) > 1:
+            #     assert self.losses[-2] != self.losses[-1]
+
+            print(L0, L01, L1)
+
+            #assert L0 != L01
 
             if abs( (L1 - L0) / L0) < self.leps:
                 print("Break Alg. 1", abs(L1 - L0) / L0)
                 break
 
-        return W, sn, t_kernel.inner_kernel.lengthscale, t_kernel.inner_kernel.variance
-
-    #
-    #         # TODO: here, we could simply call GP.optimize (with the correct kernel!)
-    #         # TODO: we can then retrieve the variance and lengthscales using .variance, .lengthscales
-    #         # (instead of updating the regression paramateres, we call
-    #         # Optimize over all other parameters ()
-    #
-    #         # TODO: Possibly just call .optimize?
-    #         # In that case, we have to have W saved somewhere as a fixed variable within the GP objetc (the kernel object)
-    #
-    #         theta_optimizer = t_ParameterOptimizer(
-    #             fix_W=fix_W,
-    #             kernel=kernel
-    #         )
-    #         sn, s, l = theta_optimizer.optimize_sn_l(
-    #             sn=sn,
-    #             s=s,
-    #             l=l,
-    #             X=X,
-    #             Y=Y,
-    #             n=self.param_max_steps
-    #         )
-    #
-    #         L0 = L1
-    #         L1 = loss(self.W, self.sn, self.s, self.l, self.gp.X, self.gp.Y)
-    #         if (np.abs(L1 - L0) / L0) < self.ftol:
-    #             break
-    #
-    #     return self.W, self.sn, self.l
+        return self.W, self.sn, self.l, self.s
 
 
     ###############################

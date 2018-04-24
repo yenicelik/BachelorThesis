@@ -56,23 +56,72 @@ class TestParameterOptimization(object):
         sn = float( np.random.rand(1) )
         l = np.random.rand(self.active_dim)
 
-        GPRegression(self.X, self.Y)
+        new_s, new_l, new_sn = self.parameter_optimizer.optimize_s_sn_l(sn, s, l)
 
-        self.kernel.update_params(W=self.fix_W, s=s, l=l)
+        print(s, new_s)
+        print(sn, new_sn)
+        print(l, new_l)
 
-        print("Got this far!")
-        print("Previous parameters")
-        print(s)
-        print(l)
-        print(sn)
-        s, l, sn = self.parameter_optimizer.optimize_s_sn_l(sn, s, l, n=1)
-        print("Got new parameters: ")
-        print(s)
-        print(l)
-        print(sn)
+        assert not np.isclose(new_s, s), (new_s, s)
+        assert not np.isclose(new_l, l).all(), (new_l, l)
+        assert not np.isclose(new_sn, sn), (new_sn, sn)
 
-    def test_parameter_opt_chages_parameters(self):
+    def test_parameter_optimizes_loss(self):
         self.init()
-        pass
+
+        s_init = float( np.random.rand(1) )
+        sn_init = float( np.random.rand(1) )
+        l_init = np.random.rand(self.active_dim)
+
+        old_loss = loss(
+            self.kernel,
+            self.fix_W,
+            sn_init,
+            s_init,
+            l_init,
+            self.X,
+            self.Y
+        )
+
+        new_s, new_l, new_sn = self.parameter_optimizer.optimize_s_sn_l(sn_init, s_init, l_init)
+
+        new_loss = loss(
+            self.kernel,
+            self.fix_W,
+            new_sn,
+            new_s,
+            new_l,
+            self.X,
+            self.Y
+        )
+
+        # print("Old loss, new loss ", (old_loss, new_loss))
+        # TODO: Should this be a new smaller value, or a value toward zero, or a new bigger value?
+        # assert new_loss <= old_loss
+        assert new_loss != old_loss
+
+    def test_parameters_change(self):
+        self.init()
+
+        s_init = float( np.random.rand(1) )
+        sn_init = float( np.random.rand(1) )
+        l_init = np.random.rand(self.active_dim)
+
+        old_loss = loss(
+            self.kernel,
+            self.fix_W,
+            sn_init,
+            s_init,
+            l_init,
+            self.X,
+            self.Y
+        )
+
+        new_s, new_l, new_sn = self.parameter_optimizer.optimize_s_sn_l(sn_init, s_init, l_init)
+
+        assert s_init != new_s, (s_init, new_s)
+        assert not np.isclose(l_init, new_l).all(), (l_init, new_l)
+        assert sn_init != new_sn, (sn_init, new_sn)
+
 
 

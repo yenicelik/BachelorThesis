@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  15 APR 2018 11:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  24 APR 2018 13:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1766,16 +1766,16 @@ Chapter 4.
 LaTeX Font Info:    Try loading font information for TS1+ptm on input line 18.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-)
+) [13]
 
-Package natbib Warning: Citation `Rea85' on page 13 undefined on input line 30.
+Package natbib Warning: Citation `Rea85' on page 14 undefined on input line 38.
 
 
 
-Package natbib Warning: Citation `Ancey1996' on page 13 undefined on input line
- 30.
+Package natbib Warning: Citation `Ancey1996' on page 14 undefined on input line
+ 38.
 
-) [13] [14] (./thesis.bbl) [15
+) [14] (./thesis.bbl) [15
 
 
 
@@ -1807,33 +1807,43 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 201.
 (./Chapter4/chapter4.aux) (./Appendix1/appendix1.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 201.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 201.
-Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 1AC069A2EB87D88CA95B552205C4843B;6584.
+
+
+Package rerunfilecheck Warning: File `thesis.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `thesis.out':
+(rerunfilecheck)             Before: 1AC069A2EB87D88CA95B552205C4843B;6584
+(rerunfilecheck)             After:  A2A22CF0441FA72621A9B2F954DA5871;6757.
  ) 
 Here is how much of TeX's memory you used:
- 26326 strings out of 492995
- 461344 string characters out of 6132704
+ 26331 strings out of 492995
+ 461395 string characters out of 6132704
  539350 words of memory out of 5000000
  29206 multiletter control sequences out of 15000+600000
- 74440 words of font info for 198 fonts, out of 8000000 for 9000
+ 74570 words of font info for 200 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,12n,92p,10383b,850s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
-xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
-live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texli
-ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
-e/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/te
-xlive/2017/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/20
-17/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-di
-st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
-pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
-mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
-a.pfb>
-Output written on thesis.pdf (30 pages, 220270 bytes).
+pdfTeX warning (dest): name{subsection.4.2.1} has been referenced but does no
+t exist, replaced by a fixed one
+
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texl
+ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texli
+ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
+/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
+2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texl
+ive/2017/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/2017
+/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist
+/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
+1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/time
+s/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8a.
+pfb>
+Output written on thesis.pdf (30 pages, 220602 bytes).
 PDF statistics:
- 487 PDF objects out of 1000 (max. 8388607)
- 425 compressed objects within 5 object streams
- 126 named destinations out of 1000 (max. 500000)
+ 490 PDF objects out of 1000 (max. 8388607)
+ 428 compressed objects within 5 object streams
+ 128 named destinations out of 1000 (max. 500000)
  42259 words of extra memory for PDF output out of 42996 (max. 10000000)
 
