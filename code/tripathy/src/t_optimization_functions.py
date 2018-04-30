@@ -38,7 +38,13 @@ class t_ParameterOptimizer:
         # Create a GP
         self.kernel.update_params(W=self.fix_W, s=s, l=l)
         gp_reg = GPRegression(self.X, self.Y.reshape(-1, 1), self.kernel, noise_var=sn)
-        gp_reg.optimize(optimizer="lbfgs")
+        try:
+            gp_reg.optimize(optimizer="lbfgs", max_iters=100)
+        except Exception as e:
+            print(e)
+            print(gp_reg.kern.K(gp_reg.X))
+            print("Error above!")
+
 
         # TODO: does this optimization work in the correct direction?
 
@@ -82,7 +88,16 @@ class t_WOptimizer:
         self.all_losses = []
         self.M_s = 10000
 
-        self.number_of_taus_to_search_through = 20
+        self.no_taus = 5
+
+        self.tau_arr = list( np.append(
+            np.linspace(0., self.tau_max, num=self.no_taus),
+            np.logspace(0., self.tau_max / 2, num=self.no_taus // 2)
+        ) )
+        self.tau_arr = [max(0., x) for x in self.tau_arr]
+        self.tau_arr = [min(self.tau_max, x) for x in self.tau_arr]
+
+        assert len(self.tau_arr) == (self.no_taus + self.no_taus // 2), self.tau_arr
 
     #########################################
     #                                       #
@@ -101,6 +116,8 @@ class t_WOptimizer:
         F_1 = loss(self.kernel, self.W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
         for i in range(self.M_s):
+            if i % 1 == 0:
+                print("Alg. 3 Progress: ", str((i * 100) / self.M_s) + "%")
             self.tau = self._find_best_tau(self.W)
             self.W = self._gamma(self.tau, self.W)
 
@@ -118,17 +135,19 @@ class t_WOptimizer:
     ###############################
     def _gamma(self, tau, W):
             # print("Tau is: ", tau)
+            assert W is not None, W
             assert (tau >= 0 - self.tau_max / 10.), (tau, self.tau_max)
             assert (tau <= self.tau_max + self.tau_max / 10.), (tau, self.tau_max)
 
             real_dim = W.shape[0]
             active_dim = W.shape[1]
 
-            AW = self._A(W)
-            lhs = np.eye(real_dim) - 0.5 * tau * AW
-            rhs = np.eye(real_dim) + 0.5 * tau * AW
+            AW = 0.5 * tau * self._A(W)
+            lhs = np.eye(real_dim) - AW
+            rhs = np.eye(real_dim) + AW
+            rhs = np.dot(rhs, W)
             out = np.linalg.solve(lhs, rhs)
-            out = np.dot(out, W)
+            # out = np.dot(out, W)
 
             return out
 
@@ -145,39 +164,35 @@ class t_WOptimizer:
     ###############################
     #          BRANCH 2           #
     ###############################
+    #  Take this definition out of here
+    def tau_manifold(self, tau, W):
+        assert (not math.isnan(tau))
+        assert W is not None
+        W_tau = self._gamma(tau, W)
+        loss_val = loss(self.kernel, W_tau, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
+        self.all_losses.append(loss_val)
+        return loss_val
+
     def _find_best_tau(self, W):
+
+        # self.tau_manifold = np.vectorize(self.tau_manifold, excluded=1)
 
         assert isinstance(self.fix_s, float) or isinstance(self.fix_s, Param), type(self.fix_s)
         assert self.fix_l.shape == (W.shape[1],)
 
-        def tau_manifold(tau):
-            assert (not math.isnan(tau))
-            W_tau = self._gamma(tau, W)
-            loss_val = loss(self.kernel, W_tau, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
-            self.all_losses.append(loss_val)
-            return loss_val
-
         assert (self.tau >= 0 - self.tau_max / 100.)
         assert (self.tau <= self.tau_max + self.tau_max / 100.)
 
-        tau_arr = np.append(
-            np.linspace(0., self.tau_max, num=self.number_of_taus_to_search_through//2),
-            np.logspace(0., self.tau_max, num=self.number_of_taus_to_search_through//2)
-        )
-        tau_arr[tau_arr > self.tau_max] = self.tau_max
-        tau_arr = np.unique(tau_arr)
+        # tau_arr[tau_arr > self.tau_max] = self.tau_max
 
-        assert len(tau_arr) >= 5, len(tau_arr)
+        # assert len(tau_arr) >= 5, len(tau_arr)
 
-        best_loss = -np.inf
-        best_tau = 0.
-        for cur_tau in tau_arr:
-            cur_loss = tau_manifold(cur_tau)
-            if cur_loss > best_loss:
-                best_loss = cur_loss
-                best_tau = cur_tau
+        # losses = np.asarray( list(map( lambda x: self.tau_manifold(x, W) , self.tau_arr)) )
+        losses = [self.tau_manifold(x, W) for x in self.tau_arr]
+        assert len(losses) == len(self.tau_arr)
 
-        print("New best tau and loss are: ", (best_tau, best_loss))
+        best_index = int( np.argmax( losses ) )
+        best_tau = self.tau_arr[best_index]
 
         assert (not math.isnan(best_tau))
 

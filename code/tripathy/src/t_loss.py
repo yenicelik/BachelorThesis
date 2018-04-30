@@ -23,6 +23,7 @@ def loss(kernel, W, sn, s, l, X, Y):
 
     # Laziliy implementing GPy's function!
     # # TODO: check if the kernel inherits the correct methods
+    # TODO: change that GPRegression is not newly created maybe, but instead only the parameters are changed or so
     kernel.update_params(W, l, s)
     Y = Y.reshape((-1, 1))
     gp_reg = GPRegression(X, Y, kernel, noise_var=sn)
@@ -100,6 +101,7 @@ def dloss_dW(kernel, W, fix_sn, fix_s, fix_l, X, Y):
     """
     kernel.update_params(W=W, l=fix_l, s=fix_s)
     Y = Y.reshape((-1, 1))
+    # TODO: same logic with the GPRegression. Do we actually need this here? Does this call change-params?
     gp_reg = GPRegression(X, Y, kernel, noise_var=fix_sn)
 
     # return gp_reg.log_likelihood()

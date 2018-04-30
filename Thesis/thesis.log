@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  24 APR 2018 13:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  29 APR 2018 20:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1373,7 +1373,7 @@ Package: translator 2010/06/12 ver 1.10
 uage-mappings.tex)))) (./thesis-info.tex) (./thesis.aux
 (./Proposal/proposal.aux) (./Abstract/abstract.aux) (./Chapter1/chapter1.aux)
 (./Chapter2/chapter2.aux) (./Chapter3/chapter3.aux) (./Chapter4/chapter4.aux)
-(./Appendix1/appendix1.aux))
+(./Chapter5/chapter5.aux) (./Appendix1/appendix1.aux))
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 110.
@@ -1562,7 +1562,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 114.
 \PHD@crest=\box54
 
-<Figs/University_Crest.pdf, id=136, 59.22125pt x 69.25874pt>
+<Figs/University_Crest.pdf, id=148, 59.22125pt x 69.25874pt>
 File: Figs/University_Crest.pdf Graphic file (type pdf)
 
 <use Figs/University_Crest.pdf>
@@ -1632,7 +1632,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 Package natbib Warning: Citation `Wang' on page iii undefined on input line 69.
 
 
-<Figs/./../src/Embedding_optimization.png, id=160, 636.3775pt x 241.90375pt>
+<Figs/./../src/Embedding_optimization.png, id=172, 636.3775pt x 241.90375pt>
 File: Figs/./../src/Embedding_optimization.png Graphic file (type png)
 
 <use Figs/./../src/Embedding_optimization.png>
@@ -1654,7 +1654,7 @@ Package pdftex.def Info: Figs/./../src/Embedding_optimization.png used on input
 
 ]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 35.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 38.
 )
 \tf@toc=\write6
 \openout6 = `thesis.toc'.
@@ -1768,21 +1768,36 @@ LaTeX Font Info:    Try loading font information for TS1+ptm on input line 18.
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [13]
 
-Package natbib Warning: Citation `Rea85' on page 14 undefined on input line 38.
+Package natbib Warning: Citation `Rea85' on page 14 undefined on input line 40.
 
 
 
 Package natbib Warning: Citation `Ancey1996' on page 14 undefined on input line
- 38.
+ 40.
 
-) [14] (./thesis.bbl) [15
+) [14]
+\openout2 = `Chapter5/chapter5.aux'.
+
+ (./Chapter5/chapter5.tex
+Chapter 5.
+
+Underfull \hbox (badness 10000) in paragraph at lines 15--16
+
+ []
+
+) [15
 
 
+
+] [16
+
+
+] (./thesis.bbl) [17
 
 ]
 \openout2 = `Appendix1/appendix1.aux'.
 
- (./Appendix1/appendix1.tex [16
+ (./Appendix1/appendix1.tex [18
 
 
 ]
@@ -1793,57 +1808,48 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
-) [17] [18
+) [19] [20
 
 
 ] (./thesis.ind)
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 201.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 201.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 206.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 206.
 (./thesis.aux (./Proposal/proposal.aux) (./Abstract/abstract.aux)
 (./Chapter1/chapter1.aux) (./Chapter2/chapter2.aux) (./Chapter3/chapter3.aux)
-(./Chapter4/chapter4.aux) (./Appendix1/appendix1.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 201.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 201.
-
-
-Package rerunfilecheck Warning: File `thesis.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `thesis.out':
-(rerunfilecheck)             Before: 1AC069A2EB87D88CA95B552205C4843B;6584
-(rerunfilecheck)             After:  A2A22CF0441FA72621A9B2F954DA5871;6757.
+(./Chapter4/chapter4.aux) (./Chapter5/chapter5.aux) (./Appendix1/appendix1.aux)
+)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 206.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 206.
+Package rerunfilecheck Info: File `thesis.out' has not changed.
+(rerunfilecheck)             Checksum: AC14A9C099D44BC1612E200930EF79F8;7331.
  ) 
 Here is how much of TeX's memory you used:
- 26331 strings out of 492995
- 461395 string characters out of 6132704
+ 26347 strings out of 492995
+ 461633 string characters out of 6132704
  539350 words of memory out of 5000000
- 29206 multiletter control sequences out of 15000+600000
+ 29210 multiletter control sequences out of 15000+600000
  74570 words of font info for 200 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,12n,92p,10383b,850s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{subsection.4.2.1} has been referenced but does no
-t exist, replaced by a fixed one
-
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
-live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texli
-ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
-2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/2017
-/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist
-/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
-1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/time
-s/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8a.
-pfb>
-Output written on thesis.pdf (30 pages, 220602 bytes).
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
+xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texli
+ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
+e/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/te
+xlive/2017/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/20
+17/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-di
+st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
+pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
+mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
+a.pfb>
+Output written on thesis.pdf (32 pages, 222571 bytes).
 PDF statistics:
- 490 PDF objects out of 1000 (max. 8388607)
- 428 compressed objects within 5 object streams
- 128 named destinations out of 1000 (max. 500000)
- 42259 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 513 PDF objects out of 1000 (max. 8388607)
+ 449 compressed objects within 5 object streams
+ 132 named destinations out of 1000 (max. 500000)
+ 42283 words of extra memory for PDF output out of 42996 (max. 10000000)
 

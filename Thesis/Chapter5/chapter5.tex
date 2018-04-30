@@ -1,0 +1,36 @@
+%!TEX root = ../thesis.tex
+%*******************************************************************************
+%****************************** Third Chapter **********************************
+%*******************************************************************************
+\chapter{Extensions}
+
+% **************************** Define Graphics Path **************************
+\ifpdf
+    \graphicspath{{Chapter3/Figs/Raster/}{Chapter3/Figs/PDF/}{Chapter3/Figs/}}
+\else
+    \graphicspath{{Chapter3/Figs/Vector/}{Chapter3/Figs/}}
+\fi
+
+\section{Finding a matrix when we apply a polynomial kernel onto the input first}
+We want to analyse if the gpregression can identify the random matrix, if the input is first put through a polynomial kernel of degree 2. \\
+
+More specifically, the problem looks as follows.
+We want to approximate the real function $ f $ through a gaussian process $ g $, with the following condition:
+
+\def\B{
+\begin{bmatrix}
+    (x - x_0)^2 \\
+    (x - x_1)^2
+\end{bmatrix}}
+
+\begin{equation}
+f \left( W \B \right) \approx g \left( x \right)
+\end{equation} 
+
+where $x_0, x_1$ are constants.
+
+
+
+
+
+

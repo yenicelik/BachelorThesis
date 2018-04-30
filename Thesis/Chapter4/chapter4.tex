@@ -15,6 +15,7 @@
 When implementing models, the following difficulties may arise:
 
 \begin{itemize}
+\item Overflows and underflow are often occuring as a reusult of high dimesionality
 \item Making sure the numerical examples are correct
 \item Making sure the differentiations are correct (use finite differences for matrices in this example)
 \item Write theoretical tests of the entire results
@@ -22,6 +23,7 @@ When implementing models, the following difficulties may arise:
 \item Test if the expectation $$ E[ f(A x) - f_hat(A_hat x) ] $$ approaches zero
 \item Visualize the individual functions
 \item write a very simple test case of a parabola, and check where the points project to
+\item Performance of the implementation might not be optimal, as the design is only clear after implementation
 \end{itemize}
 
 \section{Family of matrices}

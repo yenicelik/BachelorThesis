@@ -62,22 +62,32 @@ class TripathyMaternKernel(Kern):
     ###############################
     #       SETTER FUNCTIONS      #
     ###############################
+    # TODO: This takes a lot of time!
+    # TODO: Update parameters always before loss?
     def update_params(self, W, l, s):
-        self.set_l(l, True)
-        self.set_s(s, True)
+        if not (l is self.inner_kernel.lengthscale):
+            self.set_l(l, True)
+        if not (s == self.inner_kernel.variance):
+            self.set_s(s, True)
         # We will not include W as a parameter, as we want to call the derivatives etc. separatedly
-        self.set_W(W, True)
+        if not (W is self.W):
+            self.set_W(W, True)
 
     def set_W(self, W, safe=False):
         assert safe
         assert W.shape == (self.real_dim, self.active_dim)
         assert np.allclose( np.dot(W.T, W), np.eye(self.active_dim), atol=1.e-6), (W, np.dot(W.T, W), np.eye(self.active_dim))
         self.W = W
-        self.parameters_changed()
+        # self.parameters_changed()
 
     def set_l(self, l, safe=False):
         assert safe
         assert l.shape == (self.active_dim,)
+        l = np.maximum(
+            1e-4,
+            l
+        )
+        # print(l)
         self.inner_kernel.lengthscale = l
         # TODO: do we have to link parameters here somehow? (with this kernel, NOT the inner kernel?)
 

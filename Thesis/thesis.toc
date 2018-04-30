@@ -29,8 +29,10 @@
 \contentsline {subsection}{\numberline {3.1.1}First subsection in the first section}{11}{subsection.3.1.1}
 \contentsline {chapter}{\numberline {4}Implementing methods}{13}{chapter.4}
 \contentsline {section}{\numberline {4.1}Difficulties when implementing models}{13}{section.4.1}
-\contentsline {section}{\numberline {4.2}Family of matrices}{13}{section.4.2}
+\contentsline {section}{\numberline {4.2}Family of matrices}{14}{section.4.2}
 \contentsline {section}{\numberline {4.3}Methods from }{14}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}First subsection in the first section}{14}{subsection.4.3.1}
-\contentsline {chapter}{References}{15}{chapter*.9}
-\contentsline {chapter}{Appendix \numberline {A}How to install \LaTeX }{17}{Appendix.a.A}
+\contentsline {chapter}{\numberline {5}Extensions}{15}{chapter.5}
+\contentsline {section}{\numberline {5.1}Finding a matrix when we apply a polynomial kernel onto the input first}{15}{section.5.1}
+\contentsline {chapter}{References}{17}{chapter*.9}
+\contentsline {chapter}{Appendix \numberline {A}How to install \LaTeX }{19}{Appendix.a.A}
