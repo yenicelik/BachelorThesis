@@ -54,7 +54,7 @@ class t_ParameterOptimizer:
 
         assert gp_reg.kern.inner_kernel.lengthscale is not None
         assert gp_reg.kern.inner_kernel.variance is not None
-        assert not np.isclose(new_lengthscale, np.zeros_like(new_lengthscale) ).all(), new_lengthscale
+        assert not np.isclose(np.asarray(new_lengthscale), np.zeros_like(new_lengthscale) ).all(), new_lengthscale
 
         return float(new_variance), new_lengthscale.copy(), float(new_sn)
 

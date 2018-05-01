@@ -13,7 +13,9 @@ from paramz.transformations import Logexp
 from GPy.kern.src.stationary import Matern32
 from paramz.caching import Cache_this
 
-class TripathyMaternKernel(Kern):
+from febo.models.gpy import IncrementalKernelCacheMixin, IncrementalKernelGradientsMixin
+
+class TripathyMaternKernel(Kern, IncrementalKernelCacheMixin, IncrementalKernelGradientsMixin):
 
     """
     A kernel of the following form:

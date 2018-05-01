@@ -125,7 +125,7 @@ class TestMatrixRecoveryNaive(object):
         print(self.X.shape)
         Z = np.dot(self.X, self.real_W)
         print(Z.shape)
-        self.Y = self.function._f(Z.T).reshape(-1, 1)
+        self.Y = self.function.f(Z.T).reshape(-1, 1)
 
         self.no_tries = 2
 
@@ -220,7 +220,7 @@ class TestMatrixRecovery(object):
 
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W)
-        self.Y = self.function._f(Z.T).reshape(-1, 1)
+        self.Y = self.function.f(Z.T).reshape(-1, 1)
 
         self.w_optimizer = t_WOptimizer(
             self.kernel,
