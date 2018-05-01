@@ -32,7 +32,7 @@ class TestIndividualFunctions(object):
         self.function = Rosenbrock()
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W)
-        self.Y = self.function._f(Z.T)
+        self.Y = self.function.f(Z.T)
 
         self.optimizer = TripathyOptimizer()
 

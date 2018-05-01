@@ -33,7 +33,7 @@ class TestFunctions(object):
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W)
         assert Z.shape == (self.no_samples, self.active_dim)
-        self.Y = self.function._f(Z.T).reshape(self.no_samples,1)
+        self.Y = self.function.f(Z.T).reshape(self.no_samples,1)
         #assert self.Y.shape == (self.no_samples,)
 
         self.sn = 0.8

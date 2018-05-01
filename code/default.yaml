@@ -1,0 +1,60 @@
+algorithm:
+  model: febo.models.gp.GP
+  optimizer:
+algorithm.candidate:
+  candidates:  # Function which returns a list of candidate points to be evaluated.
+controller.plotting:
+  plot_contour: true
+  plot_regret: true
+  plot_final: true
+  plot_every: 0
+environment:
+  normalize: true
+environment.benchmark:
+  seed:  # Seed for randomly generated environments.
+  num_domain_points: 30
+  dimension: 3
+  noise_obs_mode: full  # Can be set to "full", "evaluation" or "hidden".
+  noise_function: 0.5
+  lower_bound_objective_value:
+  constraints: []
+environments.benchmark.noise.random:
+  seed:  # Seed for randomly generated noise function.
+  rho_high: 0.5  # Noise Upper Bound
+  rho_low: 0.5  # Noise Lower Bound
+experiment.benchmark:
+  label: febo.experiment.benchmark.label_id
+  iterator: []
+  fixed_environment: false  # If true, only one environment for the whole batch will be created. Use this, if you randomly genrate your environment, but the whole batch should use the same random instance of the environment.
+  repetitions: 5  # Number of repetitions each experiment is run.
+experiment.simple:
+  T: 100  # Horizon
+  algorithm: febo.algorithms.ucb.UCB
+  environment: febo.environment.benchmarks.functions.Camelback
+  controller: febo.controller.data.DataController
+main:
+  log_level: INFO
+  experiment_dir: runs/
+  experiment: febo.experiment.simple.SimpleExperiment  # Experiment
+models.gp:
+  calculate_gradients: true  # Enable/Disable computation of gradient on each update.
+  noise_var: 0.1
+  kernels:
+  - - GPy.kern.RBF
+    - variance: 2.0
+      lengthscale: 0.2
+      ARD: true
+optimizer.grid:
+  points_per_dimension: 100
+optimizer.scipy:
+  sync_restarts: true
+  num_processes: 4
+  num_restart: 5
+  lbfgs_maxfun: 1000
+  lbfgs_use_gradients: false
+optimizers.seeds:
+  projection_max_line_search: 10
+  safe_projection: false
+  num_random_points: 50
+  max_tail_length: 200
+  expected_tail_length: 100

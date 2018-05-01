@@ -44,7 +44,7 @@ class VisualizedTestingTau:
 
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W).reshape((-1, 1))
-        self.Y = self.function._f(Z.T).squeeze()
+        self.Y = self.function.f(Z.T).squeeze()
 
         self.w_optimizer = t_WOptimizer(
             self.kernel, # TODO: does the kernel take over the W?
@@ -143,7 +143,7 @@ class VisualizedTestingWParabola:
 
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W)
-        self.Y = self.function._f(Z.T).reshape(-1, 1)
+        self.Y = self.function.f(Z.T).reshape(-1, 1)
 
         self.w_optimizer = t_WOptimizer(
             self.kernel, # TODO: does the kernel take over the W?
@@ -186,7 +186,7 @@ class VisualizedTestingWParabola:
             self.kernel.update_params(W=W_hat, l=l, s=s)
             gp_reg = GPRegression(self.X, self.Y, self.kernel, noise_var=sn)
 
-            y = self.function._f( np.dot(X, self.real_W).T )
+            y = self.function.f( np.dot(X, self.real_W).T )
             y_hat = gp_reg.predict(self.X)[0].squeeze()
 
             #################################
@@ -246,7 +246,7 @@ class VisualizedTestingWAugmentedSinusoidal:
         print(self.X.shape)
         Z = np.dot(self.X, self.real_W).reshape(-1, 1)
         print(Z.shape)
-        self.Y = self.function._f(Z.T).reshape(-1, 1)
+        self.Y = self.function.f(Z.T).reshape(-1, 1)
 
         self.w_optimizer = t_WOptimizer(
             self.kernel, # TODO: does the kernel take over the W?
@@ -292,7 +292,7 @@ class VisualizedTestingWAugmentedSinusoidal:
             self.kernel.update_params(W=W_hat, l=l, s=s)
             gp_reg = GPRegression(self.X, self.Y, self.kernel, noise_var=sn)
 
-            y = self.function._f( np.dot(X, self.real_W).T )
+            y = self.function.f( np.dot(X, self.real_W).T )
 
             if self.PLOT_MEAN:
                 y_hat = gp_reg.predict(X)[0].squeeze()
@@ -362,7 +362,7 @@ class VisualizeTwoStepOptimization:
         print(self.X.shape)
         Z = np.dot(self.X, self.real_W).reshape(-1, 1)
         print(Z.shape)
-        self.Y = self.function._f(Z.T).reshape(-1, 1)
+        self.Y = self.function.f(Z.T).reshape(-1, 1)
 
         self.optimizer = TripathyOptimizer()
 
@@ -404,7 +404,7 @@ class VisualizeTwoStepOptimization:
             self.kernel.update_params(W=W_hat, l=l, s=s)
             gp_reg = GPRegression(self.X, self.Y, self.kernel, noise_var=sn)
 
-            y = self.function._f( np.dot(X, self.real_W).T )
+            y = self.function.f( np.dot(X, self.real_W).T )
 
             if self.PLOT_MEAN:
                 y_hat = gp_reg.predict(X)[0].squeeze()
@@ -474,7 +474,7 @@ class VisualizeTwoStepOptimizationWithRestarts:
         print(self.X.shape)
         Z = np.dot(self.X, self.real_W).reshape(-1, 1)
         print(Z.shape)
-        self.Y = self.function._f(Z.T).reshape(-1, 1)
+        self.Y = self.function.f(Z.T).reshape(-1, 1)
 
         self.optimizer = TripathyOptimizer()
 
@@ -520,7 +520,7 @@ class VisualizeTwoStepOptimizationWithRestarts:
         self.kernel.update_params(W=W_hat, l=l, s=s)
         gp_reg = GPRegression(self.X, self.Y, self.kernel, noise_var=sn)
 
-        y = self.function._f( np.dot(X, self.real_W).T )
+        y = self.function.f( np.dot(X, self.real_W).T )
 
         if self.PLOT_MEAN:
             y_hat = gp_reg.predict(X)[0].squeeze()
@@ -584,7 +584,7 @@ class TestMatrixRecoveryGreatD:
         Z = np.dot(self.X, self.real_W).reshape(-1, self.active_dim)
         print("The projected input matrix: ", Z.shape)
         print(Z.shape)
-        self.Y = self.function._f(Z.T).reshape(-1, 1)
+        self.Y = self.function.f(Z.T).reshape(-1, 1)
 
         print("Shapes of X and Y: ", (self.X.shape, self.Y.shape) )
 
@@ -657,7 +657,7 @@ class TestMatrixRecoveryHighDegreePolynomial:
         Z = np.dot(self.X, self.real_W).reshape(-1, self.active_dim)
         print("The projected input matrix: ", Z.shape)
         print(Z.shape)
-        self.Y = self.function._f(Z.T).reshape(-1, 1)
+        self.Y = self.function.f(Z.T).reshape(-1, 1)
 
         print("Shapes of X and Y: ", (self.X.shape, self.Y.shape) )
 

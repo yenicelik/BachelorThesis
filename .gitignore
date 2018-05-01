@@ -10,3 +10,4 @@ code/tripathy/.pytest_cache/
 code/tripathy/tests/.pytest_cache/
 *.txt
 *.png
+code/runs/trip/data/

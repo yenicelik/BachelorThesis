@@ -32,7 +32,7 @@ class TestIndividualFunctions(object):
         self.function = Rosenbrock()
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W)
-        self.Y = self.function._f(Z.T)
+        self.Y = self.function.f(Z.T)
 
         self.w_optimizer = t_WOptimizer(
             self.kernel,
@@ -78,7 +78,7 @@ class TestTauProcesses(object):
         self.function = Rosenbrock()
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W)
-        self.Y = self.function._f(Z.T)
+        self.Y = self.function.f(Z.T)
 
         self.w_optimizer = t_WOptimizer(
             self.kernel,
@@ -192,7 +192,7 @@ class TestAProcesses(object):
         self.function = Rosenbrock()
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W)
-        self.Y = self.function._f(Z.T)
+        self.Y = self.function.f(Z.T)
 
         self.w_optimizer = t_WOptimizer(
             self.kernel,

@@ -36,7 +36,7 @@ class TestParameterOptimization(object):
         self.function = Rosenbrock()
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.fix_W)
-        self.Y = self.function._f(Z.T).reshape(-1, 1)
+        self.Y = self.function.f(Z.T).reshape(-1, 1)
 
         print("Shape are: ", (self.X.shape, self.Y.shape))
 

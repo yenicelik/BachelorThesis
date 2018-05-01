@@ -68,7 +68,7 @@ class TestLoss(object):
         ])
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W)
-        self.Y = self.function._f(Z.T)
+        self.Y = self.function.f(Z.T)
 
     def test_loss_returns_correct_dimensions(self):
         self.init()
@@ -109,7 +109,7 @@ class TestDerivatives(object):
         ])
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W)
-        self.Y = self.function._f(Z.T)
+        self.Y = self.function.f(Z.T)
 
     # TODO: figure out this thing!
     def test_dK_dW_returns_correct_dimension(self):
@@ -131,7 +131,7 @@ class TestDerivativesW(object):
     def init_XY(self):
         self.X = np.random.rand(self.no_samples, self.real_dim)
         Z = np.dot(self.X, self.real_W)
-        self.Y = self.function._f(Z.T)
+        self.Y = self.function.f(Z.T)
 
     def init(self):
         self.real_dim = 3
