@@ -67,3 +67,10 @@ class TestIndividualFunctions(object):
         )
 
         assert L0 < L1, (L0, L1)
+
+    def test_finding_active_subspace_does_not_crash(self):
+        self.init()
+
+        # TODO: loss before, should be bigger than loss after!
+        W_hat, sn, l, s = self.optimizer.find_active_subspace(self.X, self.Y)
+        assert self.optimizer.dim_losses[0] >= self.optimizer.dim_losses[-1]

@@ -15,7 +15,7 @@ from paramz.caching import Cache_this
 
 from febo.models.gpy import IncrementalKernelCacheMixin, IncrementalKernelGradientsMixin
 
-class TripathyMaternKernel(Kern, IncrementalKernelCacheMixin, IncrementalKernelGradientsMixin):
+class TripathyMaternKernel(Kern):
 
     """
     A kernel of the following form:
@@ -86,7 +86,7 @@ class TripathyMaternKernel(Kern, IncrementalKernelCacheMixin, IncrementalKernelG
         assert safe
         assert l.shape == (self.active_dim,)
         l = np.maximum(
-            1e-4,
+            1.e-3,
             l
         )
         # print(l)
@@ -110,6 +110,7 @@ class TripathyMaternKernel(Kern, IncrementalKernelCacheMixin, IncrementalKernelG
         for i in range(self.real_dim):
             for j in range(self.active_dim):
                 A[i, j] = np.random.normal(0, 1)
+
         Q, R = np.linalg.qr(A)
         assert np.allclose(np.dot(Q.T, Q), np.eye(Q.shape[1]))
         assert Q.shape[0] == self.real_dim

@@ -54,13 +54,9 @@ class t_ParameterOptimizer:
 
         assert gp_reg.kern.inner_kernel.lengthscale is not None
         assert gp_reg.kern.inner_kernel.variance is not None
-        assert not np.isclose(np.asarray(new_lengthscale), np.zeros_like(new_lengthscale) ).all(), new_lengthscale
+        # assert not np.isclose(np.asarray(new_lengthscale), np.zeros_like(new_lengthscale) ).all(), new_lengthscale
 
         return float(new_variance), new_lengthscale.copy(), float(new_sn)
-
-
-        # Return variance, noise_var (GP), and lengthscale
-#        return res.x.flatten()[0], res.x.flatten()[1], res.x.flatten()[2:]
 
 
 class t_WOptimizer:
@@ -86,7 +82,7 @@ class t_WOptimizer:
         # FOR THE SAKE OF INCLUDING THIS WITHIN THE CLASS
         self.W = None
         self.all_losses = []
-        self.M_s = 10000
+        self.M_s = 500 # 10000
 
         self.no_taus = 5
 
@@ -134,22 +130,22 @@ class t_WOptimizer:
     #          BRANCH 1           #
     ###############################
     def _gamma(self, tau, W):
-            # print("Tau is: ", tau)
-            assert W is not None, W
-            assert (tau >= 0 - self.tau_max / 10.), (tau, self.tau_max)
-            assert (tau <= self.tau_max + self.tau_max / 10.), (tau, self.tau_max)
+        # print("Tau is: ", tau)
+        assert W is not None, W
+        assert (tau >= 0 - self.tau_max / 10.), (tau, self.tau_max)
+        assert (tau <= self.tau_max + self.tau_max / 10.), (tau, self.tau_max)
 
-            real_dim = W.shape[0]
-            active_dim = W.shape[1]
+        real_dim = W.shape[0]
+        active_dim = W.shape[1]
 
-            AW = 0.5 * tau * self._A(W)
-            lhs = np.eye(real_dim) - AW
-            rhs = np.eye(real_dim) + AW
-            rhs = np.dot(rhs, W)
-            out = np.linalg.solve(lhs, rhs)
-            # out = np.dot(out, W)
+        AW = 0.5 * tau * self._A(W)
+        lhs = np.eye(real_dim) - AW
+        rhs = np.eye(real_dim) + AW
+        rhs = np.dot(rhs, W)
+        out = np.linalg.solve(lhs, rhs)
+        # out = np.dot(out, W)
 
-            return out
+        return out
 
     def _A(self, W):
         dL_dW = dloss_dW(self.kernel, W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)

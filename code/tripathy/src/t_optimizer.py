@@ -9,13 +9,14 @@ import copy
 
 from .t_loss import loss
 from .t_optimization_functions import t_ParameterOptimizer, t_WOptimizer
+from .t_kernel import TripathyMaternKernel
 from GPy.core.parameterization import Param
 
 
 class TripathyOptimizer:
 
     def __init__(self):
-        # PARAMETERS
+        # PARAMETERS Algorithm 1
         self.d_max = 10
         self.M_l = 200 # 1000
 
@@ -23,10 +24,16 @@ class TripathyOptimizer:
         self.m = 1
         self.n = 1
 
-        self.no_of_restarts = 20
+        self.no_of_restarts = 200
+
+        # PARAMETERS Algorithm 4
+        self.btol = 10.e-3
+
+
 
         # For debugging / testing only
         self.losses = []
+        self.dim_losses = []
 
         # Everything should work through these values
         self.W = None
@@ -40,19 +47,54 @@ class TripathyOptimizer:
     ###############################
     # TODO: instead of taking sn, s, and l, simply take the gaussian process.
     # then we can also simply call the 'optimize' function over it!
-    # def find_active_subspace(self, init_W, init_sn, init_s, init_l, X, Y):
-    #     BIC1 = -100000
-    #     for d in range(self.d_max):
-    #
-    #         BIC0 = BIC1
-    #         BIC1 = self.bic(d, init_W, init_sn, init_s, init_l, X, Y)
-    #
-    #         # Run entire optimize-code
-    #         self.run_two_step_optimization_once(d)
-    #
-    #         if BIC1 - BIC0 / BIC0 < self.btol:
-    #             print("Best found dimension is: ", d, BIC1, BIC0)
-    #             break
+    def find_active_subspace(self, X, Y):
+        # Input dimension is always constant!
+        D = X.shape[1]
+
+        BIC1 = -10000 # Don't make if -inf, otherwise division is not possible
+        for d in range(1, min(D, self.d_max)):
+
+            print("Got this far")
+
+            print("What is the input?")
+            print(D, d)
+
+            self.kernel = TripathyMaternKernel(real_dim=D, active_dim=d)
+
+            BIC0 = BIC1
+
+            print("Moree")
+            print(X)
+            print(Y)
+
+            # Run entire optimize-code
+            W_hat, sn, l, s = self.try_two_step_optimization_with_restarts(
+                t_kernel=self.kernel,
+                X=X,
+                Y=Y
+            )
+
+            print("More stuff")
+
+            # Update the kernel with the new values
+            self.kernel.update_params(W=W_hat, l=l, s=s)
+
+            BIC1 = self.bic(
+                kernel=self.kernel,
+                W=W_hat,
+                sn=sn,
+                s=s,
+                l=l,
+                X=X,
+                Y=Y
+            )
+            self.dim_losses.append(BIC1)
+
+            if (BIC1 - BIC0) / BIC0 < self.btol:
+                print("Best found dimension is: ", d, BIC1, BIC0)
+                break
+
+        return W_hat, sn, l, s
 
     def try_two_step_optimization_with_restarts(self, t_kernel, X, Y):
 
@@ -234,7 +276,7 @@ class TripathyOptimizer:
     ###############################
     #        METRIC-FUNCTIONS     #
     ###############################
-    def bic(self, d, W, sn, s, l, X, Y):
-        s1 = self._loss(self.W, self.sn, self.s, self.l, self.gp.X, self.gp.Y)
-        s2 = self.real_dim * d + self.l.shape[0] + 1
+    def bic(self, kernel, W, sn, s, l, X, Y):
+        s1 = loss(kernel, W, sn, s, l, X, Y)
+        s2 = W.shape[0] * W.shape[1] + l.shape[0] + 1 # This counts how many parameters we have (is some form of regularization
         return s1 + s2
