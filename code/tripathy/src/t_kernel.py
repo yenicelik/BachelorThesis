@@ -186,3 +186,6 @@ class TripathyMaternKernel(Kern):
         dL_dZ = self.inner_kernel.gradients_X(dL_dK, Z)
         self.W_grad = np.einsum('ij,ik->kj', dL_dZ, X)
 
+    def update_non_incremental(self, X):
+        self._K = self.K(X)
+

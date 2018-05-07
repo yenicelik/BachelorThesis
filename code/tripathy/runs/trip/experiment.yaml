@@ -9,4 +9,4 @@ experiment.simple:
 experiment:
   log_level_console: INFO
 algorithm:
-  model: tripathy.model.TripathyGP # febo.models.GP # GPRegression # tripathy.src.model.TripathyModel #
+  model: src.tripathy__.TripathyGP # tripathy.model.TripathyGP # febo.models.GP # GPRegression # tripathy.src.model.TripathyModel #
