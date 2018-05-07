@@ -110,16 +110,19 @@ class TripathyGP(ConfidenceBoundModel):
         Returns:
 
         """
+        X = np.atleast_2d(X)
+        Y = np.atleast_2d(Y)
+        self.set_data(X=X, Y=Y, append=True)
         # print("Adding data to GP!!!")
         # logger.info(f'Adding new data of shape!! {self.x.shape}.')
 
-        X = np.atleast_2d(X)
-        Y = np.atleast_2d(Y)
-
-        X = np.concatenate((self.gp.X, X))
-        Y = np.concatenate((self.gp.Y, Y))
-        self.gp.set_XY(X, Y)
-        self.t = X.shape[0]
+        # X = np.atleast_2d(X)
+        # Y = np.atleast_2d(Y)
+        #
+        # X = np.concatenate((self.gp.X, X))
+        # Y = np.concatenate((self.gp.Y, Y))
+        # self.gp.set_XY(X, Y)
+        # self.t = X.shape[0]
 
     def add_data_point_to_gps(self, x, y):
         """
@@ -252,135 +255,3 @@ class TripathyGP(ConfidenceBoundModel):
         del self_dict[
             'gp']  # remove the gp from state dict to allow pickling. calculations are done via the cache woodbury/cholesky
         return self_dict
-#
-# # class TripathyConfig(Config):
-# #     num_layers = ConfigField(4, comment="Number of layers used")
-# #     num_neurons = ConfigField([100,100,50, 50], comment="Number of units in each layer.")
-# #     learning_rate = ConfigField('deep.learning_rate', comment="Function providing the learning rate.")
-# #     _section = 'deep.model'
-#
-# # def optimize_gp(experiment):
-# #     experiment.algorithm.f.gp.kern.variance.fix()
-# #     experiment.algorithm.f.gp.optimize()
-# #     print(experiment.algorithm.f.gp)
-# #
-# # # TODO: how to update the kernel values?
-# # # TODO: Do the optimization here! Implement the specific functions somewhere else though!
-# # # TOOD: This is because we have to optimize both the kernel-parameters, as well as the Gaussian-prior parameters! (s_n, s, l)
-# # @assign_config(GPConfig)
-# # class TripathyModel(ConfidenceBoundModel):
-# #     """
-# #     Base class for GP optimization.
-# #     Handles common functionality.
-# #     Parameters
-# #     ----------
-# #     """
-# #
-# #     def __init__(self, d):
-# #         super(TripathyModel, self).__init__(d)
-# #
-# #         # Auxiliary parameters
-# #         self.MAX_ITER = 50
-# #         self.active_d = 2 # TODO: Active dimensions. Let this be a searched parameter at some later stage
-# #         self.real_dim = d
-# #         self.tau_max = 1e-3
-# #
-# #         # Toleranec parameters
-# #         #  TODO: assign each of these tolerances to one value
-# #         self.xtol = 1e-6
-# #         self.ftol = 1e-6  # Assume this is the stiefel-manifold function
-# #         self.gtol = 1e-12  # Assume this is the tau-function
-# #
-# #         # Parameters to be optimized
-# #         self.sn = self.sample_sn()
-# #
-# #
-# #         # Prior parameters
-# #         self.prior_mean = 0
-# #         self.t = 0
-# #
-# #         # TODO: handle this kernel part somehow!
-# #         # TODO: put the active dimension etc. in a different file later
-# #         # TODO: make active and real dimension adaptable/altereable (i guess you just create a new GPRegression?)
-# #         self.kernel = TripathyMaternKernel(self.real_dim, self.active_d)
-# #         self.gp = GPRegression(d, self.kernel, noise_var=self.config.noise_var)
-# #         # number of data points
-# #
-# #         self.t_optimizer = TripathyOptimizer()
-# #
-# #     ###############################
-# #     #      SAMPLING FUNCTIONS     #
-# #     ###############################
-# #     def sample_sn(self):
-# #         return 2.
-# #
-# #     ###############################
-# #     #    DATA ADDERS & REMOVERS   #
-# #     ###############################
-# #     def set_data(self, X, Y, append=True):
-# #         if append:
-# #             X = np.concatenate((self.gp.X, X))
-# #             Y = np.concatenate((self.gp.Y, Y))
-# #         self.gp.set_XY(X, Y)
-# #         self.t = X.shape[0]
-# #
-# #     def add_data(self, x, y):
-# #         self.add_data_point_to_gps(x,y)
-# #
-# #         print("Call 2-step-optimizer when t: ", self.t)
-# #
-# #         W = self.t_optimizer.run_two_step_optimization(self.kernel, self.config.noise_var, self.gp.X,
-# #                                                        self.gp.Y)  # right now, we assume that we know the active subdimension!
-# #         self.kernel.set_W(W)
-# #
-# #     def add_data_point_to_gps(self, x, y):
-# #         """
-# #         Add a new function observation to the GPs.
-# #         Parameters
-# #         ----------
-# #         x: 2d-array
-# #         y: 2d-array
-# #         """
-# #         x = np.atleast_2d(x)
-# #         y = np.atleast_2d(y)
-# #         self.gp.append_XY(x, y)
-# #
-# #         self.t = self.gp.X.shape[0]
-# #
-# #     def remove_last_data_point(self):
-# #         """Remove the data point that was last added to the GP.
-# #         Parameters
-# #         ----------
-# #             gp: Instance of GPy.models.GPRegression
-# #                 The gp that the last data point should be removed from
-# #         """
-# #
-# #         self.gp.remove_last_data_point()
-# #
-# #         self.t = self.gp.X.shape[0]
-# #
-# #     ###############################
-# #     #        GP FUNCTIONS         #
-# #     ###############################
-# #     def mean_var(self, x):
-# #         """Recompute the confidence intervals form the GP.
-# #         Parameters
-# #         ----------
-# #         context: ndarray
-# #             Array that contains the context used to compute the sets
-# #         """
-# #         return self.gp.predict_noiseless(x)
-# #
-# #     def mean_var_grad(self, x):
-# #         return self.gp.predictive_gradients(x)
-# #
-# #     def var(self, x):
-# #         return self.mean_var(x)[1]
-# #
-# #     def mean(self, x):
-# #         # TODO: regardless of the mean value, the same regret is being returned!!!
-# #         return self.mean_var(x)[0]
-# #
-# #     @property
-# #     def beta(self):
-# #         return math.sqrt(math.log(max(self.t,2))) # TODO: we could use the theoretical bound calculated from the kernel matrix.
