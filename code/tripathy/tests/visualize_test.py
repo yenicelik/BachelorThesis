@@ -89,7 +89,7 @@ class VisualizeFeatureSelection:
         self.function = Parabola()
         self.init_dimension = 2  # All the input at the beginning is always 1D!
         self.active_dim = self.function.d
-        self.no_samples = 200
+        self.no_samples = 30 # 200
 
         self.setup_environment()
         self.setup_approximation()
@@ -116,7 +116,7 @@ class VisualizeFeatureSelection:
         ax.scatter(x_real[:, 0], x_real[:, 1], y_real, 'k.', alpha=.3, s=1)
         ax.scatter(self.X[:, 0], self.X[:, 1], y_hat, cmap=plt.cm.jet)
         fig.savefig('./featureSelection/' + title + '.png')
-        # plt.show()
+        plt.show()
         # plt.close(fig)
 
     def check_if_matrix_is_found(self):

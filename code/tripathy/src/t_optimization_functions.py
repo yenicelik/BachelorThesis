@@ -10,6 +10,8 @@ from GPy.models import GPRegression
 
 from .t_loss import loss, dloss_dW, dK_dW
 
+from .config import config
+
 class t_ParameterOptimizer:
     """
         This class includes all the logic to opimize both
@@ -39,7 +41,7 @@ class t_ParameterOptimizer:
         self.kernel.update_params(W=self.fix_W, s=s, l=l)
         gp_reg = GPRegression(self.X, self.Y.reshape(-1, 1), self.kernel, noise_var=sn)
         try:
-            gp_reg.optimize(optimizer="lbfgs", max_iters=100)
+            gp_reg.optimize(optimizer="lbfgs", max_iters=config['max_iter_parameter_optimization'])
         except Exception as e:
             print(e)
             print(gp_reg.kern.K(gp_reg.X))
@@ -73,27 +75,31 @@ class t_WOptimizer:
         self.Y = Y
 
         # TAKEN FROM CONFIG
-        self.tau_max = 1 #0.1 # 1e-3 :: this value finally seems to considerably change the loss!
+        self.tau_max = config['tau_max'] #0.1 # 1e-3 :: this value finally seems to considerably change the loss!
         # TODO: check if any tau_delta does not depend on tau_max!
-        self.stol = 1e-12
+        self.stol = config['eps_alg3']
 
         self.tau = np.asscalar(np.random.rand(1)) * self.tau_max
 
         # FOR THE SAKE OF INCLUDING THIS WITHIN THE CLASS
         self.W = None
         self.all_losses = []
-        self.M_s = 500 # 10000
+        self.M_s = config['max_iter_alg3'] # 500 # 10000
 
-        self.no_taus = 5
+        self.no_taus = config['no_taus']
 
-        self.tau_arr = list( np.append(
-            np.linspace(0., self.tau_max, num=self.no_taus),
-            np.logspace(0., self.tau_max / 2, num=self.no_taus // 2)
-        ) )
+        # self.tau_arr = list( np.append(
+        #     np.linspace(0., self.tau_max, num=self.no_taus),
+        #     np.logspace(0., self.tau_max / 2, num=self.no_taus // 2)
+        # ) )
+        # assert len(self.tau_arr) == (self.no_taus + self.no_taus // 2), self.tau_arr
+
+        self.tau_arr = np.linspace(0., self.tau_max, num=self.no_taus)
+
         self.tau_arr = [max(0., x) for x in self.tau_arr]
         self.tau_arr = [min(self.tau_max, x) for x in self.tau_arr]
 
-        assert len(self.tau_arr) == (self.no_taus + self.no_taus // 2), self.tau_arr
+        assert len(self.tau_arr) == self.no_taus
 
     #########################################
     #                                       #
@@ -113,7 +119,8 @@ class t_WOptimizer:
 
         for i in range(self.M_s):
             if i % 1 == 0:
-                print("Alg. 3 Progress: ", str((i * 100) / self.M_s) + "%")
+                print("Alg. 3 Progress: " + str((i * 100) / self.M_s) + "%")
+                print("Alg. 3: ", (i, self.M_s) )
             self.tau = self._find_best_tau(self.W)
             self.W = self._gamma(self.tau, self.W)
 

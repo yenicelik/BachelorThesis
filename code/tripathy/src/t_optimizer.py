@@ -12,22 +12,24 @@ from .t_optimization_functions import t_ParameterOptimizer, t_WOptimizer
 from .t_kernel import TripathyMaternKernel
 from GPy.core.parameterization import Param
 
+from .config import config
+
 
 class TripathyOptimizer:
 
     def __init__(self):
         # PARAMETERS Algorithm 1
-        self.d_max = 10
-        self.M_l = 200 # 1000
+        self.d_max = config['max_dimensions']
+        self.M_l = config['max_iter_alg1'] # 20 # 200 # 1000
 
-        self.leps = 10.e-3
-        self.m = 1
-        self.n = 1
+        self.leps = config['eps_alg1'] #10.e-3
+        self.m = config['max_iter_W_optimization']
+        self.n = config['max_iter_parameter_optimization']
 
-        self.no_of_restarts = 200
+        self.no_of_restarts = config['no_restarts'] # 50
 
         # PARAMETERS Algorithm 4
-        self.btol = 10.e-3
+        self.btol = config['eps_alg4']
 
 
 
@@ -50,6 +52,8 @@ class TripathyOptimizer:
     def find_active_subspace(self, X, Y):
         # Input dimension is always constant!
         D = X.shape[1]
+
+        # TODO: Iteration by one might be a lot. Potentiall make the stepsize a function of the maximum dimensions
 
         BIC1 = -10000 # Don't make if -inf, otherwise division is not possible
         for d in range(1, min(D, self.d_max)):
@@ -94,7 +98,7 @@ class TripathyOptimizer:
                 print("Best found dimension is: ", d, BIC1, BIC0)
                 break
 
-        return W_hat, sn, l, s
+        return W_hat, sn, l, s, d
 
     def try_two_step_optimization_with_restarts(self, t_kernel, X, Y):
 

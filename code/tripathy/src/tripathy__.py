@@ -51,6 +51,7 @@ class GPConfig(ModelConfig):
     # noise_var = ConfigField(0.1)
     # calculate_gradients = ConfigField(True, comment='Enable/Disable computation of gradient on each update.')
     # _section = 'models.gp'
+    pass
 
 config_manager.register(GPConfig)
 
@@ -66,25 +67,36 @@ class TripathyGP(ConfidenceBoundModel):
     Handles common functionality.
 
     """
+    def set_tripathy_optimizer(self):
+        # TODO: maybe add an optiion the active subspace is known?
+        self.optimizer = TripathyOptimizer()
+
     def set_hyperparameters(self):
         self.noise_var = 0.1
         self.calculate_gradients = True
 
-    def set_new_kernel_and_gp(self, d):
+    def set_new_kernel_and_gp(self, d, variance=None, lengthscale=None, noise_var=None):
         self.kernel = TripathyMaternKernel(
             real_dim=self.domain.d,
-            active_dim=d
+            active_dim=d,
+            variance=variance,
+            lengthscale=lengthscale
         )
+
+        # TODO: do we need to create a new GPRegression object each time we get new data?
 
         self.gp = GPRegression(
             input_dim=self.domain.d,
             kernel=self.kernel,
-            noise_var=self.noise_var,
+            noise_var=noise_var if noise_var else self.noise_var,
             calculate_gradients=self.calculate_gradients
         )
 
     def __init__(self, domain):
+        print("Initializing the matern kernel thing")
         super(TripathyGP, self).__init__(domain)
+
+        self.set_tripathy_optimizer()
 
         self.set_hyperparameters()
 
@@ -110,19 +122,10 @@ class TripathyGP(ConfidenceBoundModel):
         Returns:
 
         """
+        print("Adding data")
         X = np.atleast_2d(X)
         Y = np.atleast_2d(Y)
         self.set_data(X=X, Y=Y, append=True)
-        # print("Adding data to GP!!!")
-        # logger.info(f'Adding new data of shape!! {self.x.shape}.')
-
-        # X = np.atleast_2d(X)
-        # Y = np.atleast_2d(Y)
-        #
-        # X = np.concatenate((self.gp.X, X))
-        # Y = np.concatenate((self.gp.Y, Y))
-        # self.gp.set_XY(X, Y)
-        # self.t = X.shape[0]
 
     def add_data_point_to_gps(self, x, y):
         """
@@ -183,6 +186,23 @@ class TripathyGP(ConfidenceBoundModel):
         if append:
             X = np.concatenate((self.gp.X, X))
             Y = np.concatenate((self.gp.Y, Y))
+
+        print("Looking for optimal subspace!")
+        W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X=X, Y=Y)
+
+        # Set the newly found hyperparameters everywhere
+        # Not found by pycharm bcs the kernel is an abstract object as of now
+        # self.kernel.update_params(W=W_hat, s=s, l=l)
+        # self.gp.kern.update_params(W=W_hat, s=s, l=l)
+
+        # Create a new GP (bcs this is spaghetti code!)
+        self.set_new_kernel_and_gp(
+            d=d,
+            variance=s,
+            lengthscale=l,
+            noise_var=sn
+        )
+
         self.gp.set_XY(X, Y)
         self.t = X.shape[0]
 

@@ -23,7 +23,7 @@ class TripathyMaternKernel(Kern):
             k(x, x') = k_0(Wx, Wx')
     """
 
-    def __init__(self, real_dim, active_dim, variance=None, lengthscale=None):
+    def __init__(self, real_dim, active_dim, variance=None, lengthscale=None, name="TripathyMaternKernel"):
 
         assert(real_dim >= active_dim)
 
@@ -50,7 +50,11 @@ class TripathyMaternKernel(Kern):
 
         self.W_grad = np.zeros_like(self.W)
 
-        super(TripathyMaternKernel, self).__init__(input_dim=self.real_dim, active_dims=None, name="TripathyMaternKernel")
+        super(TripathyMaternKernel, self).__init__(input_dim=self.real_dim, active_dims=None, name=name)
+        self.__dict__['_name'] = name
+        # self._name = "TripathyKernelBaseMatern32"
+        # self.name = "TripathyKernelBaseMatern32"
+
         self.link_parameters(self.inner_kernel)
 
         # Add parameters
@@ -157,8 +161,6 @@ class TripathyMaternKernel(Kern):
         Z = np.dot(X, self.W)
         return self.inner_kernel.Kdiag(Z)
 
-    # Oriented by
-    # http: // gpy.readthedocs.io / en / deploy / _modules / GPy / kern / src / stationary.html  # Matern32.dK_dr
     def K_of_r(self, r):
         """
         :param r: The squared distance that one is to input
