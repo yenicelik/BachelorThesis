@@ -64,7 +64,7 @@ class TripathyGP(ConfidenceBoundModel):
 
     def set_new_gp_and_kernel(self, d, variance, lengthscale, noise_var):
         self.set_new_kernel(d, variance, lengthscale)
-        self.set_new_gp(d, noise_var)
+        self.set_new_gp(noise_var)
     #         # from .t_kernel import TripathyMaternKernel
     #         TripathyMaternKernel.__module__ = "tripathy.src.t_kernel"
 
@@ -74,8 +74,9 @@ class TripathyGP(ConfidenceBoundModel):
         self.optimizer = TripathyOptimizer()
 
         # TODO: d is chosen to be an arbitrary value rn!
-        self.set_new_kernel(2, None, None)
-        self.set_new_gp(None)
+        # self.set_new_kernel(2, None, None)
+        # self.set_new_gp(None)
+        self.set_new_gp_and_kernel(2, None, None, None)
 
         # calling of the kernel
         # self.gp = self._get_gp() # TODO: does this actually create a new gp?
@@ -246,6 +247,7 @@ class TripathyGP(ConfidenceBoundModel):
         W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X, Y)
 
         # Overwrite GP and kernel values
+        self.set_new_gp_and_kernel(d=d, variance=s, lengthscale=l, noise_var=sn)
 
         self.gp.set_XY(X, Y)
         self.t = X.shape[0]
@@ -348,24 +350,3 @@ class TripathyGP(ConfidenceBoundModel):
 #         # self_dict['kernel'].__dict__['_name'] = "TripathyMaternKernel"
 #         return self_dict
 
-# from GPy.util.linalg import dtrtrs, tdot
-# from febo.utils import locate
-#
-# import math
-# import numpy as np
-#
-# from febo.models import ConfidenceBoundModel
-# from febo.models.model import ModelConfig
-# from febo.models.gpy import GPRegression
-# from febo.utils.config import ConfigField, assign_config, config_manager
-# import GPy
-#
-#
-# from febo.utils import locate
-#
-# import math
-# import numpy as np
-#
-# from febo.models import ConfidenceBoundModel
-# from febo.models.model import ModelConfig
-# from febo.utils.config import ConfigField, assign_config
