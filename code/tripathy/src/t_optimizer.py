@@ -58,18 +58,9 @@ class TripathyOptimizer:
         BIC1 = -10000 # Don't make if -inf, otherwise division is not possible
         for d in range(1, min(D, self.d_max)):
 
-            print("Got this far")
-
-            print("What is the input?")
-            print(D, d)
-
             self.kernel = TripathyMaternKernel(real_dim=D, active_dim=d)
 
             BIC0 = BIC1
-
-            print("Moree")
-            print(X)
-            print(Y)
 
             # Run entire optimize-code
             W_hat, sn, l, s = self.try_two_step_optimization_with_restarts(
@@ -77,8 +68,6 @@ class TripathyOptimizer:
                 X=X,
                 Y=Y
             )
-
-            print("More stuff")
 
             # Update the kernel with the new values
             self.kernel.update_params(W=W_hat, l=l, s=s)

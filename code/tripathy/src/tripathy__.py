@@ -78,7 +78,7 @@ class TripathyGP(ConfidenceBoundModel):
         self.set_new_gp(None)
 
         # calling of the kernel
-        self.gp = self._get_gp() # TODO: does this actually create a new gp?
+        # self.gp = self._get_gp() # TODO: does this actually create a new gp?
         # number of data points
         self.t = 0
         self.kernel = self.kernel.copy()
@@ -244,6 +244,8 @@ class TripathyGP(ConfidenceBoundModel):
 
         # Do our optimization now
         W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X, Y)
+
+        # Overwrite GP and kernel values
 
         self.gp.set_XY(X, Y)
         self.t = X.shape[0]

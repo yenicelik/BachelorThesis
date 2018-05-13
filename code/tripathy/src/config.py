@@ -9,8 +9,8 @@ if DEV:
         "max_iter_alg1": 1,  # 1000, # int(1e5),
         "max_iter_alg3": 1, # 1000, # int(1e5),
 
-        "max_iter_parameter_optimization": 10,
-        "max_iter_W_optimization": 20,
+        "max_iter_parameter_optimization": 1,
+        "max_iter_W_optimization": 1,
 
         "eps_alg1": 1.e-3, # -12,
         "eps_alg3": 1.e-3, # -12,
@@ -30,8 +30,8 @@ elif HALFDEV:
         "max_iter_alg1": 1000, # int(1e5),
         "max_iter_alg3": 1000, # int(1e5),
 
-        "max_iter_parameter_optimization": 50,
-        "max_iter_W_optimization": 50,
+        "max_iter_parameter_optimization": 10,
+        "max_iter_W_optimization": 10,
 
         "eps_alg1": 1.e-3, # -12,
         "eps_alg3": 1.e-3, # -12,
