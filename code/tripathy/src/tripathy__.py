@@ -30,10 +30,10 @@ class TripathyGPConfig(ModelConfig):
 
 config_manager.register(TripathyGPConfig)
 
-def optimize_gp(experiment):
-    experiment.algorithm.f.gp.kern.variance.fix()
-    experiment.algorithm.f.gp.optimize()
-    print(experiment.algorithm.f.gp)
+# def optimize_gp(experiment):
+#     experiment.algorithm.f.gp.kern.variance.fix()
+#     experiment.algorithm.f.gp.optimize()
+#     print(experiment.algorithm.f.gp)
 
 from .t_kernel import TripathyMaternKernel
 from .t_optimizer import TripathyOptimizer
@@ -74,19 +74,8 @@ class TripathyGP(ConfidenceBoundModel):
         self.optimizer = TripathyOptimizer()
 
         # TODO: d is chosen to be an arbitrary value rn!
-        # self.set_new_kernel(2, None, None)
-
-        # the description of a kernel
-        self.kernel = None
-        for kernel_module, kernel_params in self.config.kernels:
-            input_dim = self.domain.d
-            if 'active_dims' in kernel_params:
-                input_dim = len(kernel_params['active_dims'])
-            kernel_part = locate(kernel_module)(input_dim=input_dim, **kernel_params)
-            if self.kernel is None:
-                self.kernel = kernel_part
-            else:
-                self.kernel += kernel_part
+        self.set_new_kernel(2, None, None)
+        self.set_new_gp(None)
 
         # calling of the kernel
         self.gp = self._get_gp() # TODO: does this actually create a new gp?
@@ -140,14 +129,16 @@ class TripathyGP(ConfidenceBoundModel):
         # self._update_cache()
 
 
+    # TODO: check if this is called anyhow!
     def optimize(self):
-        if self.config.optimize_bias:
-            self._optimize_bias()
-        if self.config.optimize_var:
-            self._optimize_var()
+        # if self.config.optimize_bias:
+        #     self._optimize_bias()
+        # if self.config.optimize_var:
+        #     self._optimize_var()
+
+        # self.optimizer.find_active_subspace(self.X, self.Y)
 
         self._update_beta()
-
 
     def _update_cache(self):
         # if not self.config.calculate_gradients:
@@ -250,6 +241,10 @@ class TripathyGP(ConfidenceBoundModel):
         if append:
             X = np.concatenate((self.gp.X, X))
             Y = np.concatenate((self.gp.Y, Y))
+
+        # Do our optimization now
+        W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X, Y)
+
         self.gp.set_XY(X, Y)
         self.t = X.shape[0]
         self._update_cache()
