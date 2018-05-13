@@ -23,8 +23,8 @@ class TripathyGPConfig(ModelConfig):
     kernels = ConfigField([('GPy.kern.RBF', {'variance': 2., 'lengthscale': 0.2 , 'ARD': True})])
     noise_var = ConfigField(0.1)
     calculate_gradients = ConfigField(True, comment='Enable/Disable computation of gradient on each update.')
-    optimize_bias = ConfigField(True)
-    optimize_var = ConfigField(True)
+    optimize_bias = ConfigField(False)
+    optimize_var = ConfigField(False)
     bias = ConfigField(0)
     _section = 'src.tripathy__'
 
@@ -126,18 +126,19 @@ class TripathyGP(ConfidenceBoundModel):
         x: 2d-array
         y: 2d-array
         """
+        self.i = 0 if not ("i" in dir(self)) else self.i + 1
+        print("Add data ", self.i)
         x = np.atleast_2d(x)
         y = np.atleast_2d(y)
 
-        self._Y = np.vstack([self._Y, y])  # store unbiased data
-        self.gp.append_XY(x, y - self._bias)
+        self.set_data(x, y, append=True)
 
-        self.t += y.shape[1]
-        self._update_cache()
+        # self._Y = np.vstack([self._Y, y])  # store unbiased data
+        # self.gp.append_XY(x, y - self._bias)
+        #
+        # self.t += y.shape[1]
+        # self._update_cache()
 
-        #         X = np.atleast_2d(X)
-        #         Y = np.atleast_2d(Y)
-        #         self.set_data(X=X, Y=Y, append=True)
 
     def optimize(self):
         if self.config.optimize_bias:
