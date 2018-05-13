@@ -15,6 +15,8 @@ from paramz.caching import Cache_this
 
 from febo.models.gpy import IncrementalKernelCacheMixin, IncrementalKernelGradientsMixin
 
+# __all__ = ['TripathyMaternKernel']
+
 class TripathyMaternKernel(Kern):
 
     """
@@ -23,9 +25,14 @@ class TripathyMaternKernel(Kern):
             k(x, x') = k_0(Wx, Wx')
     """
 
-    def __init__(self, real_dim, active_dim, variance=None, lengthscale=None, name="TripathyMaternKernel"):
+    def __init__(self, real_dim, active_dim, variance=None, lengthscale=None, _name="TripathyMaternKernel32"):
+
+        # self.__dict__['_name'] = _name
 
         assert(real_dim >= active_dim)
+
+        self.__module__ = "tripathy.src.t_kernel"
+        self.size = real_dim * active_dim + active_dim + 1 + 1
 
         self.real_dim = real_dim
         self.active_dim = active_dim
@@ -50,12 +57,15 @@ class TripathyMaternKernel(Kern):
 
         self.W_grad = np.zeros_like(self.W)
 
-        super(TripathyMaternKernel, self).__init__(input_dim=self.real_dim, active_dims=None, name=name)
-        self.__dict__['_name'] = name
-        # self._name = "TripathyKernelBaseMatern32"
-        # self.name = "TripathyKernelBaseMatern32"
+        super(TripathyMaternKernel, self).__init__(input_dim=self.real_dim, active_dims=None, name=_name)
+        self.__dict__['_name'] = _name
+        # self._name = _name
+        # self.name = _name
+        self.name = _name
+        self._name = _name
 
         self.link_parameters(self.inner_kernel)
+        # self.link_parameter(self.W)
 
         # Add parameters
         # l = Param('outerKernel.lengthscale', self.inner_kernel.lengthscale)
@@ -84,6 +94,7 @@ class TripathyMaternKernel(Kern):
         assert W.shape == (self.real_dim, self.active_dim)
         assert np.allclose( np.dot(W.T, W), np.eye(self.active_dim), atol=1.e-6), (W, np.dot(W.T, W), np.eye(self.active_dim))
         self.W = W
+        # self.W = Param('W', W)
         # self.parameters_changed()
 
     def set_l(self, l, safe=False):
@@ -101,7 +112,8 @@ class TripathyMaternKernel(Kern):
     def set_s(self, s, safe=False):
         assert safe
         assert isinstance(s, float) or isinstance(s, Param), type(s)
-        self.inner_kernel.variance = s
+        if not (s == float(self.inner_kernel.variance)):
+            self.inner_kernel.variance = s
 
     ###############################
     #      SAMPLING FUNCTIONS     #

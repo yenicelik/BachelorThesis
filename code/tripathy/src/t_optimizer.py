@@ -221,7 +221,6 @@ class TripathyOptimizer:
             #################################################################################
             #  PERFORM n ITERATIONS TOWARDS THE SOLUTION OF PARAMETER OPTIMIZATION PROBLEM  #
             #################################################################################
-
             parameter_optimizer = t_ParameterOptimizer(
                 fix_W=self.W,
                 kernel=t_kernel,
@@ -229,7 +228,6 @@ class TripathyOptimizer:
                 Y=Y
             )
 
-            # TODO: Check if instances (not that sth is copied wrongly etc. comply!
             for i in range(self.n):
                 # print("\n\n\nOld s, l, sn", (self.s, self.l, self.sn))
                 self.s, self.l, self.sn = parameter_optimizer.optimize_s_sn_l(
@@ -244,7 +242,6 @@ class TripathyOptimizer:
                     s=self.s,
                     l=self.l
                 )
-
 
             t_kernel.update_params(W=self.W, s=self.s, l=self.l)
             L1 = loss(
