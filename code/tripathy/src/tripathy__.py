@@ -35,6 +35,9 @@ def optimize_gp(experiment):
     experiment.algorithm.f.gp.optimize()
     print(experiment.algorithm.f.gp)
 
+from .t_kernel import TripathyMaternKernel
+from .t_optimizer import TripathyOptimizer
+
 @assign_config(TripathyGPConfig)
 class TripathyGP(ConfidenceBoundModel):
     """
@@ -43,48 +46,35 @@ class TripathyGP(ConfidenceBoundModel):
 
     """
 
-    #     def set_tripathy_optimizer(self):
-    #         # TODO: maybe add an optiion the active subspace is known?
-    #         self.optimizer = TripathyOptimizer()
-    #
-    #     def set_new_kernel_and_gp(self, d, variance=None, lengthscale=None, noise_var=None):
+    def set_new_kernel(self, d, variance=None, lengthscale=None):
+        self.kernel = TripathyMaternKernel(
+            real_dim=self.domain.d,
+            active_dim=d,
+            variance=variance,
+            lengthscale=lengthscale
+        )
+
+    def set_new_gp(self, noise_var=None):
+        self.gp = GPRegression(
+            input_dim=self.domain.d,
+            kernel=self.kernel,
+            noise_var=noise_var if noise_var else 2., # TODO: replace with config value!
+            calculate_gradients= True # TODO: replace with config value!
+        )
+
+    def set_new_gp_and_kernel(self, d, variance, lengthscale, noise_var):
+        self.set_new_kernel(d, variance, lengthscale)
+        self.set_new_gp(d, noise_var)
     #         # from .t_kernel import TripathyMaternKernel
     #         TripathyMaternKernel.__module__ = "tripathy.src.t_kernel"
-    #
-    #         self.kernel = TripathyMaternKernel(
-    #             real_dim=self.domain.d,
-    #             active_dim=d,
-    #             variance=variance,
-    #             lengthscale=lengthscale
-    #         )
-    #
-    #         # TODO: do we need to create a new GPRegression object each time we get new data?
-    #         self.gp = GPRegression(
-    #             input_dim=self.domain.d,
-    #             kernel=self.kernel,
-    #             noise_var=noise_var if noise_var else self.noise_var,
-    #             calculate_gradients=self.calculate_gradients
-    #         )
-    #
-    #     def __init__(self, domain):
-    #         print("Initializing the matern kernel thing")
-    #         super(TripathyGP, self).__init__(domain)
-    #
-    #         self.set_tripathy_optimizer()
-    #
-    #         self.set_hyperparameters()
-    #
-    #         self.set_new_kernel_and_gp(domain.d)
-    #
-    #         self.t = 0
-    #         self.kernel = self.kernel.copy()  # TODO: what do I need this thing?
-    #         self._woodbury_chol = self.gp.posterior._woodbury_chol.copy()
-    #         self._woodbury_vector = self.gp.posterior._woodbury_vector.copy()
-    #         self._X = self.gp.X.copy()
-    #
 
     def __init__(self, domain):
         super(TripathyGP, self).__init__(domain)
+
+        self.optimizer = TripathyOptimizer()
+
+        # TODO: d is chosen to be an arbitrary value rn!
+        # self.set_new_kernel(2, None, None)
 
         # the description of a kernel
         self.kernel = None
@@ -99,7 +89,7 @@ class TripathyGP(ConfidenceBoundModel):
                 self.kernel += kernel_part
 
         # calling of the kernel
-        self.gp = self._get_gp()
+        self.gp = self._get_gp() # TODO: does this actually create a new gp?
         # number of data points
         self.t = 0
         self.kernel = self.kernel.copy()
@@ -372,8 +362,6 @@ class TripathyGP(ConfidenceBoundModel):
 # from febo.utils.config import ConfigField, assign_config, config_manager
 # import GPy
 #
-# from tripathy.src.t_kernel import TripathyMaternKernel
-# from .t_optimizer import TripathyOptimizer
 #
 # from febo.utils import locate
 #

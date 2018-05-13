@@ -65,6 +65,11 @@ class TripathyMaternKernel(Kern):
         self._name = _name
 
         self.link_parameters(self.inner_kernel)
+        # TODO: make sure these are referenced copies!
+        self.variance = self.inner_kernel.variance
+        self.lengtscale = self.inner_kernel.lengthscale
+
+
         # self.link_parameter(self.W)
 
         # Add parameters
