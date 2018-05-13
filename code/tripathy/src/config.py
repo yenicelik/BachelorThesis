@@ -1,5 +1,5 @@
-DEV = True
-HALFDEV = False
+DEV = False
+HALFDEV = True
 
 if DEV:
 
