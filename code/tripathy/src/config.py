@@ -25,16 +25,16 @@ if DEV:
 elif HALFDEV:
 
     config = {
-        "no_restarts": 20, # 1000
+        "no_restarts": 50, # 1000
 
         "max_iter_alg1": 1000, # int(1e5),
         "max_iter_alg3": 1000, # int(1e5),
 
-        "max_iter_parameter_optimization": 10,
-        "max_iter_W_optimization": 10,
+        "max_iter_parameter_optimization": 2,
+        "max_iter_W_optimization": 2,
 
-        "eps_alg1": 1.e-3, # -12,
-        "eps_alg3": 1.e-3, # -12,
+        "eps_alg1": 1.e-6, # -12,
+        "eps_alg3": 1.e-6, # -12,
         "eps_alg4": 1.e-3,
 
         "tau_max": 1.e-1,

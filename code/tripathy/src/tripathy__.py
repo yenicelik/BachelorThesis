@@ -244,10 +244,11 @@ class TripathyGP(ConfidenceBoundModel):
             Y = np.concatenate((self.gp.Y, Y))
 
         # Do our optimization now
-        W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X, Y)
+        if self.i % 10 == 0:
+            W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X, Y)
 
-        # Overwrite GP and kernel values
-        self.set_new_gp_and_kernel(d=d, variance=s, lengthscale=l, noise_var=sn)
+            # Overwrite GP and kernel values
+            self.set_new_gp_and_kernel(d=d, variance=s, lengthscale=l, noise_var=sn)
 
         self.gp.set_XY(X, Y)
         self.t = X.shape[0]
