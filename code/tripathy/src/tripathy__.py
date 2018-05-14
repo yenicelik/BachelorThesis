@@ -4,6 +4,10 @@ from febo.utils import locate, get_logger
 import math
 import numpy as np
 
+import sys
+sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
+sys.path.append("/cluster/home/yedavid/BachelorThesis/tripathy")
+
 from febo.models import ConfidenceBoundModel
 from febo.models.model import ModelConfig
 from febo.models.gpy import GPRegression, GPHeteroscedasticRegression
