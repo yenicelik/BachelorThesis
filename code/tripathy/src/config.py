@@ -68,7 +68,7 @@ else:
 
 # In either case, add linux and mac paths
 if platform == "linux" or platform == "linux2":
-    config['basepath'] = "/cluster/home/yedavid/BA/"
+    config['basepath'] = "/home/yedavid/BachelorThesis/"
     config['dev'] = False
 elif platform == "darwin":
     config['basepath'] = "/Users/davidal/GoogleDrive/BachelorThesis/code"

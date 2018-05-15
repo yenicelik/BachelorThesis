@@ -94,6 +94,7 @@ class TripathyOptimizer:
         losses = []
         configs = []
 
+        # TODO: parallelize this action
         for j in range(self.no_of_restarts):
 
             try:
