@@ -6,6 +6,8 @@
 import numpy as np
 import math
 import copy
+import multiprocess
+import multiprocessing
 
 from .t_loss import loss
 from .t_optimization_functions import t_ParameterOptimizer, t_WOptimizer
@@ -58,6 +60,8 @@ class TripathyOptimizer:
         BIC1 = -10000 # Don't make if -inf, otherwise division is not possible
         for d in range(1, min(D, self.d_max)):
 
+            print("Testing for dimension: ", d)
+
             self.kernel = TripathyMaternKernel(real_dim=D, active_dim=d)
 
             BIC0 = BIC1
@@ -83,26 +87,25 @@ class TripathyOptimizer:
             )
             self.dim_losses.append(BIC1)
 
+            print("Dimension loss is: ", BIC1)
+
             if (BIC1 - BIC0) / BIC0 < self.btol:
                 print("Best found dimension is: ", d, BIC1, BIC0)
                 break
 
         return W_hat, sn, l, s, d
 
-    def try_two_step_optimization_with_restarts(self, t_kernel, X, Y):
+    # Function to be run in parallel by multiple actors
+    def single_run(self, t_kernel, X, Y):
 
-        losses = []
-        configs = []
+        # Output
+        W = np.zeros_like(t_kernel.W)
+        sn = 0.
+        l = np.zeros_like(t_kernel.inner_kernel.lengthscale)
+        s = np.zeros_like(t_kernel.inner_kernel.variance)
+        cur_loss = -np.inf
 
-        # TODO: parallelize this action
-        for j in range(self.no_of_restarts):
-
-            try:
-                pass
-            except Exception as e:
-                print(e)
-                with open("./errors.txt", "a") as myfile:
-                    myfile.write(str(e))
+        try:
 
             # We first sample new weights and hyperparameters
             W_init = t_kernel.sample_W()
@@ -110,7 +113,7 @@ class TripathyOptimizer:
             s_init = float(np.random.rand(1))
             sn = float(np.random.rand(1))
 
-            print("Restarting...", (j, self.no_of_restarts))
+            # print("Restarting...", (j, self.no_of_restarts))
 
             t_kernel.update_params(W=W_init, l=l_init, s=s_init)
 
@@ -134,8 +137,32 @@ class TripathyOptimizer:
 
             print("Loss: ", cur_loss)
 
-            losses.append(cur_loss)
-            configs.append( (W, sn, l, s) )
+        except Exception as e:
+            print(e)
+            with open("./errors.txt", "a") as myfile:
+                myfile.write(str(e))
+
+        return W, sn, l, s, cur_loss
+
+    def try_two_step_optimization_with_restarts(self, t_kernel, X, Y):
+
+        losses = []
+        configs = []
+
+        # Count how many processors we have:
+        number_processes = multiprocessing.cpu_count()
+
+        print("Number of processes found: ", number_processes)
+
+        # Define the throw-aways function:
+        def wrapper_singlerun(_):
+            return self.single_run(t_kernel, X, Y)
+
+        all_responses = multiprocess.Pool(number_processes).map(wrapper_singlerun, range(self.no_of_restarts))
+
+
+        losses = [x[4] for x in all_responses]
+        configs = [(x[0], x[1], x[2], x[3]) for x in all_responses]
 
         print("Losses are: ", losses)
 
@@ -156,7 +183,7 @@ class TripathyOptimizer:
 
         for i in range(self.M_l):
 
-            if i % 1 == 0:
+            if i % max(self.M_l//50, 1) == 0:
                 print("Alg. 1 Progress: ", str((i*100)/self.M_l) + "%")
 
             #################################################################################

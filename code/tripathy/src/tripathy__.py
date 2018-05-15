@@ -248,8 +248,13 @@ class TripathyGP(ConfidenceBoundModel):
             Y = np.concatenate((self.gp.Y, Y))
 
         # Do our optimization now
-        if self.i % 10 == 0:
+        if self.i % 3 == 0:
+            import time
+            start_time = time.time()
+
             W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X, Y)
+
+            print("--- %s seconds ---" % (time.time() - start_time))
 
             # Overwrite GP and kernel values
             self.set_new_gp_and_kernel(d=d, variance=s, lengthscale=l, noise_var=sn)
