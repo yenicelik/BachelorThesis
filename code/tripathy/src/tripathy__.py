@@ -50,10 +50,11 @@ class TripathyGP(ConfidenceBoundModel):
 
     """
 
-    def set_new_kernel(self, d, variance=None, lengthscale=None):
+    def set_new_kernel(self, d, W=None, variance=None, lengthscale=None):
         self.kernel = TripathyMaternKernel(
             real_dim=self.domain.d,
             active_dim=d,
+            W=W,
             variance=variance,
             lengthscale=lengthscale
         )
@@ -66,8 +67,8 @@ class TripathyGP(ConfidenceBoundModel):
             calculate_gradients= True # TODO: replace with config value!
         )
 
-    def set_new_gp_and_kernel(self, d, variance, lengthscale, noise_var):
-        self.set_new_kernel(d, variance, lengthscale)
+    def set_new_gp_and_kernel(self, d, W, variance, lengthscale, noise_var):
+        self.set_new_kernel(d, W, variance, lengthscale)
         self.set_new_gp(noise_var)
     #         # from .t_kernel import TripathyMaternKernel
     #         TripathyMaternKernel.__module__ = "tripathy.src.t_kernel"
@@ -120,7 +121,7 @@ class TripathyGP(ConfidenceBoundModel):
         x: 2d-array
         y: 2d-array
         """
-        self.i = 0 if not ("i" in dir(self)) else self.i + 1
+        self.i = 1 if not ("i" in dir(self)) else self.i + 1
         print("Add data ", self.i)
         x = np.atleast_2d(x)
         y = np.atleast_2d(y)
@@ -257,7 +258,8 @@ class TripathyGP(ConfidenceBoundModel):
             print("--- %s seconds ---" % (time.time() - start_time))
 
             # Overwrite GP and kernel values
-            self.set_new_gp_and_kernel(d=d, variance=s, lengthscale=l, noise_var=sn)
+            # TODO: W_hat not used ----
+            self.set_new_gp_and_kernel(d=d, W=W_hat, variance=s, lengthscale=l, noise_var=sn)
 
         self.gp.set_XY(X, Y)
         self.t = X.shape[0]

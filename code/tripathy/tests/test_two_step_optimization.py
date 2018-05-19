@@ -72,5 +72,5 @@ class TestIndividualFunctions(object):
         self.init()
 
         # TODO: loss before, should be bigger than loss after!
-        W_hat, sn, l, s = self.optimizer.find_active_subspace(self.X, self.Y)
+        W_hat, sn, l, s, d = self.optimizer.find_active_subspace(self.X, self.Y)
         assert self.optimizer.dim_losses[0] >= self.optimizer.dim_losses[-1]

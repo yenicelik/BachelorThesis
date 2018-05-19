@@ -25,7 +25,9 @@ class TripathyMaternKernel(Kern):
             k(x, x') = k_0(Wx, Wx')
     """
 
-    def __init__(self, real_dim, active_dim, variance=None, lengthscale=None, _name="TripathyMaternKernel32"):
+
+    # TODO: add W as a parameter
+    def __init__(self, real_dim, active_dim, W=None, variance=None, lengthscale=None, _name="TripathyMaternKernel32"):
 
         # self.__dict__['_name'] = _name
 
@@ -39,7 +41,7 @@ class TripathyMaternKernel(Kern):
 
         # TODO: decide what file to put these values (this file is probably good, just check how to pass around stuff)
         # TODO: add these as priors
-        self.W = self.sample_W()
+        self.W = W if W is not None else self.sample_W()
 
         self.inner_kernel = Matern32(
             input_dim=self.active_dim,

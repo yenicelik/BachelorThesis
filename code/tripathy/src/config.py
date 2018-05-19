@@ -1,6 +1,6 @@
 from sys import platform
 
-DEV = False
+DEV = True
 HALFDEV = False
 
 if DEV:
@@ -48,16 +48,16 @@ elif HALFDEV:
 else:
 
     config = {
-        "no_restarts": 16*100,
+        "no_restarts": 16*15,
 
-        "max_iter_alg1": int(1e5),
-        "max_iter_alg3": int(1e5),
+        "max_iter_alg1": int(4000),
+        "max_iter_alg3": int(4000),
 
         "max_iter_parameter_optimization": 1,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 1.e-9, # -12,
-        "eps_alg3": 1.e-9, # -12,
+        "eps_alg1": 1.e-4, # -12,
+        "eps_alg3": 1.e-4, # -12,
         "eps_alg4": 1.e-3,
 
         "tau_max": 1.e-1,
@@ -73,3 +73,6 @@ if platform == "linux" or platform == "linux2":
 elif platform == "darwin":
     config['basepath'] = "/Users/davidal/GoogleDrive/BachelorThesis/code"
     config['dev'] = True
+
+config['restict_cores'] = True
+config['max_cores'] = 16

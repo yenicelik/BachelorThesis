@@ -149,14 +149,20 @@ class TripathyOptimizer:
         losses = []
         configs = []
 
-        # Count how many processors we have:
-        number_processes = multiprocessing.cpu_count()
-
-        print("Number of processes found: ", number_processes)
-
         # Define the throw-aways function:
         def wrapper_singlerun(_):
             return self.single_run(t_kernel, X, Y)
+
+        # Defining the process pool
+        # Count how many processors we have:
+        number_processes = multiprocessing.cpu_count()
+        print("Number of processes found: ", number_processes)
+
+        if config['restict_cores']:
+            number_processes = min(number_processes, config['max_cores'])
+        number_processes = max(number_processes, 1)
+
+        print("Number of processes found: ", number_processes)
 
         all_responses = multiprocess.Pool(number_processes).map(wrapper_singlerun, range(self.no_of_restarts))
 
