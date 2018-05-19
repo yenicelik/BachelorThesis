@@ -3,7 +3,7 @@ algorithm:
 experiment.simple:
   T: 50  # Horizon
   algorithm: febo.algorithms.UCB
-  environment: febo.environment.benchmarks.Camelback
+  environment: febo.environment.benchmarks.HiddenParabola
   controller: febo.controller.DataController
 main:
   experiment_dir: ../runs/

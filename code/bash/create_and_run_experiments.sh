@@ -15,7 +15,7 @@ else
     BASEPATH="/BachelorThesis/code/experiment_yamls/"
 fi
 
-FOLDERNAMES=("high2_low1" "high5_low1" "high5_low2" "high10_low5")
+FOLDERNAMES=("high5_low1" "high5_low2" "high10_low5") # "high2_low1"
 EXPERIMENTCONFIGS=("stdd.yaml" "trip.yaml")
 
 delimiter="/"
