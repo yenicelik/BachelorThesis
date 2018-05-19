@@ -1,0 +1,10 @@
+algorithm:
+  model: src.tripathy__.TripathyGP
+experiment.simple:
+  T: 50  # Horizon
+  algorithm: febo.algorithms.UCB
+  environment: febo.environment.benchmarks.Camelback
+  controller: febo.controller.DataController
+main:
+  experiment_dir: ../runs/
+  experiment: febo.experiment.SimpleExperiment  # Experiment

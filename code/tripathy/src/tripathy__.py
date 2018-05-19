@@ -81,7 +81,7 @@ class TripathyGP(ConfidenceBoundModel):
         # TODO: d is chosen to be an arbitrary value rn!
         # self.set_new_kernel(2, None, None)
         # self.set_new_gp(None)
-        self.set_new_gp_and_kernel(2, None, None, None)
+        self.set_new_gp_and_kernel(2, None, None, None, None)
 
         # calling of the kernel
         # self.gp = self._get_gp() # TODO: does this actually create a new gp?
