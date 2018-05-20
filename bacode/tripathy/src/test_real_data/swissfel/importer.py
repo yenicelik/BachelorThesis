@@ -5,7 +5,7 @@ from h5py import File
 # import matplotlib.pyplot as plt
 # import os
 
-from code.tripathy.src import config
+from bacode.tripathy.src import config
 
 TRAIN_TEST_SPLIT = (0.7, 0.3)
 

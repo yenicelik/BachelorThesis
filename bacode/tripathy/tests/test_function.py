@@ -2,8 +2,8 @@ import sys
 sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
 print(sys.path)
 import numpy as np
-from src.t_kernel import TripathyMaternKernel
-from src.t_optimization_functions import t_WOptimizer
+from bacode.tripathy.src.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.t_optimization_functions import t_WOptimizer
 from febo.environment.benchmarks.functions import Rosenbrock, Parabola
 from GPy.models.gp_regression import GPRegression
 

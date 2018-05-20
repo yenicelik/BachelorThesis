@@ -1,0 +1,4 @@
+{
+  "tests/test_kernel.py::TestKernel::()::test_kernel_returns_gram_matrix_correct_shape": true,
+  "tests/test_kernel.py::TestKernel::()::test_two": true
+}

@@ -2,7 +2,7 @@ import sys
 sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
 print(sys.path)
 import numpy as np
-from src.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.t_kernel import TripathyMaternKernel
 from GPy.kern.src.stationary import Matern32
 
 class TestKernel(object):

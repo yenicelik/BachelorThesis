@@ -3,11 +3,11 @@ import sys
 sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
 print(sys.path)
 import numpy as np
-from src.t_kernel import TripathyMaternKernel
-from src.t_optimization_functions import t_WOptimizer
-from src.t_optimizer import TripathyOptimizer
+from bacode.tripathy.src.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.t_optimization_functions import t_WOptimizer
+from bacode.tripathy.src.t_optimizer import TripathyOptimizer
 from febo.environment.benchmarks.functions import Parabola, AugmentedSinusoidal, Rosenbrock, PolynomialKernel
-from src.t_loss import loss, dloss_dW, dK_dW, dloss_ds
+from bacode.tripathy.src.t_loss import loss, dloss_dW, dK_dW, dloss_ds
 import matplotlib.pyplot as plt
 
 """

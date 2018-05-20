@@ -6,10 +6,10 @@ sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
 print(sys.path)
 import numpy as np
 import warnings
-from src.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.t_kernel import TripathyMaternKernel
 
-from src.t_optimizer import TripathyOptimizer
-from src.t_loss import loss
+from bacode.tripathy.src.t_optimizer import TripathyOptimizer
+from bacode.tripathy.src.t_loss import loss
 
 class TestIndividualFunctions(object):
 
