@@ -99,10 +99,10 @@ class TripathyOptimizer:
     def single_run(self, t_kernel, X, Y):
 
         # Output
-        W = np.zeros_like(t_kernel.W)
-        sn = 0.
-        l = np.zeros_like(t_kernel.inner_kernel.lengthscale)
-        s = np.zeros_like(t_kernel.inner_kernel.variance)
+        W = None
+        sn = None
+        l = None
+        s = None
         cur_loss = -np.inf
 
         try:
@@ -164,7 +164,9 @@ class TripathyOptimizer:
 
         print("Number of processes found: ", number_processes)
 
-        all_responses = multiprocess.Pool(number_processes).map(wrapper_singlerun, range(self.no_of_restarts))
+        pool = multiprocess.Pool(number_processes)
+        all_responses = pool.map(wrapper_singlerun, range(self.no_of_restarts))
+        pool.close()
 
 
         losses = [x[4] for x in all_responses]

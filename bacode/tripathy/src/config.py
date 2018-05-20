@@ -6,7 +6,7 @@ HALFDEV = True
 if DEV:
 
     config = {
-        "no_restarts": 4*10, # 20, # 1000
+        "no_restarts": 4*1, # 20, # 1000
 
         "max_iter_alg1": 1,  # 1000, # int(1e5),
         "max_iter_alg3": 1, # 1000, # int(1e5),
@@ -14,8 +14,8 @@ if DEV:
         "max_iter_parameter_optimization": 1,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 1.e-3, # -12,
-        "eps_alg3": 1.e-3, # -12,
+        "eps_alg1": 1.e-4, # -12,
+        "eps_alg3": 1.e-4, # -12,
         "eps_alg4": 1.e-3,
 
         "tau_max": 1.e-1,
@@ -27,7 +27,7 @@ if DEV:
 elif HALFDEV:
 
     config = {
-        "no_restarts": 16*4, # 1000
+        "no_restarts": 4*4*4, # 1000
 
         "max_iter_alg1": 1000, # int(1e5),
         "max_iter_alg3": 1000, # int(1e5),
@@ -42,7 +42,7 @@ elif HALFDEV:
         "tau_max": 1.e-1,
         "no_taus": 5,
 
-        "max_dimensions": 10,
+        "max_dimensions": 2,
     }
 
 else:
@@ -71,7 +71,7 @@ if platform == "linux" or platform == "linux2":
     config['basepath'] = "/home/yedavid/BachelorThesis/"
     config['dev'] = False
 elif platform == "darwin":
-    config['basepath'] = "/Users/davidal/GoogleDrive/BachelorThesis/code"
+    config['basepath'] = "/Users/davidal/GoogleDrive/BachelorThesis/bacode/"
     config['dev'] = True
 
 config['restict_cores'] = True
@@ -79,4 +79,4 @@ config['max_cores'] = 16
 
 
 ### DATASET SPECIFIC CONFIGURATIONS
-config['swissfel_datapath'] = "code/data/swissfel/evaluations.hdf5"
+config['swissfel_datapath'] = config['basepath'] + "data/swissfel/evaluations.hdf5"
