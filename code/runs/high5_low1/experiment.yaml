@@ -1,5 +1,5 @@
 algorithm:
-  model: febo.models.GP
+  model: src.tripathy__.TripathyGP
 experiment.simple:
   T: 50  # Horizon
   algorithm: febo.algorithms.UCB

@@ -5,7 +5,7 @@ experiment.simple:
   environment: febo.environment.benchmarks.Camelback
   controller: febo.controller.DataController
   algorithm: febo.algorithms.UCB
-  T: 50  # Horizon
+  T: 200  # Horizon
 experiment:
   log_level_console: INFO
 algorithm:

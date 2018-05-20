@@ -29,6 +29,18 @@ f \left( W \B \right) \approx g \left( x \right)
 
 where $x_0, x_1$ are constants.
 
+\section{Our proposed improvement to existing methods}
+We propose a novel method which is based on additive GPs, where we use different kinds of kernels.
+
+We model the function $f$, which we approximate through functions $g_{i}$ as follows:
+
+\begin{equation}
+f(x) \sim g_1(A_1 x_1) + \sum_{i} g_i(A_i x_i)
+\end{equation}
+
+where $x_1$ is the subvector of the input $x$ that includes the active subspace.
+And each $x_i$ is a subvector of the input $x$ which is part of the nullspace.
+
 
 
 

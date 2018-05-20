@@ -18,7 +18,7 @@ from scipy.optimize import minimize
 
 logger = get_logger('model')
 
-class TripathyGPConfig(ModelConfig):
+class ClassicalActiveSubspaceGPConfig(ModelConfig):
     """
     * kernels: List of kernels
     * noise_var: noise variance
@@ -32,7 +32,7 @@ class TripathyGPConfig(ModelConfig):
     bias = ConfigField(0)
     _section = 'src.tripathy__'
 
-config_manager.register(TripathyGPConfig)
+config_manager.register(ClassicalActiveSubspaceGPConfig)
 
 # def optimize_gp(experiment):
 #     experiment.algorithm.f.gp.kern.variance.fix()
@@ -42,8 +42,8 @@ config_manager.register(TripathyGPConfig)
 from .t_kernel import TripathyMaternKernel
 from .t_optimizer import TripathyOptimizer
 
-@assign_config(TripathyGPConfig)
-class TripathyGP(ConfidenceBoundModel):
+@assign_config(ClassicalActiveSubspaceGPConfig)
+class ClassicalActiveSubspaceGP(ConfidenceBoundModel):
     """
     Base class for GP optimization.
     Handles common functionality.
@@ -74,7 +74,7 @@ class TripathyGP(ConfidenceBoundModel):
     #         TripathyMaternKernel.__module__ = "tripathy.src.t_kernel"
 
     def __init__(self, domain):
-        super(TripathyGP, self).__init__(domain)
+        super(ClassicalActiveSubspaceGP, self).__init__(domain)
 
         self.optimizer = TripathyOptimizer()
 
@@ -127,13 +127,6 @@ class TripathyGP(ConfidenceBoundModel):
         y = np.atleast_2d(y)
 
         self.set_data(x, y, append=True)
-
-        # self._Y = np.vstack([self._Y, y])  # store unbiased data
-        # self.gp.append_XY(x, y - self._bias)
-        #
-        # self.t += y.shape[1]
-        # self._update_cache()
-
 
     # TODO: check if this is called anyhow!
     def optimize(self):
@@ -249,7 +242,7 @@ class TripathyGP(ConfidenceBoundModel):
             Y = np.concatenate((self.gp.Y, Y))
 
         # Do our optimization now
-        if self.i % 5 == 0:
+        if self.i % 3 == 0:
             import time
             start_time = time.time()
 

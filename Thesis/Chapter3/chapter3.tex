@@ -12,6 +12,11 @@
 \fi
 
 \section{Biggest competitors}
+Some main competitors are:
+
+\subsection{REMBO}
+
+\subsection{Linear embeddings for Gaussian processes}
 And now I begin my third chapter here \dots
 
 And now to cite some more people~\citet{Rea85,Ancey1996}
@@ -19,7 +24,15 @@ And now to cite some more people~\citet{Rea85,Ancey1996}
 \subsection{Synthetic Datasets}
 \paragraph{5 dimensional function with 2 dimensional linear embedding}
 
+It is easy to test snythetic datasets, as we can evaluate these functions at any point, and immediately get a regret value.
+
+\paragraph{2D to 1D}: For this function, we use a simple Parabola which is embedded in a 2D space.
+\paragraph{5D to 1D}: For this function, we use a simple Parabola which is embedded in a 5D space.
+\paragraph{5D to 2D}: For this function, we use a simple Camelback function which is embedded in a 5D space.
+\paragraph{10D to 5D}: For this function, we use the 5D Rosenbrock functoin which is embedded in a 10D space.
+
 \subsection{Real Datasets}
+It is more difficult to test algorithms on real datasets, as we cannot quite test a metric such as regret, but rather have to use log likelihood or something similar to test how well our algorithm adapts on a test set, given a training set.
 
 \paragraph{SwissFEL dataset}
 \dots and some more 

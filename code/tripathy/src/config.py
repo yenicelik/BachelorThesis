@@ -1,7 +1,7 @@
 from sys import platform
 
-DEV = True
-HALFDEV = False
+DEV = False
+HALFDEV = True
 
 if DEV:
 
@@ -27,16 +27,16 @@ if DEV:
 elif HALFDEV:
 
     config = {
-        "no_restarts": 16*50, # 1000
+        "no_restarts": 16*4, # 1000
 
         "max_iter_alg1": 1000, # int(1e5),
         "max_iter_alg3": 1000, # int(1e5),
 
-        "max_iter_parameter_optimization": 2,
-        "max_iter_W_optimization": 2,
+        "max_iter_parameter_optimization": 1,
+        "max_iter_W_optimization": 1,
 
-        "eps_alg1": 1.e-6, # -12,
-        "eps_alg3": 1.e-6, # -12,
+        "eps_alg1": 1.e-2, # -12,
+        "eps_alg3": 1.e-2, # -12,
         "eps_alg4": 1.e-3,
 
         "tau_max": 1.e-1,
@@ -76,3 +76,7 @@ elif platform == "darwin":
 
 config['restict_cores'] = True
 config['max_cores'] = 16
+
+
+### DATASET SPECIFIC CONFIGURATIONS
+config['swissfel_datapath'] = "code/data/swissfel/evaluations.hdf5"
