@@ -10,7 +10,7 @@ from GPy.models import GPRegression
 
 from .t_loss import loss, dloss_dW, dK_dW
 
-from .config import config
+from bacode.tripathy.src.config import config
 
 class t_ParameterOptimizer:
     """

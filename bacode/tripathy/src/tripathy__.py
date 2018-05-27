@@ -1,16 +1,17 @@
-from GPy.util.linalg import dtrtrs, tdot, dpotrs
-from febo.utils import locate, get_logger
+from GPy.util.linalg import dpotrs
+from febo.utils import get_logger
 
-import math
 import numpy as np
 
 import sys
-sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
-sys.path.append("/cluster/home/yedavid/BachelorThesis/tripathy")
+# sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/bacode/tripathy")
+sys.path.append("/cluster/home/yedavid/BachelorThesis/tripathy/")
+sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/bacode")
+
 
 from febo.models import ConfidenceBoundModel
 from febo.models.model import ModelConfig
-from febo.models.gpy import GPRegression, GPHeteroscedasticRegression
+from febo.models.gpy import GPRegression
 from febo.utils.config import ConfigField, assign_config, config_manager
 import GPy
 from scipy.linalg import lapack
@@ -39,8 +40,8 @@ config_manager.register(TripathyGPConfig)
 #     experiment.algorithm.f.gp.optimize()
 #     print(experiment.algorithm.f.gp)
 
-from .t_kernel import TripathyMaternKernel
-from .t_optimizer import TripathyOptimizer
+from bacode.tripathy.src.bilionis.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.bilionis.t_optimizer import TripathyOptimizer
 
 @assign_config(TripathyGPConfig)
 class TripathyGP(ConfidenceBoundModel):

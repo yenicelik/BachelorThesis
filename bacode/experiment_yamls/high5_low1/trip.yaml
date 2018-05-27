@@ -9,4 +9,4 @@ experiment.simple:
 experiment:
   log_level_console: INFO
 algorithm:
-  model: src.tripathy__.TripathyGP
+  model: bacode.tripathy.src.tripathy__.TripathyGP

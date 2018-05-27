@@ -1,6 +1,6 @@
 from sys import platform
 
-DEV = False
+DEV = True
 HALFDEV = True
 
 if DEV:
@@ -14,20 +14,20 @@ if DEV:
         "max_iter_parameter_optimization": 1,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 1.e-4, # -12,
-        "eps_alg3": 1.e-4, # -12,
+        "eps_alg1": 1.e-2, # -12,
+        "eps_alg3": 1.e-2, # -12,
         "eps_alg4": 1.e-3,
 
         "tau_max": 1.e-1,
         "no_taus": 5,
 
-        "max_dimensions": 10,
+        "max_dimensions": 3,
     }
 
 elif HALFDEV:
 
     config = {
-        "no_restarts": 4*4*4, # 1000
+        "no_restarts": 4*4*16, # 1000
 
         "max_iter_alg1": 1000, # int(1e5),
         "max_iter_alg3": 1000, # int(1e5),
@@ -35,8 +35,8 @@ elif HALFDEV:
         "max_iter_parameter_optimization": 1,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 1.e-2, # -12,
-        "eps_alg3": 1.e-2, # -12,
+        "eps_alg1": 1.e-3, # -12,
+        "eps_alg3": 1.e-3, # -12,
         "eps_alg4": 1.e-3,
 
         "tau_max": 1.e-1,

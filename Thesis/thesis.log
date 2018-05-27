@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  20 MAY 2018 00:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  27 MAY 2018 21:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1562,7 +1562,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 114.
 \PHD@crest=\box54
 
-<Figs/University_Crest.pdf, id=152, 59.22125pt x 69.25874pt>
+<Figs/University_Crest.pdf, id=164, 59.22125pt x 69.25874pt>
 File: Figs/University_Crest.pdf Graphic file (type pdf)
 
 <use Figs/University_Crest.pdf>
@@ -1632,7 +1632,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 Package natbib Warning: Citation `Wang' on page iii undefined on input line 69.
 
 
-<Figs/./../src/Embedding_optimization.png, id=176, 636.3775pt x 241.90375pt>
+<Figs/./../src/Embedding_optimization.png, id=188, 636.3775pt x 241.90375pt>
 File: Figs/./../src/Embedding_optimization.png Graphic file (type png)
 
 <use Figs/./../src/Embedding_optimization.png>
@@ -1654,7 +1654,7 @@ Package pdftex.def Info: Figs/./../src/Embedding_optimization.png used on input
 
 ]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 45.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 48.
 )
 \tf@toc=\write6
 \openout6 = `thesis.toc'.
@@ -1785,14 +1785,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 15--16
 
  []
 
-) [15
+[15
 
 
 
-] [16
+]) [16] (./thesis.bbl) [17
 
 
-] (./thesis.bbl) [17
 
 ]
 \openout2 = `Appendix1/appendix1.aux'.
@@ -1823,22 +1822,15 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 206.
 )
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 206.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 206.
-
-
-Package rerunfilecheck Warning: File `thesis.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `thesis.out':
-(rerunfilecheck)             Before: 78C4306A6ADD628668C75029E665E36E;7366
-(rerunfilecheck)             After:  5D92570E3A1876C99A4C59753703DBB0;8103.
+Package rerunfilecheck Info: File `thesis.out' has not changed.
+(rerunfilecheck)             Checksum: 5D92570E3A1876C99A4C59753703DBB0;8103.
  ) 
 Here is how much of TeX's memory you used:
- 26359 strings out of 492995
- 461791 string characters out of 6132704
+ 26371 strings out of 492995
+ 461912 string characters out of 6132704
  539350 words of memory out of 5000000
- 29211 multiletter control sequences out of 15000+600000
- 74570 words of font info for 200 fonts, out of 8000000 for 9000
+ 29214 multiletter control sequences out of 15000+600000
+ 74830 words of font info for 204 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,12n,92p,10383b,850s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
@@ -1853,10 +1845,10 @@ st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
 mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on thesis.pdf (32 pages, 224553 bytes).
+Output written on thesis.pdf (32 pages, 226510 bytes).
 PDF statistics:
- 530 PDF objects out of 1000 (max. 8388607)
- 466 compressed objects within 5 object streams
- 143 named destinations out of 1000 (max. 500000)
- 42291 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 547 PDF objects out of 1000 (max. 8388607)
+ 483 compressed objects within 5 object streams
+ 146 named destinations out of 1000 (max. 500000)
+ 42315 words of extra memory for PDF output out of 42996 (max. 10000000)
 

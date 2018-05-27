@@ -12,5 +12,6 @@ code/tripathy/tests/.pytest_cache/
 *.png
 code/runs/trip/data/
 *.hdf5
+*/.pytest_cache/*
 bacode/.idea/*
 *.idea/

@@ -41,6 +41,26 @@ f(x) \sim g_1(A_1 x_1) + \sum_{i} g_i(A_i x_i)
 where $x_1$ is the subvector of the input $x$ that includes the active subspace.
 And each $x_i$ is a subvector of the input $x$ which is part of the nullspace.
 
+We propose the following training method:
+
+\begin{enumerate}
+\item We first approximate the function 
+$$ f(x) \sim g_1(A_1, x) $$.
+We decide the dimensionality of the matrix $A_1$ by deciding a 'cutoff dimension' as proposed by Tripathy et al. in their Algorithm 4.
+$g_1$ is a gaussian process, and $A_1$ is a learned matrix.
+
+\item We then expand this approximated term to
+$$ f(x) \sim g_1(A_1, x)  + g_2(A_2, x)$$.
+In this step, $g_1$ and $A_1$ are kept fix.
+We now learn the function $g_2$ using a gaussian process, and $A_2$ using a matrix optimization process.
+We must make sure that $A_1$ and $A_2$ do not map onto the same subspace!
+
+\item We repeat the above procedure until we have the following expression:
+$$f(x) \sim g_1(A_1 x_1) + \sum_{i} g_i(A_i x_i)$$, where we refer to $g_1$ as the leading term, and $g_{i=2,...i_{max}}$ as the follow-up terms.
+
+
+\end{enumerate}
+
 
 
 

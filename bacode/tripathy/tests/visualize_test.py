@@ -3,12 +3,10 @@ import sys
 sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
 print(sys.path)
 import numpy as np
-from bacode.tripathy.src.t_kernel import TripathyMaternKernel
-from bacode.tripathy.src.t_optimization_functions import t_WOptimizer
-from bacode.tripathy.src.t_optimizer import TripathyOptimizer
-from febo.environment.benchmarks.functions import Parabola, AugmentedSinusoidal, Rosenbrock, PolynomialKernel
-from bacode.tripathy.src.t_loss import loss, dloss_dW, dK_dW, dloss_ds
-import matplotlib.pyplot as plt
+from bacode.tripathy.src.bilionis.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.bilionis.t_optimizer import TripathyOptimizer
+from febo.environment.benchmarks.functions import Parabola
+from bacode.tripathy.src.bilionis.t_loss import loss
 
 """
     ParallelLbfgs
@@ -18,8 +16,6 @@ from febo.utils.utils import cartesian
 
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
-from matplotlib import cm
-from matplotlib.ticker import LinearLocator, FormatStrFormatter
 
 from GPy.models.gp_regression import GPRegression
 

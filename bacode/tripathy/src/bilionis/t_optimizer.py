@@ -14,7 +14,7 @@ from .t_optimization_functions import t_ParameterOptimizer, t_WOptimizer
 from .t_kernel import TripathyMaternKernel
 from GPy.core.parameterization import Param
 
-from .config import config
+from bacode.tripathy.src.config import config
 
 
 class TripathyOptimizer:
@@ -165,8 +165,15 @@ class TripathyOptimizer:
         print("Number of processes found: ", number_processes)
 
         pool = multiprocess.Pool(number_processes)
-        all_responses = pool.map(wrapper_singlerun, range(self.no_of_restarts))
+        all_responses = pool.map_async(wrapper_singlerun, range(self.no_of_restarts))
+        pool.join()
         pool.close()
+
+        # Spin lock until all processes are done (and are killed!
+        # while True:
+        #     time.sleep(1)
+        #     if not multiprocessing.active_children():
+        #         break
 
 
         losses = [x[4] for x in all_responses]

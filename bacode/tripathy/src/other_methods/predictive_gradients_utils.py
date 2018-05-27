@@ -5,8 +5,8 @@
     Implementing the theory from the paper: ﻿Active Learning of Linear Embeddings for Gaussian Processes, Garnett 2013
 """
 
-from ..t_optimization_functions import t_ParameterOptimizer
-from ..t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.bilionis.t_optimization_functions import t_ParameterOptimizer
+from bacode.tripathy.src.bilionis.t_kernel import TripathyMaternKernel
 
 def classical_active_subspace_find_optimal(X, Y):
     """

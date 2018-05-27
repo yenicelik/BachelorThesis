@@ -1,7 +1,7 @@
 """
     This file contains functions which help us allow compare the swiss fel experiment to other methods.
 """
-from bacode.tripathy.src.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.bilionis.t_kernel import TripathyMaternKernel
 from febo.models.gpy import GPRegression
 
 def set_new_kernel(d, W=None, variance=None, lengthscale=None):

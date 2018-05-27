@@ -7,9 +7,8 @@ from mpl_toolkits.mplot3d import Axes3D
 
 from febo.models.gpy import GPRegression
 
-import bacode.tripathy.src
-from bacode.tripathy.src.t_optimizer import TripathyOptimizer
-from bacode.tripathy.src.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.bilionis.t_optimizer import TripathyOptimizer
+from bacode.tripathy.src.bilionis.t_kernel import TripathyMaternKernel
 
 from bacode.tripathy.src.test_real_data.swissfel.importer import import_X_Y
 from bacode.tripathy.src.test_real_data.metrics import l2difference
@@ -18,6 +17,7 @@ default_tuple = ()
 
 def run_optimization(X, Y, Y_noise, input_d):
 
+    # TODO: Y_noise is notuuse!
     assert X.shape[1] == input_d, (X.shape, input_d)
 
     # Run the optimizer

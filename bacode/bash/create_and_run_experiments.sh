@@ -1,3 +1,7 @@
+# Add to pythonpath
+PYTHONPATH="/Users/davidal/GoogleDrive/BachelorThesis/bacode/:/Users/davidal/GoogleDrive/BachelorThesis/"
+export PYTHONPATH
+
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     machine=Linux;;
@@ -10,9 +14,9 @@ echo ${machine}
 
 if [[ $machine == *"Mac"* ]];
 then
-    BASEPATH="/Users/davidal/GoogleDrive/BachelorThesis/code/experiment_yamls/"
+    BASEPATH="/Users/davidal/GoogleDrive/BachelorThesis/bacode/experiment_yamls/"
 else
-    BASEPATH="/BachelorThesis/code/experiment_yamls/"
+    BASEPATH="/BachelorThesis/bacode/experiment_yamls/"
 fi
 
 FOLDERNAMES=("high2_low1" "high5_low1" "high5_low2" "high10_low5") #
