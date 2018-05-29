@@ -43,6 +43,9 @@
 \contentsline {subsection}{\numberline {4.3.1}First subsection in the first section}{14}{subsection.4.3.1}
 \contentsline {chapter}{\numberline {5}Extensions}{15}{chapter.5}
 \contentsline {section}{\numberline {5.1}Finding a matrix when we apply a polynomial kernel onto the input first}{15}{section.5.1}
-\contentsline {section}{\numberline {5.2}Our proposed improvement to existing methods}{15}{section.5.2}
-\contentsline {chapter}{References}{17}{chapter*.15}
-\contentsline {chapter}{Appendix \numberline {A}How to install \LaTeX }{19}{Appendix.a.A}
+\contentsline {section}{\numberline {5.2}Additive Stiefel projections - Our proposed improvement to existing methods}{15}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}What is it better than actively finding substructures}{16}{subsection.5.2.1}
+\contentsline {section}{\numberline {5.3}Random addition of REMBO}{17}{section.5.3}
+\contentsline {section}{\numberline {5.4}Additive variance reducing GP}{17}{section.5.4}
+\contentsline {chapter}{References}{19}{chapter*.15}
+\contentsline {chapter}{Appendix \numberline {A}How to install \LaTeX }{21}{Appendix.a.A}

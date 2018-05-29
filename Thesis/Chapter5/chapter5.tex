@@ -29,7 +29,7 @@ f \left( W \B \right) \approx g \left( x \right)
 
 where $x_0, x_1$ are constants.
 
-\section{Our proposed improvement to existing methods}
+\section{Additive Stiefel projections - Our proposed improvement to existing methods}
 We propose a novel method which is based on additive GPs, where we use different kinds of kernels.
 
 We model the function $f$, which we approximate through functions $g_{i}$ as follows:
@@ -58,11 +58,58 @@ We must make sure that $A_1$ and $A_2$ do not map onto the same subspace!
 \item We repeat the above procedure until we have the following expression:
 $$f(x) \sim g_1(A_1 x_1) + \sum_{i} g_i(A_i x_i)$$, where we refer to $g_1$ as the leading term, and $g_{i=2,...i_{max}}$ as the follow-up terms.
 
-
 \end{enumerate}
 
+The question now is: Does this structure implicitly find additive substructures between variables, and how is this better than actively finding substructures?
+
+\subsection{What is it better than actively finding substructures}.
+Actively finding substructures does find relations between different variables.
+But it does not account for the weight each variable has within the subsubstruce, which then needs to be accounted by.
+
+We will refer to a smaller function that does not influence the real function $f$ by $O(g_n)$.
+
+We are now interested if it covers some edge cases.
+
+We separate the algorithm into two parts:
+
+1.) Is the model capable of learning this structure
+2.) How could training result in this structure, and are the chances big enough?
 
 
+\section{Random addition of REMBO}
+Another model we potentially propose is again based on additive GP's, where we use again a mixture of different kernels.
+
+We model the function by the following term:
+
+% f(x) \sim g_1(A_1 x_1) +g_1(A_1 x_1) + g_1(A_1 x_1) + g_1(A_1 x_1) + \sum_{i} g_i(A_i x_i) + \ldots
+
+\begin{equation}
+f(x) \sim \sum_i g_i^1(A_i^1 x) + \sum_i g_i^2(A_i^2 x) + \sum_i g_i^3(A_i^3 x) + \ldots + \sum_i g_i^{d_{max}}(A_i^{d_{max}} x)
+\end{equation}
+
+The idea is that this model can capture the majority of all the possible substructures of a matrix up to a certain dimension $d_{max}$.
+We can randomly take and leave behind certain terms from within the above expression.
+We define this number to be $\epsilon$, where we leave out one term with probability $\epsilon$.
+We can then train the above substructure easily, as the random projection matrices may be fixed.
+
+----
+Downsides - this is basically "a random version to find additive substructures within the subspace X".
+
+In minization, we can minize both to best fit the predicted mean (on a test set), and the predicted variance over all values.
+
+--> Possible extension to the Projection pursuit regression?
+
+\section{Additive variance reducing GP}
+For this technique, we must detect the number of possible cliques.
+We don't need to know which variables go together, however, rather, how many times we get a maximal clique.
+
+We can use the EPFL junction tree thing to find how many maximal cliques we have. 
+Then we spawn that many terms with random matrices, but first project them all onto a lower subspace.
+How do we find out how many active dimensions each of these values has?
+Or do we assume that each such clique already is in a lower dimension.
+
+
+Besides fitting a set of test data well through the predicted mean function, we also wish to minimize the 
 
 
 

@@ -6,6 +6,8 @@ experiment.simple:
   controller: febo.controller.DataController
   algorithm: febo.algorithms.UCB
   T: 200  # Horizon
+environment.benchmark:
+ noise_function: 0.2
 experiment:
   log_level_console: INFO
 algorithm:
