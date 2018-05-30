@@ -79,4 +79,3 @@ optimizers.seeds:
   num_random_points: 50
   max_tail_length: 200
   expected_tail_length: 100
-

@@ -33,6 +33,12 @@ config_manager.register(RemboConfig)
 class RemboAlgorithm(Algorithm):
 
     def initialize(self, **kwargs):
+        """
+            self.domain carries the higher-dimensional domain
+            We then create a lower dimensional domain, called "self.optimization_domain"
+        :param kwargs:
+        :return:
+        """
         super(RemboAlgorithm, self).initialize(**kwargs)
 
         # Sample an orthogonal matrix
@@ -46,24 +52,30 @@ class RemboAlgorithm(Algorithm):
         self.hd_upperbound = self.domain.u
         # self.higher_domain = self.domain
 
+        self.center = (self.hd_lowerbound + self.hd_upperbound) / 2.
+        self.domain_range = self.hd_upperbound - self.hd_lowerbound
+        assert self.center.shape == (self.domain.d,), (
+            "The shape of the cente,r and the domain does not conform! ", self.center.shape, self.domain.d)
+        assert self.domain_range.shape == (self.domain.d,), (
+            "The shape of the domain range, and the domain does not conform! ", self.domain_range.shape, self.domain.d)
+        print("self.center is: ", self.center)
+        print("self.domain_range is: ", self.domain_range)
+        # exit(0)
+
         # Define the higher and lower dimensions for the auxiliary, lower dimensional subspace
         # In the paper, they define this to be:
 
         # TODO: check this formula! (how to calculate the lower dimensions!
-        d = self.hd_upperbound.shape[0]
-        self.ld_lowerbound = -1 * np.ones((self.config.dim,)) * np.sqrt(d)
-        self.ld_upperbound = np.ones((self.config.dim,)) * np.sqrt(d)
+        # d = self.hd_upperbound.shape[0]
+        d = self.config.dim
+        self.ld_lowerbound = -1 * np.ones((d,)) * d  # np.sqrt(d) # * np.linalg.norm(self.A) #
+        self.ld_upperbound = np.ones((d,)) * d  # np.sqrt(d) # * np.sqrt(d) * np.linalg.norm(self.A)
 
         self.optimization_domain = ContinuousDomain(self.ld_lowerbound,
                                                     self.ld_upperbound)  # box constrains in self.config.dim dimensions, according to Rembo paper
 
         self.optimizer = ScipyOptimizer(self.optimization_domain)
         self.gp = GP(self.optimization_domain)
-
-        # Bugfix! Add one random point, such that the first try is not empty!
-        self.first = True
-        first_datapoint = np.ones((1, self.domain.d))
-        self.gp.add_data(self.inv_project(first_datapoint), np.asarray(1))
 
     def _next(self):
         # return rembo's choice
@@ -75,19 +87,43 @@ class RemboAlgorithm(Algorithm):
         out = self.project(z_ucb)
         assert out.shape[1] == self.domain.d, (
             "Output of next does not conform with environment dimensions: ", out.shape, self.domain.d)
-        return out.T.squeeze()  # TODO: because the environment has this weird format..
+        out = out.T.squeeze()
+        # Need to denormalize
+        # out = self.denormalizer(out)
+        return out.T.squeeze()
 
     def ucb_acq_function(self, Z):
+        # TODO: does this need denormalization?
         return -self.gp.ucb(Z)
 
     def add_data(self, data):
-        if self.first:
-            self.first = False
-            # TODO: remove the first datapoint from the gp before adding further points!
+        # x = self.normalizer(data['x'])
+        x = self.inv_project(data['x'])
+        self.gp.add_data(x, data['y'])
 
-        self.gp.add_data(self.inv_project(data['x']), data['y'])
-        # self.t = self.gp.X.shape[0] # TODO: are these necessary? Probably!
-        # self._update_cache()
+    ############################
+    # REMBO SPECIFIC FUNCTIONS #
+    ############################
+
+    # Helper functions:
+    def normalizer(self, x):
+        # TODO: now.. how do we properly use this?
+        assert x.shape == (self.domain.d,), ("X is not a single sample - normalizer!", x.shape, self.domain.d)
+        print("Before norm: ", x)
+        out = np.divide(x - self.center,
+                        self.domain_range)  # TODO: should be elementwise division and subtraction!! (rowwise to be exact!)
+        print("After norm: ", out)
+        return out
+
+    def denormalizer(self, x):
+        # TODO: save all these variables internally -- they should actually be present in the domain thingy
+        # print("Shape of x is: ", x.shape)
+        assert x.shape == (self.domain.d,), ("X is not a single sample - denormalizer!", x.shape, self.domain.d)
+
+        print("Before denorm ", x)
+        out = (np.multiply(x, self.domain_range)) + self.center  # TODO: should be elementwise multiplication!
+        print("After denorm ", out)
+        return out
 
     def project(self, z):
         """
@@ -98,8 +134,15 @@ class RemboAlgorithm(Algorithm):
         Returns: x: R^self.hidh_domain.d
 
         """
-        # TODO: check all the dimensions!
+
+        # Assumptions:
+        # - z is always contained within Y!
+        # -
+
+        # Normalize!
+        # print("Before projection! (low to high)", z)
         inp = np.atleast_2d(z)
+
         assert inp.shape[1] == self.config.dim, (
             "Size of the REMBO input does not conform with input point! ", z.shape, self.config.dim)
         projection_on_hd = np.dot(inp, self.A.T)
@@ -107,14 +150,19 @@ class RemboAlgorithm(Algorithm):
             "Somehow, we lost a sample! ", (projection_on_hd.shape, inp.shape))
         assert projection_on_hd.shape[1] == self.domain.d, (
             "Somehow, we lost or gained a dimenion! ", (projection_on_hd.shape, self.domain.d))
-        # Constraint by the upper bounds # TODO: we need to take the samplewise maximum and minimum! This is not the case as of now
-        out = np.maximum(projection_on_hd, self.hd_lowerbound)
-        # Constraint by the lower bounds
+
+        out = np.maximum(projection_on_hd,
+                         self.hd_lowerbound)  # TODO: we need to take the samplewise maximum and minimum! This is not the case as of now
         out = np.minimum(out, self.hd_upperbound)
-        # return self.A.T.dot(z) + projection if outside box
+
         out = np.atleast_2d(out)
+
+        # Recentralize to the real world!
+        # out = (np.multiply(out, self.domain_range)) + self.center
+
         assert out.shape[1] == self.A.shape[0], (
             "Size of REMBO *projection* does not conform with output point! ", out.shape, self.A.T.shape)
+        # print("After projection (low to high)! ", out)
         return out
 
     def inv_project(self, x):
@@ -123,6 +171,9 @@ class RemboAlgorithm(Algorithm):
         :param x:
         :return:
         """
+        # x = np.divide(x - self.center, self.domain_range)
+
+        # print("Before inverse projection (high to low)! ", x)
         # Project onto the subspace
         inp = np.atleast_2d(x)
         assert inp.shape[1] == self.A.shape[0], (
@@ -131,8 +182,6 @@ class RemboAlgorithm(Algorithm):
         out = np.atleast_2d(out)
 
         # self.ld_upperbound.shape[0] # Why does this not work?
-        a = self.ld_upperbound.shape[0]
-        b = out.shape[1]
         assert self.ld_upperbound.shape[0] == out.shape[1], (
             "The output has a weird format and does not conform with the shape of the domain!",
             self.ld_upperbound.shape,
@@ -140,5 +189,7 @@ class RemboAlgorithm(Algorithm):
         # TODO: check if this conforms with the l2 projection onto the box
         out = np.maximum(self.ld_lowerbound, out)
         out = np.minimum(self.ld_upperbound, out)
+
+        # print("After inverse projection (high to low)! ", out)
 
         return out

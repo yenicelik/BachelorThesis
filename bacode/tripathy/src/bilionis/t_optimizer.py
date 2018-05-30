@@ -171,13 +171,6 @@ class TripathyOptimizer:
         pool.close()
         pool.join()
 
-        # Spin lock until all processes are done (and are killed!
-        # while True:
-        #     time.sleep(1)
-        #     if not multiprocessing.active_children():
-        #         break
-
-
         losses = [x[4] for x in all_responses]
         configs = [(x[0], x[1], x[2], x[3]) for x in all_responses]
 

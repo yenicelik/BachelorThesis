@@ -41,8 +41,8 @@ experiment_name="$dim"_"$model"
 # Run the embedded ucb sample
 config_path="$BASEPATH"johannes_configs
 echo "Using config file:" $config_path$delimiter"ucb_embed_benchmark.yaml"
-febo create "johannes_ucb" --config $config_path$delimiter"ucb_embed_benchmark.yaml" --overwrite
+febo create "jucb" --config $config_path$delimiter"ucb_embed_benchmark.yaml" --overwrite
 # cd ..
-febo run "johannes_ucb"
-febo plot "johannes_ucb"
+febo run "jucb"
+febo plot "jucb"
 cd $initial_wd
