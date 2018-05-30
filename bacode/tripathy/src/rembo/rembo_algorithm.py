@@ -42,12 +42,20 @@ class RemboAlgorithm(Algorithm):
         super(RemboAlgorithm, self).initialize(**kwargs)
 
         # Sample an orthogonal matrix
-        self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim)
+        # self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim)
+        self.A = np.asarray([
+            [1] + [0] + [0] * (self.config.dim - 2),
+            [0] + [1] + [0] * (self.config.dim - 2),
+        ])
+        lower_zero = np.zeros((self.domain.d - 2, self.config.dim))
+        self.A = np.concatenate((self.A, lower_zero), axis=0)
+
         assert self.A.shape == (self.domain.d, self.config.dim), (
             "Something went wrong when generating the dimensions of A! ", self.A.shape,
             (self.domain.d, self.config.dim))
 
         # Set the respective bounds for the higher and lower dimensions
+        # self.domain = ContinuousDomain(-1 * np.ones(self.domain.d), 1*np.ones(self.domain.d))
         self.hd_lowerbound = self.domain.l
         self.hd_upperbound = self.domain.u
         # self.higher_domain = self.domain
@@ -68,8 +76,8 @@ class RemboAlgorithm(Algorithm):
         # TODO: check this formula! (how to calculate the lower dimensions!
         # d = self.hd_upperbound.shape[0]
         d = self.config.dim
-        self.ld_lowerbound = -1 * np.ones((d,)) * d  # np.sqrt(d) # * np.linalg.norm(self.A) #
-        self.ld_upperbound = np.ones((d,)) * d  # np.sqrt(d) # * np.sqrt(d) * np.linalg.norm(self.A)
+        self.ld_lowerbound = -1 * np.ones((d,)) * np.sqrt(d) # * np.linalg.norm(self.A) #
+        self.ld_upperbound = np.ones((d,)) * np.sqrt(d) # * np.sqrt(d) * np.linalg.norm(self.A)
 
         self.optimization_domain = ContinuousDomain(self.ld_lowerbound,
                                                     self.ld_upperbound)  # box constrains in self.config.dim dimensions, according to Rembo paper
@@ -90,6 +98,7 @@ class RemboAlgorithm(Algorithm):
         out = out.T.squeeze()
         # Need to denormalize
         # out = self.denormalizer(out)
+        out = np.multiply(out, self.domain_range) + self.center
         return out.T.squeeze()
 
     def ucb_acq_function(self, Z):
@@ -98,33 +107,14 @@ class RemboAlgorithm(Algorithm):
 
     def add_data(self, data):
         # x = self.normalizer(data['x'])
-        x = self.inv_project(data['x'])
+        x = data['x']
+        x = np.divide(x - self.center, self.domain_range)
+        x = self.inv_project(x)
         self.gp.add_data(x, data['y'])
 
     ############################
     # REMBO SPECIFIC FUNCTIONS #
     ############################
-
-    # Helper functions:
-    def normalizer(self, x):
-        # TODO: now.. how do we properly use this?
-        assert x.shape == (self.domain.d,), ("X is not a single sample - normalizer!", x.shape, self.domain.d)
-        print("Before norm: ", x)
-        out = np.divide(x - self.center,
-                        self.domain_range)  # TODO: should be elementwise division and subtraction!! (rowwise to be exact!)
-        print("After norm: ", out)
-        return out
-
-    def denormalizer(self, x):
-        # TODO: save all these variables internally -- they should actually be present in the domain thingy
-        # print("Shape of x is: ", x.shape)
-        assert x.shape == (self.domain.d,), ("X is not a single sample - denormalizer!", x.shape, self.domain.d)
-
-        print("Before denorm ", x)
-        out = (np.multiply(x, self.domain_range)) + self.center  # TODO: should be elementwise multiplication!
-        print("After denorm ", out)
-        return out
-
     def project(self, z):
         """
 

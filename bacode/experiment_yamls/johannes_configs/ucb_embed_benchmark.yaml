@@ -39,10 +39,10 @@ experiment.benchmark:
     experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB
     experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded
-  # - experiment.simple:algorithm: febo.algorithms.ucb.UCB
-  #   experiment.simple:environment: febo.environment.benchmarks.functions.Camelback
+  - experiment.simple:algorithm: febo.algorithms.ucb.UCB
+    experiment.simple:environment: febo.environment.benchmarks.functions.Camelback
   fixed_environment: false  # If true, only one environment for the whole batch will be created. Use this, if you randomly genrate your environment, but the whole batch should use the same random instance of the environment.
-  repetitions: 3  # Number of repetitions each experiment is run.
+  repetitions: 5 # Number of repetitions each experiment is run.
 experiment.simple:
   T: 300  # Horizon
   load_previous_data: false
@@ -61,8 +61,8 @@ models.gp:
   noise_var: 0.01
   kernels:
   - - GPy.kern.Matern32
-    - variance: 0.1
-      lengthscale: 0.1
+    - variance: 2.
+      lengthscale: 0.05
       ARD: true
 optimizer.grid:
   points_per_dimension: 100
