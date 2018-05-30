@@ -38,7 +38,8 @@ class RemboAlgorithm(Algorithm):
         # Sample an orthogonal matrix
         self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim)
         assert self.A.shape == (self.domain.d, self.config.dim), (
-        "Something went wrong when generating the dimensions of A! ", self.A.shape, (self.domain.d, self.config.dim))
+            "Something went wrong when generating the dimensions of A! ", self.A.shape,
+            (self.domain.d, self.config.dim))
 
         # Set the respective bounds for the higher and lower dimensions
         self.hd_lowerbound = self.domain.l
@@ -59,7 +60,6 @@ class RemboAlgorithm(Algorithm):
         self.optimizer = ScipyOptimizer(self.optimization_domain)
         self.gp = GP(self.optimization_domain)
 
-
         # Bugfix! Add one random point, such that the first try is not empty!
         self.first = True
         first_datapoint = np.ones((1, self.domain.d))
@@ -70,11 +70,12 @@ class RemboAlgorithm(Algorithm):
         z_ucb, _ = self.optimizer.optimize(self.ucb_acq_function)
         z_ucb = np.atleast_2d(z_ucb)
         assert z_ucb.shape[1] == self.config.dim, (
-        "The output of the optimizer is not the right shape! ", z_ucb.shape, self.config.dim)
+            "The output of the optimizer is not the right shape! ", z_ucb.shape, self.config.dim)
         assert z_ucb.shape[0] > 0, ("Somehow, ucb optimizer gave us no points! ", z_ucb.shape)
         out = self.project(z_ucb)
-        assert out.shape[1] == self.domain.d, ("Output of next does not conform with environment dimensions: ", out.shape, self.domain.d)
-        return out.T.squeeze() # TODO: because the environment has this weird format..
+        assert out.shape[1] == self.domain.d, (
+            "Output of next does not conform with environment dimensions: ", out.shape, self.domain.d)
+        return out.T.squeeze()  # TODO: because the environment has this weird format..
 
     def ucb_acq_function(self, Z):
         return -self.gp.ucb(Z)
@@ -100,12 +101,12 @@ class RemboAlgorithm(Algorithm):
         # TODO: check all the dimensions!
         inp = np.atleast_2d(z)
         assert inp.shape[1] == self.config.dim, (
-        "Size of the REMBO input does not conform with input point! ", z.shape, self.config.dim)
+            "Size of the REMBO input does not conform with input point! ", z.shape, self.config.dim)
         projection_on_hd = np.dot(inp, self.A.T)
         assert projection_on_hd.shape[0] == inp.shape[0], (
-        "Somehow, we lost a sample! ", (projection_on_hd.shape, inp.shape))
+            "Somehow, we lost a sample! ", (projection_on_hd.shape, inp.shape))
         assert projection_on_hd.shape[1] == self.domain.d, (
-        "Somehow, we lost or gained a dimenion! ", (projection_on_hd.shape, self.domain.d))
+            "Somehow, we lost or gained a dimenion! ", (projection_on_hd.shape, self.domain.d))
         # Constraint by the upper bounds # TODO: we need to take the samplewise maximum and minimum! This is not the case as of now
         out = np.maximum(projection_on_hd, self.hd_lowerbound)
         # Constraint by the lower bounds
@@ -113,7 +114,7 @@ class RemboAlgorithm(Algorithm):
         # return self.A.T.dot(z) + projection if outside box
         out = np.atleast_2d(out)
         assert out.shape[1] == self.A.shape[0], (
-        "Size of REMBO *projection* does not conform with output point! ", out.shape, self.A.T.shape)
+            "Size of REMBO *projection* does not conform with output point! ", out.shape, self.A.T.shape)
         return out
 
     def inv_project(self, x):
@@ -124,14 +125,18 @@ class RemboAlgorithm(Algorithm):
         """
         # Project onto the subspace
         inp = np.atleast_2d(x)
-        assert inp.shape[1] == self.A.shape[0], ("The inverse projection does not quite match! ", (inp.shape, self.A.shape))
+        assert inp.shape[1] == self.A.shape[0], (
+            "The inverse projection does not quite match! ", (inp.shape, self.A.shape))
         out = np.dot(x, self.A)
         out = np.atleast_2d(out)
 
         # self.ld_upperbound.shape[0] # Why does this not work?
         a = self.ld_upperbound.shape[0]
         b = out.shape[1]
-        assert self.ld_upperbound.shape[0] == out.shape[1], ("The output has a weird format and does not conform with the shape of the domain!", self.ld_upperbound.shape, out.shape)
+        assert self.ld_upperbound.shape[0] == out.shape[1], (
+            "The output has a weird format and does not conform with the shape of the domain!",
+            self.ld_upperbound.shape,
+            out.shape)
         # TODO: check if this conforms with the l2 projection onto the box
         out = np.maximum(self.ld_lowerbound, out)
         out = np.minimum(self.ld_upperbound, out)

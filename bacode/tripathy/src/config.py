@@ -35,8 +35,8 @@ elif HALFDEV:
         "max_iter_parameter_optimization": 1,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 1.e-3, # -12,
-        "eps_alg3": 1.e-3, # -12,
+        "eps_alg1": 1.e-4, # -12,
+        "eps_alg3": 1.e-4, # -12,
         "eps_alg4": 1.e-3,
 
         "tau_max": 1.e-1,

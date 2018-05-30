@@ -6,8 +6,10 @@
 import numpy as np
 import math
 import copy
-import multiprocess
+import dill
+# import multiprocess
 import multiprocessing
+import pathos
 
 from .t_loss import loss
 from .t_optimization_functions import t_ParameterOptimizer, t_WOptimizer
@@ -159,15 +161,15 @@ class TripathyOptimizer:
         print("Number of processes found: ", number_processes)
 
         if config['restict_cores']:
-            number_processes = min(number_processes, config['max_cores'])
+            number_processes = min(number_processes - 1, config['max_cores'])
         number_processes = max(number_processes, 1)
 
         print("Number of processes found: ", number_processes)
 
-        pool = multiprocess.Pool(number_processes)
-        all_responses = pool.map_async(wrapper_singlerun, range(self.no_of_restarts))
-        pool.join()
+        pool = pathos.multiprocessing.Pool(number_processes)
+        all_responses = pool.map(wrapper_singlerun, range(self.no_of_restarts))
         pool.close()
+        pool.join()
 
         # Spin lock until all processes are done (and are killed!
         # while True:
