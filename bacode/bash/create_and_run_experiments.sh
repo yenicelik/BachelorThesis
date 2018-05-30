@@ -19,14 +19,12 @@ else
     BASEPATH="/BachelorThesis/bacode/experiment_yamls/"
 fi
 
-FOLDERNAMES=("high2_low1" "high5_low1" "high5_low2" "high10_low5") #
+FOLDERNAMES=("high5_low1" "high5_low2" "high10_low5") #"high2_low1"
 EXPERIMENTCONFIGS=("stdd" "trip")
 
 delimiter="/"
 
 initial_wd=$(pwd)
-
-# NOT QUITE WHAT YOU WANT! It creates the same experiment twice, without distinguishing between stdd and trip!
 
 for dim in "${FOLDERNAMES[@]}"
 do

@@ -1,0 +1,12 @@
+algorithm:
+  model: bacode.tripathy.src.tripathy__.TripathyGP
+environment.benchmark:
+  noise_function: 0.2
+experiment.simple:
+  T: 200  # Horizon
+  algorithm: febo.algorithms.UCB
+  environment: febo.environment.benchmarks.HiddenParabola
+  controller: febo.controller.DataController
+main:
+  experiment_dir: ../runs/
+  experiment: febo.experiment.SimpleExperiment  # Experiment

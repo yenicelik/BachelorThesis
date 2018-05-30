@@ -1,2 +1,2 @@
 # rsync -r /Users/davidal/GoogleDrive/BachelorThesis/code yedavid@euler.ethz.ch:/cluster/home/yedavid/BachelorThesis/ --progress
-rsync -r /Users/davidal/GoogleDrive/BachelorThesis/code/ yedavid@lazy.inf.ethz.ch:/home/yedavid/BachelorThesis/code/ --progress
+rsync -r /Users/davidal/GoogleDrive/BachelorThesis/bacode/ yedavid@lazy.inf.ethz.ch:/home/yedavid/BachelorThesis/bacode/ --progress

@@ -259,7 +259,6 @@ class TripathyGP(ConfidenceBoundModel):
             print("--- %s seconds ---" % (time.time() - start_time))
 
             # Overwrite GP and kernel values
-            # TODO: W_hat not used ----
             self.set_new_gp_and_kernel(d=d, W=W_hat, variance=s, lengthscale=l, noise_var=sn)
 
         self.gp.set_XY(X, Y)
