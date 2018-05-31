@@ -112,8 +112,6 @@ class RemboAlgorithm(Algorithm):
         :return:
         """
         out = np.dot(x, self.A) # TODO: normalize right after this maybe?
-        out = np.maximum(out, self.optimization_domain.l)
-        out = np.minimum(out, self.optimization_domain.u)
         return out
 
     def project_low_to_high(self, x):
@@ -167,8 +165,6 @@ class RemboAlgorithm(Algorithm):
 #             "Somehow, we lost or gained a dimenion! ", (projection_on_hd.shape, self.domain.d))
 #
 #         # TODO: we need to take the samplewise maximum and minimum! This is not the case as of now
-#         out = np.maximum(projection_on_hd, self.hd_lowerbound)
-#         out = np.minimum(out, self.hd_upperbound)
 #         out = np.atleast_2d(out)
 #
 #         # Recentralize to the real world!
@@ -197,10 +193,6 @@ class RemboAlgorithm(Algorithm):
 #             "The output has a weird format and does not conform with the shape of the domain!",
 #             self.ld_upperbound.shape,
 #             out.shape)
-#
-#         # TODO: do we need this when we project to the lower dimensional embedding.. shouldn't, right??
-#         # out = np.maximum(self.ld_lowerbound, out)
-#         # out = np.minimum(self.ld_upperbound, out)
 #
 #         # print("After inverse projection (high to low)! ", out)
 #
