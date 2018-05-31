@@ -39,7 +39,7 @@ def normalize(x, center, domainrange):
     """
     assert x.shape == center.shape, ("Center and x don't have the same shape ", x.shape, center.shape)
     assert domainrange.shape == center.shape, (
-    "Center and range don't have the same shape ", center.shape, domainrange.shape)
+        "Center and range don't have the same shape ", center.shape, domainrange.shape)
     return np.divide(x - center, domainrange)
 
 
@@ -53,29 +53,78 @@ def denormalize(x, center, domainrange):
     """
     assert x.shape == center.shape, ("Center and x don't have the same shape ", x.shape, center.shape)
     assert domainrange.shape == center.shape, (
-    "Center and range don't have the same shape ", center.shape, domainrange.shape)
+        "Center and range don't have the same shape ", center.shape, domainrange.shape)
     return np.multiply(x, domainrange) + center
 
 
-# @assign_config(RemboConfig)
-# class RemboAlgorithm(Algorithm):
-#
-#     def initialize(self, **kwargs):
-#         """
-#             self.domain carries the higher-dimensional domain
-#             We then create a lower dimensional domain, called "self.optimization_domain"
-#         :param kwargs:
-#         :return:
-#         """
-#         super(RemboAlgorithm, self).initialize(**kwargs)
-#
+@assign_config(RemboConfig)
+class RemboAlgorithm(Algorithm):
+
+    def ucb_acq_function(self, Z):
+        return -self.gp.ucb(Z)  # TODO: Do we need denormalization here anywhere?
+
+    def add_data(self, data):
+        # Project the data to the low-dimensional subspace! # TODO: do we normalize here?
+        x = data['x']
+        # x = normalize(x, center=self.center, domainrange=self.domainrange)
+        x = self.project_high_to_low(x)
+        self.gp.add_data(x, data['y'])
+
+    def initialize(self, **kwargs):
+        """
+            self.domain carries the higher-dimensional domain
+            self.config.dim carries the lower-dimensional domain
+        :param kwargs:
+        :return:
+        """
+        super(RemboAlgorithm, self).initialize(**kwargs)
+
+        self.center = (self.domain.u + self.domain.l) / 2.
+        self.domainrange = (self.domain.u - self.domain.l)
+
+        self.A = np.asarray([
+            [1, 0],
+            [0, 1],
+            [0, 0]
+        ])
+
+        lowdim_lowerbound = -1 * np.ones((self.config.dim,)) * np.sqrt(self.config.dim)
+        lowdim_upperbound = 1 * np.ones((self.config.dim,)) * np.sqrt(self.config.dim)
+
+        self.optimization_domain = ContinuousDomain(l=lowdim_lowerbound, u=lowdim_upperbound)
+
+        self.optimizer = ScipyOptimizer(self.optimization_domain)
+        self.gp = GP(self.optimization_domain)
+
+    def _next(self):
+        z_ucb, _ = self.optimizer.optimize(self.ucb_acq_function)
+
+        out = self.project_low_to_high(z_ucb)
+        # out = denormalize(out, self.center, self.domainrange)
+
+        return out
+
+    def project_high_to_low(self, x):
+        """
+        self.domain.dim to self.config.dim
+        :param x:
+        :return:
+        """
+        out = np.dot(x, self.A)
+        return out
+
+    def project_low_to_high(self, x):
+        """
+                self.config.dim to self.domain.dim
+        :param x:
+        :return:
+        """
+        out = np.dot(x, self.A.T)
+        return out
+
 #         # Sample an orthogonal matrix
 #         # self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim)
-#         self.A = np.asarray([
-#             [1, 0],
-#             [0, 1],
-#             [0, 0]
-#         ])
+
 #         assert self.A.shape == (self.domain.d, self.config.dim), (
 #             "Something went wrong when generating the dimensions of A! ", self.A.shape,
 #             (self.config.dim, self.config.dim))
@@ -92,57 +141,22 @@ def denormalize(x, center, domainrange):
 #         assert self.domain_range.shape == (self.domain.d,), (
 #             "The shape of the domain range, and the domain does not conform! ", self.domain_range.shape, self.domain.d)
 #
-#         # Define the higher and lower dimensions for the auxiliary, lower dimensional subspace
-#         self.ld_lowerbound = -1 * np.ones((self.config.dim,)) * np.sqrt(self.config.dim)
-#         self.ld_upperbound = np.ones((self.config.dim,)) * np.sqrt(self.config.dim)
-#
-#         self.optimization_domain = ContinuousDomain(self.ld_lowerbound, self.ld_upperbound)
-#
-#         self.optimizer = ScipyOptimizer(self.optimization_domain)
-#         self.gp = GP(self.optimization_domain)
-#
 #     def _next(self):
-#         # return rembo's choice
-#         z_ucb, _ = self.optimizer.optimize(self.ucb_acq_function)
-#         z_ucb = np.atleast_2d(z_ucb)
 #         assert z_ucb.shape[1] == self.config.dim, (
 #             "The output of the optimizer is not the right shape! ", z_ucb.shape, self.config.dim)
 #         assert z_ucb.shape[0] > 0, ("Somehow, ucb optimizer gave us no points! ", z_ucb.shape)
 #
 #         # First project, then normalize! # TODO: do we normalize here? when we go from high to low?
-#         out = self.project_low_to_high(z_ucb)
 #         assert out.shape[1] == self.domain.d, (
 #             "Output of next does not conform with environment dimensions: ", out.shape, self.domain.d)
-#         out = out.T.squeeze()
 #         out = denormalize(out, self.center, self.domain_range)
 #
 #         return out
 #
-#     def ucb_acq_function(self, Z):
-#         # TODO: does this need denormalization?
-#         return -self.gp.ucb(Z)
-#
 #     def add_data(self, data):
-#         # Project the data to the low-dimensional subspace! # TODO: do we normalize here?
-#         x = data['x']
 #         x = normalize(x, self.center, self.domain_range)
-#         x = self.project_high_to_low(x)
-#         self.gp.add_data(x, data['y'])
 #
-#     ############################
-#     # REMBO SPECIFIC FUNCTIONS #
-#     ############################
 #     def project_low_to_high(self, z):
-#         """
-#
-#         Args:
-#             z: R^self.config.dim
-#
-#         Returns: x: R^self.high_domain.d
-#
-#         """
-#         # Normalize!
-#         # print("Before projection! (low to high)", z)
 #         inp = np.atleast_2d(z)
 #         assert inp.shape[1] == self.config.dim, (
 #             "Size of the REMBO input does not conform with input point! ", z.shape, self.config.dim)
