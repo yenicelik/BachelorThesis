@@ -87,6 +87,7 @@ class RemboAlgorithm(Algorithm):
             [0, 1],
             [0, 0]
         ])
+        # sample_orthogonal_matrix(self.domain.d, self.config.dim)
 
         lowdim_lowerbound = -1 * np.ones((self.config.dim,)) * np.sqrt(self.config.dim)
         lowdim_upperbound = 1 * np.ones((self.config.dim,)) * np.sqrt(self.config.dim)
@@ -110,7 +111,9 @@ class RemboAlgorithm(Algorithm):
         :param x:
         :return:
         """
-        out = np.dot(x, self.A)
+        out = np.dot(x, self.A) # TODO: normalize right after this maybe?
+        out = np.maximum(out, self.optimization_domain.l)
+        out = np.minimum(out, self.optimization_domain.u)
         return out
 
     def project_low_to_high(self, x):
@@ -119,11 +122,10 @@ class RemboAlgorithm(Algorithm):
         :param x:
         :return:
         """
-        out = np.dot(x, self.A.T)
+        out = np.dot(x, self.A.T) # TODO: denormalize right after this maybe?
+        out = np.maximum(out, self.domain.l)
+        out = np.minimum(out, self.domain.u)
         return out
-
-#         # Sample an orthogonal matrix
-#         # self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim)
 
 #         assert self.A.shape == (self.domain.d, self.config.dim), (
 #             "Something went wrong when generating the dimensions of A! ", self.A.shape,
@@ -153,15 +155,12 @@ class RemboAlgorithm(Algorithm):
 #
 #         return out
 #
-#     def add_data(self, data):
-#         x = normalize(x, self.center, self.domain_range)
 #
 #     def project_low_to_high(self, z):
 #         inp = np.atleast_2d(z)
 #         assert inp.shape[1] == self.config.dim, (
 #             "Size of the REMBO input does not conform with input point! ", z.shape, self.config.dim)
 #
-#         projection_on_hd = np.dot(inp, self.A.T)
 #         assert projection_on_hd.shape[0] == inp.shape[0], (
 #             "Somehow, we lost a sample! ", (projection_on_hd.shape, inp.shape))
 #         assert projection_on_hd.shape[1] == self.domain.d, (
