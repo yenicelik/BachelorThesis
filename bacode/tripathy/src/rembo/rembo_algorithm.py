@@ -133,9 +133,6 @@ class RemboAlgorithm(Algorithm):
 #         self.hd_lowerbound = -1 * np.ones(self.domain.d)
 #         self.hd_upperbound = 1 * np.ones(self.domain.d)
 #
-#         self.center = (self.domain.l + self.domain.u) / 2.
-#         self.domain_range = self.domain.u - self.domain.l
-#
 #         assert self.center.shape == (self.domain.d,), (
 #             "The shape of the cente,r and the domain does not conform! ", self.center.shape, self.domain.d)
 #         assert self.domain_range.shape == (self.domain.d,), (
@@ -149,10 +146,7 @@ class RemboAlgorithm(Algorithm):
 #         # First project, then normalize! # TODO: do we normalize here? when we go from high to low?
 #         assert out.shape[1] == self.domain.d, (
 #             "Output of next does not conform with environment dimensions: ", out.shape, self.domain.d)
-#         out = denormalize(out, self.center, self.domain_range)
-#
 #         return out
-#
 #
 #     def project_low_to_high(self, z):
 #         inp = np.atleast_2d(z)

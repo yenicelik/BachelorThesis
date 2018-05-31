@@ -61,7 +61,7 @@ models.gp:
   noise_var: 0.01
   kernels:
   - - GPy.kern.Matern32
-    - variance: 2.
+    - variance: 0.2
       lengthscale: 0.05
       ARD: true
 optimizer.grid:
