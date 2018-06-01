@@ -29,7 +29,7 @@ class RemboConfig(AlgorithmConfig):
 config_manager.register(RemboConfig)
 
 
-def normalize(x, center, domainrange):
+def normalize(x, domain):
     """
         Normalize value of x from the range of the domain, to [-1, 1]^d
     :param x:
@@ -37,13 +37,13 @@ def normalize(x, center, domainrange):
     :param range:
     :return:
     """
-    assert x.shape == center.shape, ("Center and x don't have the same shape ", x.shape, center.shape)
-    assert domainrange.shape == center.shape, (
-        "Center and range don't have the same shape ", center.shape, domainrange.shape)
-    return np.divide(x - center, domainrange)
+    # assert x.shape == center.shape, ("Center and x don't have the same shape ", x.shape, center.shape)
+    # assert domainrange.shape == center.shape, ("Center and range don't have the same shape ", center.shape, domainrange.shape)
+    return (domain.normalize(x) - 0.5) * 2.
+    # return np.divide(x - center, domainrange)
 
 
-def denormalize(x, center, domainrange):
+def denormalize(x, domain):
     """
         Normalize value of x from the range of the domain, to [-1, 1]^d
     :param x:
@@ -51,10 +51,28 @@ def denormalize(x, center, domainrange):
     :param range:
     :return:
     """
-    assert x.shape == center.shape, ("Center and x don't have the same shape ", x.shape, center.shape)
-    assert domainrange.shape == center.shape, (
-        "Center and range don't have the same shape ", center.shape, domainrange.shape)
-    return np.multiply(x, domainrange) + center
+    # assert x.shape == center.shape, ("Center and x don't have the same shape ", x.shape, center.shape)
+    # assert domainrange.shape == center.shape, ("Center and range don't have the same shape ", center.shape, domainrange.shape)
+    return domain.denormalize( (x / 2.) + 0.5)
+    # return np.multiply(x, domainrange) + center
+
+
+def get_subspace(effective_dimensions):
+    """
+        Calculates the effective search domain Y as given in the REMBO paper
+        $$
+         Y = [ −1/eps* max{log(de), 1}, 1/eps *  max{log(de), 1} ] ^ de
+        $$
+    :param effective_dimensions:
+    :return:
+    """
+    eps = np.log(effective_dimensions) / np.sqrt(effective_dimensions) * (4.) # This modifies the chance that we get a bad entry!
+
+    span_high = np.ones((effective_dimensions,))
+    span_high = np.log(span_high)
+    span_high = np.maximum(span_high, 1) / eps
+
+    return ContinuousDomain(-1 * span_high, span_high)
 
 
 @assign_config(RemboConfig)
@@ -80,19 +98,15 @@ class RemboAlgorithm(Algorithm):
         super(RemboAlgorithm, self).initialize(**kwargs)
 
         self.center = (self.domain.u + self.domain.l) / 2.
-        self.domainrange = (self.domain.u - self.domain.l)
 
-        self.A = np.asarray([
-            [1, 0],
-            [0, 1],
-            [0, 0]
-        ])
-        # sample_orthogonal_matrix(self.domain.d, self.config.dim)
+        # self.A = np.asarray([
+        #     [1, 0],
+        #     [0, 1],
+        #     [0, 0]
+        # ])
+        self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim)
 
-        lowdim_lowerbound = -1 * np.ones((self.config.dim,)) * np.sqrt(self.config.dim)
-        lowdim_upperbound = 1 * np.ones((self.config.dim,)) * np.sqrt(self.config.dim)
-
-        self.optimization_domain = ContinuousDomain(l=lowdim_lowerbound, u=lowdim_upperbound)
+        self.optimization_domain = get_subspace(self.config.dim)
 
         self.optimizer = ScipyOptimizer(self.optimization_domain)
         self.gp = GP(self.optimization_domain)
@@ -110,14 +124,25 @@ class RemboAlgorithm(Algorithm):
         """
         out = x
 
-        out = normalize(out, center=self.center, domainrange=self.domainrange)
+        if DEBUG_LOW:
+            print("Before projection to low dimensional space to low-dimensional space", out)
+
+        if NORM_DENORM:
+            out = normalize(out, self.domain)
+
+        if DEBUG_LOW:
+            print("Normlizing to low-dimensional space", out)
 
         out = np.dot(out, self.A)
 
+        if DEBUG_LOW:
+            print("After Projecting to low-dimensional space", out)
 
-        # TODO: do we remove or leave here the following?
         out = np.maximum(out, self.optimization_domain.l)
         out = np.minimum(out, self.optimization_domain.u)
+
+        if DEBUG_LOW:
+            print("After bounding to low-dimensional space", out)
 
         return out
 
@@ -127,14 +152,34 @@ class RemboAlgorithm(Algorithm):
         :param x:
         :return:
         """
+        if DEBUG_HIGH:
+            print("\n\n\n\n\n\nProjecting to high-dimensional space", x)
         out = np.dot(x, self.A.T)
-        # out = denormalize(out, center=self.center, domainrange=self.domainrange)
-        out = denormalize(out, center=self.center, domainrange=self.domainrange)
 
-        out = np.maximum(out, self.domain.l) # before was self.domain.l, and self.domain.u
-        out = np.minimum(out, self.domain.u)
+        if DEBUG_HIGH:
+            print("After Projecting to high-dimensional space", out)
+
+        if NORM_DENORM:
+            out = np.maximum(out, -1 * np.ones((self.domain.d,)))  # before was self.domain.l, and self.domain.u
+            out = np.minimum(out, 1 * np.ones((self.domain.d,)))
+        else:
+            out = np.maximum(out, self.domain.l)
+            out = np.minimum(out, self.domain.u)
+
+        if DEBUG_HIGH:
+            print("Bounding to high-dimensional space", out)
+
+        if NORM_DENORM:
+            out = denormalize(out, self.domain)
+
+        if DEBUG_HIGH:
+            print("Denormalising to high-dimensional space", out)
 
         return out
+
+NORM_DENORM = True
+DEBUG_HIGH = False
+DEBUG_LOW = False
 
 #         assert self.A.shape == (self.domain.d, self.config.dim), (
 #             "Something went wrong when generating the dimensions of A! ", self.A.shape,
