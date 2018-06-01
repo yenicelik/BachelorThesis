@@ -60,9 +60,9 @@ models.gp:
   calculate_gradients: true  # Enable/Disable computation of gradient on each update.
   noise_var: 0.005
   kernels:
-  - - GPy.kern.Matern32
-    - variance: 1.0
-      lengthscale: 1.5
+  - - GPy.kern.RBF
+    - variance: 2.0
+      lengthscale: 0.5
       ARD: true
 optimizer.grid:
   points_per_dimension: 100

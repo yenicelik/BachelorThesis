@@ -66,7 +66,7 @@ def get_subspace(effective_dimensions):
     :param effective_dimensions:
     :return:
     """
-    eps = np.log(effective_dimensions) / np.sqrt(effective_dimensions) * (4.) # This modifies the chance that we get a bad entry!
+    eps = np.log(effective_dimensions) / np.sqrt(effective_dimensions) * (2.) # This modifies the chance that we get a bad entry!
 
     span_high = np.ones((effective_dimensions,))
     span_high = np.log(span_high)
@@ -99,12 +99,12 @@ class RemboAlgorithm(Algorithm):
 
         self.center = (self.domain.u + self.domain.l) / 2.
 
-        # self.A = np.asarray([
-        #     [1, 0],
-        #     [0, 1],
-        #     [0, 0]
-        # ])
-        self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim)
+        self.A = np.asarray([
+            [1, 0],
+            [0, 1],
+            [0, 0]
+        ])
+        # self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim)
 
         self.optimization_domain = get_subspace(self.config.dim)
 
