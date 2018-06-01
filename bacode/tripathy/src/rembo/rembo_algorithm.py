@@ -61,14 +61,14 @@ def denormalize(x, center, domainrange):
 class RemboAlgorithm(Algorithm):
 
     def ucb_acq_function(self, Z):
-        return -self.gp.ucb(Z)  # TODO: Do we need denormalization here anywhere?
+        return -self.gp.ucb(Z)
 
     def add_data(self, data):
         # Project the data to the low-dimensional subspace! # TODO: do we normalize here?
         x = data['x']
-        # x = normalize(x, center=self.center, domainrange=self.domainrange)
         x = self.project_high_to_low(x)
         self.gp.add_data(x, data['y'])
+        self.gp.optimize()  # TODO: How do we optimize the kernel parameters?
 
     def initialize(self, **kwargs):
         """
@@ -99,10 +99,7 @@ class RemboAlgorithm(Algorithm):
 
     def _next(self):
         z_ucb, _ = self.optimizer.optimize(self.ucb_acq_function)
-
         out = self.project_low_to_high(z_ucb)
-        # out = denormalize(out, self.center, self.domainrange)
-
         return out
 
     def project_high_to_low(self, x):
@@ -111,7 +108,17 @@ class RemboAlgorithm(Algorithm):
         :param x:
         :return:
         """
-        out = np.dot(x, self.A) # TODO: normalize right after this maybe?
+        out = x
+
+        out = normalize(out, center=self.center, domainrange=self.domainrange)
+
+        out = np.dot(out, self.A)
+
+
+        # TODO: do we remove or leave here the following?
+        out = np.maximum(out, self.optimization_domain.l)
+        out = np.minimum(out, self.optimization_domain.u)
+
         return out
 
     def project_low_to_high(self, x):
@@ -120,9 +127,13 @@ class RemboAlgorithm(Algorithm):
         :param x:
         :return:
         """
-        out = np.dot(x, self.A.T) # TODO: denormalize right after this maybe?
-        out = np.maximum(out, self.domain.l)
+        out = np.dot(x, self.A.T)
+        # out = denormalize(out, center=self.center, domainrange=self.domainrange)
+        out = denormalize(out, center=self.center, domainrange=self.domainrange)
+
+        out = np.maximum(out, self.domain.l) # before was self.domain.l, and self.domain.u
         out = np.minimum(out, self.domain.u)
+
         return out
 
 #         assert self.A.shape == (self.domain.d, self.config.dim), (
@@ -143,7 +154,6 @@ class RemboAlgorithm(Algorithm):
 #             "The output of the optimizer is not the right shape! ", z_ucb.shape, self.config.dim)
 #         assert z_ucb.shape[0] > 0, ("Somehow, ucb optimizer gave us no points! ", z_ucb.shape)
 #
-#         # First project, then normalize! # TODO: do we normalize here? when we go from high to low?
 #         assert out.shape[1] == self.domain.d, (
 #             "Output of next does not conform with environment dimensions: ", out.shape, self.domain.d)
 #         return out
@@ -157,9 +167,6 @@ class RemboAlgorithm(Algorithm):
 #             "Somehow, we lost a sample! ", (projection_on_hd.shape, inp.shape))
 #         assert projection_on_hd.shape[1] == self.domain.d, (
 #             "Somehow, we lost or gained a dimenion! ", (projection_on_hd.shape, self.domain.d))
-#
-#         # TODO: we need to take the samplewise maximum and minimum! This is not the case as of now
-#         out = np.atleast_2d(out)
 #
 #         # Recentralize to the real world!
 #         out = (np.multiply(out, self.domain_range)) + self.center
