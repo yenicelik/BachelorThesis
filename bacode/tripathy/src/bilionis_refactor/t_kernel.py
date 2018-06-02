@@ -94,6 +94,7 @@ class TripathyMaternKernel(Kern):
         """
         :return: An orthogonal matrix
         """
+        np.random.seed(None)
         A = np.zeros((self.real_dim, self.active_dim), dtype=np.float64)
         for i in range(self.real_dim):
             for j in range(self.active_dim):
