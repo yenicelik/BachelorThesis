@@ -3,19 +3,11 @@
     The resulting kernel must inherit from the GPy kernel class
 """
 import numpy as np
-import scipy
 from GPy.kern.src.kern import Kern
 from GPy.kern.src.stationary import Matern32
 from GPy.core.parameterization import Param
-# from GPy.core.parameterization import param.Param
-from paramz.transformations import Logexp
 
 from GPy.kern.src.stationary import Matern32
-from paramz.caching import Cache_this
-
-from febo.models.gpy import IncrementalKernelCacheMixin, IncrementalKernelGradientsMixin
-
-# __all__ = ['TripathyMaternKernel']
 
 class TripathyMaternKernel(Kern):
 
@@ -39,7 +31,6 @@ class TripathyMaternKernel(Kern):
         self.real_dim = real_dim
         self.active_dim = active_dim
 
-        # TODO: decide what file to put these values (this file is probably good, just check how to pass around stuff)
         # TODO: add these as priors
         self.W = W if W is not None else self.sample_W()
 
@@ -51,20 +42,12 @@ class TripathyMaternKernel(Kern):
 
         self.update_params(self.W, self.inner_kernel.lengthscale, self.inner_kernel.variance)
 
-        # TODO: find a way to change internal variables within the following object!
-
-        # TODO: incorporate a way to include W as the kernel-parameter (e.g. call parent function, where x = W.T x)
-
-        # TODO: overwrite the kernel parameters!
-
         self.W_grad = np.zeros_like(self.W)
 
         super(TripathyMaternKernel, self).__init__(input_dim=self.real_dim, active_dims=None, name=_name)
-        self.__dict__['_name'] = _name
-        # self._name = _name
+        # self.__dict__['_name'] = _name
         # self.name = _name
-        self.name = _name
-        self._name = _name
+        # self._name = _name
 
         self.link_parameters(self.inner_kernel)
         # TODO: make sure these are referenced copies!

@@ -1,8 +1,8 @@
 import sys
-sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
+sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/bacode/tripathy")
 print(sys.path)
 import numpy as np
-from bacode.tripathy.src.bilionis.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
 from febo.environment.benchmarks.functions import Parabola
 from GPy.models.gp_regression import GPRegression
 

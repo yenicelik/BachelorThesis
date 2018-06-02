@@ -32,9 +32,9 @@ environment.benchmark.noise:
 experiment.benchmark:
   label: febo.experiment.benchmark.label_id
   iterator:
-  # - experiment.simple:algorithm: febo.algorithms.ucb.UCB
-  #    algorithm:model: bacode.tripathy.src.tripathy__.TripathyGP # Should it be "algorithm:model", or just "model"
-  #    experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded
+  - experiment.simple:algorithm: febo.algorithms.ucb.UCB
+    algorithm:model: bacode.tripathy.src.tripathy__.TripathyGP # Should it be "algorithm:model", or just "model"
+    experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded
   - experiment.simple:algorithm: bacode.tripathy.src.rembo.rembo_algorithm.RemboAlgorithm
     experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB

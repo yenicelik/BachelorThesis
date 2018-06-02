@@ -2,11 +2,11 @@ import sys
 sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
 print(sys.path)
 import numpy as np
-from src.t_kernel import TripathyMaternKernel
-from src.t_optimization_functions import t_WOptimizer
-from src.t_optimizer import TripathyOptimizer
+from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.bilionis_refactor.t_optimization_functions import t_WOptimizer
+from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer
 from febo.environment.benchmarks.functions import Parabola, AugmentedSinusoidal, Rosenbrock, PolynomialKernel
-from src.t_loss import loss, dloss_dW, dK_dW, dloss_ds
+from bacode.tripathy.src.bilionis_refactor.t_loss import loss, dloss_dW, dK_dW, dloss_ds
 import matplotlib.pyplot as plt
 
 """
@@ -554,7 +554,7 @@ class VisualizeTwoStepOptimizationWithRestarts:
         )
 
         fig.savefig('./pics-twostep/BestLoss_' + str(l) + '.png', )
-        # plt.show()
+        plt.show()
         plt.close(fig)
 
         np.savetxt("./pics-twostep/BestLoss_" + str(l) + ".txt", W_hat)
@@ -714,5 +714,8 @@ if __name__ == "__main__":
     # viz_tau.visualize_tau_trajectory_for_random_W()
     # viz_tau.visualize_tau_trajectory_for_identity_W()
 
-    viz_w = TestMatrixRecoveryHighDegreePolynomial()
-    viz_w.check_if_matrix_is_found()
+    viz_w = VisualizeTwoStepOptimizationWithRestarts()
+    viz_w.visualize_augmented_sinusoidal_function()
+
+    # viz_w = TestMatrixRecoveryHighDegreePolynomial()
+    # viz_w.check_if_matrix_is_found()

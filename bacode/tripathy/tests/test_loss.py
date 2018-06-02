@@ -2,7 +2,7 @@ import sys
 
 from febo.environment.benchmarks import Rosenbrock, Camelback
 
-sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
+sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/bacode/tripathy")
 print(sys.path)
 
 import numpy as np

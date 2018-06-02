@@ -2,13 +2,13 @@ import sys
 
 from febo.environment.benchmarks import Rosenbrock
 
-sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/code/tripathy")
+sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/bacode/tripathy")
 print(sys.path)
 import numpy as np
-from bacode.tripathy.src.bilionis.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
 
-from bacode.tripathy.src.bilionis.t_optimizer import TripathyOptimizer
-from bacode.tripathy.src.bilionis.t_loss import loss
+from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer
+from bacode.tripathy.src.bilionis_refactor.t_loss import loss
 
 class TestIndividualFunctions(object):
 

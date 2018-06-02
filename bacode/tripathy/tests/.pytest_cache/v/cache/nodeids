@@ -1,3 +1,21 @@
 [
+  "test_function.py::TestFunctions::()::test_gp_regression",
+  "test_function.py::TestFunctions::()::test_function_returns_non_zeros",
+  "test_kernel.py::TestKernel::()::test_parameters_are_set_successfully",
+  "test_kernel.py::TestKernel::()::test_kernel_returns_gram_matrix_correct_shape",
+  "test_kernel.py::TestKernel::()::test_kernel_returns_diag_correct_shape",
+  "test_kernel.py::TestKernel::()::test_kernel_K_of_r_words_for_vectors",
+  "test_kernel.py::TestKernelSematics::()::test_kernel_identity_W_zero_inp",
+  "test_kernel.py::TestKernelSematics::()::test_kernel_reverted_W",
+  "test_kernel.py::TestKernelSematics::()::test_kernel_some_random_W",
+  "test_kernel.py::TestKernelSematics::()::test_kernel_some_random_W_independent_inner_kernel",
+  "test_loss.py::TestLoss::()::test_loss_returns_correct_dimensions",
+  "test_loss.py::TestLoss::()::test_loss_correctly_updates_parameters",
+  "test_loss.py::TestDerivatives::()::test_dK_dW_returns_correct_dimension",
+  "test_loss.py::TestDerivatives::()::test_dloss_dW_returns_correct_dimension",
+  "test_loss.py::TestDerivativesW::()::test_numerical_evaluator",
+  "test_loss.py::TestDerivativesW::()::test_dloss_dW",
+  "test_loss.py::TestDerivativesW::()::test_dloss_dW_changingXY",
+  "test_loss.py::TestDerivativesW::()::test_dloss_dvariance",
   "test_rembo.py::TestNormalizeDenormalize::()::test_norm_denorm_same"
 ]

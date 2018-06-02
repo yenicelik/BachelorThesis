@@ -99,12 +99,14 @@ class RemboAlgorithm(Algorithm):
 
         self.center = (self.domain.u + self.domain.l) / 2.
 
-        self.A = np.asarray([
-            [1, 0],
-            [0, 1],
-            [0, 0]
-        ])
-        # self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim)
+        if USE_REAL_MATRIX:
+            self.A = np.asarray([
+                [1, 0],
+                [0, 1],
+                [0, 0]
+            ])
+        else:
+            self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim)
 
         self.optimization_domain = get_subspace(self.config.dim)
 
@@ -177,6 +179,7 @@ class RemboAlgorithm(Algorithm):
 
         return out
 
+USE_REAL_MATRIX = False
 NORM_DENORM = True
 DEBUG_HIGH = False
 DEBUG_LOW = False

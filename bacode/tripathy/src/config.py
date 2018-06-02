@@ -1,6 +1,7 @@
 from sys import platform
 
-DEV = True
+DEV = False
+QDev = True
 HALFDEV = True
 
 if DEV:
@@ -24,13 +25,34 @@ if DEV:
         "max_dimensions": 3,
     }
 
+elif QDev:
+
+    config = {
+        "no_restarts": 4*4, # 1000
+
+        "max_iter_alg1": 10, # int(1e5),
+        "max_iter_alg3": 10, # int(1e5),
+
+        "max_iter_parameter_optimization": 1,
+        "max_iter_W_optimization": 1,
+
+        "eps_alg1": 1.e-3, # -12,
+        "eps_alg3": 1.e-3, # -12,
+        "eps_alg4": 1.e-3,
+
+        "tau_max": 1.e-1,
+        "no_taus": 5,
+
+        "max_dimensions": 2,
+    }
+
 elif HALFDEV:
 
     config = {
         "no_restarts": 4*4*16, # 1000
 
-        "max_iter_alg1": 1000, # int(1e5),
-        "max_iter_alg3": 1000, # int(1e5),
+        "max_iter_alg1": 400, # int(1e5),
+        "max_iter_alg3": 400, # int(1e5),
 
         "max_iter_parameter_optimization": 1,
         "max_iter_W_optimization": 1,

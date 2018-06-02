@@ -250,7 +250,7 @@ class TripathyGP(ConfidenceBoundModel):
             Y = np.concatenate((self.gp.Y, Y))
 
         # Do our optimization now
-        if self.i % 5 == 0:
+        if self.i % 10 == 9:
             import time
             start_time = time.time()
 
