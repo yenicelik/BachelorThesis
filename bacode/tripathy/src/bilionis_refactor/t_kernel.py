@@ -25,7 +25,6 @@ class TripathyMaternKernel(Kern):
 
         assert(real_dim >= active_dim)
 
-        self.__module__ = "tripathy.src.t_kernel"
         self.size = real_dim * active_dim + active_dim + 1 + 1
 
         self.real_dim = real_dim
@@ -45,25 +44,11 @@ class TripathyMaternKernel(Kern):
         self.W_grad = np.zeros_like(self.W)
 
         super(TripathyMaternKernel, self).__init__(input_dim=self.real_dim, active_dims=None, name=_name)
-        # self.__dict__['_name'] = _name
-        # self.name = _name
-        # self._name = _name
 
         self.link_parameters(self.inner_kernel)
         # TODO: make sure these are referenced copies!
         self.variance = self.inner_kernel.variance
         self.lengtscale = self.inner_kernel.lengthscale
-
-
-        # self.link_parameter(self.W)
-
-        # Add parameters
-        # l = Param('outerKernel.lengthscale', self.inner_kernel.lengthscale)
-        # self.link_parameters(l)
-
-        # s = Param('outerKernel.variance', self.inner_kernel.variance)
-        # self.link_parameters(s)
-        # self.add_parameter(s, l)
 
     ###############################
     #       SETTER FUNCTIONS      #
@@ -84,8 +69,6 @@ class TripathyMaternKernel(Kern):
         assert W.shape == (self.real_dim, self.active_dim)
         assert np.allclose( np.dot(W.T, W), np.eye(self.active_dim), atol=1.e-6), (W, np.dot(W.T, W), np.eye(self.active_dim))
         self.W = W
-        # self.W = Param('W', W)
-        # self.parameters_changed()
 
     def set_l(self, l, safe=False):
         assert safe
@@ -94,7 +77,6 @@ class TripathyMaternKernel(Kern):
             1.e-3,
             l
         )
-        # print(l)
         self.inner_kernel.lengthscale = l
         # TODO: do we have to link parameters here somehow? (with this kernel, NOT the inner kernel?)
 

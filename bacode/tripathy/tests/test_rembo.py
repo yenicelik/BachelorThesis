@@ -1,6 +1,7 @@
 import numpy as np
 
 from bacode.tripathy.src.rembo import rembo_algorithm # import normalize, denormalize
+from febo.environment.domain import ContinuousDomain
 
 class TestNormalizeDenormalize(object):
 
@@ -46,8 +47,10 @@ class TestNormalizeDenormalize(object):
             assert (self.X <= 1.0).all()
             assert (self.X >= -1.0).all()
 
-            X_norm = rembo_algorithm.normalize(self.X, self.center, self.range)
-            X_denorm = rembo_algorithm.denormalize(X_norm, self.center, self.range)
+            domain = ContinuousDomain([-5] * self.dim, [2] * self.dim)
+
+            X_norm = rembo_algorithm.normalize(self.X, domain)
+            X_denorm = rembo_algorithm.denormalize(X_norm, domain)
 
             assert np.isclose(self.X, X_denorm).all(), ("Not quite the same values after norm+denorm! ", (self.X, X_denorm))
 

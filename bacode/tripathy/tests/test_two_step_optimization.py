@@ -7,7 +7,7 @@ print(sys.path)
 import numpy as np
 from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
 
-from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer
+from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer, run_two_step_optimization
 from bacode.tripathy.src.bilionis_refactor.t_loss import loss
 
 class TestIndividualFunctions(object):
@@ -48,9 +48,8 @@ class TestIndividualFunctions(object):
             self.Y
         )
 
-        W, sn, l, s = self.optimizer.run_two_step_optimization(
+        W, sn, l, s = self.optimizer.try_two_step_optimization_with_restarts(
             t_kernel=self.kernel,
-            sn=self.sn,
             X=self.X,
             Y=self.Y
         )
