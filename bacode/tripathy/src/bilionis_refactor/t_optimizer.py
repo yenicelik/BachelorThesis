@@ -39,9 +39,6 @@ def single_run(self, t_kernel, X, Y):
         s_init = float(np.random.rand(1))
         sn = float(np.random.rand(1))
 
-        print("Is the initializer different??")
-        print(W_init)
-
         # print("Restarting...", (j, self.no_of_restarts))
 
         # t_kernel.update_params(W=W_init, l=l_init, s=s_init)
@@ -186,7 +183,6 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y):
             X,
             Y
         )
-        print("W is: ", W)
 
         # print("Tuples is: ", (self.W, self.s, self.l, self.sn))
 
