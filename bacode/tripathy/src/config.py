@@ -28,10 +28,10 @@ if DEV:
 elif QDev:
 
     config = {
-        "no_restarts": 4*4, # 1000
+        "no_restarts": 12, # 1000
 
-        "max_iter_alg1": 10, # int(1e5),
-        "max_iter_alg3": 10, # int(1e5),
+        "max_iter_alg1": 30, # int(1e5),
+        "max_iter_alg3": 30, # int(1e5),
 
         "max_iter_parameter_optimization": 1,
         "max_iter_W_optimization": 1,

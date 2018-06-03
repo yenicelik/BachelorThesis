@@ -96,7 +96,7 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y):
 
     for i in range(self.M_l):
 
-        if i % max(self.M_l//50, 1) == max(self.M_l//50, 1) // 2:
+        if i % max(self.M_l//2, 1) == max(self.M_l//2, 1) // 2:
             print("Alg. 1 Progress: ", str((i*100)/self.M_l) + "%")
 
         #################################################################################
@@ -198,7 +198,7 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y):
         #assert L0 != L01 TODO: check if there are any such conditions!
 
         if abs( (L1 - L0) / L0) < self.leps:
-            print("Break Alg. 1", abs(L1 - L0) / L0)
+            # print("Break Alg. 1", abs(L1 - L0) / L0)
             break
 
     return W, sn, l, s
@@ -301,7 +301,7 @@ class TripathyOptimizer:
         # print("Number of processes found: ", number_processes)
 
         if config['restict_cores']:
-            number_processes = min(number_processes - 1, config['max_cores'])
+            number_processes = min(number_processes, config['max_cores'])
         number_processes = max(number_processes, 1)
 
         # print("Number of processes found: ", number_processes)

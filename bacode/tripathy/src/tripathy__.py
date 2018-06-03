@@ -40,8 +40,8 @@ config_manager.register(TripathyGPConfig)
 #     experiment.algorithm.f.gp.optimize()
 #     print(experiment.algorithm.f.gp)
 
-from bacode.tripathy.src.bilionis.t_kernel import TripathyMaternKernel
-from bacode.tripathy.src.bilionis.t_optimizer import TripathyOptimizer
+from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer
 
 @assign_config(TripathyGPConfig)
 class TripathyGP(ConfidenceBoundModel):
@@ -71,8 +71,6 @@ class TripathyGP(ConfidenceBoundModel):
     def set_new_gp_and_kernel(self, d, W, variance, lengthscale, noise_var):
         self.set_new_kernel(d, W, variance, lengthscale)
         self.set_new_gp(noise_var)
-    #         # from .t_kernel import TripathyMaternKernel
-    #         TripathyMaternKernel.__module__ = "tripathy.src.t_kernel"
 
     def __init__(self, domain):
         super(TripathyGP, self).__init__(domain)
@@ -80,12 +78,8 @@ class TripathyGP(ConfidenceBoundModel):
         self.optimizer = TripathyOptimizer()
 
         # TODO: d is chosen to be an arbitrary value rn!
-        # self.set_new_kernel(2, None, None)
-        # self.set_new_gp(None)
         self.set_new_gp_and_kernel(2, None, None, None, None)
 
-        # calling of the kernel
-        # self.gp = self._get_gp() # TODO: does this actually create a new gp?
         # number of data points
         self.t = 0
         self.kernel = self.kernel.copy()
@@ -123,28 +117,14 @@ class TripathyGP(ConfidenceBoundModel):
         y: 2d-array
         """
         self.i = 1 if not ("i" in dir(self)) else self.i + 1
-        print("Add data ", self.i)
+        # print("Add data ", self.i)
         x = np.atleast_2d(x)
         y = np.atleast_2d(y)
 
         self.set_data(x, y, append=True)
 
-        # self._Y = np.vstack([self._Y, y])  # store unbiased data
-        # self.gp.append_XY(x, y - self._bias)
-        #
-        # self.t += y.shape[1]
-        # self._update_cache()
-
-
     # TODO: check if this is called anyhow!
     def optimize(self):
-        # if self.config.optimize_bias:
-        #     self._optimize_bias()
-        # if self.config.optimize_var:
-        #     self._optimize_var()
-
-        # self.optimizer.find_active_subspace(self.X, self.Y)
-
         self._update_beta()
 
     def _update_cache(self):
@@ -250,9 +230,10 @@ class TripathyGP(ConfidenceBoundModel):
             Y = np.concatenate((self.gp.Y, Y))
 
         # Do our optimization now
-        if self.i % 10 == 9:
+        if self.i % 50 == 49:
             import time
             start_time = time.time()
+            print("Adding data: ", self.i)
 
             W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X, Y)
 
@@ -264,25 +245,6 @@ class TripathyGP(ConfidenceBoundModel):
         self.gp.set_XY(X, Y)
         self.t = X.shape[0]
         self._update_cache()
-
-    # TODO: merge all the following code with the current function!
-    #         print("Looking for optimal subspace!")
-    #         W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X=X, Y=Y)
-    #
-    #         print("Found optimal subspace")
-    #
-    #         # Set the newly found hyperparameters everywhere
-    #         # Not found by pycharm bcs the kernel is an abstract object as of now
-    #         # self.kernel.update_params(W=W_hat, s=s, l=l)
-    #         # self.gp.kern.update_params(W=W_hat, s=s, l=l)
-    #
-    #         # Create a new GP (bcs this is spaghetti code!)
-    #         self.set_new_kernel_and_gp(
-    #             d=d,
-    #             variance=s,
-    #             lengthscale=l,
-    #             noise_var=sn
-    #         )
 
     def sample(self, X=None):
         class GPSampler:
@@ -351,14 +313,3 @@ class TripathyGP(ConfidenceBoundModel):
         self_dict = self.__dict__.copy()
         del self_dict['gp'] # remove the gp from state dict to allow pickling. calculations are done via the cache woodbury/cholesky
         return self_dict
-
-#     def __getstate__(self):
-#         self_dict = self.__dict__.copy()
-#         del self_dict['gp']  # remove the gp from state dict to allow pickling. calculations are done via the cache woodbury/cholesky
-#         print("Saving the dictionary: ")
-#         print(self_dict)
-#         # del self_dict['kernel']
-#         # self_dict['kernel'].__dict__['name'] = "TripathyMaternKernel"
-#         # self_dict['kernel'].__dict__['_name'] = "TripathyMaternKernel"
-#         return self_dict
-

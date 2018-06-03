@@ -33,18 +33,18 @@ experiment.benchmark:
   label: febo.experiment.benchmark.label_id
   iterator:
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB
-    algorithm:model: bacode.tripathy.src.tripathy__.TripathyGP # Should it be "algorithm:model", or just "model"
-    experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded
-  - experiment.simple:algorithm: bacode.tripathy.src.rembo.rembo_algorithm.RemboAlgorithm
-    experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded
-  - experiment.simple:algorithm: febo.algorithms.ucb.UCB
     experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB
     experiment.simple:environment: febo.environment.benchmarks.functions.Camelback
+  - experiment.simple:algorithm: bacode.tripathy.src.rembo.rembo_algorithm.RemboAlgorithm
+    experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded
+  - experiment.simple:algorithm: febo.algorithms.ucb.UCB
+    algorithm:model: bacode.tripathy.src.tripathy__.TripathyGP # Should it be "algorithm:model", or just "model"
+    experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded
   fixed_environment: false  # If true, only one environment for the whole batch will be created. Use this, if you randomly genrate your environment, but the whole batch should use the same random instance of the environment.
-  repetitions: 1  # Number of repetitions each experiment is run.
+  repetitions: 10  # Number of repetitions each experiment is run.
 experiment.simple:
-  T: 300  # Horizon
+  T: 298  # Horizon
   load_previous_data: false
   algorithm: febo.algorithms.ucb.UCB
   environment: febo.environment.benchmarks.functions.CamelbackEmbedded
@@ -58,7 +58,7 @@ models.gp:
   optimize_var: false
   optimize_bias: false
   calculate_gradients: true  # Enable/Disable computation of gradient on each update.
-  noise_var: 0.005
+  noise_var: 0.01
   kernels:
   - - GPy.kern.Matern32
     - variance: 1.0

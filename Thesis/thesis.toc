@@ -47,5 +47,8 @@
 \contentsline {subsection}{\numberline {5.2.1}What is it better than actively finding substructures}{16}{subsection.5.2.1}
 \contentsline {section}{\numberline {5.3}Random addition of REMBO}{17}{section.5.3}
 \contentsline {section}{\numberline {5.4}Additive variance reducing GP}{17}{section.5.4}
-\contentsline {chapter}{References}{19}{chapter*.15}
-\contentsline {chapter}{Appendix \numberline {A}How to install \LaTeX }{21}{Appendix.a.A}
+\contentsline {section}{\numberline {5.5}DimRed}{17}{section.5.5}
+\contentsline {subsubsection}{Why this algorithm?}{19}{section*.15}
+\contentsline {section}{\numberline {5.6}Why ours}{19}{section.5.6}
+\contentsline {chapter}{References}{21}{chapter*.16}
+\contentsline {chapter}{Appendix \numberline {A}How to install \LaTeX }{23}{Appendix.a.A}
