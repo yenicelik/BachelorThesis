@@ -3,6 +3,7 @@ from pprint import pprint
 from febo.models.gpy import GPRegression
 
 from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
+from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer
 from bacode.tripathy.src.rembo.utils import sample_orthogonal_matrix
 
 import numpy as np
@@ -21,6 +22,7 @@ class BoringConfig(AlgorithmConfig):
 
 config_manager.register(BoringConfig)
 
+
 def run_optimization():
     """
         Runs the optimization process, where we do the following:
@@ -38,7 +40,7 @@ class BoringAlgorithm(Algorithm):
     # Tripathy specific actions #
     #############################
     def set_new_kernel(self, d, W=None, variance=None, lengthscale=None):
-        self.kernel = TripathyMaternKernel(
+        self.active_kernel = TripathyMaternKernel(
             real_dim=self.domain.d,
             active_dim=d,
             W=W,
@@ -47,60 +49,64 @@ class BoringAlgorithm(Algorithm):
         )
 
     def set_new_gp(self, noise_var=None):
-        self.gp = GPRegression(
+        self.active_gp = GPRegression(
             input_dim=self.domain.d,
-            kernel=self.kernel,
+            kernel=self.active_kernel,
             noise_var=noise_var if noise_var else 2.,
-            calculate_gradients= True
+            calculate_gradients=True
         )
 
-    def set_new_gp_and_kernel(self, d, W, variance, lengthscale, noise_var):
+    def set_new_active_gp_and_kernel(self, d, W, variance, lengthscale, noise_var):
         self.set_new_kernel(d, W, variance, lengthscale)
         self.set_new_gp(noise_var)
-
 
     ################
     # ADD NEW DATA #
     ################
     def add_data(self, data):
-        # Project the data to the low-dimensional subspace! # TODO: do we normalize here?
+        """
+        Add a new function observation to the GPs.
+        Parameters
+        ----------
+        x: 2d-array
+        y: 2d-array
+        """
+
         x = data['x']
-        self.gp.add_data(x, data['y'])
-        self.data_counter += 1
+        y = data['y']
 
-        self.gp.optimize()
-
-        # print("Add data ", self.i)
         x = np.atleast_2d(x)
         y = np.atleast_2d(y)
+
+        self.data_counter += 1
 
         self.set_data(x, y, append=True)
 
     def set_data(self, X, Y, append=True):
         if append:
-            X = np.concatenate((self.gp.X, X))
-            Y = np.concatenate((self.gp.Y, Y))
+            X = np.concatenate((self.active_gp.gp.X, X))
+            Y = np.concatenate((self.active_gp.gp.Y, Y))
+
+        self.active_gp.gp.set_XY(X, Y) # TODO: need to do this for each individual components once it is successful
+        self.t = X.shape[0]
 
         # Do our optimization now
+        if self.data_counter % self.config.optimize_every == self.config.optimize_every - 1:
+            print("Optimizing the algorithm rn")
 
-        if self.data_counter % self.config.optimize_every == self.config.optimize_every:
-            print("Optimizing the algorithm now!")
+            import time
+            start_time = time.time()
+            print("Adding data: ", self.data_counter)
 
-        # if self.i % 50 == 49:
-        #     import time
-        #     start_time = time.time()
-        #     print("Adding data: ", self.i)
-        #
-        #     W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X, Y)
-        #
-        #     print("--- %s seconds ---" % (time.time() - start_time))
-        #
-        #     # Overwrite GP and kernel values
-        #     self.set_new_gp_and_kernel(d=d, W=W_hat, variance=s, lengthscale=l, noise_var=sn)
+            tripathy_optimizer = TripathyOptimizer()
+            W_hat, sn, l, s, d = tripathy_optimizer.find_active_subspace(self.active_gp.gp.X, self.active_gp.gp.Y)
 
-        self.gp.set_XY(X, Y)
-        self.t = X.shape[0]
-        self._update_cache()
+            print("--- %s seconds ---" % (time.time() - start_time))
+
+            # Overwrite GP and kernel values
+            self.set_new_active_gp_and_kernel(d=d, W=W_hat, variance=s, lengthscale=l, noise_var=sn)
+
+
 
     def initialize(self, **kwargs):
         """
@@ -113,11 +119,8 @@ class BoringAlgorithm(Algorithm):
 
         self.data_counter = 0
 
-        self.center = (self.domain.u + self.domain.l) / 2.
-
         self.optimizer = ScipyOptimizer(self.domain)
-        self.gp = GP(self.domain)
-
+        self.active_gp = GP(self.domain)
 
     #############################
     #   Acquisition functions   #
@@ -133,13 +136,8 @@ class BoringAlgorithm(Algorithm):
         pass
 
     def ucb_acq_function(self, Z):
-        return -self.gp.ucb(Z)
-
+        return -self.active_gp.ucb(Z)
 
     def _next(self):
         z_ucb, _ = self.optimizer.optimize(self.ucb_acq_function)
-        out = self.project_low_to_high(z_ucb)
-        return out
-
-
-USE_REAL_MATRIX = False
+        return z_ucb

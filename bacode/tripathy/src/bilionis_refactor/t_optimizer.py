@@ -16,7 +16,7 @@ from .t_optimization_functions import t_ParameterOptimizer, t_WOptimizer
 from .t_kernel import TripathyMaternKernel
 from GPy.core.parameterization import Param
 
-from bacode.tripathy.src.config import config
+from bacode.tripathy.src.bilionis_refactor.config import config
 from copy import deepcopy
 
 # We try not to use class functions, as we don't want to have shared memory!

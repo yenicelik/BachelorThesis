@@ -242,6 +242,8 @@ class TripathyGP(ConfidenceBoundModel):
             # Overwrite GP and kernel values
             self.set_new_gp_and_kernel(d=d, W=W_hat, variance=s, lengthscale=l, noise_var=sn)
 
+        # TODO: Should the following not come before the optimization?
+
         self.gp.set_XY(X, Y)
         self.t = X.shape[0]
         self._update_cache()
