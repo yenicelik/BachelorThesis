@@ -43,10 +43,8 @@ def generate_orthogonal_matrix_to_A(A, n):
             # Apply gram schmidt on that that vector w.r.t. to all column vectors
             tmp_all = np.concatenate((normed_A, Q), axis=1)
             new_basis = apply_gram_schmidt_single_vector(tmp_all, q_i)
-            print("Qi is: ", (new_basis.shape, A.shape))
 
             if np.isclose(np.dot(normed_A.T, new_basis), 0).all() and (new_basis > 1e-8).any():
-                print("All ok!", np.dot(normed_A.T, new_basis))
                 np.concatenate((Q, new_basis.reshape(-1, 1)), axis=1)
                 break
             if counter > 100:
@@ -68,12 +66,8 @@ def apply_gram_schmidt_single_vector(A, q):
     Q, _ = np.linalg.qr(A)
 
     for i in range(Q.shape[1]):
-        print("Working on i: ", i)
         v_i = Q[:, i]
-
         projection = (np.vdot(q, v_i) / np.vdot(v_i, v_i)) * v_i
-        print("Coefficient is: ", projection)
-
         q = np.subtract(q, projection)
 
     assert q.shape == (A.shape[0],), ("Something went wrong when orthogonalizing q!", q.shape)

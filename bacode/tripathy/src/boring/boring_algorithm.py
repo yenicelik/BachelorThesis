@@ -1,19 +1,10 @@
 from pprint import pprint
 
+from febo.models.gpy import GPRegression
+
+from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
 from bacode.tripathy.src.rembo.utils import sample_orthogonal_matrix
 
-# class Rembo:
-#
-#     def __init__(self):
-#         self.A = randommatrix
-#         self.remboDomain = ContinuousDomain(u, l)  # bound according to remobo paper
-#         self.optimizer = ScipyOptimizer(self.remboDomain)
-#
-#
-#     def next(self):
-#         x, _
-#         self.optimizer(self.u)  # define acquisition function u somehwere
-#         return x
 import numpy as np
 from febo.algorithms import Algorithm, AlgorithmConfig
 from febo.environment import ContinuousDomain
@@ -22,71 +13,94 @@ from febo.optimizers import ScipyOptimizer
 from febo.utils.config import ConfigField, config_manager, assign_config
 
 
-class RemboConfig(AlgorithmConfig):
+class BoringConfig(AlgorithmConfig):
     dim = ConfigField(2, comment='subspace dimension')
+    optimize_every = ConfigField(40,
+                                 comment='adding how many datapoints will lead to identifying the active and passive subspace?')
 
 
-config_manager.register(RemboConfig)
+config_manager.register(BoringConfig)
 
-
-def normalize(x, domain):
+def run_optimization():
     """
-        Normalize value of x from the range of the domain, to [-1, 1]^d
-    :param x:
-    :param center:
-    :param range:
+        Runs the optimization process, where we do the following:
+            1.) Identify the active subspace, and find optimal parameters for the kernel
+            2.) Generate an orthogonal basis to the active subspace, which represents the passive subspace
+            3.) For each individual axes of the passive subspace, run an individual GP
     :return:
     """
-    # assert x.shape == center.shape, ("Center and x don't have the same shape ", x.shape, center.shape)
-    # assert domainrange.shape == center.shape, ("Center and range don't have the same shape ", center.shape, domainrange.shape)
-    return (domain.normalize(x) - 0.5) * 2.
-    # return np.divide(x - center, domainrange)
 
 
-def denormalize(x, domain):
-    """
-        Normalize value of x from the range of the domain, to [-1, 1]^d
-    :param x:
-    :param center:
-    :param range:
-    :return:
-    """
-    # assert x.shape == center.shape, ("Center and x don't have the same shape ", x.shape, center.shape)
-    # assert domainrange.shape == center.shape, ("Center and range don't have the same shape ", center.shape, domainrange.shape)
-    return domain.denormalize( (x / 2.) + 0.5)
-    # return np.multiply(x, domainrange) + center
+@assign_config(BoringConfig)
+class BoringAlgorithm(Algorithm):
+
+    #############################
+    # Tripathy specific actions #
+    #############################
+    def set_new_kernel(self, d, W=None, variance=None, lengthscale=None):
+        self.kernel = TripathyMaternKernel(
+            real_dim=self.domain.d,
+            active_dim=d,
+            W=W,
+            variance=variance,
+            lengthscale=lengthscale
+        )
+
+    def set_new_gp(self, noise_var=None):
+        self.gp = GPRegression(
+            input_dim=self.domain.d,
+            kernel=self.kernel,
+            noise_var=noise_var if noise_var else 2.,
+            calculate_gradients= True
+        )
+
+    def set_new_gp_and_kernel(self, d, W, variance, lengthscale, noise_var):
+        self.set_new_kernel(d, W, variance, lengthscale)
+        self.set_new_gp(noise_var)
 
 
-def get_subspace(effective_dimensions):
-    """
-        Calculates the effective search domain Y as given in the REMBO paper
-        $$
-         Y = [ −1/eps* max{log(de), 1}, 1/eps *  max{log(de), 1} ] ^ de
-        $$
-    :param effective_dimensions:
-    :return:
-    """
-    eps = np.log(effective_dimensions) / np.sqrt(effective_dimensions) * (2.) # This modifies the chance that we get a bad entry!
-
-    span_high = np.ones((effective_dimensions,))
-    span_high = np.log(span_high)
-    span_high = np.maximum(span_high, 1) / eps
-
-    return ContinuousDomain(-1 * span_high, span_high)
-
-
-@assign_config(RemboConfig)
-class RemboAlgorithm(Algorithm):
-
-    def ucb_acq_function(self, Z):
-        return -self.gp.ucb(Z)
-
+    ################
+    # ADD NEW DATA #
+    ################
     def add_data(self, data):
         # Project the data to the low-dimensional subspace! # TODO: do we normalize here?
         x = data['x']
-        x = self.project_high_to_low(x)
         self.gp.add_data(x, data['y'])
-        self.gp.optimize()  # TODO: How do we optimize the kernel parameters?
+        self.data_counter += 1
+
+        self.gp.optimize()
+
+        # print("Add data ", self.i)
+        x = np.atleast_2d(x)
+        y = np.atleast_2d(y)
+
+        self.set_data(x, y, append=True)
+
+    def set_data(self, X, Y, append=True):
+        if append:
+            X = np.concatenate((self.gp.X, X))
+            Y = np.concatenate((self.gp.Y, Y))
+
+        # Do our optimization now
+
+        if self.data_counter % self.config.optimize_every == self.config.optimize_every:
+            print("Optimizing the algorithm now!")
+
+        # if self.i % 50 == 49:
+        #     import time
+        #     start_time = time.time()
+        #     print("Adding data: ", self.i)
+        #
+        #     W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X, Y)
+        #
+        #     print("--- %s seconds ---" % (time.time() - start_time))
+        #
+        #     # Overwrite GP and kernel values
+        #     self.set_new_gp_and_kernel(d=d, W=W_hat, variance=s, lengthscale=l, noise_var=sn)
+
+        self.gp.set_XY(X, Y)
+        self.t = X.shape[0]
+        self._update_cache()
 
     def initialize(self, **kwargs):
         """
@@ -95,91 +109,37 @@ class RemboAlgorithm(Algorithm):
         :param kwargs:
         :return:
         """
-        super(RemboAlgorithm, self).initialize(**kwargs)
+        super(BoringAlgorithm, self).initialize(**kwargs)
+
+        self.data_counter = 0
 
         self.center = (self.domain.u + self.domain.l) / 2.
 
-        if USE_REAL_MATRIX:
-            self.A = np.asarray([
-                [1, 0],
-                [0, 1],
-                [0, 0]
-            ])
-        else:
-            self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim)
+        self.optimizer = ScipyOptimizer(self.domain)
+        self.gp = GP(self.domain)
 
-        self.optimization_domain = get_subspace(self.config.dim)
 
-        self.optimizer = ScipyOptimizer(self.optimization_domain)
-        self.gp = GP(self.optimization_domain)
+    #############################
+    #   Acquisition functions   #
+    #############################
+    def mpi_acq_function(self, Z):
+        """
+            Is the maximum probability of improvement acquisition function
+        :param Z:
+        :return:
+        """
+        # return -self.gp
+        raise NotImplementedError
+        pass
+
+    def ucb_acq_function(self, Z):
+        return -self.gp.ucb(Z)
+
 
     def _next(self):
         z_ucb, _ = self.optimizer.optimize(self.ucb_acq_function)
         out = self.project_low_to_high(z_ucb)
         return out
 
-    def project_high_to_low(self, x):
-        """
-        self.domain.dim to self.config.dim
-        :param x:
-        :return:
-        """
-        out = x
-
-        if DEBUG_LOW:
-            print("Before projection to low dimensional space to low-dimensional space", out)
-
-        if NORM_DENORM:
-            out = normalize(out, self.domain)
-
-        if DEBUG_LOW:
-            print("Normlizing to low-dimensional space", out)
-
-        out = np.dot(out, self.A)
-
-        if DEBUG_LOW:
-            print("After Projecting to low-dimensional space", out)
-
-        out = np.maximum(out, self.optimization_domain.l)
-        out = np.minimum(out, self.optimization_domain.u)
-
-        if DEBUG_LOW:
-            print("After bounding to low-dimensional space", out)
-
-        return out
-
-    def project_low_to_high(self, x):
-        """
-                self.config.dim to self.domain.dim
-        :param x:
-        :return:
-        """
-        if DEBUG_HIGH:
-            print("\n\n\n\n\n\nProjecting to high-dimensional space", x)
-        out = np.dot(x, self.A.T)
-
-        if DEBUG_HIGH:
-            print("After Projecting to high-dimensional space", out)
-
-        if NORM_DENORM:
-            out = np.maximum(out, -1 * np.ones((self.domain.d,)))  # before was self.domain.l, and self.domain.u
-            out = np.minimum(out, 1 * np.ones((self.domain.d,)))
-        else:
-            out = np.maximum(out, self.domain.l)
-            out = np.minimum(out, self.domain.u)
-
-        if DEBUG_HIGH:
-            print("Bounding to high-dimensional space", out)
-
-        if NORM_DENORM:
-            out = denormalize(out, self.domain)
-
-        if DEBUG_HIGH:
-            print("Denormalising to high-dimensional space", out)
-
-        return out
 
 USE_REAL_MATRIX = False
-NORM_DENORM = True
-DEBUG_HIGH = False
-DEBUG_LOW = False

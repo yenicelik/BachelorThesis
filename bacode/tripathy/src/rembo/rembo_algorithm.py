@@ -2,18 +2,6 @@ from pprint import pprint
 
 from bacode.tripathy.src.rembo.utils import sample_orthogonal_matrix
 
-# class Rembo:
-#
-#     def __init__(self):
-#         self.A = randommatrix
-#         self.remboDomain = ContinuousDomain(u, l)  # bound according to remobo paper
-#         self.optimizer = ScipyOptimizer(self.remboDomain)
-#
-#
-#     def next(self):
-#         x, _
-#         self.optimizer(self.u)  # define acquisition function u somehwere
-#         return x
 import numpy as np
 from febo.algorithms import Algorithm, AlgorithmConfig
 from febo.environment import ContinuousDomain
