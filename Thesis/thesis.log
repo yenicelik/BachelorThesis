@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  2 JUN 2018 23:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  5 JUN 2018 09:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1790,24 +1790,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 15--16
 
 
 ] [16] [17]
-Underfull \hbox (badness 10000) in paragraph at lines 161--163
+Underfull \hbox (badness 10000) in paragraph at lines 163--165
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 164--167
+Underfull \hbox (badness 10000) in paragraph at lines 166--169
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 168--171
+Underfull \hbox (badness 10000) in paragraph at lines 170--173
 
  []
 
-[18]) [19] [20
+[18]) [19] [20] (./thesis.bbl) [21
 
 
-] (./thesis.bbl) [21
 
 ]
 \openout2 = `Appendix1/appendix1.aux'.
@@ -1839,12 +1838,12 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 206.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 206.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 206.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 00E5989B950E1858F2C338B4E02D72BA;9314.
+(rerunfilecheck)             Checksum: 9B04A66967B7CA369900CD390B4D0873;9314.
  ) 
 Here is how much of TeX's memory you used:
  26413 strings out of 492995
  462360 string characters out of 6132704
- 539954 words of memory out of 5000000
+ 539350 words of memory out of 5000000
  29222 multiletter control sequences out of 15000+600000
  75445 words of font info for 212 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1861,7 +1860,7 @@ st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
 mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on thesis.pdf (36 pages, 238382 bytes).
+Output written on thesis.pdf (36 pages, 238886 bytes).
 PDF statistics:
  607 PDF objects out of 1000 (max. 8388607)
  538 compressed objects within 6 object streams
