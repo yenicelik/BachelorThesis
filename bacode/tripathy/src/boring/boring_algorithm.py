@@ -5,6 +5,7 @@ from febo.models.gpy import GPRegression
 from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
 from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer
 from bacode.tripathy.src.rembo.utils import sample_orthogonal_matrix
+from bacode.tripathy.src.boring.utils import get_quantiles
 
 import numpy as np
 from febo.algorithms import Algorithm, AlgorithmConfig
@@ -13,6 +14,7 @@ from febo.models import GP
 from febo.optimizers import ScipyOptimizer
 from febo.utils.config import ConfigField, config_manager, assign_config
 
+from GPyOpt.acquisitions import AcquisitionMPI
 
 class BoringConfig(AlgorithmConfig):
     dim = ConfigField(2, comment='subspace dimension')
@@ -59,6 +61,9 @@ class BoringAlgorithm(Algorithm):
     def set_new_active_gp_and_kernel(self, d, W, variance, lengthscale, noise_var):
         self.set_new_kernel(d, W, variance, lengthscale)
         self.set_new_gp(noise_var)
+        # Finally, set the new acquisition function
+        # TODO: Also re-initialize the activation function?
+        # self.acquisition_object = AcquisitionMPI(self.active_gp, self.domain)
 
     ################
     # ADD NEW DATA #
@@ -84,10 +89,10 @@ class BoringAlgorithm(Algorithm):
 
     def set_data(self, X, Y, append=True):
         if append:
-            X = np.concatenate((self.active_gp.gp.X, X))
-            Y = np.concatenate((self.active_gp.gp.Y, Y))
+            X = np.concatenate((self.active_gp.X, X))
+            Y = np.concatenate((self.active_gp.Y, Y))
 
-        self.active_gp.gp.set_XY(X, Y) # TODO: need to do this for each individual components once it is successful
+        self.active_gp.set_XY(X, Y) # TODO: need to do this for each individual components once it is successful
         self.t = X.shape[0]
 
         # Do our optimization now
@@ -99,7 +104,7 @@ class BoringAlgorithm(Algorithm):
             print("Adding data: ", self.data_counter)
 
             tripathy_optimizer = TripathyOptimizer()
-            W_hat, sn, l, s, d = tripathy_optimizer.find_active_subspace(self.active_gp.gp.X, self.active_gp.gp.Y)
+            W_hat, sn, l, s, d = tripathy_optimizer.find_active_subspace(self.active_gp.X, self.active_gp.Y)
 
             print("--- %s seconds ---" % (time.time() - start_time))
 
@@ -119,8 +124,23 @@ class BoringAlgorithm(Algorithm):
 
         self.data_counter = 0
 
+        self.jitter = 0.01 # TODO: something to be rather taken from the config file
+
         self.optimizer = ScipyOptimizer(self.domain)
-        self.active_gp = GP(self.domain)
+        # self.active_gp = GP(self.domain)
+
+        # TODO: the dimension 2 was chosen arbitrarily
+        self.set_new_active_gp_and_kernel(2, None, None, None, None)
+
+    def manual_acquisition_function(self, Z):
+        """
+        Computes the Maximum probability of improvement per unit of cost
+        """
+        m, s = self.active_gp.predict(Z)
+        fmin = min(self.active_gp.predict(self.active_gp.X)[0])
+        _, Phi, _ = get_quantiles(self.jitter, fmin, m, s)
+        f_acqu = Phi
+        return f_acqu
 
     #############################
     #   Acquisition functions   #
@@ -132,12 +152,11 @@ class BoringAlgorithm(Algorithm):
         :return:
         """
         # return -self.gp
-        raise NotImplementedError
-        pass
+        return -self.manual_acquisition_function(Z)
 
-    def ucb_acq_function(self, Z):
-        return -self.active_gp.ucb(Z)
+    # def ucb_acq_function(self, Z):
+    #     return -self.active_gp.ucb(Z)
 
     def _next(self):
-        z_ucb, _ = self.optimizer.optimize(self.ucb_acq_function)
+        z_ucb, _ = self.optimizer.optimize(self.mpi_acq_function)
         return z_ucb
