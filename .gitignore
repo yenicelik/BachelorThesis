@@ -15,3 +15,5 @@ code/runs/trip/data/
 */.pytest_cache/*
 bacode/.idea/*
 *.idea/
+*/.idea/*
+bacode/.idea*
