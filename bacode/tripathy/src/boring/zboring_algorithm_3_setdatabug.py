@@ -62,19 +62,17 @@ class BoringAlgorithm(Algorithm):
 
         self.data_counter += 1
 
-        self.gp.add_data(x, y)
+        self.set_data(x, y, append=True)
 
-        # self.set_data(x, y, append=True)
-
-    # def set_data(self, X, Y, append=True):
-    #     self.gp.set_data(X, Y, append)
-    #     # # self.model.set_data(X, Y, append)
-    #     # if append:
-    #     #     X = np.concatenate((self.gp.gp.X, X))
-    #     #     Y = np.concatenate((self.gp.gp.Y, Y))
-    #     #
-    #     # self.gp.gp.set_XY(X, Y)  # TODO: need to do this for each individual components once it is successful
-    #     self.t = X.shape[0]
+    def set_data(self, X, Y, append=True):
+        self.gp.set_data(X, Y, append)
+        # # self.model.set_data(X, Y, append)
+        # if append:
+        #     X = np.concatenate((self.gp.gp.X, X))
+        #     Y = np.concatenate((self.gp.gp.Y, Y))
+        #
+        # self.gp.gp.set_XY(X, Y)  # TODO: need to do this for each individual components once it is successful
+        self.t = X.shape[0]
 
     def initialize(self, **kwargs):
         """

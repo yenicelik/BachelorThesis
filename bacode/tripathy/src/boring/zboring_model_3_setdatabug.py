@@ -44,7 +44,6 @@ config_manager.register(BoringModelConfig)
 
 from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
 from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer
-from bacode.tripathy.src.boring.generate_orthogonal_basis import generate_orthogonal_matrix_to_A
 
 @assign_config(BoringModelConfig)
 class BoringGP(ConfidenceBoundModel):
@@ -53,32 +52,47 @@ class BoringGP(ConfidenceBoundModel):
     Handles common functionality.
 
     """
+
+    def set_new_kernels(self, variance: float, lengthscale: np.ndarray):
+        """
+            TODO: Should the W, variance and lengthscales be independent or not for each individual kernel? probably yes!
+        :param active_W:
+        :param passive_W:
+        :param variance:
+        :param lengthscale:
+        :return:
+        """
+        # Make sure that the projection projects from high to low dimensional!
+
+        active_subspace_kernel = GPy_RBF(
+            input_dim=self.domain.d,
+            variance=variance if variance is not None else 2.,
+            lengthscale=lengthscale if lengthscale is not None else 0.5, # TODO: change this, or test if this correctly captures all dimensions to be captured
+            ARD=True,
+            name="active_subspace_kernel"
+        )
+
+        self.kernel = active_subspace_kernel
+
+    def set_new_gp(self, noise_var=None):
+        self.gp = GPRegression(
+            input_dim=self.domain.d,
+            kernel=self.kernel,
+            noise_var=noise_var if noise_var is not None else 0.01, # TODO: replace with config value!
+            calculate_gradients=True # TODO: replace with config value!
+        )
+
+    def set_new_gp_and_kernel(self, variance, lengthscale, noise_var):
+        self.set_new_kernels(variance, lengthscale)
+        self.set_new_gp(noise_var)
+
     def __init__(self, domain):
         super(BoringGP, self).__init__(domain)
 
         self.optimizer = TripathyOptimizer()
 
         # TODO: d is chosen to be an arbitrary value rn!
-        self.kernel = GPy_RBF(
-            input_dim=self.domain.d,
-            variance=2.,
-            lengthscale=0.5,
-            ARD=True
-        )
-
-        # TODO: We probably don't really need an extra GP for this!
-        self.datasaver_gp = GPRegression(
-            input_dim=self.domain.d,
-            kernel=self.kernel,
-            noise_var=0.01,
-            calculate_gradients=False
-        )
-        self.gp = GPRegression(
-            input_dim=self.domain.d,
-            kernel=self.kernel,
-            noise_var=0.01,
-            calculate_gradients=True
-        )
+        self.set_new_gp_and_kernel(None, None, None)
 
         # number of data points
         self.t = 0
@@ -89,12 +103,6 @@ class BoringGP(ConfidenceBoundModel):
         self._Y = np.empty(shape=(0,1))
         self._beta = 2
         self._bias = self.config.bias
-
-        # passive projection matrix still needs to be created first!
-        self.burn_in_samples = 50
-        self.active_projection_matrix = None
-        self.passive_projection_matrix = None
-        self.Q = None
 
     @property
     def beta(self):
@@ -128,31 +136,6 @@ class BoringGP(ConfidenceBoundModel):
         y = np.atleast_2d(y)
 
         self.set_data(x, y, append=True)
-
-        # Do our optimization now
-        if self.i % 50 == 49:
-            import time
-            start_time = time.time()
-            print("Adding data: ", self.i)
-
-            optimizer = TripathyOptimizer()
-
-            self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(self.gp.X.copy(), self.gp.Y.copy())
-            passive_dimensions = max(self.domain.d - d, 0)
-            if passive_dimensions > 0:
-                self.passive_projection_matrix = generate_orthogonal_matrix_to_A(self.active_projection_matrix, passive_dimensions)
-            else:
-                self.passive_projection_matrix = None
-
-            if passive_dimensions > 0:
-                self.Q = np.concatenate((self.active_projection_matrix, self.passive_projection_matrix), axis=1) # TODO: must then always multiply from right!
-            else:
-                self.Q = self.active_projection_matrix
-
-            print("Shape of the X is: ", self.gp.X.shape)
-            print("Shape of our projection matrix is: ", self.Q.shape)
-
-            print("--- %s seconds ---" % (time.time() - start_time))
 
     # TODO: check if this is called anyhow!
     def optimize(self):
@@ -257,27 +240,11 @@ class BoringGP(ConfidenceBoundModel):
 
     def set_data(self, X, Y, append=True):
 
-        # First of all, save everything in the saver GP
         if append:
-            X = np.concatenate((self.datasaver_gp.X, X), axis=0)
-            Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0) # Should be axis=0
-        self.datasaver_gp.set_XY(X, Y)
+            X = np.concatenate((self.gp.X, X))
+            Y = np.concatenate((self.gp.Y, Y))
 
-        # Now, save everything in the other GP but with a projected X value
-        #
-        X = self.datasaver_gp.X
-        Y = self.datasaver_gp.Y
-
-        # TODO: is it =, >= or what?
-        if self.i >= self.burn_in_samples:
-            assert self.Q is not None, "After the Buring in rate, self.Q is still None!"
-
-        # if self.i < self.burn_in_samples or self.Q is None:
         self.gp.set_XY(X, Y)
-        # else:
-        #     Z = np.dot(X, self.Q)
-        #     self.gp.set_XY(Z, Y)
-
         self.t = X.shape[0]
         self._update_cache()
 
