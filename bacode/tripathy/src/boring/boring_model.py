@@ -4,10 +4,10 @@ from febo.utils import get_logger
 import numpy as np
 
 import sys
+
 # sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/bacode/tripathy")
 sys.path.append("/cluster/home/yedavid/BachelorThesis/tripathy/")
 sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/bacode")
-
 
 from febo.models import ConfidenceBoundModel
 from febo.models.model import ModelConfig
@@ -20,6 +20,7 @@ from scipy.optimize import minimize
 from GPy.kern.src.rbf import RBF as GPy_RBF
 
 logger = get_logger('model')
+
 
 class BoringModelConfig(ModelConfig):
     """
@@ -35,6 +36,7 @@ class BoringModelConfig(ModelConfig):
     bias = ConfigField(0)
     _section = 'src.tripathy__'
 
+
 config_manager.register(BoringModelConfig)
 
 # def optimize_gp(experiment):
@@ -46,6 +48,7 @@ from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
 from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer
 from bacode.tripathy.src.boring.generate_orthogonal_basis import generate_orthogonal_matrix_to_A
 
+
 @assign_config(BoringModelConfig)
 class BoringGP(ConfidenceBoundModel):
     """
@@ -53,7 +56,8 @@ class BoringGP(ConfidenceBoundModel):
     Handles common functionality.
 
     """
-    def create_kernels(self, active_dimensions):
+
+    def create_kernels(self, active_dimensions, passive_dimensions):
         self.kernel = []
 
         active_kernel = GPy_RBF(
@@ -66,21 +70,24 @@ class BoringGP(ConfidenceBoundModel):
 
         self.kernel = active_kernel
 
+        # Now adding the additional kernels:
+        for i in range(passive_dimensions):
+            cur_kernel = GPy_RBF(
+                input_dim=1,
+                variance=2.,
+                lengthscale=0.5,
+                ARD=True,
+                active_dims=[active_dimensions + i]
+            )
+
+            self.kernel += cur_kernel
 
     def __init__(self, domain):
         super(BoringGP, self).__init__(domain)
 
         self.optimizer = TripathyOptimizer()
 
-        # TODO: d is chosen to be an arbitrary value rn!
-        # self.kernel = GPy_RBF(
-        #     input_dim=self.domain.d,
-        #     variance=2.,
-        #     lengthscale=0.5,
-        #     ARD=True
-        # )
-
-        self.create_kernels(1)
+        self.create_kernels(1, 2)
 
         # TODO: We probably don't really need an extra GP for this!
         self.datasaver_gp = GPRegression(
@@ -99,10 +106,11 @@ class BoringGP(ConfidenceBoundModel):
         # number of data points
         self.t = 0
         self.kernel = self.kernel.copy()
-        self._woodbury_chol = np.asfortranarray(self.gp.posterior._woodbury_chol)  # we create a copy of the matrix in fortranarray, such that we can directly pass it to lapack dtrtrs without doing another copy
+        self._woodbury_chol = np.asfortranarray(
+            self.gp.posterior._woodbury_chol)  # we create a copy of the matrix in fortranarray, such that we can directly pass it to lapack dtrtrs without doing another copy
         self._woodbury_vector = self.gp.posterior._woodbury_vector.copy()
         self._X = self.gp.X.copy()
-        self._Y = np.empty(shape=(0,1))
+        self._Y = np.empty(shape=(0, 1))
         self._beta = 2
         self._bias = self.config.bias
 
@@ -128,7 +136,7 @@ class BoringGP(ConfidenceBoundModel):
         return self._bias
 
     def _get_gp(self):
-        return self.gp # GPRegression(self.domain.d, self.kernel, noise_var=self.config.noise_var, calculate_gradients=self.config.calculate_gradients)
+        return self.gp  # GPRegression(self.domain.d, self.kernel, noise_var=self.config.noise_var, calculate_gradients=self.config.calculate_gradients)
 
     def add_data(self, x, y):
         """
@@ -153,19 +161,22 @@ class BoringGP(ConfidenceBoundModel):
 
             optimizer = TripathyOptimizer()
 
-            self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(self.gp.X.copy(), self.gp.Y.copy())
+            self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(self.gp.X.copy(),
+                                                                                        self.gp.Y.copy())
             passive_dimensions = max(self.domain.d - d, 0)
             # print("Passive dimensions are! ", passive_dimensions)
             # print("Shape of our projection matrix before concat is: ", self.Q.shape if self.Q is not None else 0)
             if passive_dimensions > 0:
-                self.passive_projection_matrix = generate_orthogonal_matrix_to_A(self.active_projection_matrix, passive_dimensions)
+                self.passive_projection_matrix = generate_orthogonal_matrix_to_A(self.active_projection_matrix,
+                                                                                 passive_dimensions)
             else:
                 self.passive_projection_matrix = None
 
             # print("Passive projection matrix has shape: ", self.passive_projection_matrix.shape)
 
             if passive_dimensions > 0:
-                self.Q = np.concatenate((self.active_projection_matrix, self.passive_projection_matrix), axis=1) # TODO: must then always multiply from right!
+                self.Q = np.concatenate((self.active_projection_matrix, self.passive_projection_matrix),
+                                        axis=1)  # TODO: must then always multiply from right!
             else:
                 self.Q = self.active_projection_matrix
 
@@ -175,7 +186,6 @@ class BoringGP(ConfidenceBoundModel):
             # Have to redefine a gaussian process
 
             print("--- %s seconds ---" % (time.time() - start_time))
-
 
     # TODO: check if this is called anyhow!
     def optimize(self):
@@ -196,7 +206,7 @@ class BoringGP(ConfidenceBoundModel):
 
     def _bias_loss(self, c):
         # calculate mean and norm for new bias via a new woodbury_vector
-        new_woodbury_vector,_= dpotrs(self._woodbury_chol, self._Y - c, lower=1)
+        new_woodbury_vector, _ = dpotrs(self._woodbury_chol, self._Y - c, lower=1)
         K = self.gp.kern.K(self.gp.X)
         mean = np.dot(K, new_woodbury_vector)
         norm = new_woodbury_vector.T.dot(mean)
@@ -211,7 +221,7 @@ class BoringGP(ConfidenceBoundModel):
     def _update_beta(self):
         logdet = self._get_logdet()
         logdet_priornoise = self._get_logdet_prior_noise()
-        self._beta = np.sqrt(2 * np.log(1/self.delta) + (logdet - logdet_priornoise)) + self._norm()
+        self._beta = np.sqrt(2 * np.log(1 / self.delta) + (logdet - logdet_priornoise)) + self._norm()
 
     def _optimize_var(self):
         # fix all parameters
@@ -237,7 +247,7 @@ class BoringGP(ConfidenceBoundModel):
             p.unfix()
 
     def _get_logdet(self):
-        return 2.*np.sum(np.log(np.diag(self.gp.posterior._woodbury_chol)))
+        return 2. * np.sum(np.log(np.diag(self.gp.posterior._woodbury_chol)))
 
     def _get_logdet_prior_noise(self):
         return self.t * np.log(self.gp.likelihood.variance.values)
@@ -252,9 +262,9 @@ class BoringGP(ConfidenceBoundModel):
         x = np.atleast_2d(x)
 
         if self.config.calculate_gradients:
-            mean,var = self.gp.predict_noiseless(x)
+            mean, var = self.gp.predict_noiseless(x)
         else:
-            mean,var = self._raw_predict(x)
+            mean, var = self._raw_predict(x)
 
         return mean + self._bias, var
 
@@ -273,7 +283,7 @@ class BoringGP(ConfidenceBoundModel):
         if var_Xcond is None:
             var_Xcond = self.var(X_cond)
 
-        return var_Xcond - KXX*KXX/(S_X*S_X + var_X)
+        return var_Xcond - KXX * KXX / (S_X * S_X + var_X)
 
     def mean(self, x):
         return self.mean_var(x)[0]
@@ -283,7 +293,7 @@ class BoringGP(ConfidenceBoundModel):
         # First of all, save everything in the saver GP
         if append:
             X = np.concatenate((self.datasaver_gp.X, X), axis=0)
-            Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0) # Should be axis=0
+            Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0)  # Should be axis=0
         self.datasaver_gp.set_XY(X, Y)
 
         # Now, save everything in the other GP but with a projected X value
@@ -340,27 +350,27 @@ class BoringGP(ConfidenceBoundModel):
         Kx = self.kernel.K(self._X, Xnew)
         mu = np.dot(Kx.T, self._woodbury_vector)
 
-        if len(mu.shape)==1:
-            mu = mu.reshape(-1,1)
+        if len(mu.shape) == 1:
+            mu = mu.reshape(-1, 1)
 
         Kxx = self.kernel.Kdiag(Xnew)
         tmp = lapack.dtrtrs(self._woodbury_chol, Kx, lower=1, trans=0, unitdiag=0)[0]
-        var = (Kxx - np.square(tmp).sum(0))[:,None]
+        var = (Kxx - np.square(tmp).sum(0))[:, None]
         return mu, var
 
     def _raw_predict_covar(self, Xnew, Xcond):
-        Kx = self.kernel.K(self._X, np.vstack((Xnew,Xcond)))
+        Kx = self.kernel.K(self._X, np.vstack((Xnew, Xcond)))
         tmp = lapack.dtrtrs(self._woodbury_chol, Kx, lower=1, trans=0, unitdiag=0)[0]
 
         n = Xnew.shape[0]
-        tmp1 = tmp[:,:n]
-        tmp2 = tmp[:,n:]
+        tmp1 = tmp[:, :n]
+        tmp2 = tmp[:, n:]
 
         Kxx = self.kernel.K(Xnew, Xcond)
         var = Kxx - (tmp1.T).dot(tmp2)
 
         Kxx_new = self.kernel.Kdiag(Xnew)
-        var_Xnew = (Kxx_new - np.square(tmp1).sum(0))[:,None]
+        var_Xnew = (Kxx_new - np.square(tmp1).sum(0))[:, None]
         return var_Xnew, var
 
     def _norm(self):
@@ -369,9 +379,9 @@ class BoringGP(ConfidenceBoundModel):
 
     def __getstate__(self):
         self_dict = self.__dict__.copy()
-        del self_dict['gp'] # remove the gp from state dict to allow pickling. calculations are done via the cache woodbury/cholesky
+        del self_dict[
+            'gp']  # remove the gp from state dict to allow pickling. calculations are done via the cache woodbury/cholesky
         return self_dict
-
 
 # @assign_config(BoringModelConfig)
 # class BoringGP(ConfidenceBoundModel):
