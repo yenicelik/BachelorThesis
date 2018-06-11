@@ -261,6 +261,9 @@ class BoringGP(ConfidenceBoundModel):
         """
         x = np.atleast_2d(x)
 
+        if self.Q is not None:
+            x = np.dot(x, self.Q)
+
         if self.config.calculate_gradients:
             mean, var = self.gp.predict_noiseless(x)
         else:
@@ -269,9 +272,15 @@ class BoringGP(ConfidenceBoundModel):
         return mean + self._bias, var
 
     def mean_var_grad(self, x):
+        # TODO: should this be here aswell?
+        if self.Q is not None:
+            x = np.dot(x, self.Q)
         return self.gp.predictive_gradients(x)
 
     def var(self, x):
+        # TODO: should this be here aswell?
+        if self.Q is not None:
+            x = np.dot(x, self.Q)
         return self.mean_var(x)[1]
 
     # TODO: is this a bug?
@@ -315,6 +324,9 @@ class BoringGP(ConfidenceBoundModel):
         self._update_cache()
 
     def sample(self, X=None):
+        # TODO: are we supposed to project here?
+        if self.Q is not None:
+            X = np.dot(X, self.Q)
         class GPSampler:
             def __init__(self, X, Y, kernel, var):
                 self.X = X
@@ -346,6 +358,10 @@ class BoringGP(ConfidenceBoundModel):
         return GPSampler(self.gp.X.copy(), self.gp.Y.copy(), self.kernel, self.gp.likelihood.variance)
 
     def _raw_predict(self, Xnew):
+        # TODO: are we supposed to project?
+        if self.Q is not None:
+            Xnew = np.dot(Xnew, self.Q)
+        # TODO: what is self._X???
 
         Kx = self.kernel.K(self._X, Xnew)
         mu = np.dot(Kx.T, self._woodbury_vector)
