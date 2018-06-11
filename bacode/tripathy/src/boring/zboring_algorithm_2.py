@@ -14,7 +14,6 @@ from febo.models import GP
 from febo.optimizers import ScipyOptimizer
 from febo.utils.config import ConfigField, config_manager, assign_config
 
-
 class BoringConfig(AlgorithmConfig):
     dim = ConfigField(2, comment='subspace dimension')
     optimize_every = ConfigField(40,
@@ -27,7 +26,6 @@ config_manager.register(BoringConfig)
 from bacode.tripathy.src.boring.boring_model import BoringGP
 from bacode.tripathy.src.boring.generate_orthogonal_basis import generate_orthogonal_matrix_to_A
 import time
-
 
 def run_optimization():
     """
@@ -46,32 +44,34 @@ def run_optimization():
 class BoringAlgorithm(Algorithm):
 
     def add_data(self, data):
-        """
-        Add a new function observation to the GPs.
-        Parameters
-        ----------
-        x: 2d-array
-        y: 2d-array
-        """
-
         x = data['x']
-        y = data['y']
-
         x = np.atleast_2d(x)
+        y = data['y']
         y = np.atleast_2d(y)
 
+        # Add to the save gp to later retrieve it
         self.data_counter += 1
+        self.saver_gp.add_data(x, y)
 
-        self.set_data(x, y, append=True)
+        # This is where the projection happens - maybe good idea to enclose it in a function!
+        self.gp.set_data(self.saver_gp.gp.X, self.saver_gp.gp.Y, append=False, W=self.active_projection)
+        self.gp.optimize()  # TODO: How do we optimize the kernel parameters?
 
-    def set_data(self, X, Y, append=True):
-        # self.model.set_data(X, Y, append)
-        if append:
-            X = np.concatenate((self.gp.gp.X, X))
-            Y = np.concatenate((self.gp.gp.Y, Y))
+        # Optimize for the best possible b
+        if self.data_counter % 50 == 49:
+            print("Optimizing after datapoint: ", self.data_counter)
+            start_time = time.time()
 
-        self.gp.gp.set_XY(X, Y)  # TODO: need to do this for each individual components once it is successful
-        self.t = X.shape[0]
+            optimizer = TripathyOptimizer()
+
+            self.active_projection, sn, l, s, self.active_dims = optimizer.find_active_subspace(self.gp.gp.X, self.gp.gp.Y) # TODO: I think we need to use the same kernel, because we also optimize over the variance and lengthscales
+            self.passive_dims = min(self.max_passive_dims, self.domain.d - self.active_dims)
+            self.passive_projection = generate_orthogonal_matrix_to_A(self.active_projection, self.passive_dims)
+
+            # Pass these on to the model somehow!
+
+            # Assume we only want to find the subspace. NO! We also want to save the kernel hyperparameters!
+            print("--- %s seconds ---" % (time.time() - start_time))
 
     def initialize(self, **kwargs):
         """
@@ -81,25 +81,29 @@ class BoringAlgorithm(Algorithm):
         :return:
         """
         super(BoringAlgorithm, self).initialize(**kwargs)
-        # self.model = BoringGP(self.domain)
+
+        # Initiall, have a matrix where the active and passive dimensions cover the entire sapce
+
+        self.max_passive_dims = 2
 
         self.data_counter = 0
-
-        self.jitter = 0.01  # TODO: something to be rather taken from the config file
-
         self.optimizer = ScipyOptimizer(self.domain)
-        self.gp = BoringGP(self.domain)  # TODO: remove this!
+        self.gp = BoringGP(self.domain)
+        self.saver_gp = GP(self.domain) # This GP is only intended to save the data, such that anytime we recalculate the projections, we can apply them on the old set!
 
-    #############################
-    #   Acquisition functions   #
-    #############################
     def ucb_acq_function(self, Z):
         return -self.gp.ucb(Z)
-        # return -self.model.ucb(Z)
 
     def _next(self):
         z_ucb, _ = self.optimizer.optimize(self.ucb_acq_function)
+
+        # TODO: do i need to project the matrix back?
         return z_ucb
+
+
+
+
+
 
     # def add_data(self, data):
     #     """

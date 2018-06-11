@@ -238,7 +238,7 @@ class BoringGP(ConfidenceBoundModel):
     def mean(self, x):
         return self.mean_var(x)[0]
 
-    def set_data(self, X, Y, append=True):
+    def set_data(self, X, Y, append=True, W=None):
         if append:
             X = np.concatenate((self.gp.X, X))
             Y = np.concatenate((self.gp.Y, Y))
