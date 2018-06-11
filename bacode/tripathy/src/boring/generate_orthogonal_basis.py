@@ -45,7 +45,7 @@ def generate_orthogonal_matrix_to_A(A, n):
             new_basis = apply_gram_schmidt_single_vector(tmp_all, q_i)
 
             if np.isclose(np.dot(normed_A.T, new_basis), 0).all() and (new_basis > 1e-8).any():
-                np.concatenate((Q, new_basis.reshape(-1, 1)), axis=1)
+                Q = np.concatenate((Q, new_basis.reshape(-1, 1)), axis=1)
                 break
             if counter > 100:
                 print("Not orthogonal column found!!", (normed_A, new_basis, np.dot(normed_A.T, new_basis)))

@@ -53,6 +53,20 @@ class BoringGP(ConfidenceBoundModel):
     Handles common functionality.
 
     """
+    # def create_kernels(self, active_dimensions):
+    #     self.kernel = []
+    #
+    #     active_kernel = GPy_RBF(
+    #         input_dim=self.domain.d,
+    #         variance=2.,
+    #         lengthscale=0.5,
+    #         ARD=True,
+    #         active_dims=np.arange(active_dimensions)
+    #     )
+    #
+    #     self.kernel = active_kernel
+
+
     def __init__(self, domain):
         super(BoringGP, self).__init__(domain)
 
@@ -65,6 +79,8 @@ class BoringGP(ConfidenceBoundModel):
             lengthscale=0.5,
             ARD=True
         )
+
+        # self.create_kernels(1)
 
         # TODO: We probably don't really need an extra GP for this!
         self.datasaver_gp = GPRegression(
@@ -139,20 +155,27 @@ class BoringGP(ConfidenceBoundModel):
 
             self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(self.gp.X.copy(), self.gp.Y.copy())
             passive_dimensions = max(self.domain.d - d, 0)
+            # print("Passive dimensions are! ", passive_dimensions)
+            # print("Shape of our projection matrix before concat is: ", self.Q.shape if self.Q is not None else 0)
             if passive_dimensions > 0:
                 self.passive_projection_matrix = generate_orthogonal_matrix_to_A(self.active_projection_matrix, passive_dimensions)
             else:
                 self.passive_projection_matrix = None
+
+            # print("Passive projection matrix has shape: ", self.passive_projection_matrix.shape)
 
             if passive_dimensions > 0:
                 self.Q = np.concatenate((self.active_projection_matrix, self.passive_projection_matrix), axis=1) # TODO: must then always multiply from right!
             else:
                 self.Q = self.active_projection_matrix
 
-            print("Shape of the X is: ", self.gp.X.shape)
-            print("Shape of our projection matrix is: ", self.Q.shape)
+            # print("Shape of the X is: ", self.gp.X.shape)
+            # print("Shape of our projection matrix is: ", self.Q.shape)
+
+            # Have to redefine a gaussian process
 
             print("--- %s seconds ---" % (time.time() - start_time))
+
 
     # TODO: check if this is called anyhow!
     def optimize(self):
@@ -269,14 +292,14 @@ class BoringGP(ConfidenceBoundModel):
         Y = self.datasaver_gp.Y
 
         # TODO: is it =, >= or what?
-        if self.i >= self.burn_in_samples:
+        if self.i > self.burn_in_samples:
             assert self.Q is not None, "After the Buring in rate, self.Q is still None!"
 
-        # if self.i < self.burn_in_samples or self.Q is None:
-        self.gp.set_XY(X, Y)
-        # else:
-        #     Z = np.dot(X, self.Q)
-        #     self.gp.set_XY(Z, Y)
+        if self.i <= self.burn_in_samples or self.Q is None:
+            self.gp.set_XY(X, Y)
+        else:
+            Z = np.dot(X, self.Q)
+            self.gp.set_XY(Z, Y)
 
         self.t = X.shape[0]
         self._update_cache()
