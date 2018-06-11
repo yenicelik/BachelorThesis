@@ -53,18 +53,18 @@ class BoringGP(ConfidenceBoundModel):
     Handles common functionality.
 
     """
-    # def create_kernels(self, active_dimensions):
-    #     self.kernel = []
-    #
-    #     active_kernel = GPy_RBF(
-    #         input_dim=self.domain.d,
-    #         variance=2.,
-    #         lengthscale=0.5,
-    #         ARD=True,
-    #         active_dims=np.arange(active_dimensions)
-    #     )
-    #
-    #     self.kernel = active_kernel
+    def create_kernels(self, active_dimensions):
+        self.kernel = []
+
+        active_kernel = GPy_RBF(
+            input_dim=active_dimensions,
+            variance=2.,
+            lengthscale=0.5,
+            ARD=True,
+            active_dims=np.arange(active_dimensions)
+        )
+
+        self.kernel = active_kernel
 
 
     def __init__(self, domain):
@@ -73,14 +73,14 @@ class BoringGP(ConfidenceBoundModel):
         self.optimizer = TripathyOptimizer()
 
         # TODO: d is chosen to be an arbitrary value rn!
-        self.kernel = GPy_RBF(
-            input_dim=self.domain.d,
-            variance=2.,
-            lengthscale=0.5,
-            ARD=True
-        )
+        # self.kernel = GPy_RBF(
+        #     input_dim=self.domain.d,
+        #     variance=2.,
+        #     lengthscale=0.5,
+        #     ARD=True
+        # )
 
-        # self.create_kernels(1)
+        self.create_kernels(1)
 
         # TODO: We probably don't really need an extra GP for this!
         self.datasaver_gp = GPRegression(
