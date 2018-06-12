@@ -96,7 +96,11 @@ class BoringGP(ConfidenceBoundModel):
         # Let the GP take over datapoints from the datasaver!
         X = self.datasaver_gp.X
         Y = self.datasaver_gp.Y
+        # Apply the Q transform if it was spawned already!
+        if self.Q is not None:
+            X = np.dot(X, self.Q)
         self.gp.set_XY(X, Y)
+        self._update_cache()
 
     def create_gp_and_kernels(self, active_dimensions, passive_dimensions):
         self.create_kernels(active_dimensions, passive_dimensions)
@@ -106,6 +110,18 @@ class BoringGP(ConfidenceBoundModel):
     def __init__(self, domain):
         super(BoringGP, self).__init__(domain)
 
+        # passive projection matrix still needs to be created first!
+        # print("WARNING: CONFIG MODE IS: ", config.DEV)
+        self.burn_in_samples = 50 # 102
+        self.recalculate_projection_every = 100
+        self.active_projection_matrix = None
+        self.passive_projection_matrix = None
+        self.Q = None
+
+        # some other parameters that are cached
+        self.t = 0
+
+        # Setting the datasaver (infrastructure which allows us to save the data to be projected again and again)
         placeholder_kernel = RBF(
             input_dim=self.domain.d
         )
@@ -119,8 +135,7 @@ class BoringGP(ConfidenceBoundModel):
         # Create a new kernel and create a new GP
         self.create_gp_and_kernels(1, 2)
 
-        # number of data points
-        self.t = 0
+        # Some post-processing
         self.kernel = self.kernel.copy()
         self._woodbury_chol = np.asfortranarray(
             self.gp.posterior._woodbury_chol)  # we create a copy of the matrix in fortranarray, such that we can directly pass it to lapack dtrtrs without doing another copy
@@ -129,14 +144,6 @@ class BoringGP(ConfidenceBoundModel):
         self._Y = np.empty(shape=(0, 1))
         self._beta = 2
         self._bias = self.config.bias
-
-        # passive projection matrix still needs to be created first!
-        # print("WARNING: CONFIG MODE IS: ", config.DEV)
-        self.burn_in_samples = 50 # 102
-        self.recalculate_projection_every = 100
-        self.active_projection_matrix = None
-        self.passive_projection_matrix = None
-        self.Q = None
 
     @property
     def beta(self):
@@ -288,7 +295,7 @@ class BoringGP(ConfidenceBoundModel):
 
         assert not np.isnan(x).all(), ("X is nan at some point!", x)
 
-        if self.config.calculate_gradients or True: # TODO: there is this nan bug when I use my _raw_predict!
+        if self.config.calculate_gradients: # TODO: there is this nan bug when I use my _raw_predict!
             mean, var = self.gp.predict_noiseless(x)
         else:
             mean, var = self._raw_predict(x)
@@ -418,6 +425,11 @@ class BoringGP(ConfidenceBoundModel):
         Kxx = self.kernel.Kdiag(Xnew)
         tmp = lapack.dtrtrs(self._woodbury_chol, Kx, lower=1, trans=0, unitdiag=0)[0]
         var = (Kxx - np.square(tmp).sum(0))[:, None]
+
+        # TODO: Make sure the variance is not negative!
+        # Make sure variance is always positive!
+        assert (var >= 0.).all(), ("Variance is negative at some points! ", var)
+
         return mu, var
 
 
