@@ -88,7 +88,7 @@ class BoringGP(ConfidenceBoundModel):
 
         self.optimizer = TripathyOptimizer()
 
-        self.create_kernels(3, 0)
+        self.create_kernels(2, 1)
 
         # TODO: We probably don't really need an extra GP for this!
         self.datasaver_gp = GPRegression(
@@ -121,7 +121,7 @@ class BoringGP(ConfidenceBoundModel):
 
         # passive projection matrix still needs to be created first!
         # print("WARNING: CONFIG MODE IS: ", config.DEV)
-        self.burn_in_samples = 400 # 102
+        self.burn_in_samples = 500 # 102
         self.recalculate_projection_every = 100
         self.active_projection_matrix = None
         self.passive_projection_matrix = None
@@ -170,6 +170,8 @@ class BoringGP(ConfidenceBoundModel):
 
             self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(self.datasaver_gp.X.copy(),
                                                                                         self.datasaver_gp.Y.copy())
+
+            # TODO: set new kernels, where the main kernel has dimension d, and the other ones are independent
             passive_dimensions = max(self.domain.d - d, 0)
             # print("Passive dimensions are! ", passive_dimensions)
             # print("Shape of our projection matrix before concat is: ", self.Q.shape if self.Q is not None else 0)

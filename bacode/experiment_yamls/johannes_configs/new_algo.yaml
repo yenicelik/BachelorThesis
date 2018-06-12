@@ -20,7 +20,7 @@ environment.benchmark:
   scale: 1
   bias: 0
   num_domain_points: 30
-  dimension: 3
+  dimension: 20
   noise_obs_mode: full  # Can be set to "full", "evaluation" or "hidden".
   noise_function: 0.1
   lower_bound_objective_value:
