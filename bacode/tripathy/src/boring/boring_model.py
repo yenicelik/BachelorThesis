@@ -17,7 +17,8 @@ import GPy
 from scipy.linalg import lapack
 from scipy.optimize import minimize
 
-from GPy.kern.src.rbf import RBF as GPy_RBF
+from GPy.kern.src.rbf import RBF
+from GPy.kern.src.sde_matern import Matern32
 
 logger = get_logger('model')
 
@@ -59,7 +60,7 @@ class BoringGP(ConfidenceBoundModel):
 
     def create_kernels(self, active_dimensions, passive_dimensions):
 
-        active_kernel = GPy_RBF(
+        active_kernel = RBF(
             input_dim=active_dimensions,
             variance=2.,
             lengthscale=0.5,
@@ -72,7 +73,7 @@ class BoringGP(ConfidenceBoundModel):
 
         # Now adding the additional kernels:
         for i in range(passive_dimensions):
-            cur_kernel = GPy_RBF(
+            cur_kernel = RBF(
                 input_dim=1,
                 variance=2.,
                 lengthscale=0.5,
@@ -83,21 +84,7 @@ class BoringGP(ConfidenceBoundModel):
 
             self.kernel += cur_kernel
 
-    def __init__(self, domain):
-        super(BoringGP, self).__init__(domain)
-
-        self.optimizer = TripathyOptimizer()
-
-        self.create_kernels(2, 1)
-
-        # TODO: We probably don't really need an extra GP for this!
-        self.datasaver_gp = GPRegression(
-            input_dim=self.domain.d,
-            kernel=self.kernel,
-            noise_var=0.01,
-            calculate_gradients=False
-        )
-        # print("self.kernel is: ", self.kernel)
+    def create_gp(self):
 
         self.gp = GPRegression(
             input_dim=self.domain.d,
@@ -106,7 +93,31 @@ class BoringGP(ConfidenceBoundModel):
             calculate_gradients=True
         )
 
-        # print("Kernel parts are: ", self.kernel.parts)
+        # Let the GP take over datapoints from the datasaver!
+        X = self.datasaver_gp.X
+        Y = self.datasaver_gp.Y
+        self.gp.set_XY(X, Y)
+
+    def create_gp_and_kernels(self, active_dimensions, passive_dimensions):
+        self.create_kernels(active_dimensions, passive_dimensions)
+        self.create_gp()
+
+    # From here on, it's the usual functions
+    def __init__(self, domain):
+        super(BoringGP, self).__init__(domain)
+
+        placeholder_kernel = RBF(
+            input_dim=self.domain.d
+        )
+        self.datasaver_gp = GPRegression(
+            input_dim=self.domain.d,
+            kernel=placeholder_kernel,
+            noise_var=0.01,
+            calculate_gradients=False
+        )
+
+        # Create a new kernel and create a new GP
+        self.create_gp_and_kernels(1, 2)
 
         # number of data points
         self.t = 0
@@ -121,7 +132,7 @@ class BoringGP(ConfidenceBoundModel):
 
         # passive projection matrix still needs to be created first!
         # print("WARNING: CONFIG MODE IS: ", config.DEV)
-        self.burn_in_samples = 500 # 102
+        self.burn_in_samples = 100 # 102
         self.recalculate_projection_every = 100
         self.active_projection_matrix = None
         self.passive_projection_matrix = None
@@ -171,23 +182,26 @@ class BoringGP(ConfidenceBoundModel):
             self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(self.datasaver_gp.X.copy(),
                                                                                         self.datasaver_gp.Y.copy())
 
-            # TODO: set new kernels, where the main kernel has dimension d, and the other ones are independent
             passive_dimensions = max(self.domain.d - d, 0)
-            # print("Passive dimensions are! ", passive_dimensions)
-            # print("Shape of our projection matrix before concat is: ", self.Q.shape if self.Q is not None else 0)
+
+            # Generate A^{bot} if there's more dimensions
             if passive_dimensions > 0:
                 self.passive_projection_matrix = generate_orthogonal_matrix_to_A(self.active_projection_matrix,
                                                                                  passive_dimensions)
             else:
                 self.passive_projection_matrix = None
 
-            # print("Passive projection matrix has shape: ", self.passive_projection_matrix.shape)
-
+            # Create Q by concatenateing the active and passive projections
             if passive_dimensions > 0:
                 self.Q = np.concatenate((self.active_projection_matrix, self.passive_projection_matrix),
-                                        axis=1)  # TODO: must then always multiply from right!
+                                        axis=1)
             else:
                 self.Q = self.active_projection_matrix
+
+            self.create_gp_and_kernels(active_dimensions=d, passive_dimensions=passive_dimensions) # TODO: after re-creating the kernel, do we need to call any calculation parameter?
+
+            print("How many datapoints do we have in the kernel?", self.gp.X.shape)
+            print("How many datapoints do we have in the kernel?", self.datasaver_gp.X.shape)
 
             print("--- %s seconds ---" % (time.time() - start_time))
 
