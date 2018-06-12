@@ -58,14 +58,14 @@ class BoringGP(ConfidenceBoundModel):
     """
 
     def create_kernels(self, active_dimensions, passive_dimensions):
-        self.kernel = []
 
         active_kernel = GPy_RBF(
             input_dim=active_dimensions,
             variance=2.,
             lengthscale=0.5,
             ARD=True,
-            active_dims=np.arange(active_dimensions)
+            active_dims=np.arange(active_dimensions),
+            name="active_subspace_kernel"
         )
 
         self.kernel = active_kernel
@@ -77,7 +77,8 @@ class BoringGP(ConfidenceBoundModel):
                 variance=2.,
                 lengthscale=0.5,
                 ARD=True,
-                active_dims=[active_dimensions + i]
+                active_dims=[active_dimensions + i],
+                name="passive_subspace_kernel_dim_" + str(i)
             )
 
             self.kernel += cur_kernel
@@ -87,7 +88,7 @@ class BoringGP(ConfidenceBoundModel):
 
         self.optimizer = TripathyOptimizer()
 
-        self.create_kernels(1, 2)
+        self.create_kernels(3, 0)
 
         # TODO: We probably don't really need an extra GP for this!
         self.datasaver_gp = GPRegression(
@@ -96,12 +97,16 @@ class BoringGP(ConfidenceBoundModel):
             noise_var=0.01,
             calculate_gradients=False
         )
+        # print("self.kernel is: ", self.kernel)
+
         self.gp = GPRegression(
             input_dim=self.domain.d,
             kernel=self.kernel,
             noise_var=0.01,
             calculate_gradients=True
         )
+
+        # print("Kernel parts are: ", self.kernel.parts)
 
         # number of data points
         self.t = 0
@@ -115,7 +120,9 @@ class BoringGP(ConfidenceBoundModel):
         self._bias = self.config.bias
 
         # passive projection matrix still needs to be created first!
-        self.burn_in_samples = 50
+        # print("WARNING: CONFIG MODE IS: ", config.DEV)
+        self.burn_in_samples = 400 # 102
+        self.recalculate_projection_every = 100
         self.active_projection_matrix = None
         self.passive_projection_matrix = None
         self.Q = None
@@ -154,15 +161,15 @@ class BoringGP(ConfidenceBoundModel):
         self.set_data(x, y, append=True)
 
         # Do our optimization now
-        if self.i % 50 == 49:
+        if self.i % self.burn_in_samples == self.burn_in_samples - 1:
             import time
             start_time = time.time()
             print("Adding data: ", self.i)
 
             optimizer = TripathyOptimizer()
 
-            self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(self.gp.X.copy(),
-                                                                                        self.gp.Y.copy())
+            self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(self.datasaver_gp.X.copy(),
+                                                                                        self.datasaver_gp.Y.copy())
             passive_dimensions = max(self.domain.d - d, 0)
             # print("Passive dimensions are! ", passive_dimensions)
             # print("Shape of our projection matrix before concat is: ", self.Q.shape if self.Q is not None else 0)
@@ -179,11 +186,6 @@ class BoringGP(ConfidenceBoundModel):
                                         axis=1)  # TODO: must then always multiply from right!
             else:
                 self.Q = self.active_projection_matrix
-
-            # print("Shape of the X is: ", self.gp.X.shape)
-            # print("Shape of our projection matrix is: ", self.Q.shape)
-
-            # Have to redefine a gaussian process
 
             print("--- %s seconds ---" % (time.time() - start_time))
 
@@ -295,6 +297,8 @@ class BoringGP(ConfidenceBoundModel):
         return var_Xcond - KXX * KXX / (S_X * S_X + var_X)
 
     def mean(self, x):
+        if self.Q is not None:
+            x = np.dot(x, self.Q)
         return self.mean_var(x)[0]
 
     def set_data(self, X, Y, append=True):
@@ -358,11 +362,7 @@ class BoringGP(ConfidenceBoundModel):
         return GPSampler(self.gp.X.copy(), self.gp.Y.copy(), self.kernel, self.gp.likelihood.variance)
 
     def _raw_predict(self, Xnew):
-        # TODO: are we supposed to project?
-        if self.Q is not None:
-            Xnew = np.dot(Xnew, self.Q)
-        # TODO: what is self._X???
-
+        # TODO: add the identity to here
         Kx = self.kernel.K(self._X, Xnew)
         mu = np.dot(Kx.T, self._woodbury_vector)
 
