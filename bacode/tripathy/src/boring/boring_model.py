@@ -133,7 +133,7 @@ class BoringGP(ConfidenceBoundModel):
         )
 
         # Create a new kernel and create a new GP
-        self.create_gp_and_kernels(1, 2)
+        self.create_gp_and_kernels(1, self.domain.d - 1)
 
         # Some post-processing
         self.kernel = self.kernel.copy()
@@ -347,7 +347,7 @@ class BoringGP(ConfidenceBoundModel):
 
         # TODO: is it =, >= or what?
         if self.i > self.burn_in_samples:
-            assert self.Q is not None, "After the Buring in rate, self.Q is still None!"
+            assert self.Q is not None, "After the burning in, self.Q is still None!"
 
         if self.i <= self.burn_in_samples or self.Q is None:
             self.gp.set_XY(X, Y)
@@ -395,11 +395,9 @@ class BoringGP(ConfidenceBoundModel):
     def _raw_predict(self, Xnew):
         m, n = Xnew.shape
 
-        if ( not hasattr(self.kernel, 'parts') ) or True:
+        if not hasattr(self.kernel, 'parts'):
             mu, var = self._raw_predict_single_kernel(Xnew)
             # print("Using the cool values! ")
-            assert not np.isnan(mu).all(), ("nan encountered for mean!", mu)
-            assert not np.isnan(var).all(), ("nan encountered for mean!", var)
         else:
             mu = np.zeros((Xnew.shape[0], 1))
             var = np.zeros((Xnew.shape[0], 1))
@@ -409,6 +407,9 @@ class BoringGP(ConfidenceBoundModel):
                 assert not np.isnan(cur_var).all(), ("nan encountered for var!", cur_var)
                 mu += cur_mu
                 var += cur_var
+
+        assert not np.isnan(mu).all(), ("nan encountered for mean!", mu)
+        assert not np.isnan(var).all(), ("nan encountered for mean!", var)
 
         assert mu.shape == (m, 1), ("Shape of mean is different! ", mu.shape, (m, 1))
         assert var.shape == (m, 1), ("Shape of variance is different! ", var.shape, (m, 1))
@@ -426,8 +427,6 @@ class BoringGP(ConfidenceBoundModel):
         tmp = lapack.dtrtrs(self._woodbury_chol, Kx, lower=1, trans=0, unitdiag=0)[0]
         var = (Kxx - np.square(tmp).sum(0))[:, None]
 
-        # TODO: Make sure the variance is not negative!
-        # Make sure variance is always positive!
         assert (var >= 0.).all(), ("Variance is negative at some points! ", var)
 
         return mu, var

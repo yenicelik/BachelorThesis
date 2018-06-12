@@ -1,7 +1,7 @@
 from sys import platform
 
-DEV = True
-QDev = True
+DEV = False
+QDev = False
 HALFDEV = True
 
 if DEV:
@@ -30,8 +30,8 @@ elif QDev:
     config = {
         "no_restarts": 12, # 1000
 
-        "max_iter_alg1": 50, # int(1e5),
-        "max_iter_alg3": 50, # int(1e5),
+        "max_iter_alg1": 20, # int(1e5),
+        "max_iter_alg3": 20, # int(1e5),
 
         "max_iter_parameter_optimization": 1,
         "max_iter_W_optimization": 1,
@@ -49,7 +49,7 @@ elif QDev:
 elif HALFDEV:
 
     config = {
-        "no_restarts": 4*4*16, # 1000
+        "no_restarts": 100, # 1000
 
         "max_iter_alg1": 400, # int(1e5),
         "max_iter_alg3": 400, # int(1e5),
@@ -57,9 +57,9 @@ elif HALFDEV:
         "max_iter_parameter_optimization": 1,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 1.e-4, # -12,
-        "eps_alg3": 1.e-4, # -12,
-        "eps_alg4": 1.e-3,
+        "eps_alg1": 1.e-3, # -12,
+        "eps_alg3": 1.e-3, # -12,
+        "eps_alg4": 1.e-2,
 
         "tau_max": 1.e-1,
         "no_taus": 5,

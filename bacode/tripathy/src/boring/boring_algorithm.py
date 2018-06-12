@@ -73,7 +73,7 @@ class BoringAlgorithm(Algorithm):
     #############################
     def ucb_acq_function(self, Z):
         # assert not np.isnan(Z).all(), ("One of the optimized values over the acquisition function it nan!", Z)
-        print(Z)
+        # print(Z)
         return -self.gp.ucb(Z)
 
     def _next(self):
