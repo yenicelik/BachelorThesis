@@ -1,6 +1,6 @@
 from sys import platform
 
-DEV = True
+DEV = False
 QDev = True
 HALFDEV = True
 

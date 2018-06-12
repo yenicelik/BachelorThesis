@@ -31,7 +31,7 @@ class BoringModelConfig(ModelConfig):
     """
     # kernels = ConfigField([('GPy.kern.RBF', {'variance': 2., 'lengthscale': 0.2 , 'ARD': True})])
     noise_var = ConfigField(0.1)
-    calculate_gradients = ConfigField(True, comment='Enable/Disable computation of gradient on each update.')
+    calculate_gradients = ConfigField(False, comment='Enable/Disable computation of gradient on each update.')
     optimize_bias = ConfigField(False)
     optimize_var = ConfigField(False)
     bias = ConfigField(0)
@@ -132,7 +132,7 @@ class BoringGP(ConfidenceBoundModel):
 
         # passive projection matrix still needs to be created first!
         # print("WARNING: CONFIG MODE IS: ", config.DEV)
-        self.burn_in_samples = 100 # 102
+        self.burn_in_samples = 50 # 102
         self.recalculate_projection_every = 100
         self.active_projection_matrix = None
         self.passive_projection_matrix = None
@@ -172,7 +172,7 @@ class BoringGP(ConfidenceBoundModel):
         self.set_data(x, y, append=True)
 
         # Do our optimization now
-        if self.i % self.burn_in_samples == self.burn_in_samples - 1:
+        if (self.i >= self.burn_in_samples and self.i % self.recalculate_projection_every == 1) or self.burn_in_samples == self.i:
             import time
             start_time = time.time()
             print("Adding data: ", self.i)
@@ -197,6 +197,8 @@ class BoringGP(ConfidenceBoundModel):
                                         axis=1)
             else:
                 self.Q = self.active_projection_matrix
+
+            assert not np.isnan(self.Q).all(), ("The projection matrix contains nan's!", self.Q)
 
             self.create_gp_and_kernels(active_dimensions=d, passive_dimensions=passive_dimensions) # TODO: after re-creating the kernel, do we need to call any calculation parameter?
 
@@ -279,13 +281,19 @@ class BoringGP(ConfidenceBoundModel):
         """
         x = np.atleast_2d(x)
 
+        assert not np.isnan(x).all(), ("X is nan before projection!", x)
+
         if self.Q is not None:
             x = np.dot(x, self.Q)
 
-        if self.config.calculate_gradients:
+        assert not np.isnan(x).all(), ("X is nan at some point!", x)
+
+        if self.config.calculate_gradients or True: # TODO: there is this nan bug when I use my _raw_predict!
             mean, var = self.gp.predict_noiseless(x)
         else:
             mean, var = self._raw_predict(x)
+
+        # print("Mean and variance are: ", mean, var)
 
         return mean + self._bias, var
 
@@ -378,7 +386,29 @@ class BoringGP(ConfidenceBoundModel):
         return GPSampler(self.gp.X.copy(), self.gp.Y.copy(), self.kernel, self.gp.likelihood.variance)
 
     def _raw_predict(self, Xnew):
-        # TODO: add the identity to here
+        m, n = Xnew.shape
+
+        if ( not hasattr(self.kernel, 'parts') ) or True:
+            mu, var = self._raw_predict_single_kernel(Xnew)
+            # print("Using the cool values! ")
+            assert not np.isnan(mu).all(), ("nan encountered for mean!", mu)
+            assert not np.isnan(var).all(), ("nan encountered for mean!", var)
+        else:
+            mu = np.zeros((Xnew.shape[0], 1))
+            var = np.zeros((Xnew.shape[0], 1))
+            for kernel in self.kernel.parts:
+                cur_mu, cur_var = self._raw_predict_given_kernel(Xnew, kernel)
+                assert not np.isnan(cur_mu).all(), ("nan encountered for mean!", cur_mu)
+                assert not np.isnan(cur_var).all(), ("nan encountered for var!", cur_var)
+                mu += cur_mu
+                var += cur_var
+
+        assert mu.shape == (m, 1), ("Shape of mean is different! ", mu.shape, (m, 1))
+        assert var.shape == (m, 1), ("Shape of variance is different! ", var.shape, (m, 1))
+
+        return mu, var
+
+    def _raw_predict_single_kernel(self, Xnew):
         Kx = self.kernel.K(self._X, Xnew)
         mu = np.dot(Kx.T, self._woodbury_vector)
 
@@ -390,6 +420,20 @@ class BoringGP(ConfidenceBoundModel):
         var = (Kxx - np.square(tmp).sum(0))[:, None]
         return mu, var
 
+
+    def _raw_predict_given_kernel(self, Xnew, kernel):
+        Kx = kernel.K(self._X, Xnew)
+        mu = np.dot(Kx.T, self._woodbury_vector)
+
+        if len(mu.shape) == 1:
+            mu = mu.reshape(-1, 1)
+
+        Kxx = kernel.Kdiag(Xnew)
+        tmp = lapack.dtrtrs(self._woodbury_chol, Kx, lower=1, trans=0, unitdiag=0)[0]
+        var = (Kxx - np.square(tmp).sum(0))[:, None]
+        return mu, var
+
+    # TODO: do we need to apply the same function here?
     def _raw_predict_covar(self, Xnew, Xcond):
         Kx = self.kernel.K(self._X, np.vstack((Xnew, Xcond)))
         tmp = lapack.dtrtrs(self._woodbury_chol, Kx, lower=1, trans=0, unitdiag=0)[0]

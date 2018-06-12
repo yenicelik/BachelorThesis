@@ -29,19 +29,6 @@ from bacode.tripathy.src.boring.generate_orthogonal_basis import generate_orthog
 import time
 
 
-def run_optimization():
-    """
-        Runs the optimization process, where we do the following:
-            1.) Identify the active subspace, and find optimal parameters for the kernel
-            2.) Generate an orthogonal basis to the active subspace, which represents the passive subspace
-            3.) For each individual axes of the passive subspace, run an individual GP
-    :return:
-    """
-    pass
-
-
-# TODO: the active and passive subspace projections should take place here
-
 @assign_config(BoringConfig)
 class BoringAlgorithm(Algorithm):
 
@@ -64,18 +51,6 @@ class BoringAlgorithm(Algorithm):
 
         self.gp.add_data(x, y)
 
-        # self.set_data(x, y, append=True)
-
-    # def set_data(self, X, Y, append=True):
-    #     self.gp.set_data(X, Y, append)
-    #     # # self.model.set_data(X, Y, append)
-    #     # if append:
-    #     #     X = np.concatenate((self.gp.gp.X, X))
-    #     #     Y = np.concatenate((self.gp.gp.Y, Y))
-    #     #
-    #     # self.gp.gp.set_XY(X, Y)  # TODO: need to do this for each individual components once it is successful
-    #     self.t = X.shape[0]
-
     def initialize(self, **kwargs):
         """
             self.domain carries the higher-dimensional domain
@@ -97,8 +72,8 @@ class BoringAlgorithm(Algorithm):
     #   Acquisition functions   #
     #############################
     def ucb_acq_function(self, Z):
+        assert not np.isnan(Z).all(), ("One of the optimized values over the acquisition function it nan!", Z)
         return -self.gp.ucb(Z)
-        # return -self.model.ucb(Z)
 
     def _next(self):
         z_ucb, _ = self.optimizer.optimize(self.ucb_acq_function)
