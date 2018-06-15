@@ -24,7 +24,7 @@
 \contentsline {subsubsection}{Identification of active subspace dimension }{12}{section*.7}
 \contentsline {section}{\numberline {2.2}Algorithms that exploit additive substructures}{12}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}Independent additive structures within the target function}{12}{subsection.2.2.1}
-\contentsline {section}{\numberline {2.3}Further approaches}{12}{section.2.3}
+\contentsline {section}{\numberline {2.3}Additional approaches}{12}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Elastic Gaussian Processes}{12}{subsection.2.3.1}
 \contentsline {subsection}{\numberline {2.3.2}Bayesian Optimization using Dropout}{12}{subsection.2.3.2}
 \contentsline {chapter}{\numberline {3}Fields of Improvement}{15}{chapter.3}
@@ -39,29 +39,29 @@
 \contentsline {paragraph}{5D to 1D}{17}{section*.13}
 \contentsline {paragraph}{5D to 2D}{17}{section*.14}
 \contentsline {paragraph}{10D to 5D}{17}{section*.15}
-\contentsline {subsection}{\numberline {3.2.2}Real Datasets}{17}{subsection.3.2.2}
-\contentsline {paragraph}{SwissFEL dataset}{17}{section*.16}
+\contentsline {subsection}{\numberline {3.2.2}Real Datasets}{18}{subsection.3.2.2}
+\contentsline {paragraph}{SwissFEL dataset}{18}{section*.16}
 \contentsline {chapter}{\numberline {4}Model Design and Extensions to the state of the art}{19}{chapter.4}
 \contentsline {section}{\numberline {4.1}The BORING Algorithm}{19}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Algorithm Description}{20}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Algorithm Properties}{21}{subsection.4.1.2}
-\contentsline {section}{\numberline {4.2}Additive Stiefel projections - Our proposed improvement to existing methods}{22}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}What is it better than actively finding substructures}{23}{subsection.4.2.1}
-\contentsline {section}{\numberline {4.3}Additive variance reducing GP}{24}{section.4.3}
-\contentsline {subsubsection}{Why this algorithm?}{24}{section*.17}
-\contentsline {section}{\numberline {4.4}Why ours}{25}{section.4.4}
+\contentsline {subsubsection}{General Idea of the algorithm}{20}{section*.17}
+\contentsline {subsubsection}{Finding a basis for the passive subspace (a subspace orthogonal to the active subspace)}{21}{section*.18}
+\contentsline {subsubsection}{Additive UCB acquisition function}{23}{section*.19}
+\contentsline {section}{\numberline {4.2}Additive Stiefel projections - Our proposed improvement to existing methods}{24}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}What is it better than actively finding substructures}{24}{subsection.4.2.1}
+\contentsline {subsubsection}{How does our algorithm address the shortcomings from chapter 3?}{25}{section*.20}
 \contentsline {chapter}{\numberline {5}Evaluation}{27}{chapter.5}
 \contentsline {section}{\numberline {5.1}Evaluation Settings}{27}{section.5.1}
 \contentsline {section}{\numberline {5.2}Quantitative evaluation}{27}{section.5.2}
-\contentsline {section}{\numberline {5.3}Qualitative evaluation}{27}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Finding a matrix when we apply a polynomial kernel onto the input first}{27}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Finding a matrix when we apply a polynomial kernel onto the input first}{28}{subsection.5.3.2}
-\contentsline {section}{\numberline {5.4}Subspace identification}{28}{section.5.4}
+\contentsline {section}{\numberline {5.3}Qualitative evaluation}{28}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Finding a matrix when we apply a polynomial kernel onto the input first}{28}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Finding a matrix when we apply a polynomial kernel onto the input first (feature selection)}{28}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}Subspace identification}{28}{subsection.5.3.3}
 \contentsline {chapter}{\numberline {6}Conclusion and Future Work}{29}{chapter.6}
 \contentsline {section}{\numberline {6.1}Summary}{29}{section.6.1}
 \contentsline {section}{\numberline {6.2}Future Work}{29}{section.6.2}
 \contentsline {subsection}{\numberline {6.2.1}Uniform benchmarking methods}{29}{subsection.6.2.1}
 \contentsline {subsection}{\numberline {6.2.2}Uniform metric that defines when a BO algorithm performs well}{29}{subsection.6.2.2}
-\contentsline {chapter}{References}{31}{chapter*.18}
+\contentsline {chapter}{References}{31}{chapter*.21}
 \contentsline {chapter}{Appendix \numberline {A}}{33}{Appendix.a.A}
 \contentsline {section}{\numberline {A.1}Benchmarking functions}{33}{section.a.A.1}

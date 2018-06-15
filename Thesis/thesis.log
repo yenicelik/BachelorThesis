@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  15 JUN 2018 12:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  15 JUN 2018 15:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1587,7 +1587,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 114.
 \PHD@crest=\box56
 
-<Figs/University_Crest.pdf, id=229, 59.22125pt x 69.25874pt>
+<Figs/University_Crest.pdf, id=213, 59.22125pt x 69.25874pt>
 File: Figs/University_Crest.pdf Graphic file (type pdf)
 
 <use Figs/University_Crest.pdf>
@@ -1657,7 +1657,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 Package natbib Warning: Citation `Wang' on page iii undefined on input line 68.
 
 
-<Figs/./../src/Embedding_optimization.png, id=253, 636.3775pt x 241.90375pt>
+<Figs/./../src/Embedding_optimization.png, id=237, 636.3775pt x 241.90375pt>
 File: Figs/./../src/Embedding_optimization.png Graphic file (type png)
 
 <use Figs/./../src/Embedding_optimization.png>
@@ -1810,36 +1810,41 @@ Underfull \hbox (badness 10000) in paragraph at lines 55--60
 
  []
 
-[16]) [17]
+[16] [17]) [18]
 \openout2 = `Chapter5/chapter5.aux'.
 
- (./Chapter5/chapter5.tex [18
-
-
-
-]
+ (./Chapter5/chapter5.tex
 Chapter 4.
 
 Underfull \hbox (badness 10000) in paragraph at lines 26--27
 
  []
 
-[19] [20] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 151--153
+[19
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 43--46
+
+ []
+
+[20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 131--133
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 154--157
+Underfull \hbox (badness 10000) in paragraph at lines 134--137
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 158--161
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 167--168
 
  []
 
-[22] [23]) [24] [25]
+[23] [24]) [25]
 \openout2 = `Chapter6/chapter6.aux'.
 
  (./Chapter6/chapter6.tex [26
@@ -1849,16 +1854,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 158--161
 ]
 Chapter 5.
 
-Underfull \hbox (badness 10000) in paragraph at lines 25--26
+Underfull \hbox (badness 10000) in paragraph at lines 35--36
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
+[27]
+Underfull \hbox (badness 10000) in paragraph at lines 53--54
 
  []
 
-[27]) [28]
+) [28]
 \openout2 = `Chapter7/chapter7.aux'.
 
  (./Chapter7/chapter7.tex
@@ -1901,43 +1906,33 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 197.
 (./Appendix1/appendix1.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 197.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 197.
-
-
-Package rerunfilecheck Warning: File `thesis.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `thesis.out':
-(rerunfilecheck)             Before: CAA7B7883B4FC08A74F4AEFA126E9CDF;12672
-(rerunfilecheck)             After:  55736C1988E2C23875F15743AABF74DC;12466.
+Package rerunfilecheck Info: File `thesis.out' has not changed.
+(rerunfilecheck)             Checksum: 1A677D9BD63B7F53710B6F1F7AFE5815;12062.
  ) 
 Here is how much of TeX's memory you used:
- 26702 strings out of 492995
- 465482 string characters out of 6132704
- 547142 words of memory out of 5000000
- 29389 multiletter control sequences out of 15000+600000
+ 26697 strings out of 492995
+ 465392 string characters out of 6132704
+ 546276 words of memory out of 5000000
+ 29385 multiletter control sequences out of 15000+600000
  63786 words of font info for 187 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,17n,92p,10383b,904s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{section.4.5} has been referenced but does not exi
-st, replaced by a fixed one
-
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
-live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texli
-ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
-2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/2017
-/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist
-/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
-1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/time
-s/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8a.
-pfb>
-Output written on thesis.pdf (46 pages, 268107 bytes).
+ 55i,17n,92p,10383b,892s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
+xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texli
+ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
+e/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/te
+xlive/2017/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/20
+17/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-di
+st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
+pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
+mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
+a.pfb>
+Output written on thesis.pdf (46 pages, 268703 bytes).
 PDF statistics:
- 806 PDF objects out of 1000 (max. 8388607)
- 725 compressed objects within 8 object streams
- 266 named destinations out of 1000 (max. 500000)
- 31179 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 789 PDF objects out of 1000 (max. 8388607)
+ 708 compressed objects within 8 object streams
+ 265 named destinations out of 1000 (max. 500000)
+ 31147 words of extra memory for PDF output out of 35830 (max. 10000000)
 

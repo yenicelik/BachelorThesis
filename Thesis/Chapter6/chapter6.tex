@@ -19,6 +19,16 @@ Furthermore, we will shortly discuss the underlying real dataset, which is hyper
 
 \section{Quantitative evaluation}
 
+We will conduct experiments in the following settings (as mentioned in some other chapter REEEE):
+
+\begin{enumerate}
+\item a 2D embedded function in a 3D (synthetic).
+\item a 2D embedded function in a 10D (synthetic).
+\item a 5D embedded function in a 25D setting (synthetic).
+\item A function that has the exact same structure that we propose.
+\item SwissFEL data (5D real dimensional domain).
+\end{enumerate}
+
 \section{Qualitative evaluation}
 
 \subsection{Finding a matrix when we apply a polynomial kernel onto the input first}
@@ -39,7 +49,7 @@ f \left( W \B \right) \approx g \left( x \right)
 
 where $x_0, x_1$ are constants.
 
-\subsection{Finding a matrix when we apply a polynomial kernel onto the input first}
+\subsection{Finding a matrix when we apply a polynomial kernel onto the input first (feature selection)}
 We want to analyse if the gpregression can identify the random matrix, if the input is first put through a polynomial kernel of degree 2. \\
 
 More specifically, the problem looks as follows.
@@ -58,6 +68,6 @@ f \left( W \B \right) \approx g \left( x \right)
 where $x_0, x_1$ are constants.
 
 
-\section{Subspace identification}
+\subsection{Subspace identification}
 
 

@@ -30,27 +30,57 @@ Where the following variables have the following meaning
 \item $A$ is the active subspace projection (an element of the stiefel manifold) learned through our algorithm, using Algorithm 1
 \item $A^{\bot}$ is an matrix whose subspace is orthonormal to the projection of $A$.
 We generate $A^{\bot}$ using Algorithm 2.
+\item The subscript $i$ in the right additive term dneotes that we view each output dimension (of $dot(A^{\bot}, X)$ individually and as independent.
+
 \end{itemize}
 
 We will no proceed with describing the algorithm in more detail.
 
 \subsection{Algorithm Description}
 
-\begin{algorithm}
+\subsubsection{General Idea of the algorithm}
+
+We propose a novel method which is based on additive GPs, where we use different kinds of kernels.
+We want to calculate $g_i$ and $f$ within that \ref{eq:dimRedEquation}, such that the maximum likelihood of the data we have accumulated so far.
+ Because the term can be written as a sum of expressions, we can maximize each summand individually, which will lead to maximizing the entire expression (after we have calculate the active subspace). \\
+ 
+ The following few steps are applied after a "burn-in" phase, in which we use REMBO to acquire new points (as this is an efficient form of random sampling).
+ We take $ \sqrt{d} $ as the dimensionality of the space $Y$ in which we search (heuristic!!).
+ 
+ \begin{enumerate}
+ \item Calculate the active subspace using the algorithm from 
+ \item Calculate an appropriate pair of vectors $v_1, \ldots, v_{n-{q}}$, where each vector is orthonormal to every other vector in $A$.
+ \item Maximize the GP for each individual expression of the space orthogonal to $A$ (as given by $V x$) individually.
+ \end{enumerate}
+ 
+ This fights the curse of dimensionality, as we can freely choose $q \geq d_e$ to set the complexity of the second term.
+ This, thus allows for smaller perturbations in the space orthogonal to $A$ to occur.
+
+\begin{algorithm}[H]
 \caption{BORING Alg. 1 - Bayesian Optimization using BORING}
 
 \begin{algorithmic} 
 \STATE $X \leftarrow \emptyset$
 \STATE $Y \leftarrow \emptyset$
 
+\COMMENT{Burn in rate - don't look for a subspace for the first 50 samples}
+\STATE $i \leftarrow 0$
+\WHILE{i < 50}
+\STATE $i++$
+\STATE $x_* \leftarrow $ argmax$_x$ acquisitionFunction$(dot(Q^{\bot}, x) )$ using standard UCB over the domain of $X$.
+\STATE Add $x_*$ to $X$ and $ f(x_*)$ to $Y$.
+\ENDWHILE
+
 \WHILE{we can choose a next point}
-\STATE $A, d \leftarrow $ Calculate active subspace projection using Algorithm 2.
+% TODO: add an if statement that the active subspace is re-calculated every now and then
+\STATE $A, d \leftarrow $ Calculate active subspace projection using Algorithm 2 from the paper by Tripathy.
 \STATE $A^{\bot} \leftarrow $ Generate passive subspace projection using Algorithm 3.
 \STATE TODO: CHECK DIMENSIONS IN THE CODE!!! (If concat is in the correct dimension!)
 \STATE $Q \leftarrow $ colwiseConcat( $[A, A^{\bot}]$ ) 
 \STATE $gp \leftarrow GP( $dot$( Q^T, X), Y)$
-\STATE kernel $\leftarrow$ activeKernel + $\sum_i^{q}$ passiveKernel$_i$
-\STATE $x_* \leftarrow $ argmax$_x$ acquisitionFunction$(dot(Q^{\bot}, x) )$
+\STATE kernel $\leftarrow$ activeKernel + $\sum_i^{q}$ passiveKernel$_i$ 
+\COMMENT{For this one, maybe be more explicit with how to set the kernels (as each kernel addresses a different number of dimensions)}
+\STATE $x_* \leftarrow $ argmax$_x$ acquisitionFunction$(dot(Q^{\bot}, x) )$ using Equations (REFERENCE HERE)
 \STATE Add $x_*$ to $X$ and $ f(x_*)$ to $Y$.
 \ENDWHILE
 
@@ -59,61 +89,11 @@ We will no proceed with describing the algorithm in more detail.
 
 \end{algorithm}
 
+
 We find the active projection matrix using the following algorithm, which is identical to the procedure described in "CITE TRIPATHY".
-
-\begin{algorithm}
-\caption{BORING Alg. 2} 
-
-\begin{algorithmic} 
-\STATE $X \leftarrow \emptyset$
-\STATE $Y \leftarrow \emptyset$
-
-\WHILE{budget not depleted}
-\STATE $ q(R) \leftarrow \text{LAPLACEAPPROX}( p(R | X, Y, \kappa, \mu) ) $
-\STATE $ q(f) \leftarrow  APPROXMARGINAL( p(f | R), q(R)) $
-\STATE $ x_* \leftarrow OPTIMIZEUTILITY( q(f), q(R) )$
-\STATE $ y \leftarrow OBSERVE( f( x_* ) ) $
-\STATE $ X \leftarrow [X; x_*] $
-\STATE $ Y \leftarrow[Y; y_*] $
-\ENDWHILE
-
-\RETURN $q(R), q(f)$
-\end{algorithmic}
-\end{algorithm}
-
 We then generate a matrix $ A^{\bot} $ by using the following procedure.
 
-\begin{algorithm}[H]
-\caption{BORING Alg. 3 - generate orthogonal matrix to A(A, n) }
-
-\begin{algorithmic} 
-\REQUIRE $A$ a matrix to which we want to create $A^{\bot}$ for; $n$, the number of vectors in $A^{\bot}$.
-
-\STATE normedA $ \leftarrow $ normalize each column of $A$
-\STATE $Q \leftarrow$ emptyMatrix()
-\COMMENT{ The final concatenated $Q$ will be $A^{\bot}$. }
-\FOR{i = 1,...,n}
-\STATE $i \leftarrow 0$ 
-\WHILE{i < 50}
-\STATE i++
-\STATE $q_i \leftarrow $ random vector with norm 1
-\STATE newBasis = apply gram schmidt single vector( $[A, Q], q_i$ ) 
-
-\IF{ dot(normed$A^T$, newBasis) $\approx \mathbf{0}$ and $|$ newBasis $|$ $> 1e-6$}
-\STATE $Q \leftarrow$ colwiseConcatenate( $(Q, $ newBasis)
-\STATE break
-\ENDIF
-\ENDWHILE                
-\ENDFOR
-
-\RETURN $Q$
-\end{algorithmic}
-\end{algorithm}
-
-
-
-\subsection{Algorithm Properties}
-
+\subsubsection{Finding a basis for the passive subspace (a subspace orthogonal to the active subspace)}
 
 \begin{equation}
 A = 
@@ -154,34 +134,50 @@ For this, $V$ consists of any basis vectors that are orthogonal to all other vec
 We can generate these vectors by taking a random vector, and applying gram schmidt.
 We repeat the above procedure if the norm of the resulting vector is smaller than a given threshold.
  (One could also maybe use fourier, then add another fourier axis, and then go back again to have a nice basis?). \\
- 
- Now to the heart of the algorithm. 
- We want to calculate $g_i$ and $f$ within that \ref{eq:dimRedEquation}, such that the maximum likelihood of the data we have accumulated so far.
- Because the term can be written as a sum of expressions, we can maximize each summand individually, which will lead to maximizing the entire expression (after we have calculate the active subspace). \\
- 
- The following few steps are applied after a "burn-in" phase, in which we use REMBO to acquire new points (as this is an efficient form of random sampling).
- We take $ \sqrt{d} $ as the dimensionality of the space $Y$ in which we search (heuristic!!).
- 
- \begin{enumerate}
- \item Calculate the active subspace using the algorithm from 
- \item Calculate an appropriate pair of vectors $v_1, \ldots, v_{n-{q}}$, where each vector is orthonormal to every other vector in $A$.
- \item Maximize the GP for each individual expression of the space orthogonal to $A$ (as given by $V x$) individually.
- \end{enumerate}
- 
- This fights the curse of dimensionality, as we can freely choose $q \geq d_e$ to set the complexity of the second term.
- This, thus allows for smaller perturbations in the space orthogonal to $A$ to occur.
+
+\begin{algorithm}[H]
+\caption{BORING Alg. 3 - generate orthogonal matrix to A(A, n) }
+
+\begin{algorithmic} 
+\REQUIRE $A$ a matrix to which we want to create $A^{\bot}$ for; $n$, the number of vectors in $A^{\bot}$.
+
+\STATE normedA $ \leftarrow $ normalize each column of $A$
+\STATE $Q \leftarrow$ emptyMatrix()
+\COMMENT{ The final concatenated $Q$ will be $A^{\bot}$. }
+\FOR{i = 1,...,n}
+\STATE $i \leftarrow 0$ 
+\WHILE{i < 50}
+\STATE i++
+\STATE $q_i \leftarrow $ random vector with norm 1
+\STATE newBasis = apply gram schmidt single vector( $[A, Q], q_i$ ) 
+
+\IF{ dot(normed$A^T$, newBasis) $\approx \mathbf{0}$ and $|$ newBasis $|$ $> 1e-6$}
+\STATE $Q \leftarrow$ colwiseConcatenate( $(Q, $ newBasis)
+\STATE break
+\ENDIF
+\ENDWHILE                
+\ENDFOR
+
+\RETURN $Q$
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Additive UCB acquisition function}
+
+Because we decompose the function into multiple additive components, we need to adapt the mean and variance computation accordingly, as is described in (CITE THE EPFL PAPER). \\
+
+\begin{align}
+\mu_{t-1}^{(j)} &= k^j(x_*^{(j)}, X^j)\Delta^{-1}y \\
+\left( \sigma_{t-1}^{(j)} \right)^2 &= k^j(x_*^{j}, x_*^{j}) - k^j(x_*^j, X^{(j)}) \Delta^{-1} k^j(X^{(j)}, x_*^j)
+\end{align}
+
+where $k(a, b)$ is the piecewise kernel operator for vectors or matrices $a$ and $b$ and $\Delta = k(X, X) + \eta I_n$.
+Because we only use a single GP with multiple kernels (where each kernel handles a different dimension of $dot(Q^T, x)$), we have $k^{j=1, \ldots, q+1}$ kernels (the $+1$ comes from the first kernel being the kernel for the active subspace). 
+
 
 \section{Additive Stiefel projections - Our proposed improvement to existing methods}
-We propose a novel method which is based on additive GPs, where we use different kinds of kernels.
 
 We model the function $f$, which we approximate through functions $g_{i}$ as follows:
-
-\begin{equation}
-f(x) \sim g_1(A_1 x_1) + \sum_{i} g_i(A_i x_i)
-\end{equation}
-
-where $x_1$ is the subvector of the input $x$ that includes the active subspace.
-And each $x_i$ is a subvector of the input $x$ which is part of the nullspace.
 
 We propose the following training method:
 
@@ -219,19 +215,7 @@ We separate the algorithm into two parts:
 
 --> Possible extension to the Projection pursuit regression?
 
-\section{Additive variance reducing GP}
-For this technique, we must detect the number of possible cliques.
-We don't need to know which variables go together, however, rather, how many times we get a maximal clique.
-
-We can use the EPFL junction tree thing to find how many maximal cliques we have. 
-Then we spawn that many terms with random matrices, but first project them all onto a lower subspace.
-How do we find out how many active dimensions each of these values has?
-Or do we assume that each such clique already is in a lower dimension.
-
-
-Besides fitting a set of test data well through the predicted mean function, we also wish to minimize the 
-
-\subsubsection{Why this algorithm?}
+\subsubsection{How does our algorithm address the shortcomings from chapter 3?}
 
 \begin{enumerate}
 \item Our algorithm intrinsically uses multiple restarts, firstly proposed as an extension to REMBO.
@@ -242,18 +226,5 @@ This makes training more reliable.
 \item Our algorithm is more accurate, as we don't assume that there is a singular maximal subspace. 
 We also take into consideration that there might be perturbation on lower dimensions!
 \end{enumerate}
-
-
-
-%% \begin{equation}
-%%
-%% \end{equation}
-
-
-
-
-\section{Why ours}
-REMBO has a probaility of failing. This probability is not high, but may result in very, very bad results. 
-Our model gives an approximate best solution given the data, which means that it always performs better than REMBO (because of the built-in restarts).
 
 

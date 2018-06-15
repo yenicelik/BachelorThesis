@@ -62,7 +62,9 @@ Besides that, we offer the following possibilities to check how well our model d
 
 \begin{itemize}
 \item choose the matrix that we will take amongst all initialized tries (should be in the paper)
-\item Test if the expectation $$ E[ f(A x) - f_hat(A_hat x) ] $$ decreases / approaches zero (for methods that identify a projection matrix).
+\item Test if the expectation $$ E[ f(A x) - f_{hat}(A_{hat} x) ] $$ decreases / approaches zero (for methods that identify a projection matrix).
+\item check if the test log-likelihood decreases
+\item Check if the l2-loss to the real surface decreases.
 \end{itemize}
 
 
