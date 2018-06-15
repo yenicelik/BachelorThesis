@@ -1,11 +1,38 @@
 %!TEX root = ../thesis.tex
 % ******************************* Thesis Appendix A ****************************
-\chapter{How to install \LaTeX} 
+\chapter{}
 
-\section*{Mac OS X}
-\subsection*{MacTeX - \TeX~ distribution}
+\section{Benchmarking functions}
+
+The following is a list of synthetic functions and real datasets presented in previous works, where the goal is to evaluate bayesian optimization algorithms. 
+
 \begin{enumerate}
-\item	Download the file from\\
-\href{https://www.tug.org/mactex/}{https://www.tug.org/mactex/}
-\item	Extract and double click to run the installer. It does the entire configuration, sit back and relax.
+\item \citep{Garnett2013} Synthetic in-model data matching the proposed model, with $d=2, 3$, and $D=10, 20$.
+\item \citep{Garnett2013} (Synthetic) Braning function, $d=2$, hidden in a higher dimensional space $D=10, 20$.
+\item \citep{Garnett2013} Temperature data $D=106$ and $d=2$.
+\item \citep{Garnett2013} Communities and Crime dataset $d=2$, and $D=96$. 
+\item \citep{Garnett2013} Relative location of CT slices on axial axis with $d = 2$ and $D=318$. 
+\item \citep{Djolonga2013} (Synthetic) Random GP samples from 2-dimensional Matern-Kernel-output, embedded within 100 dimensions
+\item \citep{Djolonga2013} Gabor Filters: Determine visual stimuli that maximally excite some neurons which reacts to edges in the image.
+We have $f(x) = \exp( -( \theta^T x - 1 )^2 )$. $\theta$ is of size 17x17, and the set of admissible signals is $d$.
+\item \citep{Wang2013} (Synthethic) $d=2$ and $D=1*10^9$.
+\item \citep{Wang2013} $D=47$ where each dimension is a parameter of a mixed integer linear programming solver.
+\item \citep{Wang2013} $D=14$ with $d$ for a random forest body part classifier.
+\item \citep{Tripathy}  (Synthetic) Use $d=1,10$ and $D=10$.
+\item \citep{Tripathy} (Half-synthetic) Stochastic elliptic partial differential equation, where $D=100$, and an assume value for $d$ of $1$ or $2$.
+\item \citep{Tripathy} Granular crystals $X \in \mathbb{R}^{1000 \times 2n_p +1}$, and $y \in \mathbb{R}^{1000}$.
+\item \citep{Gardner2017} (Synthetic) Styblinski–Tang function where $D$ is freely choosable.
+\item \citep{Gardner2017} (Synthetic) Michalewicz function where $D$ is freely choosable.
+\item \citep{Gardner2017} (Simulated) NASA cosmological constant data where $D=9$.
+\item \citep{Gardner2017} Simple matrix completion with $D=3$.
+\item \citep{Rana2017} (Synthetic) Hertmann6d in [0, 1].
+\item \citep{Rana2017} (Synthetic) Unnormalized Gaussian PDF with a maximum of 1 in $[-1, 1]^d$ for $D=20$ and $[-0.5, 0.5]^d$ for $D=50$
+\item \citep{Rana2017} (Synthetic) Generalized Rosenbrock function $[-5, 10]^d$
+\item \citep{Rana2017} Training cascade classifiers, with $D=10$ per group.
+\item \citep{Rana2017} Optimizing alloys $D=13$. 
+\item \citep{Li2018} (Synthetic) Gaussian mixture function
+\item \citep{Li2018} (Synthetic) Schwefel's 1.2 function.
+\item \citep{OptimizationTestFunctions} A list of optimiztation test functions can be found here.
+\item \citep{Jamil2013} A more comprehensive list of general functions can be found here.
+%\item https://github.com/automl/HPOlib2/tree/master/hpolib/benchmarks/synthetic_functions
 \end{enumerate}

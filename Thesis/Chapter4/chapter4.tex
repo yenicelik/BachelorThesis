@@ -2,7 +2,7 @@
 %*******************************************************************************
 %****************************** Third Chapter **********************************
 %*******************************************************************************
-\chapter{Implementing methods}
+\chapter{Fields of Improvement}
 
 % **************************** Define Graphics Path **************************
 \ifpdf
@@ -11,35 +11,76 @@
     \graphicspath{{Chapter3/Figs/Vector/}{Chapter3/Figs/}}
 \fi
 
-\section{Difficulties when implementing models}
-When implementing models, the following difficulties may arise:
+\section{Shortcomings of current methods}
+We will now draw our attention to understanding what the current best models lack.
+We will enumerate the methods from the section "related work", and will shortly discuss what the shortcomings of these models are:
 
+\paragraph{REMBO} is a purely optimizational algorithm, which finds optimizations in lower dimensions
 \begin{itemize}
-\item Overflows and underflow are often occuring as a reusult of high dimesionality
-\item Making sure the numerical examples are correct
-\item Making sure the differentiations are correct (use finite differences for matrices in this example)
-\item Write theoretical tests of the entire results
-\item test individual parts
-\item Test if the expectation $$ E[ f(A x) - f_hat(A_hat x) ] $$ approaches zero
-\item Visualize the individual functions
-\item write a very simple test case of a parabola, and check where the points project to
-\item Performance of the implementation might not be optimal, as the design is only clear after implementation
+\item \textbf{Suitable choice of the optimization domain:} Not purely robust due to the chance that no suitable subspace will be found. 
+Furthermore, empirically, the choice of the optimization domain heavily affects the duration and effectiveness of the optimization.
+We have found that the proposed solution to choose $ \left[ -\sqrt{d}, \sqrt{d}  \right]^d $ does not offer a well enough domain solution, even for simple problems (such as 2d embedded functions in 5d spaces)
+\item \textbf{Identification of subspace:} In specific domain settings, such as optimization with safety constraints, or general reproducibility in higher domains, requires the subspace to be identified. 
+REMBO is an implicit optimizer, in that it does not find any subspace.
+Identifying the active subspace may be a requirement for certain applications.
+\item \textbf{Probability of failure:} Although the authors propose that restarting REMBO multiple times would allow for a good optimization domain to be found, they do not propose an explicit way of how to achieve this.
 \end{itemize}
 
-\section{Family of matrices}
-It turns out that there is a family of matrices that all project to the same space.
-As such, we need better measures to 
+\paragraph{Active subgradients} can be a viable option if we have access to the gradients of the problem, from which we can learn the active subspace projection matrix in the manner by using that gradient matrices.
+\begin{itemize}
+\item \textbf{Access to gradients:} We don't always have access to the gradients for datasets. 
+Especially in high dimensions, this would require a very, very high number of datapoints per dimension.
+It would also require these points to be evenly enough distributed, such that the gradients can be effective estimated at many points. 
+\item \textbf{Robustness to noise:} According to (CITE TRIPATHY), this method is also quite sensitive to noisy observations.
+This makes this method not very robust.
+\end{itemize}
+
+Given the nature of real-world data, approximating the active subspace using the gradients of the datasamples is thus not a robust, and viable option.
+
+\paragraph{Tripathy} solution argues that it is more robust to real-world noise. 
+They also do not rely on gradient information from the data used for optimization.
+Tripathy allows for a noise-robust way to identify the active subspace.
+\begin{itemize}
+\item \textbf{Duration of optimization:} However, in practice tripathy's solution takes a long time, especially if the dimensions, or the number of datapoints are high (due to the high number of matrix multiplications). 
+Especially in easier problems, it is often desirable not to wait a few hours (but rather a few minutes, or do a precomputation) to find a next best candidate for a point.
+\item \textbf{Efficienty:} Tripathy's solution practically relies on a high number of restarts.
+From our observations, the number of steps to optimize the orthogonal matrix becomes relevant as the number of dimensions grow.
+Given the nature of accepting any starting point, it does not allow for a very efficient way to search for the best possible projection matrix.
+A more efficient way to search all possible matrices (by adding heuristics for example), would be desirable.
+\item \textbf{Insensitive to small pertubations:} Tripathy's model - although finding an active subspace, completely neglects the other dimensions which could allow for small perturbations to allow for an increase the global optimum value.
+There are simple methods that allow for optimization in these domains, and it may be helpful to incorporate such solutions into an existing algorithm.
+\end{itemize}
+
+\section{Method of measuring improvements}
+In the following sections, we will discuss and show how we can improve on the shortcomings of the above methods.
+Because practicality is important in our method, we will both use synthetic functions to measure the efficiency of our method, but also real datasets.
+For real datasets, we want to see if the
+\textbf{???} log likelihood improves (somehow).
+Still need to think about this.\\
+
+Besides that, we offer the following possibilities to check how well our model does.
+
 \begin{itemize}
 \item choose the matrix that we will take amongst all initialized tries (should be in the paper)
-\item 
+\item Test if the expectation $$ E[ f(A x) - f_hat(A_hat x) ] $$ decreases / approaches zero (for methods that identify a projection matrix).
 \end{itemize}
 
-\section{Methods from }
-And now I begin my third chapter here \dots
 
-And now to cite some more people~\citet{Rea85,Ancey1996}
 
-\subsection{First subsection in the first section}
+\subsection{Synthetic Datasets}
+\paragraph{5 dimensional function with 2 dimensional linear embedding}
+
+It is easy to test snythetic datasets, as we can evaluate these functions at any point, and immediately get a regret value.
+
+\paragraph{2D to 1D}: For this function, we use a simple Parabola which is embedded in a 2D space.
+\paragraph{5D to 1D}: For this function, we use a simple Parabola which is embedded in a 5D space.
+\paragraph{5D to 2D}: For this function, we use a simple Camelback function which is embedded in a 5D space.
+\paragraph{10D to 5D}: For this function, we use the 5D Rosenbrock functoin which is embedded in a 10D space.
+
+\subsection{Real Datasets}
+It is more difficult to test algorithms on real datasets, as we cannot quite test a metric such as regret, but rather have to use log likelihood or something similar to test how well our algorithm adapts on a test set, given a training set.
+
+\paragraph{SwissFEL dataset}
 \dots and some more 
 
 

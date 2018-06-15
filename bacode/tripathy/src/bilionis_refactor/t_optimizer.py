@@ -248,7 +248,7 @@ class TripathyOptimizer:
 
         # TODO: Iteration by one might be a lot. Potentiall make the stepsize a function of the maximum dimensions
 
-        BIC1 = -10000 # Don't make if -inf, otherwise division is not possible
+        BIC1 = -1e12 # Don't make if -inf, otherwise division is not possible
         for d in range(1, min(D, self.d_max + 1)):
 
             print("Testing for dimension: ", d)
@@ -280,7 +280,7 @@ class TripathyOptimizer:
 
             print("Dimension loss is: ", BIC1)
 
-            if (BIC1 - BIC0) / BIC0 < self.btol:
+            if abs( (BIC1 - BIC0) / BIC0) < self.btol:
                 print("Best found dimension is: ", d, BIC1, BIC0)
                 break
 

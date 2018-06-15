@@ -6,49 +6,61 @@
 \contentsline {chapter}{List of figures}{ix}{chapter*.4}
 \contentsline {chapter}{List of tables}{xi}{chapter*.5}
 \contentsline {chapter}{\numberline {1}Background}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}}{1}{section.1.1}
-\contentsline {section}{\numberline {1.2}Solvers}{1}{section.1.2}
-\contentsline {chapter}{\numberline {2}Existing Approaches}{3}{chapter.2}
-\contentsline {section}{\numberline {2.1}Using a projection matrix}{3}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Active learning of linear subspace}{3}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}High dimensional Gaussian bandits}{3}{subsection.2.1.2}
-\contentsline {subsection}{\numberline {2.1.3}Random embeddings (REMBO)}{4}{subsection.2.1.3}
-\contentsline {subsection}{\numberline {2.1.4}Applications to high-dimensional uncertainty propogation}{4}{subsection.2.1.4}
-\contentsline {subsubsection}{Optimize $W \in V_d(\mathbb {R}^D)$ and keep $\phi $ and $s_n^2$ fixed}{5}{section*.6}
-\contentsline {subsubsection}{Identification of active subspace dimension }{6}{section*.7}
-\contentsline {section}{\numberline {2.2}Exploiting additive structures within the function}{6}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Independent additive structures within the target function}{6}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}Ideas}{7}{subsection.2.2.2}
-\contentsline {section}{\numberline {2.3}Other approaches}{7}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}Elastic Gaussian Processes}{7}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}Bayesian Optimization using Dropout}{7}{subsection.2.3.2}
-\contentsline {subsection}{\numberline {2.3.3}Ideas}{7}{subsection.2.3.3}
-\contentsline {section}{\numberline {2.4}Datasets for benchmarking}{7}{section.2.4}
-\contentsline {chapter}{\numberline {3}Experiments}{11}{chapter.3}
-\contentsline {section}{\numberline {3.1}Biggest competitors}{11}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}REMBO}{11}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}Linear embeddings for Gaussian processes}{11}{subsection.3.1.2}
-\contentsline {subsection}{\numberline {3.1.3}Synthetic Datasets}{11}{subsection.3.1.3}
-\contentsline {paragraph}{5 dimensional function with 2 dimensional linear embedding}{11}{section*.9}
-\contentsline {paragraph}{2D to 1D}{11}{section*.10}
-\contentsline {paragraph}{5D to 1D}{11}{section*.11}
-\contentsline {paragraph}{5D to 2D}{11}{section*.12}
-\contentsline {paragraph}{10D to 5D}{11}{section*.13}
-\contentsline {subsection}{\numberline {3.1.4}Real Datasets}{12}{subsection.3.1.4}
-\contentsline {paragraph}{SwissFEL dataset}{12}{section*.14}
-\contentsline {chapter}{\numberline {4}Implementing methods}{13}{chapter.4}
-\contentsline {section}{\numberline {4.1}Difficulties when implementing models}{13}{section.4.1}
-\contentsline {section}{\numberline {4.2}Family of matrices}{14}{section.4.2}
-\contentsline {section}{\numberline {4.3}Methods from }{14}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}First subsection in the first section}{14}{subsection.4.3.1}
-\contentsline {chapter}{\numberline {5}Extensions}{15}{chapter.5}
-\contentsline {section}{\numberline {5.1}Finding a matrix when we apply a polynomial kernel onto the input first}{15}{section.5.1}
-\contentsline {section}{\numberline {5.2}Additive Stiefel projections - Our proposed improvement to existing methods}{15}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}What is it better than actively finding substructures}{16}{subsection.5.2.1}
-\contentsline {section}{\numberline {5.3}Random addition of REMBO}{17}{section.5.3}
-\contentsline {section}{\numberline {5.4}Additive variance reducing GP}{17}{section.5.4}
-\contentsline {section}{\numberline {5.5}BORING}{17}{section.5.5}
-\contentsline {subsubsection}{Why this algorithm?}{19}{section*.15}
-\contentsline {section}{\numberline {5.6}Why ours}{20}{section.5.6}
-\contentsline {chapter}{References}{21}{chapter*.16}
-\contentsline {chapter}{Appendix \numberline {A}How to install \LaTeX }{23}{Appendix.a.A}
+\contentsline {section}{\numberline {1.1}Bayesian Optimization in higher dimensions}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Gaussian Processes}{2}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Derivation of the Gaussian Process Formula}{2}{subsection.1.2.1}
+\contentsline {section}{\numberline {1.3}Acquisition Functions}{3}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Upper Confident Bound (UCB)}{3}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}Probability of Improvement (PI)}{4}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}Expected Improvement (EI)}{4}{subsection.1.3.3}
+\contentsline {section}{\numberline {1.4}Resources}{5}{section.1.4}
+\contentsline {chapter}{\numberline {2}Related Work}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}Projection matrix based algorithms}{7}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Active learning of linear subspace}{7}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}High dimensional Gaussian bandits}{8}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Random embeddings (REMBO)}{9}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Applications to high-dimensional uncertainty propogation}{9}{subsection.2.1.4}
+\contentsline {subsubsection}{Optimize $W \in V_d(\mathbb {R}^D)$ and keep $\phi $ and $s_n^2$ fixed}{10}{section*.6}
+\contentsline {subsubsection}{Identification of active subspace dimension }{12}{section*.7}
+\contentsline {section}{\numberline {2.2}Algorithms that exploit additive substructures}{12}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Independent additive structures within the target function}{12}{subsection.2.2.1}
+\contentsline {section}{\numberline {2.3}Further approaches}{12}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Elastic Gaussian Processes}{12}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Bayesian Optimization using Dropout}{12}{subsection.2.3.2}
+\contentsline {chapter}{\numberline {3}Fields of Improvement}{15}{chapter.3}
+\contentsline {section}{\numberline {3.1}Shortcomings of current methods}{15}{section.3.1}
+\contentsline {paragraph}{REMBO}{15}{section*.8}
+\contentsline {paragraph}{Active subgradients}{16}{section*.9}
+\contentsline {paragraph}{Tripathy}{16}{section*.10}
+\contentsline {section}{\numberline {3.2}Method of measuring improvements}{17}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Synthetic Datasets}{17}{subsection.3.2.1}
+\contentsline {paragraph}{5 dimensional function with 2 dimensional linear embedding}{17}{section*.11}
+\contentsline {paragraph}{2D to 1D}{17}{section*.12}
+\contentsline {paragraph}{5D to 1D}{17}{section*.13}
+\contentsline {paragraph}{5D to 2D}{17}{section*.14}
+\contentsline {paragraph}{10D to 5D}{17}{section*.15}
+\contentsline {subsection}{\numberline {3.2.2}Real Datasets}{17}{subsection.3.2.2}
+\contentsline {paragraph}{SwissFEL dataset}{17}{section*.16}
+\contentsline {chapter}{\numberline {4}Model Design and Extensions to the state of the art}{19}{chapter.4}
+\contentsline {section}{\numberline {4.1}The BORING Algorithm}{19}{section.4.1}
+\contentsline {section}{\numberline {4.2}Additive Stiefel projections - Our proposed improvement to existing methods}{21}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}What is it better than actively finding substructures}{22}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}Random addition of REMBO}{22}{section.4.3}
+\contentsline {section}{\numberline {4.4}Additive variance reducing GP}{23}{section.4.4}
+\contentsline {subsubsection}{Why this algorithm?}{23}{section*.17}
+\contentsline {section}{\numberline {4.5}Why ours}{23}{section.4.5}
+\contentsline {chapter}{\numberline {5}Evaluation}{25}{chapter.5}
+\contentsline {section}{\numberline {5.1}Evaluation Settings}{25}{section.5.1}
+\contentsline {section}{\numberline {5.2}Quantitative evaluation}{25}{section.5.2}
+\contentsline {section}{\numberline {5.3}Qualitative evaluation}{25}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Finding a matrix when we apply a polynomial kernel onto the input first}{25}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Finding a matrix when we apply a polynomial kernel onto the input first}{26}{subsection.5.3.2}
+\contentsline {section}{\numberline {5.4}Subspace identification}{26}{section.5.4}
+\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{27}{chapter.6}
+\contentsline {section}{\numberline {6.1}Summary}{27}{section.6.1}
+\contentsline {section}{\numberline {6.2}Future Work}{27}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Uniform benchmarking methods}{27}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}Uniform metric that defines when a BO algorithm performs well}{27}{subsection.6.2.2}
+\contentsline {chapter}{References}{29}{chapter*.18}
+\contentsline {chapter}{Appendix \numberline {A}}{31}{Appendix.a.A}
+\contentsline {section}{\numberline {A.1}Benchmarking functions}{31}{section.a.A.1}

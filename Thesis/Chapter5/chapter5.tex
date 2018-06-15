@@ -1,33 +1,94 @@
 %!TEX root = ../thesis.tex
 %*******************************************************************************
-%****************************** Third Chapter **********************************
+%****************************** Fourth Chapter **********************************
 %*******************************************************************************
-\chapter{Extensions}
+\chapter{Model Design and Extensions to the state of the art}
 
 % **************************** Define Graphics Path **************************
 \ifpdf
-    \graphicspath{{Chapter3/Figs/Raster/}{Chapter3/Figs/PDF/}{Chapter3/Figs/}}
+    \graphicspath{{Chapter4/Figs/Raster/}{Chapter4/Figs/PDF/}{Chapter4/Figs/}}
 \else
-    \graphicspath{{Chapter3/Figs/Vector/}{Chapter3/Figs/}}
+    \graphicspath{{Chapter4/Figs/Vector/}{Chapter4/Figs/}}
 \fi
 
-\section{Finding a matrix when we apply a polynomial kernel onto the input first}
-We want to analyse if the gpregression can identify the random matrix, if the input is first put through a polynomial kernel of degree 2. \\
+Given the fields of improvements in the above section, we now propose an algorithm which addresses the majority of the issues mentioned in the above section.
+We will first present that algorithm, and then points out, as to why each individual concern is addressed.
 
-More specifically, the problem looks as follows.
-We want to approximate the real function $ f $ through a gaussian process $ g $, with the following condition:
+\section{The BORING Algorithm}
 
-\def\B{
-\begin{bmatrix}
-    (x - x_0)^2 \\
-    (x - x_1)^2
-\end{bmatrix}}
+We propose the following algorithm, called BORING. \textbf{BORING} stands for \textbf{B}ayesian \textbf{O}ptimization using \textbf{R}EMBO and \textbf{I}de\textbf{N}tifyable subspace \textbf{G}eneration.
+
+The general idea of boring can be captured in one formula, where $f$ stands for the real function that we wish to approximate, and any subsequent function annotated by $g$ refers to a component of the right hand side, which approximates the function $f$.
+
+
 
 \begin{equation}
-f \left( W \B \right) \approx g \left( x \right)
-\end{equation} 
+f(x) \approx g_0(A x) + \sum_{i \in \mathbb{Z}^+}^{q} g_i( A^{\bot} x)_i )
+\label{eq:dimRedEquation}
+\end{equation}
 
-where $x_0, x_1$ are constants.
+where we get the nullspace $A^{\bot}$ of $A$ by taking any two random basis vectors, that are orthogonal to the first few columns of $A$.
+This then looks as the following:
+
+Assume we have the following orthogonal $A$. By definition, this matrix is in the stiefel manifold.
+Furthermore, this matrix projects any vector to the right of the matrix onto it's columnspace.
+The columnspace is described by the vectors $a_1$ and $a_2$.
+
+\begin{equation}
+A = 
+\begin{bmatrix}
+ \vdots & \vdots & & \vdots \\
+ a_1 & a_2 & ... & a_{d_e} \\
+ \vdots & \vdots & & \vdots
+\end{bmatrix}
+\label{eq:maximalEmbedding}
+\end{equation}
+
+Given that we choose a maximal lower dimensional embedding (maximising the log-likelihood of the embedding for the given points), some other axes may be disregarded.
+However, the axes that are disregarded may still carry information that can make search faster or more robust.
+
+To enable a trade-off between time and searchspace, we propose the following mechanism.
+
+%% TODO I think it's the rowspace.. not the columnspace!
+%% Potentially use this to generate these vectors: https://stackoverflow.com/questions/33658620/generating-two-orthogonal-vectors-that-are-orthogonal-to-a-particular-direction
+
+Assume we have found the maximal embedding \ref{eq:maximalEmbedding}.
+Then we have found the active subspace, which is characterizable through it's first few column vector $  a_1, a_2, ..., a_{d_e} $.
+However, as said before, we also want to address the subspace which is not addressed by the maximal embedding, which we will refer to \textit{passive subspace}.
+This passive subspace can be characterized by the set of vectors, that are all orthogonal to all other column vectors in $A$, i.e. the space orthogonal to the projection of $A$.
+
+As such, we define the entire span of the given vectorspace as:
+
+\begin{equation}
+S = 
+\begin{bmatrix}
+A & V
+\end{bmatrix}
+\label{eq:entireSubspace}
+\end{equation}
+
+where $V$ describes the matrix that is orthogonal to the columnspace of $A$.
+For this, $V$ consists of any basis vectors that are orthogonal to all other vectors in $A$.\\
+
+We can generate these vectors by taking a random vector, and applying gram schmidt.
+We repeat the above procedure if the norm of the resulting vector is smaller than a given threshold.
+ (One could also maybe use fourier, then add another fourier axis, and then go back again to have a nice basis?). \\
+ 
+ Now to the heart of the algorithm. 
+ We want to calculate $g_i$ and $f$ within that \ref{eq:dimRedEquation}, such that the maximum likelihood of the data we have accumulated so far.
+ Because the term can be written as a sum of expressions, we can maximize each summand individually, which will lead to maximizing the entire expression (after we have calculate the active subspace). \\
+ 
+ The following few steps are applied after a "burn-in" phase, in which we use REMBO to acquire new points (as this is an efficient form of random sampling).
+ We take $ \sqrt{d} $ as the dimensionality of the space $Y$ in which we search (heuristic!!).
+ 
+ \begin{enumerate}
+ \item Calculate the active subspace using the algorithm from 
+ \item Calculate an appropriate pair of vectors $v_1, \ldots, v_{n-{q}}$, where each vector is orthonormal to every other vector in $A$.
+ \item Maximize the GP for each individual expression of the space orthogonal to $A$ (as given by $V x$) individually.
+ \end{enumerate}
+ 
+ This fights the curse of dimensionality, as we can freely choose $q \geq d_e$ to set the complexity of the second term.
+ This, thus allows for smaller perturbations in the space orthogonal to $A$ to occur.
 
 \section{Additive Stiefel projections - Our proposed improvement to existing methods}
 We propose a novel method which is based on additive GPs, where we use different kinds of kernels.
@@ -110,78 +171,6 @@ Or do we assume that each such clique already is in a lower dimension.
 
 
 Besides fitting a set of test data well through the predicted mean function, we also wish to minimize the 
-
-\section{BORING}
-
-We propose the following algorithm, called BORING. \textbf{BORING} stands for \textbf{B}ayesian \textbf{O}ptimization using \textbf{R}EMBO and \textbf{I}de\textbf{N}tifyable subspace generation.
-
-\begin{equation}
-f(A x) + \sum_{i \in Z} G_i( A^{\bot} x)_i )
-\label{eq:dimRedEquation}
-\end{equation}
-
-where we get the nullspace $A^{\bot}$ of $A$ by taking any two random basis vectors, that are orthogonal to the first few columns of $A$.
-This then looks as the following:
-
-Assume we have the following orthogonal $A$. By definition, this matrix is in the stiefel manifold.
-Furthermore, this matrix projects any vector to the right of the matrix onto it's columnspace.
-The columnspace is described by the vectors $a_1$ and $a_2$.
-
-\begin{equation}
-A = 
-\begin{bmatrix}
- \vdots & \vdots & & \vdots \\
- a_1 & a_2 & ... & a_{d_e} \\
- \vdots & \vdots & & \vdots
-\end{bmatrix}
-\label{eq:maximalEmbedding}
-\end{equation}
-
-Given that we choose a maximal lower dimensional embedding (maximising the log-likelihood of the embedding for the given points), some other axes may be disregarded.
-However, the axes that are disregarded may still carry information that can make search faster or more robust.
-
-To enable a trade-off between time and searchspace, we propose the following mechanism.
-
-%% TODO I think it's the rowspace.. not the columnspace!
-%% Potentially use this to generate these vectors: https://stackoverflow.com/questions/33658620/generating-two-orthogonal-vectors-that-are-orthogonal-to-a-particular-direction
-
-Assume we have found the maximal embedding \ref{eq:maximalEmbedding}.
-Then we have found the active subspace, which is characterizable through it's first few column vector $  a_1, a_2, ..., a_{d_e} $.
-However, as said before, we also want to address the subspace which is not addressed by the maximal embedding, which we will refer to \textit{passive subspace}.
-This passive subspace can be characterized by the set of vectors, that are all orthogonal to all other column vectors in $A$, i.e. the space orthogonal to the projection of $A$.
-
-As such, we define the entire span of the given vectorspace as:
-
-\begin{equation}
-S = 
-\begin{bmatrix}
-A & V
-\end{bmatrix}
-\label{eq:entireSubspace}
-\end{equation}
-
-where $V$ describes the matrix that is orthogonal to the columnspace of $A$.
-For this, $V$ consists of any basis vectors that are orthogonal to all other vectors in $A$.\\
-
-We can generate these vectors by taking a random vector, and applying gram schmidt.
-We repeat the above procedure if the norm of the resulting vector is smaller than a given threshold.
- (One could also maybe use fourier, then add another fourier axis, and then go back again to have a nice basis?). \\
- 
- Now to the heart of the algorithm. 
- We want to calculate $g_i$ and $f$ within that \ref{eq:dimRedEquation}, such that the maximum likelihood of the data we have accumulated so far.
- Because the term can be written as a sum of expressions, we can maximize each summand individually, which will lead to maximizing the entire expression (after we have calculate the active subspace). \\
- 
- The following few steps are applied after a "burn-in" phase, in which we use REMBO to acquire new points (as this is an efficient form of random sampling).
- We take $ \sqrt{d} $ as the dimensionality of the space $Y$ in which we search (heuristic!!).
- 
- \begin{enumerate}
- \item Calculate the active subspace using the algorithm from 
- \item Calculate an appropriate pair of vectors $v_1, \ldots, v_{n-{q}}$, where each vector is orthonormal to every other vector in $A$.
- \item Maximize the GP for each individual expression of the space orthogonal to $A$ (as given by $V x$) individually.
- \end{enumerate}
- 
- This fights the curse of dimensionality, as we can freely choose $q \geq d_e$ to set the complexity of the second term.
- This, thus allows for smaller perturbations in the space orthogonal to $A$ to occur.
 
 \subsubsection{Why this algorithm?}
 
