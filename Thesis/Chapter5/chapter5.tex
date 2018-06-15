@@ -37,19 +37,21 @@ We will no proceed with describing the algorithm in more detail.
 \subsection{Algorithm Description}
 
 \begin{algorithm}
-\caption{BORING Alg. 1}
+\caption{BORING Alg. 1 - Bayesian Optimization using BORING}
 
 \begin{algorithmic} 
 \STATE $X \leftarrow \emptyset$
 \STATE $Y \leftarrow \emptyset$
 
-\WHILE{budget not depleted}
-\STATE $ q(R) \leftarrow \text{LAPLACEAPPROX}( p(R | X, Y, \kappa, \mu) ) $
-\STATE $ q(f) \leftarrow  APPROXMARGINAL( p(f | R), q(R)) $
-\STATE $ x_* \leftarrow OPTIMIZEUTILITY( q(f), q(R) )$
-\STATE $ y \leftarrow OBSERVE( f( x_* ) ) $
-\STATE $ X \leftarrow [X; x_*] $
-\STATE $ Y \leftarrow[Y; y_*] $
+\WHILE{we can choose a next point}
+\STATE $A, d \leftarrow $ Calculate active subspace projection using Algorithm 2.
+\STATE $A^{\bot} \leftarrow $ Generate passive subspace projection using Algorithm 3.
+\STATE TODO: CHECK DIMENSIONS IN THE CODE!!! (If concat is in the correct dimension!)
+\STATE $Q \leftarrow $ colwiseConcat( $[A, A^{\bot}]$ ) 
+\STATE $gp \leftarrow GP( $dot$( Q^T, X), Y)$
+\STATE kernel $\leftarrow$ activeKernel + $\sum_i^{q}$ passiveKernel$_i$
+\STATE $x_* \leftarrow $ argmax$_x$ acquisitionFunction$(dot(Q^{\bot}, x) )$
+\STATE Add $x_*$ to $X$ and $ f(x_*)$ to $Y$.
 \ENDWHILE
 
 \RETURN $q(R), q(f)$
@@ -214,28 +216,6 @@ We separate the algorithm into two parts:
 
 1.) Is the model capable of learning this structure
 2.) How could training result in this structure, and are the chances big enough?
-
-
-\section{Random addition of REMBO}
-Another model we potentially propose is again based on additive GP's, where we use again a mixture of different kernels.
-
-We model the function by the following term:
-
-% f(x) \sim g_1(A_1 x_1) +g_1(A_1 x_1) + g_1(A_1 x_1) + g_1(A_1 x_1) + \sum_{i} g_i(A_i x_i) + \ldots
-
-\begin{equation}
-f(x) \sim \sum_i g_i^1(A_i^1 x) + \sum_i g_i^2(A_i^2 x) + \sum_i g_i^3(A_i^3 x) + \ldots + \sum_i g_i^{d_{max}}(A_i^{d_{max}} x)
-\end{equation}
-
-The idea is that this model can capture the majority of all the possible substructures of a matrix up to a certain dimension $d_{max}$.
-We can randomly take and leave behind certain terms from within the above expression.
-We define this number to be $\epsilon$, where we leave out one term with probability $\epsilon$.
-We can then train the above substructure easily, as the random projection matrices may be fixed.
-
-----
-Downsides - this is basically "a random version to find additive substructures within the subspace X".
-
-In minization, we can minize both to best fit the predicted mean (on a test set), and the predicted variance over all values.
 
 --> Possible extension to the Projection pursuit regression?
 

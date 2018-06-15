@@ -47,10 +47,9 @@
 \contentsline {subsection}{\numberline {4.1.2}Algorithm Properties}{21}{subsection.4.1.2}
 \contentsline {section}{\numberline {4.2}Additive Stiefel projections - Our proposed improvement to existing methods}{22}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}What is it better than actively finding substructures}{23}{subsection.4.2.1}
-\contentsline {section}{\numberline {4.3}Random addition of REMBO}{24}{section.4.3}
-\contentsline {section}{\numberline {4.4}Additive variance reducing GP}{24}{section.4.4}
-\contentsline {subsubsection}{Why this algorithm?}{25}{section*.17}
-\contentsline {section}{\numberline {4.5}Why ours}{25}{section.4.5}
+\contentsline {section}{\numberline {4.3}Additive variance reducing GP}{24}{section.4.3}
+\contentsline {subsubsection}{Why this algorithm?}{24}{section*.17}
+\contentsline {section}{\numberline {4.4}Why ours}{25}{section.4.4}
 \contentsline {chapter}{\numberline {5}Evaluation}{27}{chapter.5}
 \contentsline {section}{\numberline {5.1}Evaluation Settings}{27}{section.5.1}
 \contentsline {section}{\numberline {5.2}Quantitative evaluation}{27}{section.5.2}
