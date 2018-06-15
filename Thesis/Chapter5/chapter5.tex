@@ -20,19 +20,98 @@ We propose the following algorithm, called BORING. \textbf{BORING} stands for \t
 
 The general idea of boring can be captured in one formula, where $f$ stands for the real function that we wish to approximate, and any subsequent function annotated by $g$ refers to a component of the right hand side, which approximates the function $f$.
 
-
-
 \begin{equation}
 f(x) \approx g_0(A x) + \sum_{i \in \mathbb{Z}^+}^{q} g_i( A^{\bot} x)_i )
 \label{eq:dimRedEquation}
-\end{equation}
+\end{equation} \\
 
-where we get the nullspace $A^{\bot}$ of $A$ by taking any two random basis vectors, that are orthogonal to the first few columns of $A$.
-This then looks as the following:
+Where the following variables have the following meaning
+\begin{itemize}
+\item $A$ is the active subspace projection (an element of the stiefel manifold) learned through our algorithm, using Algorithm 1
+\item $A^{\bot}$ is an matrix whose subspace is orthonormal to the projection of $A$.
+We generate $A^{\bot}$ using Algorithm 2.
+\end{itemize}
 
-Assume we have the following orthogonal $A$. By definition, this matrix is in the stiefel manifold.
-Furthermore, this matrix projects any vector to the right of the matrix onto it's columnspace.
-The columnspace is described by the vectors $a_1$ and $a_2$.
+We will no proceed with describing the algorithm in more detail.
+
+\subsection{Algorithm Description}
+
+\begin{algorithm}
+\caption{BORING Alg. 1}
+
+\begin{algorithmic} 
+\STATE $X \leftarrow \emptyset$
+\STATE $Y \leftarrow \emptyset$
+
+\WHILE{budget not depleted}
+\STATE $ q(R) \leftarrow \text{LAPLACEAPPROX}( p(R | X, Y, \kappa, \mu) ) $
+\STATE $ q(f) \leftarrow  APPROXMARGINAL( p(f | R), q(R)) $
+\STATE $ x_* \leftarrow OPTIMIZEUTILITY( q(f), q(R) )$
+\STATE $ y \leftarrow OBSERVE( f( x_* ) ) $
+\STATE $ X \leftarrow [X; x_*] $
+\STATE $ Y \leftarrow[Y; y_*] $
+\ENDWHILE
+
+\RETURN $q(R), q(f)$
+\end{algorithmic}
+
+\end{algorithm}
+
+We find the active projection matrix using the following algorithm, which is identical to the procedure described in "CITE TRIPATHY".
+
+\begin{algorithm}
+\caption{BORING Alg. 2} 
+
+\begin{algorithmic} 
+\STATE $X \leftarrow \emptyset$
+\STATE $Y \leftarrow \emptyset$
+
+\WHILE{budget not depleted}
+\STATE $ q(R) \leftarrow \text{LAPLACEAPPROX}( p(R | X, Y, \kappa, \mu) ) $
+\STATE $ q(f) \leftarrow  APPROXMARGINAL( p(f | R), q(R)) $
+\STATE $ x_* \leftarrow OPTIMIZEUTILITY( q(f), q(R) )$
+\STATE $ y \leftarrow OBSERVE( f( x_* ) ) $
+\STATE $ X \leftarrow [X; x_*] $
+\STATE $ Y \leftarrow[Y; y_*] $
+\ENDWHILE
+
+\RETURN $q(R), q(f)$
+\end{algorithmic}
+\end{algorithm}
+
+We then generate a matrix $ A^{\bot} $ by using the following procedure.
+
+\begin{algorithm}[H]
+\caption{BORING Alg. 3 - generate orthogonal matrix to A(A, n) }
+
+\begin{algorithmic} 
+\REQUIRE $A$ a matrix to which we want to create $A^{\bot}$ for; $n$, the number of vectors in $A^{\bot}$.
+
+\STATE normedA $ \leftarrow $ normalize each column of $A$
+\STATE $Q \leftarrow$ emptyMatrix()
+\COMMENT{ The final concatenated $Q$ will be $A^{\bot}$. }
+\FOR{i = 1,...,n}
+\STATE $i \leftarrow 0$ 
+\WHILE{i < 50}
+\STATE i++
+\STATE $q_i \leftarrow $ random vector with norm 1
+\STATE newBasis = apply gram schmidt single vector( $[A, Q], q_i$ ) 
+
+\IF{ dot(normed$A^T$, newBasis) $\approx \mathbf{0}$ and $|$ newBasis $|$ $> 1e-6$}
+\STATE $Q \leftarrow$ colwiseConcatenate( $(Q, $ newBasis)
+\STATE break
+\ENDIF
+\ENDWHILE                
+\ENDFOR
+
+\RETURN $Q$
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\subsection{Algorithm Properties}
+
 
 \begin{equation}
 A = 

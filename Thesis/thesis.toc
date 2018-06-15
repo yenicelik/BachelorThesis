@@ -43,24 +43,26 @@
 \contentsline {paragraph}{SwissFEL dataset}{17}{section*.16}
 \contentsline {chapter}{\numberline {4}Model Design and Extensions to the state of the art}{19}{chapter.4}
 \contentsline {section}{\numberline {4.1}The BORING Algorithm}{19}{section.4.1}
-\contentsline {section}{\numberline {4.2}Additive Stiefel projections - Our proposed improvement to existing methods}{21}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}What is it better than actively finding substructures}{22}{subsection.4.2.1}
-\contentsline {section}{\numberline {4.3}Random addition of REMBO}{22}{section.4.3}
-\contentsline {section}{\numberline {4.4}Additive variance reducing GP}{23}{section.4.4}
-\contentsline {subsubsection}{Why this algorithm?}{23}{section*.17}
-\contentsline {section}{\numberline {4.5}Why ours}{23}{section.4.5}
-\contentsline {chapter}{\numberline {5}Evaluation}{25}{chapter.5}
-\contentsline {section}{\numberline {5.1}Evaluation Settings}{25}{section.5.1}
-\contentsline {section}{\numberline {5.2}Quantitative evaluation}{25}{section.5.2}
-\contentsline {section}{\numberline {5.3}Qualitative evaluation}{25}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Finding a matrix when we apply a polynomial kernel onto the input first}{25}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Finding a matrix when we apply a polynomial kernel onto the input first}{26}{subsection.5.3.2}
-\contentsline {section}{\numberline {5.4}Subspace identification}{26}{section.5.4}
-\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{27}{chapter.6}
-\contentsline {section}{\numberline {6.1}Summary}{27}{section.6.1}
-\contentsline {section}{\numberline {6.2}Future Work}{27}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}Uniform benchmarking methods}{27}{subsection.6.2.1}
-\contentsline {subsection}{\numberline {6.2.2}Uniform metric that defines when a BO algorithm performs well}{27}{subsection.6.2.2}
-\contentsline {chapter}{References}{29}{chapter*.18}
-\contentsline {chapter}{Appendix \numberline {A}}{31}{Appendix.a.A}
-\contentsline {section}{\numberline {A.1}Benchmarking functions}{31}{section.a.A.1}
+\contentsline {subsection}{\numberline {4.1.1}Algorithm Description}{20}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Algorithm Properties}{21}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}Additive Stiefel projections - Our proposed improvement to existing methods}{22}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}What is it better than actively finding substructures}{23}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}Random addition of REMBO}{24}{section.4.3}
+\contentsline {section}{\numberline {4.4}Additive variance reducing GP}{24}{section.4.4}
+\contentsline {subsubsection}{Why this algorithm?}{25}{section*.17}
+\contentsline {section}{\numberline {4.5}Why ours}{25}{section.4.5}
+\contentsline {chapter}{\numberline {5}Evaluation}{27}{chapter.5}
+\contentsline {section}{\numberline {5.1}Evaluation Settings}{27}{section.5.1}
+\contentsline {section}{\numberline {5.2}Quantitative evaluation}{27}{section.5.2}
+\contentsline {section}{\numberline {5.3}Qualitative evaluation}{27}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Finding a matrix when we apply a polynomial kernel onto the input first}{27}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Finding a matrix when we apply a polynomial kernel onto the input first}{28}{subsection.5.3.2}
+\contentsline {section}{\numberline {5.4}Subspace identification}{28}{section.5.4}
+\contentsline {chapter}{\numberline {6}Conclusion and Future Work}{29}{chapter.6}
+\contentsline {section}{\numberline {6.1}Summary}{29}{section.6.1}
+\contentsline {section}{\numberline {6.2}Future Work}{29}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Uniform benchmarking methods}{29}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}Uniform metric that defines when a BO algorithm performs well}{29}{subsection.6.2.2}
+\contentsline {chapter}{References}{31}{chapter*.18}
+\contentsline {chapter}{Appendix \numberline {A}}{33}{Appendix.a.A}
+\contentsline {section}{\numberline {A.1}Benchmarking functions}{33}{section.a.A.1}
