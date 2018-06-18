@@ -100,6 +100,8 @@ elif platform == "darwin":
 config['restict_cores'] = True
 config['max_cores'] = 16
 
+config['visualize_vanilla_path'] = config['basepath'] + "visualize_vanilla/"
+
 
 ### DATASET SPECIFIC CONFIGURATIONS
 config['swissfel_datapath'] = config['basepath'] + "data/swissfel/evaluations.hdf5"

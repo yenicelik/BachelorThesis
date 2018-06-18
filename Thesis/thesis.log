@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  15 JUN 2018 15:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  18 JUN 2018 15:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1397,8 +1397,7 @@ Package: translator 2010/06/12 ver 1.10
 uage-mappings.tex)))) (./thesis-info.tex) (./thesis.aux
 (./Proposal/proposal.aux) (./Abstract/abstract.aux) (./Chapter1/chapter1.aux)
 (./Chapter2/chapter2.aux) (./Chapter4/chapter4.aux) (./Chapter5/chapter5.aux)
-(./Chapter6/chapter6.aux) (./Chapter7/chapter7.aux) (./Appendix1/appendix1.aux)
-)
+(./Chapter6/chapter6.aux) (./Appendix1/appendix1.aux))
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 110.
@@ -1416,7 +1415,8 @@ LaTeX Font Info:    ... okay on input line 110.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 110.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 110.
 
- (/usr/local/texlive/2017/texmf-dist/tex/latex/base/ts1cmr.fd
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 110.
@@ -1587,7 +1587,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 114.
 \PHD@crest=\box56
 
-<Figs/University_Crest.pdf, id=213, 59.22125pt x 69.25874pt>
+<Figs/University_Crest.pdf, id=192, 59.22125pt x 69.25874pt>
 File: Figs/University_Crest.pdf Graphic file (type pdf)
 
 <use Figs/University_Crest.pdf>
@@ -1657,7 +1657,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 Package natbib Warning: Citation `Wang' on page iii undefined on input line 68.
 
 
-<Figs/./../src/Embedding_optimization.png, id=237, 636.3775pt x 241.90375pt>
+<Figs/./../src/Embedding_optimization.png, id=217, 636.3775pt x 241.90375pt>
 File: Figs/./../src/Embedding_optimization.png Graphic file (type png)
 
 <use Figs/./../src/Embedding_optimization.png>
@@ -1710,6 +1710,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 18--20
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 21--23
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--27
 
  []
 
@@ -1863,38 +1868,28 @@ Underfull \hbox (badness 10000) in paragraph at lines 53--54
 
  []
 
-) [28]
-\openout2 = `Chapter7/chapter7.aux'.
-
- (./Chapter7/chapter7.tex
-Chapter 6.
-) [29
+) [28] (./thesis.bbl) [29
 
 
-
-] [30
-
-
-] (./thesis.bbl) [31
 
 ]
 \openout2 = `Appendix1/appendix1.aux'.
 
- (./Appendix1/appendix1.tex [32
+ (./Appendix1/appendix1.tex [30
 
 
 ]
 Appendix A.
-[33]
+[31]
 
-Package natbib Warning: Citation `OptimizationTestFunctions' on page 34 undefin
+Package natbib Warning: Citation `OptimizationTestFunctions' on page 32 undefin
 ed on input line 35.
 
 
-Package natbib Warning: Citation `Jamil2013' on page 34 undefined on input line
+Package natbib Warning: Citation `Jamil2013' on page 32 undefined on input line
  36.
 
-) [34] (./thesis.ind)
+) [32] (./thesis.ind)
 
 Package natbib Warning: There were undefined citations.
 
@@ -1902,18 +1897,18 @@ Package atveryend Info: Empty hook `BeforeClearDocument' on input line 197.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 197.
 (./thesis.aux (./Proposal/proposal.aux) (./Abstract/abstract.aux)
 (./Chapter1/chapter1.aux) (./Chapter2/chapter2.aux) (./Chapter4/chapter4.aux)
-(./Chapter5/chapter5.aux) (./Chapter6/chapter6.aux) (./Chapter7/chapter7.aux)
-(./Appendix1/appendix1.aux))
+(./Chapter5/chapter5.aux) (./Chapter6/chapter6.aux) (./Appendix1/appendix1.aux)
+)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 197.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 197.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 1A677D9BD63B7F53710B6F1F7AFE5815;12062.
+(rerunfilecheck)             Checksum: 4ADBF086A44C610CCF4FBFB2136E1388;10944.
  ) 
 Here is how much of TeX's memory you used:
- 26697 strings out of 492995
- 465392 string characters out of 6132704
- 546276 words of memory out of 5000000
- 29385 multiletter control sequences out of 15000+600000
+ 26676 strings out of 492995
+ 465073 string characters out of 6132704
+ 544721 words of memory out of 5000000
+ 29379 multiletter control sequences out of 15000+600000
  63786 words of font info for 187 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,17n,92p,10383b,892s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1929,10 +1924,10 @@ st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
 mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on thesis.pdf (46 pages, 268703 bytes).
+Output written on thesis.pdf (44 pages, 267571 bytes).
 PDF statistics:
- 789 PDF objects out of 1000 (max. 8388607)
- 708 compressed objects within 8 object streams
- 265 named destinations out of 1000 (max. 500000)
- 31147 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 753 PDF objects out of 1000 (max. 8388607)
+ 675 compressed objects within 7 object streams
+ 258 named destinations out of 1000 (max. 500000)
+ 31107 words of extra memory for PDF output out of 35830 (max. 10000000)
 

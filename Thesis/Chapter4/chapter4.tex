@@ -73,11 +73,18 @@ Besides that, we offer the following possibilities to check how well our model d
 \paragraph{5 dimensional function with 2 dimensional linear embedding}
 
 It is easy to test snythetic datasets, as we can evaluate these functions at any point, and immediately get a regret value.
+We will have one test function for different scenarios.
 
 \paragraph{2D to 1D}: For this function, we use a simple Parabola which is embedded in a 2D space.
-\paragraph{5D to 1D}: For this function, we use a simple Parabola which is embedded in a 5D space.
+This function is supposed to check that the complexity of the model does not hinder simpler possibilities, i.e. that the complexity does not sacrifice finding simple models.
 \paragraph{5D to 2D}: For this function, we use a simple Camelback function which is embedded in a 5D space.
+This checks if simple models can be found within certain, higher dimensional spaces.
+\paragraph{5D to 2D}: For this function, we use a simple Camelback function which is enclosed in a sinusoidal function (with decreasing amplitude), which is embedded in a 5D space.
+This is the most important dataset, as it measures if small perturbations are covered by the more complicated model (our proposed model).
 \paragraph{10D to 5D}: For this function, we use the 5D Rosenbrock functoin which is embedded in a 10D space.
+To check how the algorithms cope with higher dimensions.
+In additional to the Rosenbrock function, again, we add a decreasing sinusoidal, such that small perturbations in the data exist.
+This checks if our model is able to expand to higher dimensions.
 
 \subsection{Real Datasets}
 It is more difficult to test algorithms on real datasets, as we cannot quite test a metric such as regret, but rather have to use log likelihood or something similar to test how well our algorithm adapts on a test set, given a training set.
