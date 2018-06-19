@@ -63,7 +63,7 @@ class PredictRembo(BasePrediction):
 class PredictStiefelSimple(BasePrediction):
 
     def __init__(self, domain):
-        self.algo = TripathyGP(domain)
+        self.algo = TripathyGP(domain, calculate_always=True)
         self.data_added = False
 
     def train(self, X_train, Y_train):
@@ -83,7 +83,7 @@ class PredictStiefelSimple(BasePrediction):
 class PredictBoring(BasePrediction):
 
     def __init__(self, domain):
-        self.algo = BoringGP(domain)
+        self.algo = BoringGP(domain, always_calculate=True)
         self.data_added = False
 
     def train(self, X_train, Y_train):
@@ -108,9 +108,11 @@ def train_and_predict_all_models(X_train, Y_train, X_test, Y_test, domain):
     rembo_yhat = rembo.predict(X_test)
 
     # Vanilla Tripathy
-    tripathy = PredictStiefelSimple(domain)
-    tripathy.train(X_train, Y_train)
-    tripathy_yhat = tripathy.predict(X_test)
+    # tripathy = PredictStiefelSimple(domain)
+    # tripathy.train(X_train, Y_train)
+    # tripathy_yhat = tripathy.predict(X_test)
+
+    tripathy_yhat = None
 
     # Boring
     boring = PredictBoring(domain)

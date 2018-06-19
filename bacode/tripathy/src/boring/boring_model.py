@@ -63,7 +63,7 @@ class BoringGP(ConfidenceBoundModel):
         active_kernel = RBF(
             input_dim=active_dimensions,
             variance=2.,
-            lengthscale=0.5,
+            lengthscale=1.5, # 0.5,
             ARD=True,
             active_dims=np.arange(active_dimensions),
             name="active_subspace_kernel"
@@ -78,7 +78,7 @@ class BoringGP(ConfidenceBoundModel):
                 cur_kernel = RBF(
                     input_dim=1,
                     variance=2.,
-                    lengthscale=0.5,
+                    lengthscale=0.5, # 0.5,
                     ARD=True,
                     active_dims=[active_dimensions + i],
                     name="passive_subspace_kernel_dim_" + str(i)
@@ -109,7 +109,7 @@ class BoringGP(ConfidenceBoundModel):
         self.create_gp()
 
     # From here on, it's the usual functions
-    def __init__(self, domain):
+    def __init__(self, domain, always_calculate=False):
         super(BoringGP, self).__init__(domain)
 
         # passive projection matrix still needs to be created first!
@@ -146,6 +146,7 @@ class BoringGP(ConfidenceBoundModel):
         self._Y = np.empty(shape=(0, 1))
         self._beta = 2
         self._bias = self.config.bias
+        self.always_calculate = always_calculate
 
     @property
     def beta(self):
@@ -179,42 +180,6 @@ class BoringGP(ConfidenceBoundModel):
         y = np.atleast_2d(y)
 
         self.set_data(x, y, append=True)
-
-        # Do our optimization now
-        if self.burn_in_samples == self.i: # (self.i >= self.burn_in_samples and self.i % self.recalculate_projection_every == 1) or
-            import time
-            start_time = time.time()
-            print("Adding data: ", self.i)
-
-            optimizer = TripathyOptimizer()
-
-            self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(self.datasaver_gp.X.copy(),
-                                                                                        self.datasaver_gp.Y.copy())
-
-            passive_dimensions = max(self.domain.d - d, 0)
-
-            # Generate A^{bot} if there's more dimensions
-            if passive_dimensions > 0:
-                self.passive_projection_matrix = generate_orthogonal_matrix_to_A(self.active_projection_matrix,
-                                                                                 passive_dimensions)
-            else:
-                self.passive_projection_matrix = None
-
-            # Create Q by concatenateing the active and passive projections
-            if passive_dimensions > 0:
-                self.Q = np.concatenate((self.active_projection_matrix, self.passive_projection_matrix),
-                                        axis=1)
-            else:
-                self.Q = self.active_projection_matrix
-
-            assert not np.isnan(self.Q).all(), ("The projection matrix contains nan's!", self.Q)
-
-            self.create_gp_and_kernels(active_dimensions=d, passive_dimensions=passive_dimensions) # TODO: after re-creating the kernel, do we need to call any calculation parameter?
-
-            print("How many datapoints do we have in the kernel?", self.gp.X.shape)
-            print("How many datapoints do we have in the kernel?", self.datasaver_gp.X.shape)
-
-            print("--- %s seconds ---" % (time.time() - start_time))
 
     # TODO: check if this is called anyhow!
     def optimize(self):
@@ -292,12 +257,13 @@ class BoringGP(ConfidenceBoundModel):
 
         assert not np.isnan(x).all(), ("X is nan before projection!", x)
 
-        if self.Q is not None:
-            x = np.dot(x, self.Q)
+        # TODO: the following is applied multiple times!
+        # if self.Q is not None:
+        #     x = np.dot(x, self.Q)
 
         assert not np.isnan(x).all(), ("X is nan at some point!", x)
 
-        if self.config.calculate_gradients: # TODO: there is this nan bug when I use my _raw_predict!
+        if self.config.calculate_gradients and False: # TODO: there is this nan bug when I use my _raw_predict!
             mean, var = self.gp.predict_noiseless(x)
         else:
             mean, var = self._raw_predict(x)
@@ -347,11 +313,49 @@ class BoringGP(ConfidenceBoundModel):
         X = self.datasaver_gp.X
         Y = self.datasaver_gp.Y
 
-        # TODO: is it =, >= or what?
-        if self.i > self.burn_in_samples:
-            assert self.Q is not None, "After the burning in, self.Q is still None!"
+        # Do our optimization now
+        if self.burn_in_samples == self.i or self.always_calculate: # (self.i >= self.burn_in_samples and self.i % self.recalculate_projection_every == 1) or
+            import time
+            start_time = time.time()
+            print("Adding data: ", self.i)
 
-        if self.i <= self.burn_in_samples or self.Q is None:
+            optimizer = TripathyOptimizer()
+
+            self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(X, Y)
+
+            passive_dimensions = max(self.domain.d - d, 0)
+            # passive_dimensions = 0 # TODO: take out this part!
+
+            # Generate A^{bot} if there's more dimensions
+            if passive_dimensions > 0:
+                self.passive_projection_matrix = generate_orthogonal_matrix_to_A(self.active_projection_matrix,
+                                                                                 passive_dimensions)
+            else:
+                self.passive_projection_matrix = None
+
+            # Create Q by concatenateing the active and passive projections
+            if passive_dimensions > 0:
+                self.Q = np.concatenate((self.active_projection_matrix, self.passive_projection_matrix),
+                                        axis=1)
+            else:
+                self.Q = self.active_projection_matrix
+
+            assert not np.isnan(self.Q).all(), ("The projection matrix contains nan's!", self.Q)
+
+            self.create_gp_and_kernels(active_dimensions=d, passive_dimensions=passive_dimensions) # TODO: after re-creating the kernel, do we need to call any calculation parameter?
+
+            print("Projection matrix is: ", self.Q.shape)
+            print("Dimensions found are: ", d)
+            print("Active projection matrix is ", self.active_projection_matrix.shape)
+            print("How many datapoints do we have in the kernel?", self.gp.X.shape)
+            print("How many datapoints do we have in the kernel?", self.datasaver_gp.X.shape)
+
+            print("--- %s seconds ---" % (time.time() - start_time))
+
+        # if self.i > self.burn_in_samples:
+        #     assert self.Q is not None, "After the burning in, self.Q is still None!"
+
+        if (self.i <= self.burn_in_samples or self.Q is None) and (not self.always_calculate):
             self.gp.set_XY(X, Y)
         else:
             Z = np.dot(X, self.Q)

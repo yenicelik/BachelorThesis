@@ -72,7 +72,7 @@ class TripathyGP(ConfidenceBoundModel):
         self.set_new_kernel(d, W, variance, lengthscale)
         self.set_new_gp(noise_var)
 
-    def __init__(self, domain):
+    def __init__(self, domain, calculate_always=False):
         super(TripathyGP, self).__init__(domain)
 
         self.optimizer = TripathyOptimizer()
@@ -89,6 +89,7 @@ class TripathyGP(ConfidenceBoundModel):
         self._Y = np.empty(shape=(0,1))
         self._beta = 2
         self._bias = self.config.bias
+        self.calculate_always = calculate_always
 
     @property
     def beta(self):
@@ -230,7 +231,7 @@ class TripathyGP(ConfidenceBoundModel):
             Y = np.concatenate((self.gp.Y, Y))
 
         # Do our optimization now
-        if self.i % 50 == 49:
+        if self.i % 50 == 49 or self.calculate_always:
             import time
             start_time = time.time()
             print("Adding data: ", self.i)

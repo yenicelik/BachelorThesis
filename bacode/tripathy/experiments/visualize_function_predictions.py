@@ -44,11 +44,11 @@ def visualize_2d_to_1d():
     # Get the predicted datasets
     rembo_Yhat, tripathy_Yhat, boring_yhat = train_and_predict_all_models(X_train, Y_train, X_test, Y_test, function_instance.domain)
 
-    print("Predicted Y is: ", rembo_Yhat.shape, tripathy_Yhat.shape, boring_yhat.shape)
+    # print("Predicted Y is: ", rembo_Yhat.shape, tripathy_Yhat.shape, boring_yhat.shape)
 
     # do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_rembo", X_test, Y_real, rembo_Yhat)
-    do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_tripathy", X_test, Y_real, tripathy_Yhat)
-    # do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_boring", X_test, Y_real, boring_yhat)
+    # do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_tripathy", X_test, Y_real, tripathy_Yhat)
+    do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_boring", X_test, Y_real, boring_yhat)
 
 def visualize_5d_to_2d_plain():
     function_instance = CamelbackEmbedded5D()
