@@ -26,7 +26,7 @@ class TripathyGPConfig(ModelConfig):
 
     """
     # kernels = ConfigField([('GPy.kern.RBF', {'variance': 2., 'lengthscale': 0.2 , 'ARD': True})])
-    noise_var = ConfigField(0.1)
+    # noise_var = ConfigField(0.1)
     calculate_gradients = ConfigField(True, comment='Enable/Disable computation of gradient on each update.')
     optimize_bias = ConfigField(False)
     optimize_var = ConfigField(False)

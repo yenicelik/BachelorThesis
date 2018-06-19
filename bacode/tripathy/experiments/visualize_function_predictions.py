@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 
 # TODO: the following does not work for anything that's not integer!
 from bacode.tripathy.experiments.utils import do_plotting, do_plotting_real_vs_gaussian, generate_train_test_data
-from bacode.tripathy.experiments.predictions import PredictRembo, train_and_predict_all_models
+from bacode.tripathy.experiments.predictions import PredictRembo, PredictStiefelSimple, train_and_predict_all_models
 from febo.environment.benchmarks.functions import ParabolaEmbedded2D, CamelbackEmbedded5D, DecreasingSinusoidalEmbedded5D, RosenbrockEmbedded10D
 
 # Generate the intervals at which we're visualizing each individual function (between the intervals of -1 and 1
@@ -42,11 +42,13 @@ def visualize_2d_to_1d():
     Y_real = function_instance.f(X_test.T)
 
     # Get the predicted datasets
-    Y_hat_rembo = train_and_predict_all_models(X_train, Y_train, X_test, Y_test, function_instance.domain)
+    rembo_Yhat, tripathy_Yhat, boring_yhat = train_and_predict_all_models(X_train, Y_train, X_test, Y_test, function_instance.domain)
 
-    print("Predicted Y is: ", Y_hat_rembo.shape)
+    print("Predicted Y is: ", rembo_Yhat.shape, tripathy_Yhat.shape, boring_yhat.shape)
 
-    do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d", X_test, Y_real, Y_hat_rembo)
+    # do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_rembo", X_test, Y_real, rembo_Yhat)
+    do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_tripathy", X_test, Y_real, tripathy_Yhat)
+    # do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_boring", X_test, Y_real, boring_yhat)
 
 def visualize_5d_to_2d_plain():
     function_instance = CamelbackEmbedded5D()

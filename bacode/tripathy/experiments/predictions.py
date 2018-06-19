@@ -8,6 +8,8 @@
 :return:
 """
 from bacode.tripathy.src.rembo.rembo_algorithm import RemboAlgorithm
+from bacode.tripathy.src.boring.boring_algorithm import BoringGP
+from bacode.tripathy.src.tripathy__ import TripathyGP
 
 class BasePrediction:
 
@@ -60,36 +62,59 @@ class PredictRembo(BasePrediction):
 
 class PredictStiefelSimple(BasePrediction):
 
-    def __init__(self):
-        pass
+    def __init__(self, domain):
+        self.algo = TripathyGP(domain)
+        self.data_added = False
 
     def train(self, X_train, Y_train):
-        raise NotImplementedError
-
-    def evaluate_numerical(self, X_test, Y_test):
-        raise NotImplementedError
+        assert not self.data_added, "Data was already added before! You should create a new Object!"
+        self.algo.add_data(X_train, Y_train)
+        self.data_added = True
 
     def predict(self, X_project):
-        raise NotImplementedError
+        Y_hat = self.algo.mean(X_project)
+        return Y_hat
+
+    def evaluate_numerical(self, X_test, Y_test):
+        # Predict, then compare to Y_test
+        Y_hat = self.predict(X_test)
+        return .0
 
 class PredictBoring(BasePrediction):
 
-    def __init__(self):
-        pass
+    def __init__(self, domain):
+        self.algo = BoringGP(domain)
+        self.data_added = False
 
     def train(self, X_train, Y_train):
-        raise NotImplementedError
-
-    def evaluate_numerical(self, X_test, Y_test):
-        raise NotImplementedError
+        assert not self.data_added, "Data was already added before! You should create a new Object!"
+        self.algo.add_data(X_train, Y_train)
+        self.data_added = True
 
     def predict(self, X_project):
-        raise NotImplementedError
+        Y_hat = self.algo.mean(X_project)
+        return Y_hat
+
+    def evaluate_numerical(self, X_test, Y_test):
+        # Predict, then compare to Y_test
+        Y_hat = self.predict(X_test)
+        return .0
 
 
 def train_and_predict_all_models(X_train, Y_train, X_test, Y_test, domain):
-    # Visualize Rembo
+    # Rembo
     rembo = PredictRembo(domain)
     rembo.train(X_train, Y_train)
     rembo_yhat = rembo.predict(X_test)
-    return rembo_yhat
+
+    # Vanilla Tripathy
+    tripathy = PredictStiefelSimple(domain)
+    tripathy.train(X_train, Y_train)
+    tripathy_yhat = tripathy.predict(X_test)
+
+    # Boring
+    boring = PredictBoring(domain)
+    boring.train(X_train, Y_train)
+    boring_yhat = boring.predict(X_test)
+
+    return rembo_yhat, tripathy_yhat, boring_yhat

@@ -16,7 +16,7 @@ from febo.utils.config import ConfigField, config_manager, assign_config
 
 
 class BoringConfig(AlgorithmConfig):
-    dim = ConfigField(2, comment='subspace dimension')
+    # dim = ConfigField(2, comment='subspace dimension')
     optimize_every = ConfigField(40,
                                  comment='adding how many datapoints will lead to identifying the active and passive subspace?')
 
