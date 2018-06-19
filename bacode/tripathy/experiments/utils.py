@@ -55,15 +55,24 @@ def do_plotting_real_vs_gaussian(title, X, Y_real, Y_gp):
     plt.show()
     plt.close(fig)
 
-def generate_train_test_data(fun, lower, upper, train_sampels, test_sampels):
-    dim = lower.shape[0]
-    dcenter = upper + lower / 2.
-    drange = upper - lower
+def generate_train_test_data(fun, train_sampels, test_sampels, lower_dim=2):
+    dim = fun.domain.d
+    dcenter = fun.domain.u + fun.domain.l / 2.
+    drange = fun.domain.u - fun.domain.l
 
-    X_train = (np.random.rand(train_sampels, dim) * drange) + dcenter
-    Y_train = fun(X_train.T).reshape(-1, 1)
+    if hasattr(fun, 'W') and dim > 2:
+        X_train = np.random.rand(train_sampels, lower_dim)
+        X_train = (np.dot(X_train, fun.W) * drange ) + dcenter
+        Y_train = fun.f(X_train.T).reshape(-1, 1)
 
-    X_test = (np.random.rand(test_sampels, dim) * drange) + dcenter
-    Y_test = fun(X_test.T).reshape(-1, 1)
+        X_test = np.random.rand(test_sampels, lower_dim)
+        X_test = (np.dot(X_test, fun.W) * drange ) + dcenter
+        Y_test = fun.f(X_test.T).reshape(-1, 1)
+    else:
+        X_train = (np.random.rand(train_sampels, dim) * drange) + dcenter
+        Y_train = fun.f(X_train.T).reshape(-1, 1)
+
+        X_test = (np.random.rand(test_sampels, dim) * drange) + dcenter
+        Y_test = fun.f(X_test.T).reshape(-1, 1)
 
     return X_train, Y_train, X_test, Y_test

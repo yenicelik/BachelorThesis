@@ -7,6 +7,8 @@
 :param X_project: The X values for which we want to receive predictions
 :return:
 """
+import numpy as np
+
 from bacode.tripathy.src.rembo.rembo_algorithm import RemboAlgorithm
 from bacode.tripathy.src.boring.boring_algorithm import BoringGP
 from bacode.tripathy.src.tripathy__ import TripathyGP
@@ -107,16 +109,15 @@ def train_and_predict_all_models(X_train, Y_train, X_test, Y_test, domain):
     rembo.train(X_train, Y_train)
     rembo_yhat = rembo.predict(X_test)
 
-    # Vanilla Tripathy
-    # tripathy = PredictStiefelSimple(domain)
-    # tripathy.train(X_train, Y_train)
-    # tripathy_yhat = tripathy.predict(X_test)
+    # Vanilla Tripathy # Does not contain the "kernel" bug
+    tripathy = PredictStiefelSimple(domain)
+    tripathy.train(X_train, Y_train)
+    tripathy_yhat = tripathy.predict(X_test)
 
-    tripathy_yhat = None
-
-    # Boring
+    # Boring # I think the error of UserWarning:Your kernel has a different input dimension 1 then the given X dimension 2. Be very sure this is what you want and you have not forgotten to set the right input dimenion in your kernel
     boring = PredictBoring(domain)
     boring.train(X_train, Y_train)
     boring_yhat = boring.predict(X_test)
+    # boring_yhat = np.random.rand(X_test.shape[0], 1)
 
     return rembo_yhat, tripathy_yhat, boring_yhat

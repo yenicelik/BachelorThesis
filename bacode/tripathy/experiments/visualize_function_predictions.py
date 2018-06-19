@@ -38,7 +38,7 @@ def visualize_2d_to_1d():
     print("X shape is: ", X.shape)
     Y = function_instance.f(X.T) # TODO: check if the input dimension is appropriate
 
-    X_train, Y_train, X_test, Y_test = generate_train_test_data(function_instance.f, lower, upper, train_sampels=100, test_sampels=2000)
+    X_train, Y_train, X_test, Y_test = generate_train_test_data(function_instance, train_sampels=100, test_sampels=2000)
     Y_real = function_instance.f(X_test.T)
 
     # Get the predicted datasets
@@ -47,8 +47,8 @@ def visualize_2d_to_1d():
     # print("Predicted Y is: ", rembo_Yhat.shape, tripathy_Yhat.shape, boring_yhat.shape)
 
     # do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_rembo", X_test, Y_real, rembo_Yhat)
-    # do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_tripathy", X_test, Y_real, tripathy_Yhat)
-    do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_boring", X_test, Y_real, boring_yhat)
+    do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_tripathy", X_test, Y_real, tripathy_Yhat)
+    # do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_boring", X_test, Y_real, boring_yhat)
 
 def visualize_5d_to_2d_plain():
     function_instance = CamelbackEmbedded5D()
@@ -69,16 +69,34 @@ def visualize_5d_to_2d_plain():
             )
     X = np.vstack([X_ele.flatten() for X_ele in Xs]).T
     X = np.dot(X, function_instance.W)
-    print(X)
 
+    #########################
+    #   PROJECTION STARTS   #
+    #########################
     # Project the points to the embeddings to apply a function evaluation
     print("X shape is: ", X.shape)
-    Y = function_instance.f(X.T) # TODO: check if the input dimension is appropriate
-    print("Y shape is: ", Y.shape)
 
-    X_vis = np.dot(X, function_instance.W.T)
-    print(X_vis.shape)
-    do_plotting("embedded_camelback_5d_to_2d", X_vis, Y)
+    X_train, Y_train, X_test, Y_test = generate_train_test_data(function_instance, train_sampels=100, test_sampels=2000)
+
+    print("Shape of our input is: ", X_train.shape)
+    print("Shape of our input is: ", X_test.shape)
+
+    Y_real = function_instance.f(X_test.T)
+
+    # Get the predicted datasets
+    rembo_Yhat, tripathy_Yhat, boring_yhat = train_and_predict_all_models(X_train, Y_train, X_test, Y_test,
+                                                                          function_instance.domain)
+
+    # print("Predicted Y is: ", rembo_Yhat.shape, tripathy_Yhat.shape, boring_yhat.shape)
+
+    X_test = np.dot(X_test, function_instance.W.T)
+
+    # TODO: Watch out
+
+    do_plotting_real_vs_gaussian("embedded_camelback_5d_to_2d_rembo", X_test, Y_real, rembo_Yhat)
+    # do_plotting_real_vs_gaussian("embedded_camelback_5d_to_2d_tripathy", X_test, Y_real, tripathy_Yhat)
+    # do_plotting_real_vs_gaussian("embedded_camelback_5d_to_2d_boring", X_test, Y_real, boring_yhat)
+
 
 def visualize_5d_to_2d_small_perturbation():
     function_instance = DecreasingSinusoidalEmbedded5D()
@@ -150,10 +168,10 @@ def visualize_10d_to_5d():
 
 def main():
     print("Starting to visualize all functions")
-    print("Visualizing 2d to 1d plain")
-    visualize_2d_to_1d()
-    # print("Visualizing 5d to 2d plain")
-    # visualize_5d_to_2d_plain()
+    # print("Visualizing 2d to 1d plain")
+    # visualize_2d_to_1d()
+    print("Visualizing 5d to 2d plain")
+    visualize_5d_to_2d_plain()
     # print("Visualizing 5d to 2d with small perturbations")
     # visualize_5d_to_2d_small_perturbation()
     # print("Visualizing 10d to 5d")
