@@ -58,8 +58,8 @@ def visualize_2d_to_1d():
 def visualize_5d_to_2d_plain():
     function_instance = CamelbackEmbedded5D()
 
-    lower = np.asarray([-5., -5.])
-    upper = np.asarray([10., 10.])
+    lower = np.asarray([-2., -1.])
+    upper = np.asarray([2., 1.])
     drange = upper - lower
     dcenter = (upper + lower) / 2.
 
@@ -69,7 +69,14 @@ def visualize_5d_to_2d_plain():
 
     print("Upper and lower are: ", lower, upper)
 
-    X_test = (np.random.rand(100**2, 2) * drange) + dcenter
+    # Difference between meshgrid and random generation causes the weird function!
+    Xs: np.ndarray = np.meshgrid(
+                np.arange(lower[0], upper[0], step_size[0]),
+                np.arange(lower[1], upper[1], step_size[1]),
+            )
+    X_test = np.vstack([X_ele.flatten() for X_ele in Xs]).T
+
+    # X_test = (np.random.rand(100**2, 2) * drange) + dcenter
     X_train = (np.random.rand(100, 2) * drange) + dcenter
 
     print(X_test)
@@ -89,8 +96,7 @@ def visualize_5d_to_2d_plain():
     print(X_vis.shape)
     # do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_rembo", X_vis, Y_test, rembo_Yhat)
     do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_tripathy", X_vis, Y_test, tripathy_Yhat)
-    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_boring", X_vis, Y_test, boring_yhat)
-
+    # do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_boring", X_vis, Y_test, Y_test)
 
 ###############################
 # 5D to 2D SMALL PERTURBATION #
