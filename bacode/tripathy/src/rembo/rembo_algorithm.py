@@ -85,6 +85,9 @@ class RemboAlgorithm(Algorithm):
         """
         super(RemboAlgorithm, self).initialize(**kwargs)
 
+        # Take the domain out of the kwargs
+        self.domain = kwargs.get('domain') # TODO: this was added as a result of visualizing REMBO (because usually, it is a subclass of the model)
+        print("Domain is: ", self.domain)
         self.center = (self.domain.u + self.domain.l) / 2.
 
         if USE_REAL_MATRIX:

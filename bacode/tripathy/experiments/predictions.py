@@ -42,7 +42,9 @@ class PredictRembo(BasePrediction):
 
     def __init__(self, domain):
         self.algo = RemboAlgorithm()
-        self.algo.initialize(domain=domain)
+        self.algo.initialize(**{
+            'domain': domain
+        })
         self.data_added = False
 
     def train(self, X_train, Y_train):
