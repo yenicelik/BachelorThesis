@@ -87,7 +87,7 @@ def visualize_5d_to_2d_plain():
                                                                           function_instance.domain)
     X_vis = np.dot(X_test, function_instance.W.T)
     print(X_vis.shape)
-    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_rembo", X_vis, Y_test, rembo_Yhat)
+    # do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_rembo", X_vis, Y_test, rembo_Yhat)
     do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_tripathy", X_vis, Y_test, tripathy_Yhat)
     do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_boring", X_vis, Y_test, boring_yhat)
 

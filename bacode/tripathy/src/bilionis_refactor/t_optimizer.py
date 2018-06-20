@@ -25,62 +25,63 @@ def single_run(self, t_kernel, X, Y):
     # t_kernel = deepcopy(t_kernel)
 
     # Output
-    W = None
-    sn = None
-    l = None
-    s = None
-    cur_loss = -np.inf
+    # W = None
+    # sn = None
+    # l = None
+    # s = None
+    # cur_loss = -np.inf
 
-    try:
+    # try:
 
-        # We first sample new weights and hyperparameters
-        W_init = t_kernel.sample_W()
-        l_init = np.random.rand(t_kernel.active_dim)
-        s_init = float(np.random.rand(1))
-        sn = float(np.random.rand(1))
+    # We first sample new weights and hyperparameters
+    W_init = t_kernel.sample_W()
+    l_init = np.random.rand(t_kernel.active_dim)
+    s_init = float(np.random.rand(1))
+    sn = float(np.random.rand(1))
 
-        # print("Restarting...", (j, self.no_of_restarts))
+    # print("Restarting...", (j, self.no_of_restarts))
 
-        # t_kernel.update_params(W=W_init, l=l_init, s=s_init)
-        # TODO: we need to copy the kernel before we apply any further operations!
-        # TODO: Currently, the kernel is shared, so all the parameters are shared!
-        # t_kernel = None
-        real_dim = t_kernel.real_dim
-        active_dim = t_kernel.active_dim
-        t_kernel = None
-        t_kernel = TripathyMaternKernel(
-            real_dim=real_dim,
-            active_dim=active_dim,
-            W=W_init,
-            variance=s_init,
-            lengthscale=l_init
-        )
+    # t_kernel.update_params(W=W_init, l=l_init, s=s_init)
+    # TODO: we need to copy the kernel before we apply any further operations!
+    # TODO: Currently, the kernel is shared, so all the parameters are shared!
+    # t_kernel = None
+    real_dim = t_kernel.real_dim
+    active_dim = t_kernel.active_dim
+    t_kernel = None
+    t_kernel = TripathyMaternKernel(
+        real_dim=real_dim,
+        active_dim=active_dim,
+        W=W_init,
+        variance=s_init,
+        lengthscale=l_init
+    )
 
-        # We do a deepcopy, because each time we start from the initial values
-        W, sn, l, s = run_two_step_optimization(
-            self,
-            t_kernel=t_kernel,
-            sn=sn,
-            X=X,
-            Y=Y
-        )
+    # We do a deepcopy, because each time we start from the initial values
+    W, sn, l, s = run_two_step_optimization(
+        self,
+        t_kernel=t_kernel,
+        sn=sn,
+        X=X,
+        Y=Y
+    )
 
-        cur_loss = loss(
-            t_kernel,
-            W,
-            sn,
-            s,
-            l,
-            X,
-            Y
-        )
+    cur_loss = loss(
+        t_kernel,
+        W,
+        sn,
+        s,
+        l,
+        X,
+        Y
+    )
 
-        print("Loss: ", cur_loss)
+    print("Loss: ", cur_loss)
 
-    except Exception as e:
-        print(e)
-        with open("./errors.txt", "a") as myfile:
-            myfile.write(str(e))
+    # except Exception as e:
+    #     print("We encountered an error!")
+    #     print(str(e))
+    #     with open("./errors.txt", "a") as myfile:
+    #         myfile.write(str(e))
 
     return W, sn, l, s, cur_loss
 
@@ -322,10 +323,15 @@ class TripathyOptimizer:
 
         # print("Losses are: ", losses)
 
-        best_index = int(np.argmax( losses ))
+        best_index = int(np.argmax( losses )) # TODO: do we take the argmax, or the argmin? argmax seems to work well!
         best_config = configs[best_index]
 
-        return best_config[0], best_config[1], best_config[2], best_config[3] #W, sn, l, s
+        # Check if those are empty!
+        if best_config[0] is None:
+            best_index = int(np.argsort(losses)[-2])
+            best_config = configs[best_index]
+
+        return best_config[0], best_config[1], best_config[2], best_config[3] # W, sn, l, s
 
 
     ###############################
