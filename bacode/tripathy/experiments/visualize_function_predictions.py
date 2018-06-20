@@ -137,21 +137,26 @@ def visualize_5d_to_2d_small_perturbation():
 
     print("Upper and lower are: ", lower, upper)
 
-    X = (np.random.rand(100**2, 2) * drange) + dcenter
+    X_test = (np.random.rand(100**2, 2) * drange) + dcenter
+    X_train = (np.random.rand(100, 2) * drange) + dcenter
 
-    print(X)
-    X = np.dot(X, function_instance.W)
-    print(X)
+    print(X_test)
+    X_test = np.dot(X_test, function_instance.W)
+    X_train = np.dot(X_train, function_instance.W)
+    print(X_test)
 
     # Project the points to the embeddings to apply a function evaluation
-    print("X shape is: ", X.shape)
-    Y = function_instance.f(X.T)  # TODO: check if the input dimension is appropriate
-    print("Y shape is: ", Y.shape)
+    print("X shape is: ", X_test.shape)
+    Y_train = function_instance.f(X_train.T).reshape(-1, 1)
+    Y_test = function_instance.f(X_test.T).reshape(-1, 1)  # TODO: check if the input dimension is appropriate
+    print("Y shape is: ", Y_test.shape)
 
-    X_vis = np.dot(X, function_instance.W.T)
+    rembo_Yhat, tripathy_Yhat, boring_yhat = train_and_predict_all_models(X_train, Y_train, X_test, Y_test,
+                                                                          function_instance.domain)
+    X_vis = np.dot(X_test, function_instance.W.T)
     print(X_vis.shape)
     # do_plotting("embedded_sinusoidal_small_perturbations_5d_to_2d", X_vis, Y)
-    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d", X_vis, Y, Y)
+    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d", X_vis, Y_test, tripathy_Yhat)
 
 ###############################
 #          10D to 5D          #
