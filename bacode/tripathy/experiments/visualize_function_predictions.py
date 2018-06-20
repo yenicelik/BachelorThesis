@@ -180,13 +180,12 @@ def main():
     print("Starting to visualize all functions")
     # print("Visualizing 2d to 1d plain")
     # visualize_2d_to_1d()
-    # TODO: this one is buggy. Come back to this one
-    print("Visualizing 5d to 2d plain")
-    visualize_5d_to_2d_plain()
+    # print("Visualizing 5d to 2d plain")
+    # visualize_5d_to_2d_plain()
     # print("Visualizing 5d to 2d with small perturbations")
     # visualize_5d_to_2d_small_perturbation()
-    # print("Visualizing 10d to 5d")
-    # visualize_10d_to_5d()
+    print("Visualizing 10d to 5d")
+    visualize_10d_to_5d()
     print("Done!")
 
 
