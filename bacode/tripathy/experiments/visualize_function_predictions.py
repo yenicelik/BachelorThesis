@@ -55,56 +55,41 @@ def visualize_2d_to_1d():
 ###############################
 #       5D to 2D VANILLA      #
 ###############################
-def generate_train_test_data_5d_to_2d_vanilla(fun, train_sampels, test_sampels):
-    # dim = fun.domain.d
-    # dcenter = fun.domain.u + fun.domain.l / 2.
-    # drange = fun.domain.u - fun.domain.l
-    #
-    # X_train = (np.random.rand(train_sampels, dim) * drange) + dcenter
-    # Y_train = fun.f(X_train.T).reshape(-1, 1)
-    #
-    # X_test = (np.random.rand(test_sampels, dim) * drange) + dcenter
-    # Y_test = fun.f(X_test.T).reshape(-1, 1)
-    train_dim = fun.domain.d
-    dcenter = fun.domain.u + fun.domain.l / 2.
-    drange = fun.domain.u - fun.domain.l
-
-    X_train = (np.random.rand(train_sampels, train_dim) * drange) + dcenter
-    X_test = (np.random.rand(test_sampels, train_dim) * drange) + dcenter
-
-    # test_dim = 2
-    # X_test = np.dot(X_test, fun.W) * drange + dcenter
-
-    Y_train = fun.f(X_train.T).reshape(-1, 1)
-    Y_test = fun.f(X_test.T).reshape(-1, 1)
-
-    return X_train, Y_train, X_test, Y_test
-
 def visualize_5d_to_2d_plain():
     function_instance = CamelbackEmbedded5D()
 
-    X_train, Y_train, X_test, Y_test = generate_train_test_data_5d_to_2d_vanilla(function_instance, train_sampels=100, test_sampels=2000)
+    lower = np.asarray([-5., -5.])
+    upper = np.asarray([10., 10.])
+    drange = upper - lower
+    dcenter = (upper + lower) / 2.
 
-    print("Shape of our input is: ", X_train.shape)
-    print("Shape of our input is: ", X_test.shape)
+    # lower = function_instance.domain.l
+    # upper = function_instance.domain.u
+    step_size = (upper - lower) / (points_per_axis)
 
+    print("Upper and lower are: ", lower, upper)
+
+    X_test = (np.random.rand(100**2, 2) * drange) + dcenter
+    X_train = (np.random.rand(100, 2) * drange) + dcenter
+
+    print(X_test)
+    X_test = np.dot(X_test, function_instance.W)
+    X_train = np.dot(X_train, function_instance.W)
+    print(X_test)
+
+    # Project the points to the embeddings to apply a function evaluation
+    print("X shape is: ", X_test.shape)
     Y_train = function_instance.f(X_train.T).reshape(-1, 1)
-    Y_test = function_instance.f(X_test.T).reshape(-1, 1)
+    Y_test = function_instance.f(X_test.T).reshape(-1, 1)  # TODO: check if the input dimension is appropriate
+    print("Y shape is: ", Y_test.shape)
 
-    # Get the predicted datasets
     rembo_Yhat, tripathy_Yhat, boring_yhat = train_and_predict_all_models(X_train, Y_train, X_test, Y_test,
                                                                           function_instance.domain)
-
-    # print("Predicted Y is: ", rembo_Yhat.shape, tripathy_Yhat.shape, boring_yhat.shape)
-
-    # X_test = np.dot(X_test, function_instance.W.T)
-
-    # TODO: Watch out
-    X_test = np.dot(X_test, function_instance.W.T)
-
-    # do_plotting_real_vs_gaussian("embedded_camelback_5d_to_2d_rembo", X_test_o, Y_test, rembo_Yhat)
-    do_plotting_real_vs_gaussian("embedded_camelback_5d_to_2d_tripathy", X_test, Y_test, tripathy_Yhat)
-    # do_plotting_real_vs_gaussian("embedded_camelback_5d_to_2d_boring", X_test_o, Y_test, boring_yhat)
+    X_vis = np.dot(X_test, function_instance.W.T)
+    print(X_vis.shape)
+    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_rembo", X_vis, Y_test, rembo_Yhat)
+    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_tripathy", X_vis, Y_test, tripathy_Yhat)
+    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_boring", X_vis, Y_test, boring_yhat)
 
 
 ###############################
@@ -192,8 +177,8 @@ def main():
     # TODO: this one is buggy. Come back to this one
     # print("Visualizing 5d to 2d plain")
     # visualize_5d_to_2d_plain()
-    # print("Visualizing 5d to 2d with small perturbations")
-    # visualize_5d_to_2d_small_perturbation()
+    print("Visualizing 5d to 2d with small perturbations")
+    visualize_5d_to_2d_small_perturbation()
     # print("Visualizing 10d to 5d")
     # visualize_10d_to_5d()
     print("Done!")
