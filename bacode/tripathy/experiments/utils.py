@@ -52,8 +52,9 @@ def do_plotting_real_vs_gaussian(title, X, Y_real, Y_gp):
     ax.scatter(X[:, 0], X[:, 1], Y_gp.squeeze(), cmap=plt.cm.jet)
 
     fig.savefig(config['visualize_vanilla_vs_gp_path'] + title)
-    plt.show()
-    plt.close(fig)
+    # plt.show()
+    # plt.close(fig)
+    plt.clf()
 
 def generate_train_test_data_5d(fun, train_samples, test_samples):
     pass

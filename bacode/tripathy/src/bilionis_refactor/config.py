@@ -7,7 +7,7 @@ HALFDEV = True
 if DEV:
 
     config = {
-        "no_restarts": 4*1, # 20, # 1000
+        "no_restarts": 2*1, # 20, # 1000
 
         "max_iter_alg1": 1,  # 1000, # int(1e5),
         "max_iter_alg3": 1, # 1000, # int(1e5),
