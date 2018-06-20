@@ -55,6 +55,3 @@ def do_plotting_real_vs_gaussian(title, X, Y_real, Y_gp):
     # plt.show()
     # plt.close(fig)
     plt.clf()
-
-def generate_train_test_data_5d(fun, train_samples, test_samples):
-    pass

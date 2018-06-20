@@ -1,6 +1,6 @@
 from sys import platform
 
-DEV = True
+DEV = False
 QDev = True
 HALFDEV = True
 
@@ -28,7 +28,7 @@ if DEV:
 elif QDev:
 
     config = {
-        "no_restarts": 6, # 1000
+        "no_restarts": 4, # 1000
 
         "max_iter_alg1": 15, # int(1e5),
         "max_iter_alg3": 15, # int(1e5),
@@ -38,7 +38,7 @@ elif QDev:
 
         "eps_alg1": 1.e-3, # -12,
         "eps_alg3": 1.e-3, # -12,
-        "eps_alg4": 1.e-3,
+        "eps_alg4": 8.e-2,
 
         "tau_max": 1.e-1,
         "no_taus": 5,
@@ -49,7 +49,7 @@ elif QDev:
 elif HALFDEV:
 
     config = {
-        "no_restarts": 10, # 1000
+        "no_restarts": 50, # 1000
 
         "max_iter_alg1": 15, # int(1e5),
         "max_iter_alg3": 15, # int(1e5),
@@ -105,3 +105,7 @@ config['visualize_vanilla_vs_gp_path'] = config['basepath'] + "visualize_vanilla
 
 ### DATASET SPECIFIC CONFIGURATIONS
 config['swissfel_datapath'] = config['basepath'] + "data/swissfel/evaluations.hdf5"
+
+config['run_rembo'] = True
+config['run_boring'] = False
+config['run_tripathy'] = False

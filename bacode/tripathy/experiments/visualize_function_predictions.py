@@ -49,10 +49,12 @@ def visualize_2d_to_1d():
     # Get the predicted datasets
     rembo_Yhat, tripathy_Yhat, boring_yhat = train_and_predict_all_models(X_train, Y_train, X_test, Y_test,
                                                                           function_instance.domain)
-
-    do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_rembo", X_test, Y_real, rembo_Yhat)
-    do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_tripathy", X_test, Y_real, tripathy_Yhat)
-    do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_boring", X_test, Y_real, boring_yhat)
+    if config['run_rembo']:
+        do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_rembo", X_test, Y_real, rembo_Yhat)
+    if config['run_tripathy']:
+        do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_tripathy", X_test, Y_real, tripathy_Yhat)
+    if config['run_boring']:
+        do_plotting_real_vs_gaussian("embedded_parabola_2d_to_1d_boring", X_test, Y_real, boring_yhat)
 
 ###############################
 #       5D to 2D VANILLA      #
@@ -96,9 +98,12 @@ def visualize_5d_to_2d_plain():
                                                                           function_instance.domain)
     X_vis = np.dot(X_test, function_instance.W.T)
     print(X_vis.shape)
-    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_rembo", X_vis, Y_test, rembo_Yhat)
-    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_tripathy", X_vis, Y_test, tripathy_Yhat)
-    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_boring", X_vis, Y_test, boring_yhat)
+    if config['run_rembo']:
+        do_plotting_real_vs_gaussian("embedded_camelback_5d_to_2d_rembo", X_vis, Y_test, rembo_Yhat)
+    if config['run_tripathy']:
+        do_plotting_real_vs_gaussian("embedded_camelback_5d_to_2d_tripathy", X_vis, Y_test, tripathy_Yhat)
+    if config['run_boring']:
+        do_plotting_real_vs_gaussian("embedded_camelback_5d_to_2d_boring", X_vis, Y_test, boring_yhat)
 
 ###############################
 # 5D to 2D SMALL PERTURBATION #
@@ -136,9 +141,12 @@ def visualize_5d_to_2d_small_perturbation():
     X_vis = np.dot(X_test, function_instance.W.T)
     print(X_vis.shape)
     # do_plotting("embedded_sinusoidal_small_perturbations_5d_to_2d", X_vis, Y)
-    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_rembo", X_vis, Y_test, rembo_Yhat)
-    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_tripathy", X_vis, Y_test, tripathy_Yhat)
-    do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_boring", X_vis, Y_test, boring_yhat)
+    if config['run_rembo']:
+        do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_rembo", X_vis, Y_test, rembo_Yhat)
+    if config['run_tripathy']:
+        do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_tripathy", X_vis, Y_test, tripathy_Yhat)
+    if config['run_boring']:
+        do_plotting_real_vs_gaussian("embedded_sinusoidal_small_perturbations_5d_to_2d_boring", X_vis, Y_test, boring_yhat)
 
 ###############################
 #          10D to 5D          #
@@ -178,9 +186,12 @@ def visualize_10d_to_5d():
     X_vis= pca.fit_transform(X=standardizedData)
 
     # do_plotting("embedded_rosenbrock_10d_to_5d", principalComponents, Y)
-    do_plotting_real_vs_gaussian("embedded_rosenbrock_10d_to_5d_rembo", X_vis, Y_test, rembo_Yhat)
-    do_plotting_real_vs_gaussian("embedded_rosenbrock_10d_to_5d_tripathy", X_vis, Y_test, tripathy_Yhat)
-    do_plotting_real_vs_gaussian("embedded_rosenbrock_10d_to_5d_boring", X_vis, Y_test, boring_yhat)
+    if config['run_rembo']:
+        do_plotting_real_vs_gaussian("embedded_rosenbrock_10d_to_5d_rembo", X_vis, Y_test, rembo_Yhat)
+    if config['run_tripathy']:
+        do_plotting_real_vs_gaussian("embedded_rosenbrock_10d_to_5d_tripathy", X_vis, Y_test, tripathy_Yhat)
+    if config['run_boring']:
+        do_plotting_real_vs_gaussian("embedded_rosenbrock_10d_to_5d_boring", X_vis, Y_test, boring_yhat)
 
 
 def main():
@@ -188,18 +199,23 @@ def main():
     # Start by removing all pictures!
     import os
     import shutil
-    if not os.path.exists(config['visualize_vanilla_vs_gp_path']):
+    if os.path.exists(config['visualize_vanilla_vs_gp_path']):
         shutil.rmtree(config['visualize_vanilla_vs_gp_path'])
 
     print("Starting to visualize all functions")
+
     print("Visualizing 2d to 1d plain")
     visualize_2d_to_1d()
+
     print("Visualizing 5d to 2d plain")
     visualize_5d_to_2d_plain()
+
     print("Visualizing 5d to 2d with small perturbations")
     visualize_5d_to_2d_small_perturbation()
+
     print("Visualizing 10d to 5d")
     visualize_10d_to_5d()
+
     print("Done!")
 
 

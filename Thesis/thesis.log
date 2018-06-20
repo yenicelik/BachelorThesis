@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  18 JUN 2018 15:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  20 JUN 2018 16:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1397,7 +1397,95 @@ Package: translator 2010/06/12 ver 1.10
 uage-mappings.tex)))) (./thesis-info.tex) (./thesis.aux
 (./Proposal/proposal.aux) (./Abstract/abstract.aux) (./Chapter1/chapter1.aux)
 (./Chapter2/chapter2.aux) (./Chapter4/chapter4.aux) (./Chapter5/chapter5.aux)
-(./Chapter6/chapter6.aux) (./Appendix1/appendix1.aux))
+(./Chapter6/chapter6.aux
+
+LaTeX Warning: Label `fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `fig:gull' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:gull' multiply defined.
+
+
+LaTeX Warning: Label `fig:tiger' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:tiger' multiply defined.
+
+
+LaTeX Warning: Label `fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `fig:animals' multiply defined.
+
+
+LaTeX Warning: Label `fig:gull' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:gull' multiply defined.
+
+
+LaTeX Warning: Label `fig:tiger' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:tiger' multiply defined.
+
+
+LaTeX Warning: Label `fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `fig:animals' multiply defined.
+
+
+LaTeX Warning: Label `fig:gull' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:gull' multiply defined.
+
+
+LaTeX Warning: Label `fig:tiger' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:tiger' multiply defined.
+
+
+LaTeX Warning: Label `fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:mouse' multiply defined.
+
+
+LaTeX Warning: Label `fig:animals' multiply defined.
+
+) (./Appendix1/appendix1.aux))
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 110.
@@ -1868,28 +1956,157 @@ Underfull \hbox (badness 10000) in paragraph at lines 53--54
 
  []
 
-) [28] (./thesis.bbl) [29
+[28] [29]
+<Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png, id=594, 462.528pt x 346.896
+pt>
+File: Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png Graphic file (type png)
+
+ <use Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png>
+Package pdftex.def Info: Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png used
+ on input line 94.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+
+<Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png, id=
+595, 462.528pt x 346.896pt>
+File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
+ Graphic file (type png)
+
+<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
+Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
+5d_to_2d_boring.png used on input line 101.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
+ Graphic file (type png)
+
+<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
+Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
+5d_to_2d_boring.png used on input line 109.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
+ Graphic file (type png)
+
+<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
+Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
+5d_to_2d_boring.png used on input line 116.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+
+<Chapter6/Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.png, id=59
+6, 462.528pt x 346.896pt>
+File: Chapter6/Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.png G
+raphic file (type png)
+
+<use Chapter6/Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.png>
+Package pdftex.def Info: Chapter6/Figs/orig/embedded_sinusoidal_small_perturbat
+ions_5d_to_2d.png used on input line 127.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
+ Graphic file (type png)
+
+<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
+Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
+5d_to_2d_boring.png used on input line 134.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
+ Graphic file (type png)
+
+<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
+Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
+5d_to_2d_boring.png used on input line 142.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
+ Graphic file (type png)
+
+<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
+Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
+5d_to_2d_boring.png used on input line 149.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+
+<Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png, id=597, 462.528pt x 346.89
+6pt>
+File: Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png Graphic file (type png
+)
+ <use Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png>
+Package pdftex.def Info: Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png use
+d on input line 160.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
+ Graphic file (type png)
+
+<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
+Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
+5d_to_2d_boring.png used on input line 167.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
+ Graphic file (type png)
+
+<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
+Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
+5d_to_2d_boring.png used on input line 175.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
+ Graphic file (type png)
+
+<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
+Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
+5d_to_2d_boring.png used on input line 182.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+[30 <./Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png> <./Chapter6/Figs/embe
+dded_sinusoidal_small_perturbations_5d_to_2d_boring.png> <./Chapter6/Figs/orig/
+embedded_sinusoidal_small_perturbations_5d_to_2d.png>]
+<Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png, id=605, 462.528pt x 346.
+896pt>
+File: Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png Graphic file (type p
+ng)
+ <use Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png>
+Package pdftex.def Info: Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png u
+sed on input line 193.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
+ Graphic file (type png)
+
+<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
+Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
+5d_to_2d_boring.png used on input line 200.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
+ Graphic file (type png)
+
+<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
+Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
+5d_to_2d_boring.png used on input line 208.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
+ Graphic file (type png)
+
+<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
+Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
+5d_to_2d_boring.png used on input line 215.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+) [31 <./Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png> <./Chapter6/Figs/o
+rig/embedded_rosenbrock_10d_to_5d.png>] [32
 
 
+] (./thesis.bbl) [33
 
 ]
 \openout2 = `Appendix1/appendix1.aux'.
 
- (./Appendix1/appendix1.tex [30
+
+(./Appendix1/appendix1.tex [34
 
 
 ]
 Appendix A.
-[31]
+[35]
 
-Package natbib Warning: Citation `OptimizationTestFunctions' on page 32 undefin
+Package natbib Warning: Citation `OptimizationTestFunctions' on page 36 undefin
 ed on input line 35.
 
 
-Package natbib Warning: Citation `Jamil2013' on page 32 undefined on input line
+Package natbib Warning: Citation `Jamil2013' on page 36 undefined on input line
  36.
 
-) [32] (./thesis.ind)
+) [36] (./thesis.ind)
 
 Package natbib Warning: There were undefined citations.
 
@@ -1902,14 +2119,18 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 197.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 197.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 197.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 4ADBF086A44C610CCF4FBFB2136E1388;10944.
+(rerunfilecheck)             Checksum: 62F1033771429EDA60C9111620472928;10944.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 26676 strings out of 492995
- 465073 string characters out of 6132704
- 544721 words of memory out of 5000000
- 29379 multiletter control sequences out of 15000+600000
- 63786 words of font info for 187 fonts, out of 8000000 for 9000
+ 26745 strings out of 492995
+ 467142 string characters out of 6132704
+ 546278 words of memory out of 5000000
+ 29415 multiletter control sequences out of 15000+600000
+ 66768 words of font info for 193 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,17n,92p,10383b,892s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
@@ -1924,10 +2145,10 @@ st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
 mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on thesis.pdf (44 pages, 267571 bytes).
+Output written on thesis.pdf (48 pages, 928450 bytes).
 PDF statistics:
- 753 PDF objects out of 1000 (max. 8388607)
- 675 compressed objects within 7 object streams
- 258 named destinations out of 1000 (max. 500000)
- 31107 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 794 PDF objects out of 1000 (max. 8388607)
+ 701 compressed objects within 8 object streams
+ 270 named destinations out of 1000 (max. 500000)
+ 35228 words of extra memory for PDF output out of 35830 (max. 10000000)
 

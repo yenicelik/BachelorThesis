@@ -33,6 +33,8 @@ environment.benchmark.noise:
 experiment.benchmark:
   label: febo.experiment.benchmark.label_id
   iterator:
+  - experiment.simple:algorithm: bacode.tripathy.src.boring.boring_algorithm.BoringAlgorithm # febo.algorithms.ucb.UCB
+    experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB
     experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB
