@@ -249,7 +249,7 @@ class TripathyOptimizer:
         # TODO: Iteration by one might be a lot. Potentiall make the stepsize a function of the maximum dimensions
 
         BIC1 = -1e12 # Don't make if -inf, otherwise division is not possible
-        for d in range(1, min(D, self.d_max + 1)):
+        for d in range(1, max(2, min(D, self.d_max + 1))):
 
             print("Testing for dimension: ", d)
 
@@ -263,6 +263,12 @@ class TripathyOptimizer:
                 X=X,
                 Y=Y
             )
+
+            print("Returned W, sn, l values are: ", W_hat, sn, l, s)
+            assert W_hat is not None
+            assert sn is not None
+            assert l is not None
+            assert s is not None
 
             # Update the kernel with the new values
             self.kernel.update_params(W=W_hat, l=l, s=s)
