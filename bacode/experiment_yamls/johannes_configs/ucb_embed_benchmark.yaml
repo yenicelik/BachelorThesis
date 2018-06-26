@@ -30,6 +30,12 @@ environment.benchmark.noise:
   seed:  # Seed for randomly generated noise function.
   high: 0.5  # May be used by the noise function to roughly set the higest noise level.
   low: 0.5  # May be used by the noise function to roughly set the lowest noise level.
+main:
+  log_level: INFO
+  experiment_dir: runs/
+  experiment: febo.experiment.benchmark.BenchmarkExperiment  # Experiment
+  log_level_console: INFO
+  log_level_file: INFO
 experiment.benchmark:
   label: febo.experiment.benchmark.label_id
   iterator:
@@ -52,10 +58,6 @@ experiment.simple:
   algorithm: febo.algorithms.ucb.UCB
   environment: febo.environment.benchmarks.functions.CamelbackEmbedded
   controller: febo.controller.data.DataController
-main:
-  log_level: INFO
-  experiment_dir: runs/
-  experiment: febo.experiment.benchmark.BenchmarkExperiment  # Experiment
 models.gp:
   bias: 0
   optimize_var: false

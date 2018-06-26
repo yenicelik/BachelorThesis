@@ -262,7 +262,7 @@ class BoringGP(ConfidenceBoundModel):
 
         assert not np.isnan(x).all(), ("X is nan at some point!", x)
 
-        if self.config.calculate_gradients and True: # TODO: there is this nan bug when I use my _raw_predict!
+        if self.config.calculate_gradients and False: # TODO: there is this nan bug when I use my _raw_predict!
             mean, var = self.gp.predict_noiseless(x)
         else:
             mean, var = self._raw_predict(x)
@@ -351,7 +351,7 @@ class BoringGP(ConfidenceBoundModel):
             print("BORING sampled the following matrix: ")
             print(self.Q)
 
-            self.create_gp_and_kernels(active_dimensions=d, passive_dimensions=passive_dimensions, first=True) # TODO: after re-creating the kernel, do we need to call any calculation parameter?
+            self.create_gp_and_kernels(active_dimensions=d, passive_dimensions=passive_dimensions, first=True)
 
             print("Projection matrix is: ", self.Q.shape)
             print("Dimensions found are: ", d)
