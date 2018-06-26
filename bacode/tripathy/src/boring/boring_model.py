@@ -63,7 +63,7 @@ class BoringGP(ConfidenceBoundModel):
         active_kernel = RBF(
             input_dim=active_dimensions,
             variance=2.,
-            lengthscale=1.5, # 0.5,
+            lengthscale=0.5, # 0.5,
             ARD=True,
             active_dims=np.arange(active_dimensions),
             name="active_subspace_kernel"
@@ -355,11 +355,20 @@ class BoringGP(ConfidenceBoundModel):
         # if self.i > self.burn_in_samples:
         #     assert self.Q is not None, "After the burning in, self.Q is still None!"
 
+        # TODO: at this point, maybe it is also beneficial to plot the data and the manifold fit?
         if (self.i <= self.burn_in_samples or self.Q is None) and (not self.always_calculate):
+            print("Still using the old method!")
             self.gp.set_XY(X, Y)
         else:
+            print("We use the dot product thingy from now on!")
             Z = np.dot(X, self.Q)
+            print("Old shape: ", X.shape)
+            print("New shape: ", Z.shape)
             self.gp.set_XY(Z, Y)
+
+        print("Added data: ", self.i)
+        print("Datasave has shape: ", self.datasaver_gp.X.shape)
+        print("Another shape: ", self.gp.X.shape)
 
         self.t = X.shape[0]
         self._update_cache()

@@ -55,8 +55,7 @@
 \contentsline {section}{\numberline {5.2}Quantitative evaluation}{27}{section.5.2}
 \contentsline {section}{\numberline {5.3}Qualitative evaluation}{28}{section.5.3}
 \contentsline {subsection}{\numberline {5.3.1}Finding a matrix when we apply a polynomial kernel onto the input first}{28}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Finding a matrix when we apply a polynomial kernel onto the input first (feature selection)}{28}{subsection.5.3.2}
-\contentsline {subsection}{\numberline {5.3.3}Subspace identification}{28}{subsection.5.3.3}
-\contentsline {chapter}{References}{33}{chapter*.25}
-\contentsline {chapter}{Appendix \numberline {A}}{35}{Appendix.a.A}
-\contentsline {section}{\numberline {A.1}Benchmarking functions}{35}{section.a.A.1}
+\contentsline {subsection}{\numberline {5.3.2}Subspace identification}{28}{subsection.5.3.2}
+\contentsline {chapter}{References}{31}{chapter*.25}
+\contentsline {chapter}{Appendix \numberline {A}}{33}{Appendix.a.A}
+\contentsline {section}{\numberline {A.1}Benchmarking functions}{33}{section.a.A.1}

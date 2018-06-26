@@ -97,7 +97,7 @@ class RemboAlgorithm(Algorithm):
                 [0, 0]
             ])
         else:
-            self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim)
+            self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim, seed=None)
 
         self.optimization_domain = get_subspace(self.config.dim)
 
@@ -106,7 +106,9 @@ class RemboAlgorithm(Algorithm):
 
     def _next(self):
         z_ucb, _ = self.optimizer.optimize(self.ucb_acq_function)
+        print("Optimized point is: ", z_ucb)
         out = self.project_low_to_high(z_ucb)
+        print("Next chosen point is: ", out)
         return out
 
     def project_high_to_low(self, x):

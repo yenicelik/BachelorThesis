@@ -250,7 +250,8 @@ class TripathyOptimizer:
         # TODO: Iteration by one might be a lot. Potentiall make the stepsize a function of the maximum dimensions
 
         BIC1 = -1e12 # Don't make if -inf, otherwise division is not possible
-        for d in range(1, max(2, min(D, self.d_max + 1))):
+        for d in [2]:
+#        for d in range(1, max(2, min(D, self.d_max + 1))):
 
             print("Testing for dimension: ", d)
 

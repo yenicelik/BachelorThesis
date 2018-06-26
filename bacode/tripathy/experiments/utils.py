@@ -49,7 +49,7 @@ def do_plotting_real_vs_gaussian(title, X, Y_real, Y_gp):
 
     # First plot the real function
     ax.scatter(X[:, 0], X[:, 1], Y_real.squeeze(), 'k.', alpha=.3, s=1)
-    ax.scatter(X[:, 0], X[:, 1], Y_gp.squeeze(), cmap=plt.cm.jet)
+    ax.scatter(X[:, 0], X[:, 1], Y_gp.squeeze(), cmap=plt.cm.jet, s=5)
 
     fig.savefig(config['visualize_vanilla_vs_gp_path'] + title)
     # plt.show()

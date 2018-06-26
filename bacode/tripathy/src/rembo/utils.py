@@ -11,11 +11,11 @@ import numpy as np
 # assert Q.shape[1] == self.active_dim
 # return Q
 
-def sample_orthogonal_matrix(real_dim, active_dim):
+def sample_orthogonal_matrix(real_dim, active_dim, seed=None):
     """
     :return: An orthogonal matrix
     """
-    np.random.seed(None)
+    np.random.seed(seed)
     A = np.zeros((real_dim, active_dim), dtype=np.float64)
     for i in range(real_dim):
         for j in range(active_dim):
