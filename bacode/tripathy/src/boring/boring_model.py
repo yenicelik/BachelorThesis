@@ -58,12 +58,12 @@ class BoringGP(ConfidenceBoundModel):
 
     """
 
-    def create_kernels(self, active_dimensions, passive_dimensions, first=False):
+    def create_kernels(self, active_dimensions, passive_dimensions, first=False, k_variance=None, k_lengthscales=None):
 
         active_kernel = RBF(
             input_dim=active_dimensions,
-            variance=2.,
-            lengthscale=0.5, # 0.5,
+            variance=2. if k_variance is None else k_variance,
+            lengthscale=0.5 if k_lengthscales is None else k_lengthscales, # 0.5,
             ARD=True,
             active_dims=np.arange(active_dimensions),
             name="active_subspace_kernel"
@@ -104,8 +104,8 @@ class BoringGP(ConfidenceBoundModel):
         self.gp.set_XY(X, Y)
         self._update_cache()
 
-    def create_gp_and_kernels(self, active_dimensions, passive_dimensions, first=False):
-        self.create_kernels(active_dimensions, passive_dimensions, first=first)
+    def create_gp_and_kernels(self, active_dimensions, passive_dimensions, first=False, k_variance=None, k_lengthscales=None):
+        self.create_kernels(active_dimensions, passive_dimensions, first=first, k_variance=k_variance, k_lengthscales=k_lengthscales)
         self.create_gp()
 
     # From here on, it's the usual functions
@@ -320,24 +320,34 @@ class BoringGP(ConfidenceBoundModel):
 
             optimizer = TripathyOptimizer()
 
-            self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(X, Y)
+            # TODO: the following part is commented out, so we can test, if the function works well if we give it the real matrix!
+            # self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(X, Y)
+            #
+            # print("BORING sampled the following active matrix: ")
+            # print(self.active_projection_matrix)
+            #
+            # # passive_dimensions = max(self.domain.d - d, 0)
+            # passive_dimensions = 1 # TODO: take out this part!
+            # # passive_dimensions = 0
+            #
+            # # Generate A^{bot} if there's more dimensions
+            # if passive_dimensions > 0:
+            #     self.passive_projection_matrix = generate_orthogonal_matrix_to_A(self.active_projection_matrix,
+            #                                                                      passive_dimensions)
+            # else:
+            #     self.passive_projection_matrix = None
+            #
+            # print("BORING sampled the following passive matrix: ")
+            # print(self.passive_projection_matrix)
 
-            print("BORING sampled the following active matrix: ")
-            print(self.active_projection_matrix)
-
-            # passive_dimensions = max(self.domain.d - d, 0)
-            passive_dimensions = 1
-            # passive_dimensions = 0 # TODO: take out this part!
-
-            # Generate A^{bot} if there's more dimensions
-            if passive_dimensions > 0:
-                self.passive_projection_matrix = generate_orthogonal_matrix_to_A(self.active_projection_matrix,
-                                                                                 passive_dimensions)
-            else:
-                self.passive_projection_matrix = None
-
-            print("BORING sampled the following passive matrix: ")
-            print(self.passive_projection_matrix)
+            d = 2
+            self.active_projection_matrix = np.asarray([
+                [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+                [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+            ]).T
+            s = 1.
+            l = 1.5
+            passive_dimensions = 0
 
             # Create Q by concatenateing the active and passive projections
             if passive_dimensions > 0:
@@ -351,7 +361,14 @@ class BoringGP(ConfidenceBoundModel):
             print("BORING sampled the following matrix: ")
             print(self.Q)
 
-            self.create_gp_and_kernels(active_dimensions=d, passive_dimensions=passive_dimensions, first=True)
+            assert d == self.active_projection_matrix.shape[1]
+
+            self.create_gp_and_kernels(
+                active_dimensions=d,
+                passive_dimensions=passive_dimensions,
+                first=True,
+                k_variance=s,
+                k_lengthscales=l)
 
             print("Projection matrix is: ", self.Q.shape)
             print("Dimensions found are: ", d)
