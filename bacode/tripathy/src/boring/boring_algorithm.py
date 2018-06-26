@@ -78,4 +78,5 @@ class BoringAlgorithm(Algorithm):
 
     def _next(self):
         z_ucb, _ = self.optimizer.optimize(self.ucb_acq_function)
+        print("Boring samples the next point: ", z_ucb)
         return z_ucb

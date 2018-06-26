@@ -36,7 +36,7 @@ def generate_orthogonal_matrix_to_A(A, n):
             counter += 1
 
             # Generate a random vector
-            np.random.seed(None)
+            # np.random.seed(None) // TODO: This often causes a shitty bug!
             q_i = np.random.rand(dims)
             q_i = q_i / np.linalg.norm(q_i)
 

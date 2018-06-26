@@ -98,6 +98,30 @@ class RemboAlgorithm(Algorithm):
             ])
         else:
             self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim, seed=None)
+            self.A = np.asarray(
+                [[-0.87029532, - 0.1387281],
+                 [-0.03966056, - 0.44315976],
+                 [0.10547953, - 0.8431906],
+                 [-0.42296969,  0.2088443],
+                [-0.22579596, - 0.17256191]]
+            )
+            # self.A = np.asarray(
+            #     [[-0.48816741, -0.60447259],
+            #      [0.2216277, -0.78353003],
+            #      [0.84414083, -0.14385261]]
+            # )
+            print("REMBO uses the following matrix!")
+            print(self.A)
+
+            # A little too straight, but it seems acceptable!
+            # [[-0.64909311  0.4687148]
+            #  [-0.21805274 - 0.86921481]
+            #  [0.72878744  0.1573914]]
+
+            # Looks good enough
+            # [[-0.48816741 - 0.60447259]
+            #  [0.2216277 - 0.78353003]
+            #  [0.84414083 - 0.14385261]]
 
         self.optimization_domain = get_subspace(self.config.dim)
 

@@ -64,7 +64,7 @@ class TripathyGP(ConfidenceBoundModel):
         self.gp = GPRegression(
             input_dim=self.domain.d,
             kernel=self.kernel,
-            noise_var=noise_var if noise_var else 2., # TODO: replace with config value!
+            noise_var=noise_var if noise_var else self.config.noise_var, # TODO: replace with config value!
             calculate_gradients= True # TODO: replace with config value!
         )
 

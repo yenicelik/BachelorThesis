@@ -71,7 +71,7 @@ class BoringGP(ConfidenceBoundModel):
 
         self.kernel = active_kernel
 
-        if first:
+        if first: # TODO: need to change this back!
 
             # Now adding the additional kernels:
             for i in range(passive_dimensions):
@@ -114,7 +114,7 @@ class BoringGP(ConfidenceBoundModel):
 
         # passive projection matrix still needs to be created first!
         # print("WARNING: CONFIG MODE IS: ", config.DEV)
-        self.burn_in_samples = 101 # 102
+        self.burn_in_samples = 101 # 101 # 102
         self.recalculate_projection_every = 101
         self.active_projection_matrix = None
         self.passive_projection_matrix = None
@@ -135,7 +135,7 @@ class BoringGP(ConfidenceBoundModel):
         )
 
         # Create a new kernel and create a new GP
-        self.create_gp_and_kernels(1, self.domain.d - 1, first=True)
+        self.create_gp_and_kernels(5, 0, first=True) #self.domain.d - 2
 
         # Some post-processing
         self.kernel = self.kernel.copy()
@@ -144,13 +144,12 @@ class BoringGP(ConfidenceBoundModel):
         self._woodbury_vector = self.gp.posterior._woodbury_vector.copy()
         self._X = self.gp.X.copy()
         self._Y = np.empty(shape=(0, 1))
-        self._beta = 2
         self._bias = self.config.bias
         self.always_calculate = always_calculate
 
     @property
     def beta(self):
-        return self._beta
+        return np.sqrt(np.log(self.datasaver_gp.X.shape[0]))
 
     @property
     def scale(self):
@@ -263,7 +262,7 @@ class BoringGP(ConfidenceBoundModel):
 
         assert not np.isnan(x).all(), ("X is nan at some point!", x)
 
-        if self.config.calculate_gradients and False: # TODO: there is this nan bug when I use my _raw_predict!
+        if self.config.calculate_gradients and True: # TODO: there is this nan bug when I use my _raw_predict!
             mean, var = self.gp.predict_noiseless(x)
         else:
             mean, var = self._raw_predict(x)
@@ -323,7 +322,11 @@ class BoringGP(ConfidenceBoundModel):
 
             self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(X, Y)
 
-            passive_dimensions = max(self.domain.d - d, 0)
+            print("BORING sampled the following active matrix: ")
+            print(self.active_projection_matrix)
+
+            # passive_dimensions = max(self.domain.d - d, 0)
+            passive_dimensions = 1
             # passive_dimensions = 0 # TODO: take out this part!
 
             # Generate A^{bot} if there's more dimensions
@@ -332,6 +335,9 @@ class BoringGP(ConfidenceBoundModel):
                                                                                  passive_dimensions)
             else:
                 self.passive_projection_matrix = None
+
+            print("BORING sampled the following passive matrix: ")
+            print(self.passive_projection_matrix)
 
             # Create Q by concatenateing the active and passive projections
             if passive_dimensions > 0:
@@ -342,7 +348,10 @@ class BoringGP(ConfidenceBoundModel):
 
             assert not np.isnan(self.Q).all(), ("The projection matrix contains nan's!", self.Q)
 
-            self.create_gp_and_kernels(active_dimensions=d, passive_dimensions=passive_dimensions) # TODO: after re-creating the kernel, do we need to call any calculation parameter?
+            print("BORING sampled the following matrix: ")
+            print(self.Q)
+
+            self.create_gp_and_kernels(active_dimensions=d, passive_dimensions=passive_dimensions, first=True) # TODO: after re-creating the kernel, do we need to call any calculation parameter?
 
             print("Projection matrix is: ", self.Q.shape)
             print("Dimensions found are: ", d)
@@ -461,6 +470,7 @@ class BoringGP(ConfidenceBoundModel):
 
     # TODO: do we need to apply the same function here?
     def _raw_predict_covar(self, Xnew, Xcond):
+        print("Stufffasdasdas")
         Kx = self.kernel.K(self._X, np.vstack((Xnew, Xcond)))
         tmp = lapack.dtrtrs(self._woodbury_chol, Kx, lower=1, trans=0, unitdiag=0)[0]
 
