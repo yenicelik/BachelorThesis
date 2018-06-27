@@ -26,7 +26,7 @@ class TripathyGPConfig(ModelConfig):
 
     """
     # kernels = ConfigField([('GPy.kern.RBF', {'variance': 2., 'lengthscale': 0.2 , 'ARD': True})])
-    # noise_var = ConfigField(0.1)
+    noise_var = ConfigField(0.1)
     calculate_gradients = ConfigField(True, comment='Enable/Disable computation of gradient on each update.')
     optimize_bias = ConfigField(False)
     optimize_var = ConfigField(False)
@@ -236,7 +236,17 @@ class TripathyGP(ConfidenceBoundModel):
             start_time = time.time()
             print("Adding data: ", self.i)
 
-            W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X, Y)
+            # TODO: UNCOMMENT THE FOLLOWIN GLINE AGAIN!
+            # This is just to check if tripathy conforms with the other version
+            # W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X, Y)
+            d = 2
+            W_hat = np.asarray([
+                [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+                [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+            ]).T
+            s = 1.
+            l = 1.5
+            sn = self.config.noise_var
 
             print("--- %s seconds ---" % (time.time() - start_time))
 

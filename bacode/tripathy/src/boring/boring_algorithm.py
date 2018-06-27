@@ -74,6 +74,9 @@ class BoringAlgorithm(Algorithm):
     def ucb_acq_function(self, Z):
         # assert not np.isnan(Z).all(), ("One of the optimized values over the acquisition function it nan!", Z)
         # print(Z)
+        # TODO: do I need to project this?
+        # if self.gp.Q is not None:
+        #     Z = np.dot(Z, self.Q)
         return -self.gp.ucb(Z)
 
     def _next(self):

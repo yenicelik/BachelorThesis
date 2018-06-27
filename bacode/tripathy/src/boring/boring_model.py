@@ -18,7 +18,9 @@ from scipy.linalg import lapack
 from scipy.optimize import minimize
 
 from GPy.kern.src.rbf import RBF
-from GPy.kern.src.sde_matern import Matern32
+from GPy.kern import Matern32
+
+# from GPy.kern.src.sde_matern import Matern32
 
 logger = get_logger('model')
 
@@ -60,10 +62,12 @@ class BoringGP(ConfidenceBoundModel):
 
     def create_kernels(self, active_dimensions, passive_dimensions, first=False, k_variance=None, k_lengthscales=None):
 
+        # Use tripathy kernel here instead, because it includes W in it's stuff
+
         active_kernel = RBF(
             input_dim=active_dimensions,
-            variance=2. if k_variance is None else k_variance,
-            lengthscale=0.5 if k_lengthscales is None else k_lengthscales, # 0.5,
+            variance=1. if k_variance is None else k_variance,
+            lengthscale=1.5 if k_lengthscales is None else k_lengthscales,  # 0.5,
             ARD=True,
             active_dims=np.arange(active_dimensions),
             name="active_subspace_kernel"
@@ -71,15 +75,15 @@ class BoringGP(ConfidenceBoundModel):
 
         self.kernel = active_kernel
 
-        if first: # TODO: need to change this back!
+        if first:  # TODO: need to change this back!
 
             # Now adding the additional kernels:
             for i in range(passive_dimensions):
                 cur_kernel = RBF(
                     input_dim=1,
                     variance=2.,
-                    lengthscale=0.5, # 0.5,
-                    ARD=True,
+                    lengthscale=0.5,  # 0.5,
+                    ARD=False,
                     active_dims=[active_dimensions + i],
                     name="passive_subspace_kernel_dim_" + str(i)
                 )
@@ -101,11 +105,15 @@ class BoringGP(ConfidenceBoundModel):
         # Apply the Q transform if it was spawned already!
         if self.Q is not None:
             X = np.dot(X, self.Q)
+        if self.Q is not None:
+            assert X.shape[1] == 2, ("Somehow, Q was not projected!")
         self.gp.set_XY(X, Y)
         self._update_cache()
 
-    def create_gp_and_kernels(self, active_dimensions, passive_dimensions, first=False, k_variance=None, k_lengthscales=None):
-        self.create_kernels(active_dimensions, passive_dimensions, first=first, k_variance=k_variance, k_lengthscales=k_lengthscales)
+    def create_gp_and_kernels(self, active_dimensions, passive_dimensions, first=False, k_variance=None,
+                              k_lengthscales=None):
+        self.create_kernels(active_dimensions, passive_dimensions, first=first, k_variance=k_variance,
+                            k_lengthscales=k_lengthscales)
         self.create_gp()
 
     # From here on, it's the usual functions
@@ -114,7 +122,7 @@ class BoringGP(ConfidenceBoundModel):
 
         # passive projection matrix still needs to be created first!
         # print("WARNING: CONFIG MODE IS: ", config.DEV)
-        self.burn_in_samples = 101 # 101 # 102
+        self.burn_in_samples = 101  # 101 # 102
         self.recalculate_projection_every = 101
         self.active_projection_matrix = None
         self.passive_projection_matrix = None
@@ -135,7 +143,7 @@ class BoringGP(ConfidenceBoundModel):
         )
 
         # Create a new kernel and create a new GP
-        self.create_gp_and_kernels(5, 0, first=True) #self.domain.d - 2
+        self.create_gp_and_kernels(5, 0, first=True)  # self.domain.d - 2
 
         # Some post-processing
         self.kernel = self.kernel.copy()
@@ -254,49 +262,29 @@ class BoringGP(ConfidenceBoundModel):
         """
         x = np.atleast_2d(x)
 
-        assert not np.isnan(x).all(), ("X is nan before projection!", x)
-
-        # TODO: the following is applied multiple times!
-        # if self.Q is not None:
-        #     x = np.dot(x, self.Q)
-
         assert not np.isnan(x).all(), ("X is nan at some point!", x)
 
-        if self.config.calculate_gradients and False: # TODO: there is this nan bug when I use my _raw_predict!
+        if self.config.calculate_gradients or True:
+            # In the other case, projection is done in a subfunction
+            if self.Q is not None:
+                x = np.dot(x, self.Q)
             mean, var = self.gp.predict_noiseless(x)
         else:
             mean, var = self._raw_predict(x)
-
-        # print("Mean and variance are: ", mean, var)
 
         return mean + self._bias, var
 
     def mean_var_grad(self, x):
         # TODO: should this be here aswell?
+        # TODO: check, that this is not actually used for new AND saved gp's!
         if self.Q is not None:
             x = np.dot(x, self.Q)
         return self.gp.predictive_gradients(x)
 
     def var(self, x):
-        # TODO: should this be here aswell?
-        if self.Q is not None:
-            x = np.dot(x, self.Q)
         return self.mean_var(x)[1]
 
-    # TODO: is this a bug?
-    def predictive_var(self, X, X_cond, S_X, var_Xcond=None):
-        X = np.atleast_2d(X)
-        X_cond = np.atleast_2d(X_cond)
-        var_X, KXX = self._raw_predict_covar(X, X_cond)
-
-        if var_Xcond is None:
-            var_Xcond = self.var(X_cond)
-
-        return var_Xcond - KXX * KXX / (S_X * S_X + var_X)
-
     def mean(self, x):
-        if self.Q is not None:
-            x = np.dot(x, self.Q)
         return self.mean_var(x)[0]
 
     def set_data(self, X, Y, append=True):
@@ -313,7 +301,7 @@ class BoringGP(ConfidenceBoundModel):
         Y = self.datasaver_gp.Y
 
         # Do our optimization now
-        if self.burn_in_samples == self.i or self.always_calculate: # (self.i >= self.burn_in_samples and self.i % self.recalculate_projection_every == 1) or
+        if self.burn_in_samples == self.i or self.always_calculate:  # (self.i >= self.burn_in_samples and self.i % self.recalculate_projection_every == 1) or
             import time
             start_time = time.time()
             print("Adding data: ", self.i)
@@ -381,8 +369,8 @@ class BoringGP(ConfidenceBoundModel):
         # if self.i > self.burn_in_samples:
         #     assert self.Q is not None, "After the burning in, self.Q is still None!"
 
-        # TODO: at this point, maybe it is also beneficial to plot the data and the manifold fit?
-        if (self.i <= self.burn_in_samples or self.Q is None) and (not self.always_calculate):
+        # Add the points to the newly shapes GP!
+        if (self.i < self.burn_in_samples or self.Q is None) and (not self.always_calculate):
             print("Still using the old method!")
             self.gp.set_XY(X, Y)
         else:
@@ -399,45 +387,18 @@ class BoringGP(ConfidenceBoundModel):
         self.t = X.shape[0]
         self._update_cache()
 
-    def sample(self, X=None):
-        # TODO: are we supposed to project here?
-        if self.Q is not None:
-            X = np.dot(X, self.Q)
-        class GPSampler:
-            def __init__(self, X, Y, kernel, var):
-                self.X = X
-                self.Y = Y
-                self.N = var * np.ones(shape=Y.shape)
-                self.kernel = kernel
-                self.m = GPy.models.GPHeteroscedasticRegression(self.X, self.Y, self.kernel)
-                self.m['.*het_Gauss.variance'] = self.N
-
-            def __call__(self, X):
-                X = np.atleast_2d(X)
-                sample = np.empty(shape=(X.shape[0], 1))
-
-                # iteratively generate sample values for all x in x_test
-                for i, x in enumerate(X):
-                    sample[i] = self.m.posterior_samples_f(x.reshape((1, -1)), size=1)
-
-                    # add observation as without noise
-                    self.X = np.vstack((self.X, x))
-                    self.Y = np.vstack((self.Y, sample[i]))
-                    self.N = np.vstack((self.N, 0))
-
-                    # recalculate model
-                    self.m = GPy.models.GPHeteroscedasticRegression(self.X, self.Y, self.kernel)
-                    self.m['.*het_Gauss.variance'] = self.N  # Set the noise parameters to the error in Y
-
-                return sample
-
-        return GPSampler(self.gp.X.copy(), self.gp.Y.copy(), self.kernel, self.gp.likelihood.variance)
-
     def _raw_predict(self, Xnew):
         m, n = Xnew.shape
 
-        if not hasattr(self.kernel, 'parts'):
-            mu, var = self._raw_predict_single_kernel(Xnew)
+        # Need to project Xnew here?
+        # if self.Q is not None:
+        #     Xnew = np.dot(Xnew, self.Q)
+        #     assert Xnew.shape[1] == self.Q.reshape(self.Q.shape[0], -1).shape[1], ("Shapes are wrong: ", Xnew.shape, self.Q.shape)
+        # else:
+        #     assert Xnew.shape[1] == self.domain.d, ("Shapes are wrong when we have no Q!", Xnew.shape, self.domain.d)
+
+        if not hasattr(self.kernel, 'parts'):  # TODO: take this out?
+            mu, var = self._raw_predict_given_kernel(Xnew, self.kernel)
             # print("Using the cool values! ")
         else:
             mu = np.zeros((Xnew.shape[0], 1))
@@ -457,22 +418,6 @@ class BoringGP(ConfidenceBoundModel):
 
         return mu, var
 
-    def _raw_predict_single_kernel(self, Xnew):
-        Kx = self.kernel.K(self._X, Xnew)
-        mu = np.dot(Kx.T, self._woodbury_vector)
-
-        if len(mu.shape) == 1:
-            mu = mu.reshape(-1, 1)
-
-        Kxx = self.kernel.Kdiag(Xnew)
-        tmp = lapack.dtrtrs(self._woodbury_chol, Kx, lower=1, trans=0, unitdiag=0)[0]
-        var = (Kxx - np.square(tmp).sum(0))[:, None]
-
-        assert (var >= 0.).all(), ("Variance is negative at some points! ", var)
-
-        return mu, var
-
-
     def _raw_predict_given_kernel(self, Xnew, kernel):
         Kx = kernel.K(self._X, Xnew)
         mu = np.dot(Kx.T, self._woodbury_vector)
@@ -484,23 +429,6 @@ class BoringGP(ConfidenceBoundModel):
         tmp = lapack.dtrtrs(self._woodbury_chol, Kx, lower=1, trans=0, unitdiag=0)[0]
         var = (Kxx - np.square(tmp).sum(0))[:, None]
         return mu, var
-
-    # TODO: do we need to apply the same function here?
-    def _raw_predict_covar(self, Xnew, Xcond):
-        print("Stufffasdasdas")
-        Kx = self.kernel.K(self._X, np.vstack((Xnew, Xcond)))
-        tmp = lapack.dtrtrs(self._woodbury_chol, Kx, lower=1, trans=0, unitdiag=0)[0]
-
-        n = Xnew.shape[0]
-        tmp1 = tmp[:, :n]
-        tmp2 = tmp[:, n:]
-
-        Kxx = self.kernel.K(Xnew, Xcond)
-        var = Kxx - (tmp1.T).dot(tmp2)
-
-        Kxx_new = self.kernel.Kdiag(Xnew)
-        var_Xnew = (Kxx_new - np.square(tmp1).sum(0))[:, None]
-        return var_Xnew, var
 
     def _norm(self):
         norm = self._woodbury_vector.T.dot(self.gp.kern.K(self.gp.X)).dot(self._woodbury_vector)
