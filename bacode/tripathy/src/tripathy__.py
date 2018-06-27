@@ -26,19 +26,14 @@ class TripathyGPConfig(ModelConfig):
 
     """
     # kernels = ConfigField([('GPy.kern.RBF', {'variance': 2., 'lengthscale': 0.2 , 'ARD': True})])
-    noise_var = ConfigField(0.1)
-    calculate_gradients = ConfigField(True, comment='Enable/Disable computation of gradient on each update.')
+    noise_var = ConfigField(0.01)
+    calculate_gradients = ConfigField(False, comment='Enable/Disable computation of gradient on each update.')
     optimize_bias = ConfigField(False)
     optimize_var = ConfigField(False)
     bias = ConfigField(0)
     _section = 'src.tripathy__'
 
 config_manager.register(TripathyGPConfig)
-
-# def optimize_gp(experiment):
-#     experiment.algorithm.f.gp.kern.variance.fix()
-#     experiment.algorithm.f.gp.optimize()
-#     print(experiment.algorithm.f.gp)
 
 from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
 from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer
@@ -64,8 +59,8 @@ class TripathyGP(ConfidenceBoundModel):
         self.gp = GPRegression(
             input_dim=self.domain.d,
             kernel=self.kernel,
-            noise_var=noise_var if noise_var else self.config.noise_var, # TODO: replace with config value!
-            calculate_gradients= True # TODO: replace with config value!
+            noise_var=noise_var if noise_var else 2., # self.config.noise_var,
+            calculate_gradients=self.config.calculate_gradients
         )
 
     def set_new_gp_and_kernel(self, d, W, variance, lengthscale, noise_var):
@@ -198,7 +193,7 @@ class TripathyGP(ConfidenceBoundModel):
         """
         x = np.atleast_2d(x)
 
-        if self.config.calculate_gradients:
+        if self.config.calculate_gradients or True:
             mean,var = self.gp.predict_noiseless(x)
         else:
             mean,var = self._raw_predict(x)
@@ -211,17 +206,6 @@ class TripathyGP(ConfidenceBoundModel):
     def var(self, x):
         return self.mean_var(x)[1]
 
-    # TODO: is this a bug?
-    def predictive_var(self, X, X_cond, S_X, var_Xcond=None):
-        X = np.atleast_2d(X)
-        X_cond = np.atleast_2d(X_cond)
-        var_X, KXX = self._raw_predict_covar(X, X_cond)
-
-        if var_Xcond is None:
-            var_Xcond = self.var(X_cond)
-
-        return var_Xcond - KXX*KXX/(S_X*S_X + var_X)
-
     def mean(self, x):
         return self.mean_var(x)[0]
 
@@ -231,12 +215,12 @@ class TripathyGP(ConfidenceBoundModel):
             Y = np.concatenate((self.gp.Y, Y))
 
         # Do our optimization now
-        if self.i % 50 == 49 or self.calculate_always:
+        if self.i % 100 == 99 or self.calculate_always:
             import time
             start_time = time.time()
             print("Adding data: ", self.i)
 
-            # TODO: UNCOMMENT THE FOLLOWIN GLINE AGAIN!
+            # TODO: UNCOMMENT THE FOLLOWING LINE AGAIN!
             # This is just to check if tripathy conforms with the other version
             # W_hat, sn, l, s, d = self.optimizer.find_active_subspace(X, Y)
             d = 2
@@ -246,7 +230,7 @@ class TripathyGP(ConfidenceBoundModel):
             ]).T
             s = 1.
             l = 1.5
-            sn = self.config.noise_var
+            sn = 2. # 0.01 #self.config.noise_var
 
             print("--- %s seconds ---" % (time.time() - start_time))
 

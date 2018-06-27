@@ -64,7 +64,7 @@ class BoringGP(ConfidenceBoundModel):
 
         # Use tripathy kernel here instead, because it includes W in it's stuff
 
-        active_kernel = RBF(
+        active_kernel = Matern32(
             input_dim=active_dimensions,
             variance=1. if k_variance is None else k_variance,
             lengthscale=1.5 if k_lengthscales is None else k_lengthscales,  # 0.5,
@@ -96,7 +96,7 @@ class BoringGP(ConfidenceBoundModel):
             input_dim=self.domain.d,
             kernel=self.kernel,
             noise_var=0.01,
-            calculate_gradients=True
+            calculate_gradients=False
         )
 
         # Let the GP take over datapoints from the datasaver!
