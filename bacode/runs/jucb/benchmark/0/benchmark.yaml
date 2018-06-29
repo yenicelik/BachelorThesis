@@ -1,2 +1,2 @@
 experiment.simple: {algorithm: bacode.tripathy.src.rembo.rembo_algorithm.RemboAlgorithm,
-  environment: febo.environment.benchmarks.functions.CamelbackEmbedded}
+  environment: febo.environment.benchmarks.functions.CamelbackEmbedded5D}
