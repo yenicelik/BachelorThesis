@@ -52,27 +52,35 @@ class TripathyGP(ConfidenceBoundModel):
 
     """
 
+    def create_new_kernel(self, active_d, W=None, variance=None, lengthscale=None):
+        self.kernel = TripathyMaternKernel(
+            self.domain.d,
+            active_d,
+            W=W,
+            variance=variance,
+            lengthscale=lengthscale
+        )
+
+    def create_new_gp(self, noise_var=None):
+        self.gp = GPRegression(
+            self.domain.d,
+            self.kernel,
+            noise_var=noise_var if noise_var is not None else self.config.noise_var,
+            calculate_gradients=self.config.calculate_gradients
+        )
+
     def __init__(self, domain):
         super(TripathyGP, self).__init__(domain)
 
-        # self.kernel = self.config.kernels
-        # self.kernel = Matern32(
-        #     self.domain.d,
-        #     variance=1.,
-        #     lengthscale=1.5,
-        #     ARD=True
-        # )
-
-        self.kernel = TripathyMaternKernel(
-            self.domain.d,
-            self.domain.d,
+        self.create_new_kernel(
+            active_d=self.domain.d,
             W=np.eye(self.domain.d),
             variance=1.0,
             lengthscale=1.5
         )
 
-        # calling of the kernel
-        self.gp = self._get_gp()
+        self.create_new_gp()
+
         # number of data points
         self.t = 0
         self.kernel = self.kernel.copy()
@@ -101,8 +109,7 @@ class TripathyGP(ConfidenceBoundModel):
         return self._bias
 
     def _get_gp(self):
-        return GPRegression(self.domain.d, self.kernel, noise_var=self.config.noise_var,
-                            calculate_gradients=self.config.calculate_gradients)
+        return self.gp
 
     def add_data(self, x, y):
         """
