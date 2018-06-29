@@ -5,8 +5,8 @@ import numpy as np
 
 import sys
 # sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/bacode/tripathy")
-sys.path.append("/cluster/home/yedavid/BachelorThesis/tripathy/")
-sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/bacode")
+# sys.path.append("/cluster/home/yedavid/BachelorThesis/tripathy/")
+# sys.path.append("/Users/davidal/GoogleDrive/BachelorThesis/bacode")
 
 
 from febo.models import ConfidenceBoundModel
@@ -17,7 +17,7 @@ import GPy
 from scipy.linalg import lapack
 from scipy.optimize import minimize
 
-logger = get_logger('model')
+logger = get_logger('tripathy')
 
 from febo.utils import locate, get_logger
 

@@ -43,9 +43,9 @@ experiment.benchmark:
   #   experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded5D
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB
     experiment.simple:environment: febo.environment.benchmarks.functions.Camelback
-  # - experiment.simple:algorithm: febo.algorithms.ucb.UCB
-  #   algorithm:model: bacode.tripathy.src.tripathy__.TripathyGP # Should it be "algorithm:model", or just "model"
-  #   experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded5D
+  - experiment.simple:algorithm: febo.algorithms.ucb.UCB
+    algorithm:model: bacode.tripathy.src.tripathy__.TripathyGP # Should it be "algorithm:model", or just "model"
+    experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded5D
   - experiment.simple:algorithm: bacode.tripathy.src.rembo.rembo_algorithm.RemboAlgorithm
     experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded5D
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB
