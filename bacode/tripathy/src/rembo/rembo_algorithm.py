@@ -130,9 +130,11 @@ class RemboAlgorithm(Algorithm):
 
     def _next(self):
         z_ucb, _ = self.optimizer.optimize(self.ucb_acq_function)
-        print("Optimized point is: ", z_ucb)
+        if VERBOSE_NEXTPOINT:
+            print("Optimized point is: ", z_ucb)
         out = self.project_low_to_high(z_ucb)
-        print("Next chosen point is: ", out)
+        if VERBOSE_NEXTPOINT:
+            print("Next chosen point is: ", out)
         return out
 
     def project_high_to_low(self, x):
@@ -200,6 +202,7 @@ USE_REAL_MATRIX = False
 NORM_DENORM = True
 DEBUG_HIGH = False
 DEBUG_LOW = False
+VERBOSE_NEXTPOINT = False
 
 #         assert self.A.shape == (self.domain.d, self.config.dim), (
 #             "Something went wrong when generating the dimensions of A! ", self.A.shape,

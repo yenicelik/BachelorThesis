@@ -19,13 +19,15 @@ from scipy.optimize import minimize
 
 logger = get_logger('model')
 
+from febo.utils import locate, get_logger
+
 class TripathyGPConfig(ModelConfig):
     """
     * kernels: List of kernels
     * noise_var: noise variance
 
     """
-    # kernels = ConfigField([('GPy.kern.RBF', {'variance': 2., 'lengthscale': 0.2 , 'ARD': True})])
+    kernels = ConfigField([('GPy.kern.RBF', {'variance': 2., 'lengthscale': 0.2 , 'ARD': True})])
     noise_var = ConfigField(0.01)
     calculate_gradients = ConfigField(False, comment='Enable/Disable computation of gradient on each update.')
     optimize_bias = ConfigField(False)
@@ -51,9 +53,16 @@ class TripathyGP(ConfidenceBoundModel):
         super(TripathyGP, self).__init__(domain)
 
         # the description of a kernel
-        self.kernel = Matern32(
-            self.domain.d
-        )
+        self.kernel = None
+        for kernel_module, kernel_params in self.config.kernels:
+            input_dim = self.domain.d
+            if 'active_dims' in kernel_params:
+                input_dim = len(kernel_params['active_dims'])
+            kernel_part = locate(kernel_module)(input_dim=input_dim, **kernel_params)
+            if self.kernel is None:
+                self.kernel = kernel_part
+            else:
+                self.kernel += kernel_part
 
         # calling of the kernel
         self.gp = self._get_gp()
@@ -66,6 +75,7 @@ class TripathyGP(ConfidenceBoundModel):
         self._Y = np.empty(shape=(0,1))
         self._beta = 2
         self._bias = self.config.bias
+
 
     @property
     def beta(self):
