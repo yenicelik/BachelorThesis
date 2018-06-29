@@ -61,28 +61,50 @@ class TripathyGP(ConfidenceBoundModel):
             lengthscale=lengthscale
         )
 
-    def create_new_gp(self, noise_var=None):
+    def create_new_gp(self, noise_var=None, overtakeXY=True):
+        # Take over data from the old GP, if existent
+        if overtakeXY:
+            X = self.gp.X
+            Y = self.gp.Y
         self.gp = GPRegression(
             self.domain.d,
             self.kernel,
             noise_var=noise_var if noise_var is not None else self.config.noise_var,
             calculate_gradients=self.config.calculate_gradients
         )
+        if overtakeXY:
+            self._set_data(X, Y)
 
-    def __init__(self, domain):
+    def create_new_gp_and_kernel(self, active_d, W, variance, lengtscale, noise_var, overtakeXY=True):
+        self.create_new_kernel(
+            active_d=active_d,
+            W=W,
+            variance=variance,
+            lengthscale=lengtscale
+        )
+        self.create_new_gp(
+            noise_var=noise_var,
+            overtakeXY=overtakeXY
+        )
+
+    def __init__(self, domain, calculate_always=False):
         super(TripathyGP, self).__init__(domain)
 
-        self.create_new_kernel(
+        print("Starting tripathy model!")
+        self.gp = None
+
+        self.create_new_gp_and_kernel(
             active_d=self.domain.d,
             W=np.eye(self.domain.d),
             variance=1.0,
-            lengthscale=1.5
+            lengtscale=1.5,
+            noise_var=None,
+            overtakeXY=False
         )
-
-        self.create_new_gp()
 
         # number of data points
         self.t = 0
+        self.i = 0
         self.kernel = self.kernel.copy()
         self._woodbury_chol = np.asfortranarray(
             self.gp.posterior._woodbury_chol)  # we create a copy of the matrix in fortranarray, such that we can directly pass it to lapack dtrtrs without doing another copy
@@ -91,6 +113,7 @@ class TripathyGP(ConfidenceBoundModel):
         self._Y = np.empty(shape=(0, 1))
         self._beta = 2
         self._bias = self.config.bias
+        self.calculate_always = calculate_always
 
     # Obligatory values
     @property
@@ -122,11 +145,9 @@ class TripathyGP(ConfidenceBoundModel):
         x = np.atleast_2d(x)
         y = np.atleast_2d(y)
 
-        self._Y = np.vstack([self._Y, y])  # store unbiased data
-        self.gp.append_XY(x, y - self._bias)
+        self.i += 1
 
-        self.t += y.shape[1]
-        self._update_cache()
+        self.set_data(x, y, append=True)
 
     def optimize(self):
         self._update_beta()
@@ -159,7 +180,7 @@ class TripathyGP(ConfidenceBoundModel):
         """
         x = np.atleast_2d(x)
 
-        if self.config.calculate_gradients:
+        if self.config.calculate_gradients or True:
             mean, var = self.gp.predict_noiseless(x)
         else:
             mean, var = self._raw_predict(x)
@@ -172,13 +193,33 @@ class TripathyGP(ConfidenceBoundModel):
     def mean(self, x):
         return self.mean_var(x)[0]
 
+    # TODO: Implement the thing finder in here!
     def set_data(self, X, Y, append=True):
         if append:
             X = np.concatenate((self.gp.X, X))
             Y = np.concatenate((self.gp.Y, Y))
-        self.gp.set_XY(X, Y)
-        self.t = X.shape[0]
-        self._update_cache()
+
+        if self.i % 100 == 99 or self.calculate_always:
+
+            # Recalculate the kernel and gp with optimized values
+            self.create_new_gp_and_kernel(
+                active_d=self.domain.d,
+                W=np.eye(self.domain.d),
+                variance=1.0,
+                lengtscale=1.5,
+                noise_var=None,
+                overtakeXY=True
+            )
+
+        else:
+
+            # Don't recalculate the kernel and gp
+            self._set_data(X, Y)
+
+    def _set_data(self, X, Y):
+       self.gp.set_XY(X, Y)
+       self.t = X.shape[0]
+       self._update_cache()
 
     def _raw_predict(self, Xnew):
 
