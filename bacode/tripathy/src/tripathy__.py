@@ -56,18 +56,20 @@ class TripathyGP(ConfidenceBoundModel):
         super(TripathyGP, self).__init__(domain)
 
         # self.kernel = self.config.kernels
-        self.kernel = Matern32(
-            self.domain.d,
-            variance=1.,
-            lengthscale=1.5,
-            ARD=True
-        )
-
-        # self.kernel = TripathyMaternKernel(
+        # self.kernel = Matern32(
         #     self.domain.d,
-        #     self.domain.d,
-        #     W=np.eye(self.domain.d)
+        #     variance=1.,
+        #     lengthscale=1.5,
+        #     ARD=True
         # )
+
+        self.kernel = TripathyMaternKernel(
+            self.domain.d,
+            self.domain.d,
+            W=np.eye(self.domain.d),
+            variance=1.0,
+            lengthscale=1.5
+        )
 
         # calling of the kernel
         self.gp = self._get_gp()
