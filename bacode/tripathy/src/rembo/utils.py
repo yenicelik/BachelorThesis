@@ -15,7 +15,7 @@ def sample_orthogonal_matrix(real_dim, active_dim, seed=None):
     """
     :return: An orthogonal matrix
     """
-    np.random.seed(seed)
+    # np.random.seed(seed)
     A = np.zeros((real_dim, active_dim), dtype=np.float64)
     for i in range(real_dim):
         for j in range(active_dim):
