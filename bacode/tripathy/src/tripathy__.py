@@ -27,7 +27,7 @@ class TripathyGPConfig(ModelConfig):
     * noise_var: noise variance
 
     """
-    kernels = ConfigField([('GPy.kern.RBF', {'variance': 2., 'lengthscale': 0.2 , 'ARD': True})])
+    kernels = ConfigField([('GPy.kern.Matern32', {'variance': 1., 'lengthscale': 1.5 , 'ARD': True})])
     noise_var = ConfigField(0.01)
     calculate_gradients = ConfigField(False, comment='Enable/Disable computation of gradient on each update.')
     optimize_bias = ConfigField(False)
@@ -52,17 +52,19 @@ class TripathyGP(ConfidenceBoundModel):
     def __init__(self, domain):
         super(TripathyGP, self).__init__(domain)
 
-        # the description of a kernel
-        self.kernel = None
-        for kernel_module, kernel_params in self.config.kernels:
-            input_dim = self.domain.d
-            if 'active_dims' in kernel_params:
-                input_dim = len(kernel_params['active_dims'])
-            kernel_part = locate(kernel_module)(input_dim=input_dim, **kernel_params)
-            if self.kernel is None:
-                self.kernel = kernel_part
-            else:
-                self.kernel += kernel_part
+        # self.kernel = self.config.kernels
+        self.kernel = Matern32(
+            self.domain.d,
+            variance=1.,
+            lengthscale=1.5,
+            ARD=True
+        )
+
+        # self.kernel = TripathyMaternKernel(
+        #     self.domain.d,
+        #     self.domain.d,
+        #     W=np.eye(self.domain.d)
+        # )
 
         # calling of the kernel
         self.gp = self._get_gp()
@@ -77,6 +79,7 @@ class TripathyGP(ConfidenceBoundModel):
         self._bias = self.config.bias
 
 
+    # Obligatory values
     @property
     def beta(self):
         return self._beta
@@ -114,11 +117,6 @@ class TripathyGP(ConfidenceBoundModel):
 
 
     def optimize(self):
-        if self.config.optimize_bias:
-            self._optimize_bias()
-        if self.config.optimize_var:
-            self._optimize_var()
-
         self._update_beta()
 
 
@@ -129,25 +127,6 @@ class TripathyGP(ConfidenceBoundModel):
         self._X = self.gp.X.copy()
 
         self._update_beta()
-
-    def _optimize_bias(self):
-        self._bias = minimize(self._bias_loss, self._bias, method='L-BFGS-B')['x'].copy()
-        self._set_bias(self._bias)
-        logger.info(f"Updated bias to {self._bias}")
-
-    def _bias_loss(self, c):
-        # calculate mean and norm for new bias via a new woodbury_vector
-        new_woodbury_vector,_= dpotrs(self._woodbury_chol, self._Y - c, lower=1)
-        K = self.gp.kern.K(self.gp.X)
-        mean = np.dot(K, new_woodbury_vector)
-        norm = new_woodbury_vector.T.dot(mean)
-        # loss is least_squares_error + norm
-        return np.asscalar(np.sum(np.square(mean + c - self._Y)) + norm)
-
-    def _set_bias(self, c):
-        self._bias = c
-        self.gp.set_Y(self._Y - c)
-        self._woodbury_vector = self.gp.posterior._woodbury_vector.copy()
 
     def _update_beta(self):
         logdet = self._get_logdet()
@@ -229,37 +208,6 @@ class TripathyGP(ConfidenceBoundModel):
         self.gp.set_XY(X, Y)
         self.t = X.shape[0]
         self._update_cache()
-
-    def sample(self, X=None):
-        class GPSampler:
-            def __init__(self, X, Y, kernel, var):
-                self.X = X
-                self.Y = Y
-                self.N = var * np.ones(shape=Y.shape)
-                self.kernel = kernel
-                self.m = GPy.models.GPHeteroscedasticRegression(self.X, self.Y, self.kernel)
-                self.m['.*het_Gauss.variance'] = self.N
-
-            def __call__(self, X):
-                X = np.atleast_2d(X)
-                sample = np.empty(shape=(X.shape[0], 1))
-
-                # iteratively generate sample values for all x in x_test
-                for i, x in enumerate(X):
-                    sample[i] = self.m.posterior_samples_f(x.reshape((1, -1)), size=1)
-
-                    # add observation as without noise
-                    self.X = np.vstack((self.X, x))
-                    self.Y = np.vstack((self.Y, sample[i]))
-                    self.N = np.vstack((self.N, 0))
-
-                    # recalculate model
-                    self.m = GPy.models.GPHeteroscedasticRegression(self.X, self.Y, self.kernel)
-                    self.m['.*het_Gauss.variance'] = self.N  # Set the noise parameters to the error in Y
-
-                return sample
-
-        return GPSampler(self.gp.X.copy(), self.gp.Y.copy(), self.kernel, self.gp.likelihood.variance)
 
     def _raw_predict(self, Xnew):
 
