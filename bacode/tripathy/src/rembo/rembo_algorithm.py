@@ -55,11 +55,10 @@ def get_subspace(effective_dimensions):
     :return:
     """
     eps = np.log(effective_dimensions) / np.sqrt(effective_dimensions) * (2.) # This modifies the chance that we get a bad entry!
-    # eps = np.log(effective_dimensions) / np.sqrt(effective_dimensions) * (4.) # This modifies the chance that we get a bad entry!
 
     span_high = np.ones((effective_dimensions,))
     span_high = np.log(span_high)
-    span_high = np.maximum(span_high, 1.) / eps
+    span_high = np.maximum(span_high, 1) / eps
 
     return ContinuousDomain(-1 * span_high, span_high)
 
@@ -75,7 +74,6 @@ class RemboAlgorithm(Algorithm):
         x = data['x']
         x = self.project_high_to_low(x)
         self.gp.add_data(x, data['y'])
-        print("Y is: ", data['y'])
         self.gp.optimize()  # TODO: How do we optimize the kernel parameters?
 
     def initialize(self, **kwargs):
@@ -88,7 +86,7 @@ class RemboAlgorithm(Algorithm):
         super(RemboAlgorithm, self).initialize(**kwargs)
 
         # Take the domain out of the kwargs
-        # self.domain = kwargs.get('domain') # TODO: this was added as a result of visualizing REMBO (because usually, it is a subclass of the model)
+        self.domain = kwargs.get('domain') # TODO: this was added as a result of visualizing REMBO (because usually, it is a subclass of the model)
         print("Domain is: ", self.domain)
         self.center = (self.domain.u + self.domain.l) / 2.
 
@@ -100,13 +98,13 @@ class RemboAlgorithm(Algorithm):
             ])
         else:
             self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim, seed=None)
-            # self.A = np.asarray(
-            #     [[-0.87029532, - 0.1387281],
-            #      [-0.03966056, - 0.44315976],
-            #      [0.10547953, - 0.8431906],
-            #      [-0.42296969,  0.2088443],
-            #     [-0.22579596, - 0.17256191]]
-            # )
+            self.A = np.asarray(
+                [[-0.87029532, - 0.1387281],
+                 [-0.03966056, - 0.44315976],
+                 [0.10547953, - 0.8431906],
+                 [-0.42296969,  0.2088443],
+                [-0.22579596, - 0.17256191]]
+            )
             # self.A = np.asarray(
             #     [[-0.48816741, -0.60447259],
             #      [0.2216277, -0.78353003],
@@ -181,8 +179,8 @@ class RemboAlgorithm(Algorithm):
             print("After Projecting to high-dimensional space", out)
 
         if NORM_DENORM:
-            out = np.maximum(out, -1. * np.ones((self.domain.d,)))  # before was self.domain.l, and self.domain.u
-            out = np.minimum(out, 1. * np.ones((self.domain.d,)))
+            out = np.maximum(out, -1 * np.ones((self.domain.d,)))  # before was self.domain.l, and self.domain.u
+            out = np.minimum(out, 1 * np.ones((self.domain.d,)))
         else:
             out = np.maximum(out, self.domain.l)
             out = np.minimum(out, self.domain.u)
