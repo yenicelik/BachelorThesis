@@ -38,11 +38,15 @@ experiment_name="$dim"_"$model"
 # febo plot "johannes_ucb"
 # cd $initial_wd
 
+
 # Run the embedded ucb sample
 config_path="$BASEPATH"johannes_configs
 echo "Using config file:" $config_path$delimiter"ucb_embed_benchmark.yaml"
 febo create jucb --config $config_path$delimiter"ucb_embed_benchmark.yaml" --overwrite
 # cd ..
 febo run jucb
+
+printf "\n\n\n\n\nDONE RUNNING. NOW VISUALIZING\n\n\n\n\n\n\n\n"
+
 febo plot jucb
 cd $initial_wd

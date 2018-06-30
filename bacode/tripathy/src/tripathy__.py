@@ -28,13 +28,13 @@ class TripathyGPConfig(ModelConfig):
     * noise_var: noise variance
 
     """
-    kernels = ConfigField([('GPy.kern.Matern32', {'variance': 1., 'lengthscale': 1.5, 'ARD': True})])
+    # kernels = ConfigField([('GPy.kern.Matern32', {'variance': 1., 'lengthscale': 1.5, 'ARD': True})])
     noise_var = ConfigField(0.01)
     calculate_gradients = ConfigField(False, comment='Enable/Disable computation of gradient on each update.')
     optimize_bias = ConfigField(False)
     optimize_var = ConfigField(False)
     bias = ConfigField(0)
-    # _section = 'src.tripathy__'
+    _section = 'src.tripathy__'
 
 
 config_manager.register(TripathyGPConfig)
@@ -53,29 +53,26 @@ class TripathyGP(ConfidenceBoundModel):
     """
 
     def create_new_kernel(self, active_d, W=None, variance=None, lengthscale=None):
+        print("Creating a new kernel!")
         self.kernel = TripathyMaternKernel(
-            self.domain.d,
-            active_d,
+            real_dim=self.domain.d,
+            active_dim=active_d,
             W=W,
             variance=variance,
             lengthscale=lengthscale
         )
 
-    def create_new_gp(self, noise_var=None, overtakeXY=True):
+    def create_new_gp(self, noise_var=None):
         # Take over data from the old GP, if existent
-        if overtakeXY:
-            X = self.gp.X
-            Y = self.gp.Y
+        print("Creating a new gp!")
         self.gp = GPRegression(
             self.domain.d,
             self.kernel,
             noise_var=noise_var if noise_var is not None else self.config.noise_var,
             calculate_gradients=self.config.calculate_gradients
         )
-        if overtakeXY:
-            self._set_data(X, Y)
 
-    def create_new_gp_and_kernel(self, active_d, W, variance, lengtscale, noise_var, overtakeXY=True):
+    def create_new_gp_and_kernel(self, active_d, W, variance, lengtscale, noise_var):
         self.create_new_kernel(
             active_d=active_d,
             W=W,
@@ -83,8 +80,7 @@ class TripathyGP(ConfidenceBoundModel):
             lengthscale=lengtscale
         )
         self.create_new_gp(
-            noise_var=noise_var,
-            overtakeXY=overtakeXY
+            noise_var=noise_var
         )
 
     def __init__(self, domain, calculate_always=False):
@@ -93,13 +89,18 @@ class TripathyGP(ConfidenceBoundModel):
         print("Starting tripathy model!")
         self.gp = None
 
+        self.active_d = None
+        self.W_hat = None
+        self.variance = None
+        self.lengthscale = None
+        self.noise_var = None
+
         self.create_new_gp_and_kernel(
-            active_d=self.domain.d,
-            W=np.eye(self.domain.d),
-            variance=1.0,
-            lengtscale=1.5,
-            noise_var=None,
-            overtakeXY=False
+            active_d=self.domain.d if self.active_d is None else self.active_d,
+            W=np.eye(self.domain.d) if self.active_d is None else self.W,
+            variance=1.0 if self.active_d is None else self.variance,
+            lengtscale=1.5 if self.active_d is None else self.lengthscale,
+            noise_var=None if self.active_d is None else self.noise_var,
         )
 
         # number of data points
@@ -125,7 +126,7 @@ class TripathyGP(ConfidenceBoundModel):
         if self.gp.kern.name == 'sum':
             return sum([part.variance for part in self.gp.kern.parts])
         else:
-            return np.sqrt(self.gp.kern.variance)
+            return np.sqrt(self.gp.kern.inner_kernel.variance)
 
     @property
     def bias(self):
@@ -144,6 +145,8 @@ class TripathyGP(ConfidenceBoundModel):
         """
         x = np.atleast_2d(x)
         y = np.atleast_2d(y)
+
+        assert x.shape[1] == self.domain.d, "Input dimension is not the one of the domain!"
 
         self.i += 1
 
@@ -199,21 +202,59 @@ class TripathyGP(ConfidenceBoundModel):
             X = np.concatenate((self.gp.X, X))
             Y = np.concatenate((self.gp.Y, Y))
 
-        if self.i % 100 == 99 or self.calculate_always:
+        if self.i % 500 == 99 or self.calculate_always:
+
+            # optimizer = TripathyOptimizer()
+            # W_hat, sn, l, s, d = optimizer.find_active_subspace(X, Y)
+
+
+            print("Adapting projection! ")
+
+            # TODO: use optimizer instead of real projection matrix?
+            self.active_d = 2
+            self.W_hat = np.asarray([
+                [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+                [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+            ]).T
+            self.variance = 0.4
+            self.lengthscale = 3.
+
+            self.noise_var = None
 
             # Recalculate the kernel and gp with optimized values
             self.create_new_gp_and_kernel(
-                active_d=self.domain.d,
-                W=np.eye(self.domain.d),
-                variance=1.0,
-                lengtscale=1.5,
-                noise_var=None,
-                overtakeXY=True
+                active_d=self.active_d,
+                W=self.W_hat,
+                variance=self.variance,
+                lengtscale=self.lengthscale,
+                noise_var=self.noise_var
             )
+
+            self._set_data(X, Y)
+
+            ########
+            # Optimize parameters for gp
+            try:
+                self.gp.optimize(optimizer="lbfgs", max_iters=1000)  # config['max_iter_parameter_optimization'])
+            except Exception as e:
+                print(e)
+                print(self.kern.K(self.X))
+                print("Error above!")
+
+            self.variance = self.gp.kern.inner_kernel.variance
+            self.lengthscale = self.gp.kern.inner_kernel.lengthscale
+            new_sn = self.gp['Gaussian_noise.variance']
+            print("Optimized parameters are: ")
+            print(self.variance)
+            print(self.lengthscale)
+            print(new_sn)
+            print("Printing the entire gp now")
+            print(self.gp)
+            ########
+
 
         else:
 
-            # Don't recalculate the kernel and gp
             self._set_data(X, Y)
 
     def _set_data(self, X, Y):

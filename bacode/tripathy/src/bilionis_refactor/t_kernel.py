@@ -47,8 +47,6 @@ class TripathyMaternKernel(Kern):
 
         self.link_parameters(self.inner_kernel)
         # TODO: make sure these are referenced copies!
-        self.variance = self.inner_kernel.variance
-        self.lengtscale = self.inner_kernel.lengthscale
 
     ###############################
     #       SETTER FUNCTIONS      #
@@ -81,7 +79,7 @@ class TripathyMaternKernel(Kern):
             1.e-3,
             l
         )
-        self.inner_kernel.lengthscale = l
+        self.inner_kernel.lengthscale = Param('lengthscale', l)
         # TODO: do we have to link parameters here somehow? (with this kernel, NOT the inner kernel?)
 
 
@@ -89,7 +87,7 @@ class TripathyMaternKernel(Kern):
         assert safe
         assert isinstance(s, float) or isinstance(s, Param), type(s)
         if not (s == float(self.inner_kernel.variance)):
-            self.inner_kernel.variance = s
+            self.inner_kernel.variance = Param('variance', s)
 
     ###############################
     #      SAMPLING FUNCTIONS     #
@@ -114,13 +112,13 @@ class TripathyMaternKernel(Kern):
         """
         :return: A standard variance
         """
-        return 1.0
+        return Param('variance', np.asarray(1.0))
 
     def sample_lengthscale(self):
         """
         :return: A standard length-scale
         """
-        return np.ones((self.active_dim,)) * 1.5
+        return Param('lengthscale', np.ones((self.active_dim,)) * 1.5)
 
     ###############################
     #        KERNEL-FUNCTIONS     #

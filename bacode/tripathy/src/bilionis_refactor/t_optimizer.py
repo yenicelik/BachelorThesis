@@ -213,7 +213,7 @@ class TripathyOptimizer:
 
         self.leps = config['eps_alg1'] #10.e-3
         self.m = config['max_iter_W_optimization']
-        self.n = config['max_iter_parameter_optimization']
+        self.n = 1 #config['max_iter_parameter_optimization']
 
         self.no_of_restarts = config['no_restarts'] # 50
 

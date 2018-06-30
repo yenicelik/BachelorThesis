@@ -50,7 +50,7 @@ elif QDev:
         "max_iter_alg1": 50,  # int(1e5),
         "max_iter_alg3": 50,  # int(1e5),
 
-        "max_iter_parameter_optimization": 1,
+        "max_iter_parameter_optimization": 500,
         "max_iter_W_optimization": 1,
 
         "eps_alg1": 1.e-3,  # -12,
