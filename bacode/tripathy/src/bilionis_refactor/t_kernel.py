@@ -67,10 +67,10 @@ class TripathyMaternKernel(Kern):
         assert W.shape == (self.real_dim, self.active_dim)
         # TODO: the following is a weird check!
         # TODO: We currently do a stupid thing, where we normalize W before we add it to the thing. This may, or may not be a good idea!
-        self.W, _ = np.linalg.qr(W)
+        # self.W, _ = np.linalg.qr(W)
         # TODO: this bug is not good!
-        # assert np.allclose( np.dot(self.W.T, self.W), np.eye(self.active_dim), atol=1.e-1), (self.W, np.dot(self.W.T, W), np.eye(self.active_dim))
-        # self.W = W
+        assert np.allclose( np.dot(self.W.T, self.W), np.eye(self.active_dim), atol=1.e-1), (self.W, np.dot(self.W.T, W), np.eye(self.active_dim))
+        self.W = W
 
     def set_l(self, l, safe=False):
         assert safe

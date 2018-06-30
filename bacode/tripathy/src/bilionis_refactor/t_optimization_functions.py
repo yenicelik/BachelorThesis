@@ -41,7 +41,7 @@ class t_ParameterOptimizer:
         self.kernel.update_params(W=self.fix_W, s=s, l=l)
         gp_reg = GPRegression(self.X, self.Y.reshape(-1, 1), self.kernel, noise_var=sn)
         try:
-            gp_reg.optimize(optimizer="lbfgs", max_iters=200) #config['max_iter_parameter_optimization'])
+            gp_reg.optimize(optimizer="scg", max_iters=config['max_iter_parameter_optimization']) # lbfgs # config['max_iter_parameter_optimization'])
         except Exception as e:
             print(e)
             print(gp_reg.kern.K(gp_reg.X))

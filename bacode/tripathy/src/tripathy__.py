@@ -17,6 +17,8 @@ import GPy
 from scipy.linalg import lapack
 from scipy.optimize import minimize
 
+from bacode.tripathy.src.bilionis_refactor.t_optimization_functions import t_ParameterOptimizer
+
 logger = get_logger('tripathy')
 
 from febo.utils import locate, get_logger
@@ -183,7 +185,7 @@ class TripathyGP(ConfidenceBoundModel):
         """
         x = np.atleast_2d(x)
 
-        if self.config.calculate_gradients or True:
+        if self.config.calculate_gradients and False: # or True:
             mean, var = self.gp.predict_noiseless(x)
         else:
             mean, var = self._raw_predict(x)
@@ -202,26 +204,32 @@ class TripathyGP(ConfidenceBoundModel):
             X = np.concatenate((self.gp.X, X))
             Y = np.concatenate((self.gp.Y, Y))
 
-        if self.i % 500 == 99 or self.calculate_always:
+        if self.i % 500 == 501 or self.calculate_always:
 
             # optimizer = TripathyOptimizer()
-            # W_hat, sn, l, s, d = optimizer.find_active_subspace(X, Y)
+            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = optimizer.find_active_subspace(X, Y)
+            #
+            # print("Optimized parameters are: ")
+            # print(self.noise_var)
+            # print(self.lengthscale)
+            # print(self.variance)
+            # print(self.active_d)
 
 
-            print("Adapting projection! ")
+            # print("Adapting projection! ")
+            #
+            # # TODO: use optimizer instead of real projection matrix?
+            # self.active_d = 2
+            # self.W_hat = np.asarray([
+            #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+            #     [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+            # ]).T
+            # self.variance = np.asarray(1.)
+            # self.lengthscale = np.ones((self.active_d,)) * 1.5
+            #
+            # self.noise_var = None
 
-            # TODO: use optimizer instead of real projection matrix?
-            self.active_d = 2
-            self.W_hat = np.asarray([
-                [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
-                [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
-            ]).T
-            self.variance = 0.4
-            self.lengthscale = 3.
-
-            self.noise_var = None
-
-            # Recalculate the kernel and gp with optimized values
+            # For the sake of creating a kernel with new dimensions!
             self.create_new_gp_and_kernel(
                 active_d=self.active_d,
                 W=self.W_hat,
@@ -230,28 +238,40 @@ class TripathyGP(ConfidenceBoundModel):
                 noise_var=self.noise_var
             )
 
+            # Recalculate the kernel and gp with optimized values
+            ######
+            # Optimize over all parameters
+            # self.parameter_optimizer = t_ParameterOptimizer(
+            #     self.W_hat,
+            #     self.kernel,
+            #     X,
+            #     Y
+            # )
+            #
+            # self.variance, self.lengthscale, new_noise = self.parameter_optimizer.optimize_s_sn_l(
+            #     self.config.noise_var,
+            #     self.variance,
+            #     self.lengthscale
+            # )
+            #
+            # self.create_new_gp_and_kernel(
+            #     active_d=self.active_d,
+            #     W=self.W_hat,
+            #     variance=self.variance,
+            #     lengtscale=self.lengthscale,
+            #     noise_var=self.noise_var
+            # )
+
             self._set_data(X, Y)
 
-            ########
-            # Optimize parameters for gp
-            try:
-                self.gp.optimize(optimizer="lbfgs", max_iters=1000)  # config['max_iter_parameter_optimization'])
-            except Exception as e:
-                print(e)
-                print(self.kern.K(self.X))
-                print("Error above!")
 
-            self.variance = self.gp.kern.inner_kernel.variance
-            self.lengthscale = self.gp.kern.inner_kernel.lengthscale
-            new_sn = self.gp['Gaussian_noise.variance']
-            print("Optimized parameters are: ")
-            print(self.variance)
-            print(self.lengthscale)
-            print(new_sn)
-            print("Printing the entire gp now")
-            print(self.gp)
-            ########
-
+            # print("Optimized parameters are: ")
+            # print(self.variance)
+            # print(self.lengthscale)
+            # print(new_noise)
+            # print("Printing the entire gp now")
+            # print(self.gp)
+            ####
 
         else:
 
