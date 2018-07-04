@@ -31,61 +31,66 @@ def single_run(self, t_kernel, X, Y):
     # s = None
     # cur_loss = -np.inf
 
-    # try:
+    try:
 
-    # We first sample new weights and hyperparameters
-    W_init = t_kernel.sample_W()
-    l_init = np.random.rand(t_kernel.active_dim)
-    s_init = float(np.random.rand(1))
-    sn = float(np.random.rand(1))
+        # We first sample new weights and hyperparameters
+        W_init = t_kernel.sample_W()
+        l_init = np.random.rand(t_kernel.active_dim)
+        s_init = float(np.random.rand(1))
+        sn = float(np.random.rand(1))
 
-    # print("Restarting...", (j, self.no_of_restarts))
+        # print("Restarting...", (j, self.no_of_restarts))
 
-    # t_kernel.update_params(W=W_init, l=l_init, s=s_init)
-    # TODO: we need to copy the kernel before we apply any further operations!
-    # TODO: Currently, the kernel is shared, so all the parameters are shared!
-    # t_kernel = None
-    real_dim = t_kernel.real_dim
-    active_dim = t_kernel.active_dim
-    t_kernel = None
-    t_kernel = TripathyMaternKernel(
-        real_dim=real_dim,
-        active_dim=active_dim,
-        W=W_init,
-        variance=s_init,
-        lengthscale=l_init
-    )
+        # t_kernel.update_params(W=W_init, l=l_init, s=s_init)
+        # TODO: we need to copy the kernel before we apply any further operations!
+        # TODO: Currently, the kernel is shared, so all the parameters are shared!
+        # t_kernel = None
+        real_dim = t_kernel.real_dim
+        active_dim = t_kernel.active_dim
+        t_kernel = None
+        t_kernel = TripathyMaternKernel(
+            real_dim=real_dim,
+            active_dim=active_dim,
+            W=W_init,
+            variance=s_init,
+            lengthscale=l_init
+        )
 
-    # We do a deepcopy, because each time we start from the initial values
-    W, sn, l, s = run_two_step_optimization(
-        self,
-        t_kernel=t_kernel,
-        sn=sn,
-        X=X,
-        Y=Y
-    )
+        # We do a deepcopy, because each time we start from the initial values
+        W, sn, l, s = run_two_step_optimization(
+            self,
+            t_kernel=t_kernel,
+            sn=sn,
+            X=X,
+            Y=Y
+        )
 
-    cur_loss = loss(
-        t_kernel,
-        W,
-        sn,
-        s,
-        l,
-        X,
-        Y
-    )
+        cur_loss = loss(
+            t_kernel,
+            W,
+            sn,
+            s,
+            l,
+            X,
+            Y
+        )
 
-    print("Loss: ", cur_loss)
+        print("Loss: ", cur_loss)
 
-    # except Exception as e:
-    #     print("We encountered an error!")
-    #     print(str(e))
-    #     with open("./errors.txt", "a") as myfile:
-    #         myfile.write(str(e))
+        # except Exception as e:
+        #     print("We encountered an error!")
+        #     print(str(e))
+        #     with open("./errors.txt", "a") as myfile:
+        #         myfile.write(str(e))
 
-    return W, sn, l, s, cur_loss
+        return W, sn, l, s, cur_loss
 
-def run_two_step_optimization(self, t_kernel, sn, X, Y):
+    except Exception as e:
+        print(e)
+        print("Some error happened!")
+        return None, None, None, None, -1e13
+
+def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False):
     # First of all, deepcopy the kernel, such that any modifications are not thread-overlapping!
 
     # TODO: Here, we simply copy the W, and work on the same W all the time. This is a major bug!
@@ -94,6 +99,9 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y):
     sn = sn
     s = t_kernel.inner_kernel.variance
     l = t_kernel.inner_kernel.lengthscale
+
+    if save_Ws:
+        all_Ws = []
 
     for i in range(self.M_l):
 
@@ -130,12 +138,14 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y):
             # print("Old W: ", self.W)
             W = w_optimizer.optimize_stiefel_manifold(W=W.copy())
             # print("New W: ", W)
-            # self.W = W # TODO: Very weird!
+            self.W = W # TODO: Very weird!
             t_kernel.update_params(
                 W=W,
                 l=l,
                 s=s
             )
+            if save_Ws:
+                all_Ws.append(W)
         #################################################################################
         #  INTERMEDIATE LOSS
         ##################################################################################
@@ -202,7 +212,10 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y):
             # print("Break Alg. 1", abs(L1 - L0) / L0)
             break
 
-    return W, sn, l, s
+    if save_Ws:
+        return all_Ws
+    else:
+        return W, sn, l, s
 
 class TripathyOptimizer:
 

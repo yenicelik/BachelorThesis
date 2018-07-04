@@ -24,7 +24,7 @@ class Metrics(object):
         self.samples = 10
         np.random.seed(seed)
 
-        self.tol_mean_diff = 1e-3 # TODO: set this to an ok value
+        self.tol_mean_diff = 1e-1 # TODO: set this to an ok value
         self.tol_abs_diff = 1e-2
 
     # TODO: simulate the real projection by 37-39

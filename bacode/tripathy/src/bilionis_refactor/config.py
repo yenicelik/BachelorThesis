@@ -2,7 +2,7 @@ from sys import platform
 
 DEV = False
 QDev = True
-HALFDEV = True
+HALFDEV = False
 
 if DEV:
 
@@ -45,12 +45,12 @@ elif QDev:
         #
         # "max_dimensions": 3,
 
-        "no_restarts": 48,  # 12, # 1000
+        "no_restarts": 12,  # 12, # 1000
 
         "max_iter_alg1": 50,  # int(1e5),
         "max_iter_alg3": 50,  # int(1e5),
 
-        "max_iter_parameter_optimization": 500,
+        "max_iter_parameter_optimization": 30,
         "max_iter_W_optimization": 1,
 
         "eps_alg1": 1.e-3,  # -12,
@@ -60,6 +60,7 @@ elif QDev:
         "tau_max": 1.e-1,
         "no_taus": 5,
 
+        "test_single_dimension": True,
         "max_dimensions": 2,
     }
 
@@ -92,18 +93,20 @@ else:
     config = {
         "no_restarts": 16*15,
 
-        "max_iter_alg1": int(4000),
-        "max_iter_alg3": int(4000),
+        "max_iter_alg1": int(1000),
+        "max_iter_alg3": int(1000),
 
         "max_iter_parameter_optimization": 1,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 1.e-4, # -12,
-        "eps_alg3": 1.e-4, # -12,
+        "eps_alg1": 5.e-6, # -12,
+        "eps_alg3": 5.e-6, # -12,
         "eps_alg4": 1.e-3,
 
         "tau_max": 1.e-1,
-        "no_taus": 5,
+        "no_taus": 6,
+
+        "test_single_dimension": True,
 
         "max_dimensions": 100,
     }
