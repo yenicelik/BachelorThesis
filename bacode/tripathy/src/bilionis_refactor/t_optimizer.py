@@ -144,8 +144,6 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False):
                 l=l,
                 s=s
             )
-            if save_Ws:
-                all_Ws.append(W)
         #################################################################################
         #  INTERMEDIATE LOSS
         ##################################################################################
@@ -197,6 +195,8 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False):
 
         # print("Tuples is: ", (self.W, self.s, self.l, self.sn))
 
+        if save_Ws:
+            all_Ws.append(W)
         self.losses.append(L1)
 
         # assert L0 < L01, (L0, L01)
