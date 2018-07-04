@@ -71,14 +71,14 @@ elif HALFDEV:
     config = {
         "no_restarts": 50, # 1000
 
-        "max_iter_alg1": 15, # int(1e5),
+        "max_iter_alg1": 50, # int(1e5),
         "max_iter_alg3": 15, # int(1e5),
 
         "max_iter_parameter_optimization": 200,
         "max_iter_W_optimization": 200,
 
-        "eps_alg1": 1.e-4, # -12,
-        "eps_alg3": 1.e-4, # -12,
+        "eps_alg1": 1.e-8, # -12,
+        "eps_alg3": 1.e-8, # -12,
         "eps_alg4": 8.e-2,
 
         "tau_max": 1.e-1,

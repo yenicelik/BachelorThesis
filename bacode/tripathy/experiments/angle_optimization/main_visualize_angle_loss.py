@@ -11,8 +11,8 @@ from bacode.tripathy.src.bilionis_refactor.t_optimizer import run_two_step_optim
 
 FNC_TUPLES = [
     # ["Parabola-2D->1D", ParabolaEmbedded2D(), 1],
-    ["Camelback-5D->2D", CamelbackEmbedded5D(), 2],
-    # ["Sinusoidal-5D->2D", DecreasingSinusoidalEmbedded5D(), 2]
+    # ["Camelback-5D->2D", CamelbackEmbedded5D(), 2],
+    ["Sinusoidal-5D->2D", DecreasingSinusoidalEmbedded5D(), 2]
 ]
 
 def visualize_angle_loss():
@@ -23,15 +23,9 @@ def visualize_angle_loss():
         "noise_var": 0.01
     }
 
-    # Sampling kernel
-    # W_init = t_kernel.sample_W()
-    # l_init = np.random.rand(t_kernel.active_dim)
-    # s_init = float(np.random.rand(1))
-    # sn = float(np.random.rand(1))
-
     # Optimizer parameters
     local_config = {
-        "M_l": 50,
+        "M_l": 100,
         "m": 10,
         "n": 10,
         "losses": [],

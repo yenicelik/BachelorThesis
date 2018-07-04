@@ -1,2 +1,2 @@
 algorithm: {model: bacode.tripathy.src.tripathy__.TripathyGP}
-experiment.simple: {algorithm: febo.algorithms.ucb.UCB, environment: febo.environment.benchmarks.functions.CamelbackEmbedded5D}
+experiment.simple: {algorithm: febo.algorithms.ucb.UCB, environment: febo.environment.benchmarks.functions.ParabolaEmbedded2D}

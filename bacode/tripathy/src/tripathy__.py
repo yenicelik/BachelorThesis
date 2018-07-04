@@ -204,7 +204,7 @@ class TripathyGP(ConfidenceBoundModel):
             X = np.concatenate((self.gp.X, X))
             Y = np.concatenate((self.gp.Y, Y))
 
-        if self.i % 500 == 501 or self.calculate_always:
+        if self.i % 200 == 100 or self.calculate_always:
 
             # optimizer = TripathyOptimizer()
             # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = optimizer.find_active_subspace(X, Y)
