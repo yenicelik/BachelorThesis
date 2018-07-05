@@ -1,0 +1,87 @@
+algorithm:
+  points_per_dim: 5
+  noise_model_config: {}
+  noise_model:
+  constrains_model_config: {}
+  constrains_model:
+  model_config: {}
+  model: febo.models.gp.GP
+  optimizer:
+  dim: 2
+algorithm.candidate:
+  candidates:  # Function which returns a list of candidate points to be evaluated.
+controller.plotting:
+  plot_safeset: false
+  plot_contour: true
+  plot_regret: true
+  plot_final: true
+  plot_every: 0
+environment.benchmark:
+  seed:  # Seed for randomly generated environments.
+  scale: 1
+  bias: 0
+  num_domain_points: 30
+  dimension: 2
+  noise_obs_mode: full  # Can be set to "full", "evaluation" or "hidden".
+  noise_function: 0.1
+  lower_bound_objective_value:
+  constraints: []
+environment.benchmark.noise:
+  seed:  # Seed for randomly generated noise function.
+  high: 0.5  # May be used by the noise function to roughly set the higest noise level.
+  low: 0.5  # May be used by the noise function to roughly set the lowest noise level.
+main:
+  log_level: INFO
+  experiment_dir: runs/
+  experiment: febo.experiment.benchmark.BenchmarkExperiment  # Experiment
+  log_level_console: INFO
+  log_level_file: INFO
+experiment.benchmark:
+  label: febo.experiment.benchmark.label_id
+  iterator:
+  # - experiment.simple:algorithm: bacode.tripathy.src.boring.boring_algorithm.BoringAlgorithm # febo.algorithms.ucb.UCB
+  #   experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded5D
+  - experiment.simple:algorithm: febo.algorithms.ucb.UCB
+    experiment.simple:environment: febo.environment.benchmarks.functions.DecreasingSinusoidal
+  - experiment.simple:algorithm: bacode.tripathy.src.rembo.rembo_algorithm.RemboAlgorithm
+    experiment.simple:environment: febo.environment.benchmarks.functions.DecreasingSinusoidalEmbedded5D
+  - experiment.simple:algorithm: febo.algorithms.ucb.UCB
+    experiment.simple:environment: febo.environment.benchmarks.functions.DecreasingSinusoidalEmbedded5D
+  - experiment.simple:algorithm: febo.algorithms.ucb.UCB # TODO: there is a bug, when we move this element to the top of the list!
+    algorithm:model: bacode.tripathy.src.tripathy__.TripathyGP
+    experiment.simple:environment: febo.environment.benchmarks.functions.DecreasingSinusoidalEmbedded5D
+  fixed_environment: false  # If true, onlyucb_embed_benchmark.yaml one environment for the whole batch will be created. Use this, if you randomly genrate your environment, but the whole batch should use the same random instance of the environment.
+  repetitions: 1 # Number of repetitions each experiment is run.
+experiment.simple:
+  T: 349 #498  # Horizon
+  load_previous_data: false
+  algorithm: febo.algorithms.ucb.UCB
+  environment: febo.environment.benchmarks.functions.CamelbackEmbedded
+  controller: febo.controller.data.DataController
+models.gp:
+  bias: 0
+  optimize_var: false
+  optimize_bias: false
+  calculate_gradients: true  # Enable/Disable computation of gradient on each update.
+  noise_var: 0.005
+  kernels:
+  - - GPy.kern.Matern32 #Matern32
+    - variance: 1.0
+      lengthscale: 1.5
+      ARD: true
+optimizer.grid:
+  points_per_dimension: 100
+optimizer.scipy:
+  convergence_warnings: true
+  sync_restarts: true
+  num_processes: 1
+  num_restart: 5
+  lbfgs_maxfun: 1000
+  lbfgs_use_gradients: false
+optimizers.seeds:
+  projection_max_line_search: 10
+  safe_projection: false
+  num_random_points: 50
+  max_tail_length: 200
+  expected_tail_length: 100
+

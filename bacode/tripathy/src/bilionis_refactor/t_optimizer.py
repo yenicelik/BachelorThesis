@@ -10,6 +10,8 @@ import dill
 # import multiprocess
 import multiprocessing
 import pathos
+import time
+import gc
 
 from .t_loss import loss
 from .t_optimization_functions import t_ParameterOptimizer, t_WOptimizer
@@ -325,13 +327,32 @@ class TripathyOptimizer:
         if config['restict_cores']:
             number_processes = min(number_processes, config['max_cores'])
         number_processes = max(number_processes, 1)
+        print("Number of cores in use: ", number_processes)
 
         # print("Number of processes found: ", number_processes)
 
         pool = pathos.multiprocessing.Pool(number_processes)
         all_responses = pool.map(wrapper_singlerun, range(self.no_of_restarts))
         pool.close()
+        pool.terminate()
         pool.join()
+        pool = None
+
+        # Run garbage collection
+        gc.collect()
+
+        for p in multiprocessing.active_children():
+            p.terminate()
+            gc.collect()
+
+        # # Make sure we don't have any zombies
+        # while True:
+        #     act = multiprocessing.active_children()
+        #     if len(act) > 0:
+        #         print("Waiting for workers to finish: ", len(act))
+        #     else:
+        #         break
+        #     time.sleep(2)
 
         losses = [x[4] for x in all_responses]
         configs = [(x[0], x[1], x[2], x[3]) for x in all_responses]

@@ -1,0 +1,2 @@
+experiment.simple: {algorithm: bacode.tripathy.src.rembo.rembo_algorithm.RemboAlgorithm,
+  environment: febo.environment.benchmarks.functions.ParabolaEmbedded2D}

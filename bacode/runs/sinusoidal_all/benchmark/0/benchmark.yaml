@@ -1,0 +1,1 @@
+experiment.simple: {algorithm: febo.algorithms.ucb.UCB, environment: febo.environment.benchmarks.functions.DecreasingSinusoidal}

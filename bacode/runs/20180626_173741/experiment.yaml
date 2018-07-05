@@ -1,4 +1,0 @@
-main:
-  log_level_file: INFO
-  log_level_console: INFO
-  experiment: febo.experiment.benchmark.BenchmarkExperiment  # Experiment
