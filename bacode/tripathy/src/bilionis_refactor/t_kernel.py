@@ -18,19 +18,17 @@ class TripathyMaternKernel(Kern):
     """
 
 
-    # TODO: add W as a parameter
     def __init__(self, real_dim, active_dim, W=None, variance=None, lengthscale=None, _name="TripathyMaternKernel32"):
 
         # self.__dict__['_name'] = _name
 
-        assert(real_dim >= active_dim)
+        assert real_dim >= active_dim, (real_dim, active_dim)
 
         self.size = real_dim * active_dim + active_dim + 1 + 1
 
         self.real_dim = real_dim
         self.active_dim = active_dim
 
-        # TODO: add these as priors
         self.W = W if W is not None else self.sample_W()
 
         self.inner_kernel = Matern32(

@@ -42,7 +42,7 @@ experiment.benchmark:
   # - experiment.simple:algorithm: bacode.tripathy.src.boring.boring_algorithm.BoringAlgorithm # febo.algorithms.ucb.UCB
   #   experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded5D
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB
-    experiment.simple:environment: febo.environment.benchmarks.functions.Camelback
+    experiment.simple:environment: febo.environment.benchmarks.functions.Parabola
   # - experiment.simple:algorithm: bacode.tripathy.src.rembo.rembo_algorithm.RemboAlgorithm
   #   experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded5D
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB
@@ -53,7 +53,7 @@ experiment.benchmark:
   fixed_environment: false  # If true, onlyucb_embed_benchmark.yaml one environment for the whole batch will be created. Use this, if you randomly genrate your environment, but the whole batch should use the same random instance of the environment.
   repetitions: 1 # Number of repetitions each experiment is run.
 experiment.simple:
-  T: 449 #498  # Horizon
+  T: 349 #498  # Horizon
   load_previous_data: false
   algorithm: febo.algorithms.ucb.UCB
   environment: febo.environment.benchmarks.functions.CamelbackEmbedded

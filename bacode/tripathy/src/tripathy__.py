@@ -206,14 +206,20 @@ class TripathyGP(ConfidenceBoundModel):
 
         if self.i % 200 == 100 or self.calculate_always:
 
-            # optimizer = TripathyOptimizer()
-            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = optimizer.find_active_subspace(X, Y)
+            optimizer = TripathyOptimizer()
+            self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = optimizer.find_active_subspace(X, Y)
             #
             # print("Optimized parameters are: ")
             # print(self.noise_var)
             # print(self.lengthscale)
             # print(self.variance)
             # print(self.active_d)
+
+            print("Found parameters are: ")
+            print("W: ", self.W_hat)
+            print("noise_var: ", self.noise_var)
+            print("lengthscale: ", self.lengthscale)
+            print("variance: ", self.variance)
 
 
             # print("Adapting projection! ")
@@ -224,7 +230,7 @@ class TripathyGP(ConfidenceBoundModel):
             #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
             #     [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
             # ]).T
-            # self.variance = np.asarray(1.)
+            # self.variance = np.asarray(5.)
             # self.lengthscale = np.ones((self.active_d,)) * 1.5
             #
             # self.noise_var = None

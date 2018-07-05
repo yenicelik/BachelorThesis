@@ -113,11 +113,13 @@ else:
 
 # In either case, add linux and mac paths
 if platform == "linux" or platform == "linux2":
-    config['basepath'] = "/home/yedavid/BachelorThesis/"
+    config['basepath'] = "/home/yedavid/BachelorThesis/bacode/"
     config['dev'] = False
 elif platform == "darwin":
     config['basepath'] = "/Users/davidal/GoogleDrive/BachelorThesis/bacode/"
     config['dev'] = True
+
+config['active_dimension'] = 1
 
 config['restict_cores'] = True
 config['max_cores'] = 16

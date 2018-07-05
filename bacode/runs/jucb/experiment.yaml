@@ -46,7 +46,7 @@ experiment.benchmark:
   fixed_environment: false  # If true, only one environment for the whole batch will be created. Use this, if you randomly genrate your environment, but the whole batch should use the same random instance of the environment.
   repetitions: 1  # Number of repetitions each experiment is run.
 experiment.simple:
-  T: 449  # Horizon
+  T: 349  # Horizon
   load_previous_data: false
   algorithm: febo.algorithms.ucb.UCB
   environment: febo.environment.benchmarks.functions.CamelbackEmbedded

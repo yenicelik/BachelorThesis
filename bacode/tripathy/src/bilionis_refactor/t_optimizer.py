@@ -31,6 +31,8 @@ def single_run(self, t_kernel, X, Y):
     # s = None
     # cur_loss = -np.inf
 
+    print("Initializing single-run...")
+
     try:
 
         # We first sample new weights and hyperparameters
@@ -105,7 +107,7 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False):
 
     for i in range(self.M_l):
 
-        if i % max(self.M_l//2, 1) == max(self.M_l//2, 1) // 2:
+        if i % max(self.M_l//5, 1) == max(self.M_l//20, 1):
             print("Alg. 1 Progress: ", str((i*100)/self.M_l) + "%")
 
         #################################################################################
@@ -133,7 +135,6 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False):
         )
 
         for i in range(self.m):
-            # TODO: the following optimizer should return the W for which the Loss is optimized.
             # NOT the W which was found at last
             # print("Old W: ", self.W)
             W = w_optimizer.optimize_stiefel_manifold(W=W.copy())
@@ -263,7 +264,7 @@ class TripathyOptimizer:
         # TODO: Iteration by one might be a lot. Potentiall make the stepsize a function of the maximum dimensions
 
         BIC1 = -1e12 # Don't make if -inf, otherwise division is not possible
-        for d in [2]:
+        for d in [config['active_dimension']]:
 #        for d in range(1, max(2, min(D, self.d_max + 1))):
 
             print("Testing for dimension: ", d)
