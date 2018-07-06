@@ -72,6 +72,7 @@ class RemboAlgorithm(Algorithm):
     def add_data(self, data):
         # Project the data to the low-dimensional subspace! # TODO: do we normalize here?
         x = data['x']
+
         x = self.project_high_to_low(x)
         self.gp.add_data(x, data['y'])
         self.gp.optimize()  # TODO: How do we optimize the kernel parameters?
@@ -98,6 +99,7 @@ class RemboAlgorithm(Algorithm):
             ])
         else:
             self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim, seed=None)
+
             # self.A = np.asarray(
             #     [[-0.87029532, - 0.1387281],
             #      [-0.03966056, - 0.44315976],
@@ -110,8 +112,8 @@ class RemboAlgorithm(Algorithm):
             #      [0.2216277, -0.78353003],
             #      [0.84414083, -0.14385261]]
             # )
-            print("REMBO uses the following matrix!")
-            print(self.A)
+            # print("REMBO uses the following matrix!")
+            # print(self.A)
 
             # A little too straight, but it seems acceptable!
             # [[-0.64909311  0.4687148]
@@ -203,3 +205,16 @@ NORM_DENORM = True
 DEBUG_HIGH = False
 DEBUG_LOW = False
 VERBOSE_NEXTPOINT = False
+
+# Trash for interleaved runs!
+# self.k = 5
+# self.projection_counter = 0
+#
+#        self.projection_counter += 1
+#
+# TODO: move to next projection matrix!
+# self.A = self.interleaved_projections[self.projection_counter % self.k]
+#
+#             self.interleaved_projections = [sample_orthogonal_matrix(self.domain.d, self.config.dim, seed=None) for i in range(self.k)]
+#             self.A = self.interleaved_projections[self.projection_counter % self.k]
+# Take-away: for interleaved runs, we would need to re-set the gp, because the y values would not be corresponding to the correct ones now
