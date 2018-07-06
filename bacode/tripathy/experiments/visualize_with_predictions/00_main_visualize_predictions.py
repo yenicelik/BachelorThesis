@@ -2,7 +2,7 @@
 from febo.environment.benchmarks import ParabolaEmbedded2D, DecreasingSinusoidalEmbedded5D, CamelbackEmbedded5D
 
 from bacode.tripathy.experiments.angle_optimization.utils import visualize_angle_given_W_array
-from bacode.tripathy.experiments.visualize_with_predictions.utils import do_plotting_real_vs_gaussian
+from bacode.tripathy.experiments.visualize_with_predictions.utils import do_plotting_real_vs_gaussian, do_plotting
 from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
 
 import numpy as np
@@ -101,6 +101,8 @@ def visualize_predictions():
 
         X_train, Y_train = get_training_set(NUM_TRAINING_POINTS, fnc)
         X_viz, X_test, Y_test = get_test_set(100, fnc)
+
+        do_plotting(fnc_name, X_viz, Y_test)
 
         # Train REMBO (this is separate, bcs does not have a GP interface
         for name, algo in [("REMBO", initialize_rembo(fnc._domain))]:
