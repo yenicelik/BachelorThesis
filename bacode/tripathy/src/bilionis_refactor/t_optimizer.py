@@ -4,6 +4,7 @@
     that occur within the process of the confidence-bounded model that wraps this
 """
 import numpy as np
+import os
 import math
 import copy
 import dill
@@ -328,14 +329,21 @@ class TripathyOptimizer:
             number_processes = min(number_processes, config['max_cores'])
         number_processes = max(number_processes, 1)
         print("Number of cores in use: ", number_processes)
+        print("The current process id is: ", os.getpid())
 
         # print("Number of processes found: ", number_processes)
 
-        pool = pathos.multiprocessing.Pool(number_processes)
+        pool = pathos.pools._ProcessPool(number_processes)
+
+        # Do "number of reruns by spawning new processes
+
         all_responses = pool.map(wrapper_singlerun, range(self.no_of_restarts))
         pool.close()
         pool.terminate()
         pool.join()
+
+        # pool._clear()
+
         pool = None
 
         # Run garbage collection
@@ -344,6 +352,8 @@ class TripathyOptimizer:
         for p in multiprocessing.active_children():
             p.terminate()
             gc.collect()
+
+        print("We have so many active children: ", multiprocessing.active_children())
 
         # # Make sure we don't have any zombies
         # while True:

@@ -122,7 +122,7 @@ elif platform == "darwin":
 config['active_dimension'] = 1
 
 config['restict_cores'] = True
-config['max_cores'] = 16
+config['max_cores'] = 8
 
 config['visualize_vanilla_path'] = config['basepath'] + "visualize_vanilla/"
 config['visualize_vanilla_vs_gp_path'] = config['basepath'] + "visualize_vanilla_vs_gp/"

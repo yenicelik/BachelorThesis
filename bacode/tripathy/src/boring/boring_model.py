@@ -143,7 +143,7 @@ class BoringGP(ConfidenceBoundModel):
         )
 
         # Create a new kernel and create a new GP
-        self.create_gp_and_kernels(5, 0, first=True)  # self.domain.d - 2
+        self.create_gp_and_kernels(self.domain.d, 0, first=True)  # self.domain.d - 2
 
         # Some post-processing
         self.kernel = self.kernel.copy()
@@ -309,33 +309,33 @@ class BoringGP(ConfidenceBoundModel):
             optimizer = TripathyOptimizer()
 
             # TODO: the following part is commented out, so we can test, if the function works well if we give it the real matrix!
-            # self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(X, Y)
+            self.active_projection_matrix, sn, l, s, d = optimizer.find_active_subspace(X, Y)
             #
             # print("BORING sampled the following active matrix: ")
             # print(self.active_projection_matrix)
             #
-            # # passive_dimensions = max(self.domain.d - d, 0)
+            passive_dimensions = max(self.domain.d - d, 0)
             # passive_dimensions = 1 # TODO: take out this part!
             # # passive_dimensions = 0
             #
-            # # Generate A^{bot} if there's more dimensions
-            # if passive_dimensions > 0:
-            #     self.passive_projection_matrix = generate_orthogonal_matrix_to_A(self.active_projection_matrix,
-            #                                                                      passive_dimensions)
-            # else:
-            #     self.passive_projection_matrix = None
+            # Generate A^{bot} if there's more dimensions
+            if passive_dimensions > 0:
+                self.passive_projection_matrix = generate_orthogonal_matrix_to_A(self.active_projection_matrix,
+                                                                                 passive_dimensions)
+            else:
+                self.passive_projection_matrix = None
             #
             # print("BORING sampled the following passive matrix: ")
             # print(self.passive_projection_matrix)
 
-            d = 2
-            self.active_projection_matrix = np.asarray([
-                [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
-                [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
-            ]).T
-            s = 1.
-            l = 1.5
-            passive_dimensions = 0
+            # d = 2
+            # self.active_projection_matrix = np.asarray([
+            #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+            #     [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+            # ]).T
+            # s = 1.
+            # l = 1.5
+            # passive_dimensions = 0
 
             # Create Q by concatenateing the active and passive projections
             if passive_dimensions > 0:

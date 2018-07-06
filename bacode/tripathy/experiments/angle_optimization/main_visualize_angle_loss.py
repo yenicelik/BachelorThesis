@@ -10,9 +10,9 @@ import numpy as np
 from bacode.tripathy.src.bilionis_refactor.t_optimizer import run_two_step_optimization
 
 FNC_TUPLES = [
-    # ["Parabola-2D->1D", ParabolaEmbedded2D(), 1],
+    ["Parabola-2D->1D", ParabolaEmbedded2D(), 1],
     # ["Camelback-5D->2D", CamelbackEmbedded5D(), 2],
-    ["Sinusoidal-5D->2D", DecreasingSinusoidalEmbedded5D(), 2]
+    # ["Sinusoidal-5D->2D", DecreasingSinusoidalEmbedded5D(), 2]
 ]
 
 def visualize_angle_loss():
@@ -26,8 +26,8 @@ def visualize_angle_loss():
     # Optimizer parameters
     local_config = {
         "M_l": 100,
-        "m": 10,
-        "n": 10,
+        "m": 300,
+        "n": 300,
         "losses": [],
         "leps": 1e-6
     }
