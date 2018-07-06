@@ -8,8 +8,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
 # TODO: the following does not work for anything that's not integer!
-from bacode.tripathy.experiments.utils import do_plotting, generate_train_test_data
-from bacode.tripathy.experiments.predictions import PredictRembo
+from bacode.tripathy.experiments.visualize_with_predictions.utils import do_plotting
 from febo.environment.benchmarks.functions import ParabolaEmbedded2D, CamelbackEmbedded5D, DecreasingSinusoidalEmbedded5D, RosenbrockEmbedded10D
 
 # Generate the intervals at which we're visualizing each individual function (between the intervals of -1 and 1

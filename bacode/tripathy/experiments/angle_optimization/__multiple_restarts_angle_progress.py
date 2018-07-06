@@ -4,17 +4,10 @@
 
 import numpy as np
 
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
-
 # TODO: the following does not work for anything that's not integer!
-from bacode.tripathy.experiments.utils import do_plotting, do_plotting_real_vs_gaussian
-from bacode.tripathy.experiments.predictions import PredictRembo, PredictStiefelSimple, train_and_predict_all_models
-from febo.environment.benchmarks.functions import ParabolaEmbedded2D, CamelbackEmbedded5D, \
-    DecreasingSinusoidalEmbedded5D, RosenbrockEmbedded10D
+from febo.environment.benchmarks.functions import CamelbackEmbedded5D
 
 # Generate the intervals at which we're visualizing each individual function (between the intervals of -1 and 1
-from bacode.tripathy.src.bilionis_refactor.config import config
 from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer
 
 points_per_axis = 100.

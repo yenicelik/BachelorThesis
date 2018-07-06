@@ -8,8 +8,8 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
 # TODO: the following does not work for anything that's not integer!
-from bacode.tripathy.experiments.utils import do_plotting, do_plotting_real_vs_gaussian
-from bacode.tripathy.experiments.predictions import PredictRembo, PredictStiefelSimple, train_and_predict_all_models
+from bacode.tripathy.experiments.visualize_with_predictions.utils import do_plotting_real_vs_gaussian
+from bacode.tripathy.experiments.predictions import train_and_predict_all_models
 from febo.environment.benchmarks.functions import ParabolaEmbedded2D, CamelbackEmbedded5D, \
     DecreasingSinusoidalEmbedded5D, RosenbrockEmbedded10D
 

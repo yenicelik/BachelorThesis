@@ -106,7 +106,7 @@ class BoringGP(ConfidenceBoundModel):
         if self.Q is not None:
             X = np.dot(X, self.Q)
         if self.Q is not None:
-            assert X.shape[1] == 2, ("Somehow, Q was not projected!")
+            assert X.shape[1] >= 2, ("Somehow, Q was not projected!", X.shape, 2) # TODO: change this back to ==!
         self.gp.set_XY(X, Y)
         self._update_cache()
 
@@ -314,7 +314,7 @@ class BoringGP(ConfidenceBoundModel):
             # print("BORING sampled the following active matrix: ")
             # print(self.active_projection_matrix)
             #
-            passive_dimensions = max(self.domain.d - d, 0)
+            passive_dimensions = 1 # max(self.domain.d - d, 0)
             # passive_dimensions = 1 # TODO: take out this part!
             # # passive_dimensions = 0
             #
