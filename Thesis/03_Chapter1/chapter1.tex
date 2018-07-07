@@ -83,17 +83,18 @@ p(y | x, u) = N (u, \sigma_s^2 I)
 % CITE some part of murphy?
 % https://stats.stackexchange.com/questions/84058/derivation-of-predictive-distribution-of-gaussian-process
 
-Given the prior and likelihood of the Gaussian Process, the posterior of the Gaussian Process can be derived by simple application of Bayes rule.
+Given the prior and likelihood of the Gaussian Process, the \textbf{posterior} of the Gaussian Process can be derived by simple application of Bayes rule.
 
 \begin{align}
 p(u | x, y) &= \frac{ p(y | x, u) p(u) }{p(y | x)}
 & = N( K(K +\sigma^2 I)^{-1}y, \sigma^2 (K + \sigma^2 I)^{-1} K )
 \end{align}
 
-At this point, we want to create a surrogate embeddings, that predicts $y_*$ for any possible given $x_*$. 
-We refer to this as the surrogate response surface.
+From the above posterior, we now want to predict for an arbitrary $x_*$ the function value $y_*$.
+Predicting $y_*$ for every possible $x_*$ in the domain results in the surrogate response surface that the GP models. \\
 
-We use the following formula to derive the posterior distribution for a given predictor $y_*$.
+We assume that the value $y_*$ we want to predict is also distributed as a Gaussian probability distribution. 
+Because the $y_*$ that we want to predict relies on all the values collected in the past (which are again normally distributed), the probability distribution can be modelled as jointly Gaussian.
 
 \begin{equation}
 \begin{pmatrix} y \\
@@ -101,30 +102,30 @@ y_* \end{pmatrix} \sim N\Biggl(\mu,\begin{pmatrix} K & K^T_*\\
  K_* & K_{**} \end{pmatrix}\Biggr),
 \end{equation}
 
-To numerically calculate this, one uses the Matrix Inversion Lemma (CITE Murphy Chapter 4.3 110-111)
-
+To compute this equation, we use the results from Murphy's textbook \citep{Murphy} pages 110 to 111 to do inference in a joint Gaussian model.
 
 \section{Acquisition Functions}
 
-Given the above formula for the posterior mean $\mu$ and the poster variance $\sigma^2$, Bayesian Optimization uses an acquisition function to optimize over.
-We quickly present some of the most common acquisition functions.
+Given the above formula for the posterior mean $\mu$ and the poster variance $\sigma^2$, Bayesian Optimization makes use of an acquisition function.
+The following is a summary of the most popular acquisition functions in current literature.
 
 % Most formulae taken from "A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning
 
 \subsection{Upper Confident Bound (UCB)}
-(CITE Krause Srinivas) about how acquisition function is guaranteed to find best config after awhile.
+\citep{UCBRegretProof} show a proof, that for a certain tuning of the parameter $\beta$, the acquisition function is guaranteed to find the best configuration after a certain number of data-samples taken.
 
-The upper confidence bound allows the user to control exploitation and exploration through a parameter $\beta > 0$, which can be chosen as CITE PAPER, to offer optimality guarantees.
+The upper confidence bound allows the user to control exploitation and exploration through a parameter $\beta > 0$, which can be chosen as specified in \citep{UCBRegretProof} , to offer regret bounds.
 
 \begin{equation}
-UCB(x) = \mu(x) + \beta \sigma(x)
+UCB(x) = \mu(x) + \sqrt{ \beta } \sigma(x)
 \end{equation}
 
 Here, the functions $\mu$ and $\sigma$ are the predicted mean and variance of the Gaussian Process Posterior.
 
 \subsection{Probability of Improvement (PI)}
-The (maximum) probability of improvement always selects the point which has the highest potential to maximise the function. 
-The downside to this policy is that this leads to exploitation, which can be controlled by a parameter $\xi > 0$.
+The (maximum) probability of improvement \citep{AcquisitionFunctions} always selects the points where the mean plus uncertainty is above the maximum explored function threshold. 
+The downside to this policy is that this leads to heavy exploitation.
+However, the rate of exploitation can be controlled by a parameter $\xi > 0$.
 
 \begin{align}
     PI(x) & = P( f(x) \geq f(x^+) + \xi ) \\
@@ -133,27 +134,29 @@ The downside to this policy is that this leads to exploitation, which can be con
 
 
 \subsection{Expected Improvement (EI)}
+As an improvement to the maximum probability of improvement, the expected improvement takes into consideration not only the probability that a point can improve the maximum found so far.
+But that the EI also takes into account the magnitude by which it can improve the maximum function value \citep{AcquisitionFunctions}.
+As in MPI, one can control the rate of exploitation by setting the parameter $\xi > 0$, which was introduced by \citep{Lizotte2008}.
 
-"CITE A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning"
 \begin{align}
     EI(x) =
     \begin{dcases}
-        ( \mu (x) - f(x^+) \Phi(Z) \sigma (x) \phi (Z) ) & \text{ if } \sigma (x) > 0 \\
+        ( \mu (x) - f(x^+) - \xi) \Phi(Z) + \sigma (x) \phi (Z) & \text{ if } \sigma (x) > 0 \\
         0 & \text{ if } \sigma (x) = 0
     \end{dcases} \\
 \end{align}
 
+where
+
 \begin{equation}
-    Z = \frac{\mu (x) - f(x^+) }{\sigma(x)}
+    Z = \frac{\mu (x) - f(x^+) - \xi}{\sigma(x)}
 \end{equation}
 
-Given one of the above acquisition functions, we then use an optimizer such as $L-BFGS$, to find an approximate global maximum of the respective function.
-The combination of Gaussian Processes and Acquisition function together result in a Bayesian Optimization algorithm, which has a prior assumption about the function to be learned, and uses datasamples to create a likelihood to further refine the posterior of the function assumption.
+and where $\phi$ denotes the PDF, and $\Phi$ denotes the CDF of the standard normal distribution respectively. \\
+
+Given one of the above acquisition functions, one can then use an optimizer such as $LBFGS$ or monte carlo sampling methods, to find an approximate global maximum of the respective function.
+The combination of Gaussian Processes and Acquisition function together result in a Bayesian Optimization algorithm, which has a prior assumption about the function to be learned, and uses data-samples to create a likelihood to further refine the posterior of the initial function assumption.
 
 \section{Resources}
-(CITE https://github.com/SheffieldML/GPy)
-We will use "GPy: A Gaussian process framework in python" and "CITE https://github.com/SheffieldML/GPyOpt" by the Sheffield Machine Learning Group.
+For the experiments and code basis, most of our functions rely on the Sheffield Machine Learning - GPy library \citep{gpy2014}.
 In addition to that, the febo framework developed by Johannes Kirschner from the Learning and Adaptive Systems group at ETH Zurich.
-We use pytest to write tests (CITE).
-
-% BFGS: https://stats.stackexchange.com/questions/284712/how-does-the-l-bfgs-work

@@ -1,72 +1,86 @@
 This is BibTeX, Version 0.99d (TeX Live 2017)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: thesis.aux
-A level-1 auxiliary file: Proposal/proposal.aux
-A level-1 auxiliary file: Abstract/abstract.aux
-A level-1 auxiliary file: Chapter1/chapter1.aux
-A level-1 auxiliary file: Chapter2/chapter2.aux
-A level-1 auxiliary file: Chapter3/chapter3.aux
+A level-1 auxiliary file: 00_Proposal/proposal.aux
+A level-1 auxiliary file: 01_Abstract/abstract.aux
+A level-1 auxiliary file: 03_Chapter1/chapter1.aux
+A level-1 auxiliary file: 04_Chapter2/chapter2.aux
+A level-1 auxiliary file: 05_Chapter4/chapter4.aux
+A level-1 auxiliary file: 06_Chapter5/chapter5.aux
+A level-1 auxiliary file: 07_Chapter6/chapter6.aux
 The style file: apalike.bst
 A level-1 auxiliary file: Appendix1/appendix1.aux
 Database file #1: References/references.bib
-Warning--entry type for "Li2018" isn't style-file defined
---line 5 of file References/references.bib
-Warning--entry type for "Rana2017" isn't style-file defined
---line 14 of file References/references.bib
-Warning--entry type for "Gardner2017" isn't style-file defined
---line 21 of file References/references.bib
-Warning--entry type for "Djolonga2013" isn't style-file defined
+Warning--entry type for "OptimizationTestFunctions" isn't style-file defined
+--line 13 of file References/references.bib
+Warning--entry type for "UCBRegretProof" isn't style-file defined
 --line 28 of file References/references.bib
+Warning--entry type for "Lizotte2008" isn't style-file defined
+--line 42 of file References/references.bib
+Warning--entry type for "Jamil2013" isn't style-file defined
+--line 48 of file References/references.bib
+Warning--entry type for "Li2018" isn't style-file defined
+--line 57 of file References/references.bib
+Warning--entry type for "Rana2017" isn't style-file defined
+--line 66 of file References/references.bib
+Warning--entry type for "Gardner2017" isn't style-file defined
+--line 73 of file References/references.bib
+Warning--entry type for "BayesianOptimizationNAS" isn't style-file defined
+--line 80 of file References/references.bib
+Warning--entry type for "BOIncreasingPopularityEmpirically" isn't style-file defined
+--line 87 of file References/references.bib
+Warning--entry type for "AcquisitionFunctions" isn't style-file defined
+--line 101 of file References/references.bib
+Warning--entry type for "Djolonga2013" isn't style-file defined
+--line 108 of file References/references.bib
 Warning--entry type for "Garnett2013" isn't style-file defined
---line 35 of file References/references.bib
+--line 115 of file References/references.bib
 Warning--entry type for "Tripathy" isn't style-file defined
---line 44 of file References/references.bib
+--line 124 of file References/references.bib
 Warning--entry type for "Wang2013" isn't style-file defined
---line 55 of file References/references.bib
+--line 135 of file References/references.bib
 Warning--entry type for "Rolland" isn't style-file defined
---line 64 of file References/references.bib
+--line 144 of file References/references.bib
 Warning--I didn't find a database entry for "Wang"
-Warning--I didn't find a database entry for "Rea85"
-Warning--I didn't find a database entry for "Ancey1996"
-You've used 8 entries,
+You've used 18 entries,
             1935 wiz_defined-function locations,
-            519 strings with 5180 characters,
-and the built_in function-call counts, 2743 in all, are:
-= -- 252
-> -- 194
-< -- 0
-+ -- 68
-- -- 68
-* -- 240
-:= -- 539
-add.period$ -- 16
-call.type$ -- 8
-change.case$ -- 74
-chr.to.int$ -- 8
-cite$ -- 8
-duplicate$ -- 80
-empty$ -- 121
-format.name$ -- 76
-if$ -- 483
+            563 strings with 6983 characters,
+and the built_in function-call counts, 5743 in all, are:
+= -- 538
+> -- 350
+< -- 5
++ -- 120
+- -- 120
+* -- 471
+:= -- 1117
+add.period$ -- 39
+call.type$ -- 18
+change.case$ -- 149
+chr.to.int$ -- 18
+cite$ -- 18
+duplicate$ -- 192
+empty$ -- 293
+format.name$ -- 140
+if$ -- 1033
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 35
-num.names$ -- 24
-pop$ -- 66
+missing$ -- 3
+newline$ -- 78
+num.names$ -- 54
+pop$ -- 136
 preamble$ -- 1
-purify$ -- 74
+purify$ -- 150
 quote$ -- 0
-skip$ -- 65
+skip$ -- 151
 stack$ -- 0
-substring$ -- 96
-swap$ -- 0
+substring$ -- 216
+swap$ -- 2
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 48
+type$ -- 106
 warning$ -- 0
-while$ -- 16
+while$ -- 36
 width$ -- 0
-write$ -- 82
-(There were 11 warnings)
+write$ -- 188
+(There were 16 warnings)

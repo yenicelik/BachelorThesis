@@ -1,5 +1,21 @@
 \begin{thebibliography}{}
 
+\bibitem[Abdelrahman et~al., 2016]{BOIncreasingPopularityEmpirically}
+Abdelrahman, H., Berkenkamp, F., Poland, J., and Krause, A. (2016).
+\newblock {Bayesian Optimization for Maximum Power Point Tracking in
+  Photovoltaic Power Plants}.
+
+\bibitem[Berkenkamp et~al., 2017]{berkenkamp17saferl}
+Berkenkamp, F., Turchetta, M., Schoellig, A.~P., and Krause, A. (2017).
+\newblock Safe model-based reinforcement learning with stability guarantees.
+\newblock In {\em Neural Information Processing Systems (NIPS)}.
+
+\bibitem[Brochu et~al., 2010]{AcquisitionFunctions}
+Brochu, E., Cora, V.~M., and De~Freitas, N. (2010).
+\newblock {A tutorial on Bayesian optimization of expensive cost functions,
+  with application to active user modeling and hierarchical reinforcement
+  learning}.
+
 \bibitem[Djolonga et~al., 2013]{Djolonga2013}
 Djolonga, J., Krause, A., and Cevher, V. (2013).
 \newblock {High-Dimensional Gaussian Process Bandits}.
@@ -13,9 +29,34 @@ Gardner, J.~R., Guo, C., Weinberger, K.~Q., Garnett, R., and Grosse, R. (2017).
 Garnett, R., Osborne, M.~A., and Hennig, P. (2013).
 \newblock {Active Learning of Linear Embeddings for Gaussian Processes}.
 
+\bibitem[{GPy}, 2012]{gpy2014}
+{GPy} (since 2012).
+\newblock {GPy}: A gaussian process framework in python.
+\newblock \url{http://github.com/SheffieldML/GPy}.
+
+\bibitem[Jamil and Yang, 2018]{Jamil2013}
+Jamil, M. and Yang, X.-S. (2018).
+\newblock {A Literature Survey of Benchmark Functions For Global Optimization
+  Problems Citation details: Momin Jamil and Xin-She Yang, A literature survey
+  of benchmark functions for global optimization problems}.
+
+\bibitem[Kandasamy et~al., 2018]{BayesianOptimizationNAS}
+Kandasamy, K., Neiswanger, W., Schneider, J., Poczos, B., and Xing, E. (2018).
+\newblock {Neural Architecture Search with Bayesian Optimisation and Optimal
+  Transport}.
+
 \bibitem[Li et~al., 2018]{Li2018}
 Li, C., Gupta, S., Rana, S., Nguyen, V., Venkatesh, S., and Shilton, A. (2018).
 \newblock {High Dimensional Bayesian Optimization Using Dropout}.
+
+\bibitem[Lizotte, 2008]{Lizotte2008}
+Lizotte, D. (2008).
+\newblock {Practical Bayesian Optimization}.
+
+\bibitem[Murphy, 2012]{Murphy}
+Murphy, K.~P. (2012).
+\newblock {\em Machine Learning, A Probabilistic Perspective}.
+\newblock MIT Press.
 
 \bibitem[Rana et~al., 2017]{Rana2017}
 Rana, S., Li, C., Gupta, S., Nguyen, V., and Venkatesh, S. (2017).
@@ -27,10 +68,20 @@ Rolland, P., Scarlett, J., Bogunovic, I., and Cevher, V. (2018).
 \newblock {High-Dimensional Bayesian Optimization via Additive Models with
   Overlapping Groups}.
 
+\bibitem[Srinivas et~al., 2009]{UCBRegretProof}
+Srinivas, N., Krause, A., Kakade, S., and Seeger, M. (2009).
+\newblock {Gaussian Process Optimization in the Bandit Setting: No Regret and
+  Experimental Design}.
+
 \bibitem[Tripathy et~al., 2016]{Tripathy}
 Tripathy, R., Bilionis, I., and Gonzalez, M. (2016).
 \newblock {Gaussian processes with built-in dimensionality reduction:
   Applications in high-dimensional uncertainty propagation}.
+
+\bibitem[University, 2017]{OptimizationTestFunctions}
+University, S.~F. (2017).
+\newblock Virtual library of simulation experiments: Test functions and
+  datasets - optimization test problems.
 
 \bibitem[Wang et~al., 2013]{Wang2013}
 Wang, Z., Hutter, F., Zoghi, M., Matheson, D., and De~Freitas, N. (2013).

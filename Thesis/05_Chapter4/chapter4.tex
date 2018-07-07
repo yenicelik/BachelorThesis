@@ -12,67 +12,82 @@
 \fi
 
 \section{Shortcomings of current methods}
-We will now draw our attention to understanding what the current best models lack.
-We will enumerate the methods from the section "related work", and will shortly discuss what the shortcomings of these models are:
+I will enumerate select models from the section "related work", and will shortly discuss what the shortcomings of these models are:
 
 \paragraph{REMBO} is a purely optimizational algorithm, which finds optimizations in lower dimensions
+
 \begin{itemize}
-\item \textbf{Suitable choice of the optimization domain:} Not purely robust due to the chance that no suitable subspace will be found. 
-Furthermore, empirically, the choice of the optimization domain heavily affects the duration and effectiveness of the optimization.
-We have found that the proposed solution to choose $ \left[ -\sqrt{d}, \sqrt{d}  \right]^d $ does not offer a well enough domain solution, even for simple problems (such as 2d embedded functions in 5d spaces)
-\item \textbf{Identification of subspace:} In specific domain settings, such as optimization with safety constraints, or general reproducibility in higher domains, requires the subspace to be identified. 
-REMBO is an implicit optimizer, in that it does not find any subspace.
-Identifying the active subspace may be a requirement for certain applications.
-\item \textbf{Probability of failure:} Although the authors propose that restarting REMBO multiple times would allow for a good optimization domain to be found, they do not propose an explicit way of how to achieve this.
+
+\item \textbf{Suitable choice of the optimization domain:} REMBO is not purely robust, as there is a considerable chance that no suitable subspace will be found. 
+Empirically, the choice of the optimization domain heavily affects the duration and effectiveness of the optimization.
+I have found that the proposed optimization domain $ \left[ -\sqrt{d}, \sqrt{d}  \right]^d $ is not well chosen for smaller environments, such as the Camelback function embedded in 5 dimensions.
+In any case, this is a very sensitive hyperparameter
+
+\item \textbf{Identification of subspace:} In some settings, including optimization with safety constraints, knowing the subspace that the model projects to is advantageous. 
+REMBO is an implicit optimizer, in that it does not find any subspace, but optimizes through a randomly sampled matrix.
+
+\item \textbf{Probability of failure:} REMBO has a relatively high probability of failure. 
+The authors propose that restarting REMBO multiple times would allow for a good optimization domain to be found, which leads to interleaved runs. 
+
 \end{itemize}
 
 \paragraph{Active subgradients} can be a viable option if we have access to the gradients of the problem, from which we can learn the active subspace projection matrix in the manner by using that gradient matrices.
+
 \begin{itemize}
-\item \textbf{Access to gradients:} We don't always have access to the gradients for datasets. 
-Especially in high dimensions, this would require a very, very high number of datapoints per dimension.
-It would also require these points to be evenly enough distributed, such that the gradients can be effective estimated at many points. 
-\item \textbf{Robustness to noise:} According to (CITE TRIPATHY), this method is also quite sensitive to noisy observations.
-This makes this method not very robust.
+
+\item \textbf{Access to gradients:} For optimization algorithms, the function we want to optimize over is usually a black-box function.
+Practically, most black-box functions don't offer access to gradient information.
+To approximate the gradients using sampled points, this would require a high number of datapoints per dimension.
+In addition to that, these points would have to be evenly distributed, such that the gradients can be effectively estimated for more than one region.
+
+\item \textbf{Robustness to noise:} According to \citep{Tripathy}, methods that approximate gradients and use this gradient information to create subspace projectsion are very sensitive to noise.
+Depending on the application, this can make the algorithm ineffective as it is not robust to small variations in the response surface.
+
 \end{itemize}
 
-Given the nature of real-world data, approximating the active subspace using the gradients of the datasamples is thus not a robust, and viable option.
+Given the nature of real-world data, approximating the active subspace using the gradients of the data-samples is thus not a robust, and viable option.
 
-\paragraph{Tripathy} solution argues that it is more robust to real-world noise. 
-They also do not rely on gradient information from the data used for optimization.
-Tripathy allows for a noise-robust way to identify the active subspace.
+\paragraph{Tripathy's method} argues that it is more robust to real-world noise. 
+It also does not rely on gradient information of the response surface.
+Tripathy's method allows for a noise-robust way to identify the active subspace.
+
 \begin{itemize}
-\item \textbf{Duration of optimization:} However, in practice tripathy's solution takes a long time, especially if the dimensions, or the number of datapoints are high (due to the high number of matrix multiplications). 
-Especially in easier problems, it is often desirable not to wait a few hours (but rather a few minutes, or do a precomputation) to find a next best candidate for a point.
-\item \textbf{Efficienty:} Tripathy's solution practically relies on a high number of restarts.
+
+\item \textbf{Duration of optimization:} In practice, Tripathy's method takes a long time, especially if the dimensions, or the number of data-points are high. This is due to the high number of matrix multiplications. 
+Especially for easier problems, it is often desirable if the running time of optimizing for the next point is in a few minutes or seconds, rather than hours.
+
+\item \textbf{Efficiency:} In practice, Tripathy's method relies on a high number of restarts.
 From our observations, the number of steps to optimize the orthogonal matrix becomes relevant as the number of dimensions grow.
 Given the nature of accepting any starting point, it does not allow for a very efficient way to search for the best possible projection matrix.
-A more efficient way to search all possible matrices (by adding heuristics for example), would be desirable.
-\item \textbf{Insensitive to small pertubations:} Tripathy's model - although finding an active subspace, completely neglects the other dimensions which could allow for small perturbations to allow for an increase the global optimum value.
-There are simple methods that allow for optimization in these domains, and it may be helpful to incorporate such solutions into an existing algorithm.
+A more efficient way to search all possible matrices - by incorporating heuristics for example - would be desirable.
+
+\item \textbf{Insensitive to small perturbations:} Although Tripathy's model finds an active subspace, it completely neglects other dimensions which could allow for small perturbations to allow for an additional increase the global optimum value.
+Although we can control to what extent small perturbations should be part of the active subdimension, one usually wants to choose a significant cutoff dimension, but still incorporate additional small perturbations without sacrificing the effectiveness of the projection.
+
 \end{itemize}
 
 \section{Method of measuring improvements}
 In the following sections, we will discuss and show how we can improve on the shortcomings of the above methods.
 Because practicality is important in our method, we will both use synthetic functions to measure the efficiency of our method, but also real datasets.
 For real datasets, we want to see if the
-\textbf{???} log likelihood improves (somehow).
-Still need to think about this.\\
+\textbf{???} log likelihood improves.
+I will use a real dataset of an electron accelerator.
+I will increasingly train the GP model on a number of data-points.
+As more data-points are added to the GP, the log likelihood of the test points should have the tendency to increase.\\
 
 Besides that, we offer the following possibilities to check how well our model does.
 
 \begin{itemize}
-\item choose the matrix that we will take amongst all initialized tries (should be in the paper)
-\item Test if the expectation $$ E[ f(A x) - f_{hat}(A_{hat} x) ] $$ decreases / approaches zero (for methods that identify a projection matrix).
-\item check if the test log-likelihood decreases
-\item Check if the l2-loss to the real surface decreases.
+\item Test if the expectation $$ E[ f(A x) - \hat{f}(\hat{A} x) ] $$ decreases / approaches zero (for methods that identify a projection matrix).
+\item Check if the test log-likelihood decreases for functions that are provided by a finite number of data-points.
+\item Check if the regret for the methods at hand are competitive, for synthetic functions.
 \end{itemize}
-
 
 
 \subsection{Synthetic Datasets}
 \paragraph{5 dimensional function with 2 dimensional linear embedding}
 
-It is easy to test snythetic datasets, as we can evaluate these functions at any point, and immediately get a regret value.
+It is easy to test snythetic datasets, as one can evaluate these functions at any point, and immediately get a regret value.
 We will have one test function for different scenarios.
 
 \paragraph{2D to 1D}: For this function, we use a simple Parabola which is embedded in a 2D space.
@@ -81,13 +96,10 @@ This function is supposed to check that the complexity of the model does not hin
 This checks if simple models can be found within certain, higher dimensional spaces.
 \paragraph{5D to 2D}: For this function, we use a simple Camelback function which is enclosed in a sinusoidal function (with decreasing amplitude), which is embedded in a 5D space.
 This is the most important dataset, as it measures if small perturbations are covered by the more complicated model (our proposed model).
-\paragraph{10D to 5D}: For this function, we use the 5D Rosenbrock function which is embedded in a 10D space.
-To check how the algorithms cope with higher dimensions.
-In additional to the Rosenbrock function, again, we add a decreasing sinusoidal, such that small perturbations in the data exist.
-This checks if our model is able to expand to higher dimensions.
 
 \subsection{Real Datasets}
-It is more difficult to test algorithms on real datasets, as we cannot quite test a metric such as regret, but rather have to use log likelihood or something similar to test how well our algorithm adapts on a test set, given a training set.
+It is more difficult to test algorithms on real datasets, as one cannot test on a metric such as regret.
+However, one can train the GP on a training set, and then compare the log-likelihood on a test set.
 
 \paragraph{SwissFEL dataset}
 \dots and some more 

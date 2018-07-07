@@ -31,31 +31,30 @@
 \contentsline {section}{\numberline {3.1}Shortcomings of current methods}{15}{section.3.1}
 \contentsline {paragraph}{REMBO}{15}{section*.8}
 \contentsline {paragraph}{Active subgradients}{16}{section*.9}
-\contentsline {paragraph}{Tripathy}{16}{section*.10}
+\contentsline {paragraph}{Tripathy's method}{16}{section*.10}
 \contentsline {section}{\numberline {3.2}Method of measuring improvements}{17}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Synthetic Datasets}{17}{subsection.3.2.1}
 \contentsline {paragraph}{5 dimensional function with 2 dimensional linear embedding}{17}{section*.11}
 \contentsline {paragraph}{2D to 1D}{17}{section*.12}
 \contentsline {paragraph}{5D to 2D}{17}{section*.13}
-\contentsline {paragraph}{5D to 2D}{17}{section*.14}
-\contentsline {paragraph}{10D to 5D}{18}{section*.15}
+\contentsline {paragraph}{5D to 2D}{18}{section*.14}
 \contentsline {subsection}{\numberline {3.2.2}Real Datasets}{18}{subsection.3.2.2}
-\contentsline {paragraph}{SwissFEL dataset}{18}{section*.16}
+\contentsline {paragraph}{SwissFEL dataset}{18}{section*.15}
 \contentsline {chapter}{\numberline {4}Model Design and Extensions to the state of the art}{19}{chapter.4}
 \contentsline {section}{\numberline {4.1}The BORING Algorithm}{19}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Algorithm Description}{20}{subsection.4.1.1}
-\contentsline {subsubsection}{General Idea of the algorithm}{20}{section*.17}
-\contentsline {subsubsection}{Finding a basis for the passive subspace (a subspace orthogonal to the active subspace)}{21}{section*.18}
-\contentsline {subsubsection}{Additive UCB acquisition function}{23}{section*.19}
+\contentsline {subsubsection}{General Idea of the algorithm}{20}{section*.16}
+\contentsline {subsubsection}{Finding a basis for the passive subspace (a subspace orthogonal to the active subspace)}{21}{section*.17}
+\contentsline {subsubsection}{Additive UCB acquisition function}{23}{section*.18}
 \contentsline {section}{\numberline {4.2}Additive Stiefel projections - Our proposed improvement to existing methods}{24}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}What is it better than actively finding substructures}{24}{subsection.4.2.1}
-\contentsline {subsubsection}{How does our algorithm address the shortcomings from chapter 3?}{25}{section*.20}
+\contentsline {subsubsection}{How does our algorithm address the shortcomings from chapter 3?}{25}{section*.19}
 \contentsline {chapter}{\numberline {5}Evaluation}{27}{chapter.5}
 \contentsline {section}{\numberline {5.1}Evaluation Settings}{27}{section.5.1}
 \contentsline {section}{\numberline {5.2}Quantitative evaluation}{27}{section.5.2}
 \contentsline {section}{\numberline {5.3}Qualitative evaluation}{28}{section.5.3}
 \contentsline {subsection}{\numberline {5.3.1}Finding a matrix when we apply a polynomial kernel onto the input first}{28}{subsection.5.3.1}
 \contentsline {subsection}{\numberline {5.3.2}Subspace identification}{28}{subsection.5.3.2}
-\contentsline {chapter}{References}{31}{chapter*.25}
+\contentsline {chapter}{References}{31}{chapter*.24}
 \contentsline {chapter}{Appendix \numberline {A}}{33}{Appendix.a.A}
 \contentsline {section}{\numberline {A.1}Benchmarking functions}{33}{section.a.A.1}
