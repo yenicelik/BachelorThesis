@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  20 JUN 2018 16:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  7 JUL 2018 13:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1395,9 +1395,10 @@ Package: translator 2010/06/12 ver 1.10
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/beamer/translator/translator-lang
 uage-mappings.tex)))) (./thesis-info.tex) (./thesis.aux
-(./Proposal/proposal.aux) (./Abstract/abstract.aux) (./Chapter1/chapter1.aux)
-(./Chapter2/chapter2.aux) (./Chapter4/chapter4.aux) (./Chapter5/chapter5.aux)
-(./Chapter6/chapter6.aux
+(./00_Proposal/proposal.aux) (./01_Abstract/abstract.aux)
+(./03_Chapter1/chapter1.aux) (./04_Chapter2/chapter2.aux)
+(./05_Chapter4/chapter4.aux) (./06_Chapter5/chapter5.aux)
+(./07_Chapter6/chapter6.aux
 
 LaTeX Warning: Label `fig:mouse' multiply defined.
 
@@ -1675,7 +1676,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 114.
 \PHD@crest=\box56
 
-<Figs/University_Crest.pdf, id=192, 59.22125pt x 69.25874pt>
+<Figs/University_Crest.pdf, id=188, 59.22125pt x 69.25874pt>
 File: Figs/University_Crest.pdf Graphic file (type pdf)
 
 <use Figs/University_Crest.pdf>
@@ -1694,10 +1695,10 @@ Package pdftex.def Info: Figs/University_Crest.pdf used on input line 114.
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./Figs/
 University_Crest.pdf>]
-\openout2 = `Proposal/proposal.aux'.
+\openout2 = `00_Proposal/proposal.aux'.
 
 
-(./Proposal/proposal.tex
+(./00_Proposal/proposal.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 4.
 
@@ -1742,35 +1743,63 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 
 ]
 
-Package natbib Warning: Citation `Wang' on page iii undefined on input line 68.
+Package natbib Warning: Citation `Wang' on page iii undefined on input line 69.
 
 
-<Figs/./../src/Embedding_optimization.png, id=217, 636.3775pt x 241.90375pt>
+<Figs/./../src/Embedding_optimization.png, id=213, 636.3775pt x 241.90375pt>
 File: Figs/./../src/Embedding_optimization.png Graphic file (type png)
 
 <use Figs/./../src/Embedding_optimization.png>
 Package pdftex.def Info: Figs/./../src/Embedding_optimization.png used on input
- line 80.
+ line 81.
 (pdftex.def)             Requested size: 218.73056pt x 83.14313pt.
  [3]) [4 <./Figs/./../src/Embedding_optimization.png>]
-\openout2 = `Abstract/abstract.aux'.
+\openout2 = `01_Abstract/abstract.aux'.
 
- (./Abstract/abstract.tex) [5
+ (./01_Abstract/abstract.tex
+Underfull \hbox (badness 10000) in paragraph at lines 5--8
 
-
-
-
-] [6
+ []
 
 
-] (./thesis.toc [7
+Underfull \hbox (badness 10000) in paragraph at lines 9--11
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 12--15
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 21--28
+
+ []
+
+[5
+
+
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 29--33
+
+ []
+
+) [6] (./thesis.toc [7
+
+
 
 ])
 \tf@toc=\write6
 \openout6 = `thesis.toc'.
 
-
-[8] (./thesis.lof)
+ [8] (./thesis.lof)
 \tf@lof=\write7
 \openout7 = `thesis.lof'.
 
@@ -1787,27 +1816,39 @@ No file thesis.nls.
 [11] [12
 
 ]
-\openout2 = `Chapter1/chapter1.aux'.
+\openout2 = `03_Chapter1/chapter1.aux'.
 
- (./Chapter1/chapter1.tex
+ (./03_Chapter1/chapter1.tex
 Chapter 1.
+
+Package natbib Warning: Citation `BayesianOptimizationNAS' on page 1 undefined 
+on input line 19.
+
+
+Package natbib Warning: Citation `berkenkamp17saferl' on page 1 undefined on in
+put line 19.
+
 
 Underfull \hbox (badness 10000) in paragraph at lines 18--20
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 21--23
+Underfull \hbox (badness 10000) in paragraph at lines 21--24
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 24--27
+Underfull \hbox (badness 10000) in paragraph at lines 25--28
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 28--29
+Package natbib Warning: Citation `BOIncreasingPopularityEmpirically' on page 1 
+undefined on input line 29.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 29--30
 
  []
 
@@ -1815,17 +1856,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 28--29
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 34--36
+Underfull \hbox (badness 10000) in paragraph at lines 36--38
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 37--39
+Underfull \hbox (badness 10000) in paragraph at lines 39--41
 
  []
 
 
-Overfull \hbox (10.99869pt too wide) in paragraph at lines 48--50
+Overfull \hbox (10.99869pt too wide) in paragraph at lines 50--52
 []\T1/ptm/m/n/12 (-20) Where $\OML/ztmcm/m/it/12 ^^V$ \T1/ptm/m/n/12 (-20) is a
  mean func-tion, $\OML/ztmcm/m/it/12 K \OT1/ztmcm/m/n/12 = [](\OT1/ptm/b/n/12 X
 \OML/ztmcm/m/it/12 ; \OT1/ptm/b/n/12 X\OT1/ztmcm/m/n/12 )$\T1/ptm/m/n/12 (-20) 
@@ -1836,14 +1877,14 @@ n/12 (-20) .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 51--55
+Underfull \hbox (badness 10000) in paragraph at lines 53--57
 
  []
 
 [2] [3] [4]) [5]
-\openout2 = `Chapter2/chapter2.aux'.
+\openout2 = `04_Chapter2/chapter2.aux'.
 
- (./Chapter2/chapter2.tex [6
+ (./04_Chapter2/chapter2.tex [6
 
 
 
@@ -1887,9 +1928,9 @@ Overfull \hbox (24.21904pt too wide) in paragraph at lines 186--186
  []
 
 [11]) [12] [13]
-\openout2 = `Chapter4/chapter4.aux'.
+\openout2 = `05_Chapter4/chapter4.aux'.
 
- (./Chapter4/chapter4.tex [14
+ (./05_Chapter4/chapter4.tex [14
 
 
 
@@ -1904,9 +1945,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 55--60
  []
 
 [16] [17]) [18]
-\openout2 = `Chapter5/chapter5.aux'.
+\openout2 = `06_Chapter5/chapter5.aux'.
 
- (./Chapter5/chapter5.tex
+ (./06_Chapter5/chapter5.tex
 Chapter 4.
 
 Underfull \hbox (badness 10000) in paragraph at lines 26--27
@@ -1938,9 +1979,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 167--168
  []
 
 [23] [24]) [25]
-\openout2 = `Chapter6/chapter6.aux'.
+\openout2 = `07_Chapter6/chapter6.aux'.
 
- (./Chapter6/chapter6.tex [26
+ (./07_Chapter6/chapter6.tex [26
 
 
 
@@ -1952,133 +1993,146 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--36
  []
 
 [27] [28]
-<Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png, id=589, 462.528pt x 346.896
-pt>
-File: Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png Graphic file (type png)
-
- <use Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png>
-Package pdftex.def Info: Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png used
- on input line 76.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-
-<Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png, id=
-590, 462.528pt x 346.896pt>
-File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
- Graphic file (type png)
-
-<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
-Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
-5d_to_2d_boring.png used on input line 83.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
- Graphic file (type png)
-
-<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
-Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
-5d_to_2d_boring.png used on input line 91.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
- Graphic file (type png)
-
-<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
-Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
-5d_to_2d_boring.png used on input line 98.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-
-<Chapter6/Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.png, id=59
-1, 462.528pt x 346.896pt>
-File: Chapter6/Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.png G
-raphic file (type png)
-
-<use Chapter6/Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.png>
-Package pdftex.def Info: Chapter6/Figs/orig/embedded_sinusoidal_small_perturbat
-ions_5d_to_2d.png used on input line 109.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
- Graphic file (type png)
-
-<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
-Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
-5d_to_2d_boring.png used on input line 116.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
- Graphic file (type png)
-
-<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
-Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
-5d_to_2d_boring.png used on input line 124.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
- Graphic file (type png)
-
-<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
-Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
-5d_to_2d_boring.png used on input line 131.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-
-<Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png, id=592, 462.528pt x 346.89
-6pt>
-File: Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png Graphic file (type png
-)
- <use Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png>
-Package pdftex.def Info: Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png use
-d on input line 142.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
- Graphic file (type png)
-
-<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
-Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
-5d_to_2d_boring.png used on input line 149.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
- Graphic file (type png)
-
-<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
-Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
-5d_to_2d_boring.png used on input line 157.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
- Graphic file (type png)
-
-<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
-Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
-5d_to_2d_boring.png used on input line 164.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-[29 <./Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png> <./Chapter6/Figs/embe
-dded_sinusoidal_small_perturbations_5d_to_2d_boring.png> <./Chapter6/Figs/orig/
-embedded_sinusoidal_small_perturbations_5d_to_2d.png>]
-<Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png, id=600, 462.528pt x 346.
+<07_Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png, id=584, 462.528pt x 346.
 896pt>
-File: Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png Graphic file (type p
+File: 07_Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png Graphic file (type p
 ng)
- <use Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png>
-Package pdftex.def Info: Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png u
-sed on input line 175.
+ <use 07_Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png>
+Package pdftex.def Info: 07_Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png u
+sed on input line 76.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
- Graphic file (type png)
 
-<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
-Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
-5d_to_2d_boring.png used on input line 182.
-(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
- Graphic file (type png)
+<07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png, 
+id=585, 462.528pt x 346.896pt>
+File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
+png Graphic file (type png)
 
-<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
-Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
-5d_to_2d_boring.png used on input line 190.
+<use 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.p
+ng>
+Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
+ns_5d_to_2d_boring.png used on input line 83.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-File: Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png
- Graphic file (type png)
+File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
+png Graphic file (type png)
 
-<use Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png>
-Package pdftex.def Info: Chapter6/Figs/embedded_sinusoidal_small_perturbations_
-5d_to_2d_boring.png used on input line 197.
+<use 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.p
+ng>
+Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
+ns_5d_to_2d_boring.png used on input line 91.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-) [30 <./Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png> <./Chapter6/Figs/o
-rig/embedded_rosenbrock_10d_to_5d.png>] (./thesis.bbl) [31
+File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
+png Graphic file (type png)
+
+<use 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.p
+ng>
+Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
+ns_5d_to_2d_boring.png used on input line 98.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+
+<07_Chapter6/Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.png, id
+=586, 462.528pt x 346.896pt>
+File: 07_Chapter6/Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.pn
+g Graphic file (type png)
+
+<use 07_Chapter6/Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.png
+>
+Package pdftex.def Info: 07_Chapter6/Figs/orig/embedded_sinusoidal_small_pertur
+bations_5d_to_2d.png used on input line 109.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
+png Graphic file (type png)
+
+<use 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.p
+ng>
+Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
+ns_5d_to_2d_boring.png used on input line 116.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
+png Graphic file (type png)
+
+<use 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.p
+ng>
+Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
+ns_5d_to_2d_boring.png used on input line 124.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
+png Graphic file (type png)
+
+<use 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.p
+ng>
+Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
+ns_5d_to_2d_boring.png used on input line 131.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+
+<07_Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png, id=587, 462.528pt x 346
+.896pt>
+File: 07_Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png Graphic file (type 
+png)
+ <use 07_Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png>
+Package pdftex.def Info: 07_Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png 
+used on input line 142.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
+png Graphic file (type png)
+
+<use 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.p
+ng>
+Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
+ns_5d_to_2d_boring.png used on input line 149.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
+png Graphic file (type png)
+
+<use 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.p
+ng>
+Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
+ns_5d_to_2d_boring.png used on input line 157.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
+png Graphic file (type png)
+
+<use 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.p
+ng>
+Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
+ns_5d_to_2d_boring.png used on input line 164.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+ [29 <./07_Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png> <./07_Chapter6/Fi
+gs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png> <./07_Chapter6/
+Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.png>]
+<07_Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png, id=595, 462.528pt x 3
+46.896pt>
+File: 07_Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png Graphic file (typ
+e png)
+ <use 07_Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png>
+Package pdftex.def Info: 07_Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.pn
+g used on input line 175.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
+png Graphic file (type png)
+
+<use 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.p
+ng>
+Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
+ns_5d_to_2d_boring.png used on input line 182.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
+png Graphic file (type png)
+
+<use 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.p
+ng>
+Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
+ns_5d_to_2d_boring.png used on input line 190.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
+png Graphic file (type png)
+
+<use 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.p
+ng>
+Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
+ns_5d_to_2d_boring.png used on input line 197.
+(pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
+) [30 <./07_Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png> <./07_Chapter6/
+Figs/orig/embedded_rosenbrock_10d_to_5d.png>] (./thesis.bbl) [31
 
 
 
@@ -2104,54 +2158,45 @@ Package natbib Warning: Citation `Jamil2013' on page 34 undefined on input line
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 197.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 197.
-(./thesis.aux (./Proposal/proposal.aux) (./Abstract/abstract.aux)
-(./Chapter1/chapter1.aux) (./Chapter2/chapter2.aux) (./Chapter4/chapter4.aux)
-(./Chapter5/chapter5.aux) (./Chapter6/chapter6.aux) (./Appendix1/appendix1.aux)
-)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 197.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 197.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 199.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 199.
+(./thesis.aux (./00_Proposal/proposal.aux) (./01_Abstract/abstract.aux)
+(./03_Chapter1/chapter1.aux) (./04_Chapter2/chapter2.aux)
+(./05_Chapter4/chapter4.aux) (./06_Chapter5/chapter5.aux)
+(./07_Chapter6/chapter6.aux) (./Appendix1/appendix1.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 199.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 199.
+Package rerunfilecheck Info: File `thesis.out' has not changed.
+(rerunfilecheck)             Checksum: 5AD371E1401F475150CD55DDBCA9427A;10347.
 
-
-Package rerunfilecheck Warning: File `thesis.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `thesis.out':
-(rerunfilecheck)             Before: 62F1033771429EDA60C9111620472928;10944
-(rerunfilecheck)             After:  5AD371E1401F475150CD55DDBCA9427A;10347.
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 26742 strings out of 492995
- 467114 string characters out of 6132704
+ 26746 strings out of 492995
+ 467430 string characters out of 6132704
  546278 words of memory out of 5000000
- 29415 multiletter control sequences out of 15000+600000
- 66768 words of font info for 193 fonts, out of 8000000 for 9000
+ 29417 multiletter control sequences out of 15000+600000
+ 66898 words of font info for 195 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,17n,92p,10383b,892s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{subsection.5.3.3} has been referenced but does no
-t exist, replaced by a fixed one
-
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
-live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texli
-ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
-2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/2017
-/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist
-/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
-1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/time
-s/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8a.
-pfb>
-Output written on thesis.pdf (46 pages, 927685 bytes).
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
+xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texli
+ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
+e/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/te
+xlive/2017/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/20
+17/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-di
+st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
+pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
+mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
+a.pfb>
+Output written on thesis.pdf (46 pages, 930783 bytes).
 PDF statistics:
- 784 PDF objects out of 1000 (max. 8388607)
- 694 compressed objects within 7 object streams
- 267 named destinations out of 1000 (max. 500000)
- 35228 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 779 PDF objects out of 1000 (max. 8388607)
+ 689 compressed objects within 7 object streams
+ 266 named destinations out of 1000 (max. 500000)
+ 35220 words of extra memory for PDF output out of 35830 (max. 10000000)
 

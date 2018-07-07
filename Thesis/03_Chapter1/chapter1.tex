@@ -1,0 +1,159 @@
+%!TEX root = ../thesis.tex
+%*******************************************************************************
+%*********************************** First Chapter *****************************
+%*******************************************************************************
+
+\chapter{Background}  %Title of the First Chapter
+
+\ifpdf
+    \graphicspath{{Chapter1/Figs/Raster/}{Chapter1/Figs/PDF/}{Chapter1/Figs/}}
+\else
+    \graphicspath{{Chapter1/Figs/Vector/}{Chapter1/Figs/}}
+\fi
+
+
+%********************************** %First Section  **************************************
+\section{Bayesian Optimization in high dimensions} %Section - 1.1 
+
+Many technical problems can be boiled down to some flavour of black box optimization. 
+Such problems include neural architecture search \citep{BayesianOptimizationNAS}, hyper-parameter search for neural networks, parameter optimization for electron accelerators, or drone parameter optimization using safety constraints \citep{berkenkamp17saferl}. \\
+
+Bayesian optimization methods are a class of sequential black box optimization methods.
+A surrogate function surface is learned using a Gaussian prior, and a Gaussian likelihood function.
+Combining the prior and the likelihood results in the Gaussian Posterior, which can then be used as a surface over which optimization can take place, with the help of a chosen acquisition function. \\
+
+Bayesian optimization is a method that has increasingly gained attention in the last decades, as it requires relatively few points to find an appropriate response surface for the function over which we want to optimize over.
+It is a sequential model based optimization function, which means that we choose the best point $x^*_i$ given all previous points $x^*_{i-1}, x^*_{i-2}, \ldots, x^*_{0}$.
+Given certain acquisition functions, it offers a good mixture between exploration and exploitation from an empirical standpoint. \\
+
+Bayesian optimization is a method that has increasingly gained popularity, as it shows empirical success in finding a good mixture between exploration the search space (finding new hyper-parameter configurations that outperform all existing configurations), and exploiting currently found best configurations (using the best learned hyper-parameter configurations to get utility out of the system) \citep{BOIncreasingPopularityEmpirically}. \\
+
+However, as machine learning algorithms, and other problems become more complex, bayesian optimization needs to cope with the increasing number of dimensions that define the search space of possible configurations.
+Because BO methods lose effectiveness in higher dimensions due to the loss of information through spatial locality, this thesis work explores methods that work in higher dimensions.
+Finally, we propose a novel method that improves on certain characteristics of the current state-of-the-art.
+
+\section{Gaussian Processes}
+Bayesian Optimization aims at using a Gaussian Process as an intermediate representation to find an optimal parameter setting $\mathbf{x^*}$ that maximizes a given utility function $f$.
+We assume the response surface to be Lipschitz-continuous. \\
+
+Assume we have observations $ \mathcal{Y} = \{ y^{(1)}, \ldots, y^{(N)} \}$, each evaluated at a point $ \mathcal{X} = \{  \mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)} \}$.
+The relationship between the observations $y$ and individual parameter settings $\mathbf{x}$ is $y = f \left( \mathbf{x} \right) + \epsilon$ where $\epsilon \sim  \mathcal{N} \left( 0, \sigma^2_n \right)$. Any quantity to be predicted has a subscript-star (e.g. $y_*$ is the function evaluation we want to predict).\\
+
+In it's simplest form, a Gaussian Process is described by the following equation:
+
+\begin{equation}
+\begin{pmatrix} y \\
+y_* \end{pmatrix} \sim N\Biggl(\mu,\begin{pmatrix} K & K^T_*\\
+ K_* & K_{**} \end{pmatrix}\Biggr),
+\end{equation}
+
+Where $\mu$ is a mean function, $K = \text{kernel}(\mathbf{X}, \mathbf{X})$, $K_* = \text{kernel}(\mathbf{x_*}, \mathbf{X})$ and $K_{**} = \text{kernel}(\mathbf{x_*}, \mathbf{x_*})$.
+Any new point $y_*$ is predicted given all previously sampled points $y$ by estimating the probability $ p(y_*|y) \sim N(K_*K^{-1}y,K_{**}-K_*K^{-1}K'_*) $
+
+This, in turn, can be used to build an acquisition function. 
+This acquisition function describes where to best sample points next.
+Some popular acquisition functions include GP-UCB, Most probable improvement (MPI) and Expected Improvement (EI).
+The choice of the acquisition function has great influence on the performance of the optimization procedure.\\
+
+In the following, I provide a short derivation of the core formulae used for Gaussian Processes.
+
+\subsection{Derivation of the Gaussian Process Formula}
+The \textbf{prior} for the Gaussian Process is the following (assuming the commonly chosen 0-mean-prior).
+
+\begin{equation}
+u \sim GP(0, k(x, x'))
+\end{equation}
+
+Because $u$ is a random variable following a Gaussian Process distribution, its probably distribution is given by a normal distribution:
+
+\begin{equation}
+p(u) = N ( 0, K )
+\end{equation}
+
+Additional data $ X = \{ (x_1, y_1), \ldots, (x_n, y_n) \} $ can be observed.
+The Gaussian Process incorporates an error term that takes into consideration possible noise in the measurement of the experiment.
+Thus, $y$ has some noise term $\epsilon$ such that $y = u(x) + \epsilon$.
+By the central limit theorem, commonly the assumption is held that $\epsilon$ is normally distributed around $0$ with $\sigma_s$ standard deviation.
+Given the sampled datapoints, and the inherent noise that these datapoints have, the \textbf{likelihood} of the Gaussian Process can be represented as follows:
+
+\begin{equation}
+p(y | x, u) = N (u, \sigma_s^2 I)
+\end{equation}
+
+% CITE some part of murphy?
+% https://stats.stackexchange.com/questions/84058/derivation-of-predictive-distribution-of-gaussian-process
+
+Given the prior and likelihood of the Gaussian Process, the posterior of the Gaussian Process can be derived by simple application of Bayes rule.
+
+\begin{align}
+p(u | x, y) &= \frac{ p(y | x, u) p(u) }{p(y | x)}
+& = N( K(K +\sigma^2 I)^{-1}y, \sigma^2 (K + \sigma^2 I)^{-1} K )
+\end{align}
+
+At this point, we want to create a surrogate embeddings, that predicts $y_*$ for any possible given $x_*$. 
+We refer to this as the surrogate response surface.
+
+We use the following formula to derive the posterior distribution for a given predictor $y_*$.
+
+\begin{equation}
+\begin{pmatrix} y \\
+y_* \end{pmatrix} \sim N\Biggl(\mu,\begin{pmatrix} K & K^T_*\\
+ K_* & K_{**} \end{pmatrix}\Biggr),
+\end{equation}
+
+To numerically calculate this, one uses the Matrix Inversion Lemma (CITE Murphy Chapter 4.3 110-111)
+
+
+\section{Acquisition Functions}
+
+Given the above formula for the posterior mean $\mu$ and the poster variance $\sigma^2$, Bayesian Optimization uses an acquisition function to optimize over.
+We quickly present some of the most common acquisition functions.
+
+% Most formulae taken from "A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning
+
+\subsection{Upper Confident Bound (UCB)}
+(CITE Krause Srinivas) about how acquisition function is guaranteed to find best config after awhile.
+
+The upper confidence bound allows the user to control exploitation and exploration through a parameter $\beta > 0$, which can be chosen as CITE PAPER, to offer optimality guarantees.
+
+\begin{equation}
+UCB(x) = \mu(x) + \beta \sigma(x)
+\end{equation}
+
+Here, the functions $\mu$ and $\sigma$ are the predicted mean and variance of the Gaussian Process Posterior.
+
+\subsection{Probability of Improvement (PI)}
+The (maximum) probability of improvement always selects the point which has the highest potential to maximise the function. 
+The downside to this policy is that this leads to exploitation, which can be controlled by a parameter $\xi > 0$.
+
+\begin{align}
+    PI(x) & = P( f(x) \geq f(x^+) + \xi ) \\
+    & = \Phi ( \frac{\mu(x) - f(x^+) - \xi}{\sigma(x)}  ) 
+\end{align}
+
+
+\subsection{Expected Improvement (EI)}
+
+"CITE A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning"
+\begin{align}
+    EI(x) =
+    \begin{dcases}
+        ( \mu (x) - f(x^+) \Phi(Z) \sigma (x) \phi (Z) ) & \text{ if } \sigma (x) > 0 \\
+        0 & \text{ if } \sigma (x) = 0
+    \end{dcases} \\
+\end{align}
+
+\begin{equation}
+    Z = \frac{\mu (x) - f(x^+) }{\sigma(x)}
+\end{equation}
+
+Given one of the above acquisition functions, we then use an optimizer such as $L-BFGS$, to find an approximate global maximum of the respective function.
+The combination of Gaussian Processes and Acquisition function together result in a Bayesian Optimization algorithm, which has a prior assumption about the function to be learned, and uses datasamples to create a likelihood to further refine the posterior of the function assumption.
+
+\section{Resources}
+(CITE https://github.com/SheffieldML/GPy)
+We will use "GPy: A Gaussian process framework in python" and "CITE https://github.com/SheffieldML/GPyOpt" by the Sheffield Machine Learning Group.
+In addition to that, the febo framework developed by Johannes Kirschner from the Learning and Adaptive Systems group at ETH Zurich.
+We use pytest to write tests (CITE).
+
+% BFGS: https://stats.stackexchange.com/questions/284712/how-does-the-l-bfgs-work

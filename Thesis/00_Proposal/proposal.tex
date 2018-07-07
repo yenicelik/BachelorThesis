@@ -65,6 +65,7 @@ A junction tree is created from the graph, which is then used to find the global
 The dependencies between the variable-subsets are represented through a graph, which can be learned through Gibbs sampling.
 This, in turn, is used to create a kernel for the GP.
 
+% TODO: cite rembo!
 \item \cite{Wang}
 A function $f : \mathbf{R}^D \rightarrow \mathbf{R}$ is said to have effective dimensionality $d_e$ (where $d_e < D$), if there exists a linear subspace $\mathcal{T}$ of dimension $d_e$ such that for all $ x_\top \in \mathcal{T} \subset \mathbf{R}^D $ and $x_\perp \in \mathcal{T_\perp} \subset \mathbf{R}^D $, we have $ f(x) = f(x_\top +x_\perp ) = f(x_\top)$.
 $\mathcal{T^\perp}$ is the orthogonal complement of $\mathcal{T}$.
