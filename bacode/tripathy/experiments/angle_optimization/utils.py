@@ -3,6 +3,8 @@
 """
 
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 def calculate_angle_between_two_matrices(A, B):

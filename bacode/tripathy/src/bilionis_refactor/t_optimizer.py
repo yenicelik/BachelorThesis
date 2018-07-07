@@ -247,6 +247,19 @@ class TripathyOptimizer:
         self.l = None
         self.s = None
 
+        # Initialize the pool here, so we can use it globally
+        # Defining the process pool
+        # Count how many processors we have:
+        number_processes = multiprocessing.cpu_count()
+        # print("Number of processes found: ", number_processes)
+
+        if config['restict_cores']:
+            number_processes = min(number_processes, config['max_cores'])
+        number_processes = max(number_processes, 1)
+        print("Number of cores in use: ", number_processes)
+        print("The current process id is: ", os.getpid())
+
+        self.pool = pathos.multiprocessing.ProcessingPool(number_processes)
 
     ###############################
     #      GENERAL-OPTIMIZATION   #
@@ -320,31 +333,18 @@ class TripathyOptimizer:
         def wrapper_singlerun(_):
             return single_run(self, t_kernel, X, Y)
 
-        # Defining the process pool
-        # Count how many processors we have:
-        number_processes = multiprocessing.cpu_count()
-        # print("Number of processes found: ", number_processes)
-
-        if config['restict_cores']:
-            number_processes = min(number_processes, config['max_cores'])
-        number_processes = max(number_processes, 1)
-        print("Number of cores in use: ", number_processes)
-        print("The current process id is: ", os.getpid())
 
         # print("Number of processes found: ", number_processes)
-
-        pool = pathos.pools._ProcessPool(number_processes)
-
         # Do "number of reruns by spawning new processes
 
-        all_responses = pool.map(wrapper_singlerun, range(self.no_of_restarts))
-        pool.close()
-        pool.terminate()
-        pool.join()
+        all_responses = self.pool.map(wrapper_singlerun, range(self.no_of_restarts))
+        self.pool._clear()
 
-        # pool._clear()
+        # pool.close()
+        # pool.terminate()
+        # pool.join()
 
-        pool = None
+        # pool = None
 
         # Run garbage collection
         gc.collect()

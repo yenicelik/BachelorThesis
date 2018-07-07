@@ -22,7 +22,7 @@ from bacode.tripathy.src.bilionis_refactor.t_optimization_functions import t_Par
 logger = get_logger('tripathy')
 
 from febo.utils import locate, get_logger
-
+import gc
 
 class TripathyGPConfig(ModelConfig):
     """
@@ -118,6 +118,8 @@ class TripathyGP(ConfidenceBoundModel):
         self._bias = self.config.bias
         self.calculate_always = calculate_always
 
+        self.optimizer = TripathyOptimizer()
+
     # Obligatory values
     @property
     def beta(self):
@@ -204,16 +206,17 @@ class TripathyGP(ConfidenceBoundModel):
             X = np.concatenate((self.gp.X, X))
             Y = np.concatenate((self.gp.Y, Y))
 
-        if self.i % 200 == 100 or self.calculate_always:
+        if self.i % 600 == 100 or self.calculate_always:
 
-            optimizer = TripathyOptimizer()
-            self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = optimizer.find_active_subspace(X, Y)
-            #
+            self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(X, Y)
+
             # print("Optimized parameters are: ")
             # print(self.noise_var)
             # print(self.lengthscale)
             # print(self.variance)
             # print(self.active_d)
+            # del optimizer
+            gc.collect()
 
             print("Found parameters are: ")
             print("W: ", self.W_hat)

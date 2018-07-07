@@ -1,6 +1,6 @@
 from sys import platform
 
-DEV = True
+DEV = False
 QDev = False
 HALFDEV = True
 
@@ -69,20 +69,20 @@ elif QDev:
 elif HALFDEV:
 
     config = {
-        "no_restarts": 50, # 1000
+        "no_restarts": 100, # 1000
 
-        "max_iter_alg1": 50, # int(1e5),
-        "max_iter_alg3": 15, # int(1e5),
+        "max_iter_alg1": 200, # int(1e5),
+        "max_iter_alg3": 200, # int(1e5),
 
-        "max_iter_parameter_optimization": 200,
-        "max_iter_W_optimization": 200,
+        "max_iter_parameter_optimization": 100,
+        "max_iter_W_optimization": 10,
 
-        "eps_alg1": 1.e-8, # -12,
-        "eps_alg3": 1.e-8, # -12,
+        "eps_alg1": 1.e-12, # -12,
+        "eps_alg3": 1.e-12, # -12,
         "eps_alg4": 8.e-2,
 
         "tau_max": 1.e-1,
-        "no_taus": 5,
+        "no_taus": 6,
 
         "test_single_dimension": True,
         "max_dimensions": 3,
@@ -91,16 +91,16 @@ elif HALFDEV:
 else:
 
     config = {
-        "no_restarts": 16*15,
+        "no_restarts": 4*14,
 
-        "max_iter_alg1": int(1000),
-        "max_iter_alg3": int(1000),
+        "max_iter_alg1": int(200),
+        "max_iter_alg3": int(200),
 
         "max_iter_parameter_optimization": 1,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 5.e-6, # -12,
-        "eps_alg3": 5.e-6, # -12,
+        "eps_alg1": 5.e-7, # -12,
+        "eps_alg3": 5.e-7, # -12,
         "eps_alg4": 1.e-3,
 
         "tau_max": 1.e-1,

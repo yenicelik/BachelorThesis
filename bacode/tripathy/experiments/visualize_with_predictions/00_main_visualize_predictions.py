@@ -100,7 +100,7 @@ def visualize_predictions():
         # Generate test set
 
         X_train, Y_train = get_training_set(NUM_TRAINING_POINTS, fnc)
-        X_viz, X_test, Y_test = get_test_set(100, fnc)
+        X_viz, X_test, Y_test = get_test_set(80, fnc)
 
         do_plotting(fnc_name, X_viz, Y_test)
 
