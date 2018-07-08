@@ -112,9 +112,10 @@ The following is a summary of the most popular acquisition functions in current 
 % Most formulae taken from "A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning
 
 \subsection{Upper Confident Bound (UCB)}
-\citep{UCBRegretProof} show a proof, that for a certain tuning of the parameter $\beta$, the acquisition function is guaranteed to find the best configuration after a certain number of data-samples taken.
+\citep{UCBRegretProof} show a proof, that for a certain tuning of the parameter $\beta$, the acquisition function has certain asymptotic regret bounds.
 
 The upper confidence bound allows the user to control exploitation and exploration through a parameter $\beta > 0$, which can be chosen as specified in \citep{UCBRegretProof} , to offer regret bounds.
+In addition to that, GP-UCB shows state-of-the-art empirical performance \citep{Djolonga2013}.
 
 \begin{equation}
 UCB(x) = \mu(x) + \sqrt{ \beta } \sigma(x)

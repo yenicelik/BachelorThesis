@@ -87,15 +87,15 @@ Besides that, we offer the following possibilities to check how well our model d
 \subsection{Synthetic Datasets}
 \paragraph{5 dimensional function with 2 dimensional linear embedding}
 
-It is easy to test snythetic datasets, as one can evaluate these functions at any point, and immediately get a regret value.
-We will have one test function for different scenarios.
+One can evaluate synthetic functions at any point, and immediately get a regret value.
+The following synthetic functions cover different use cases.
 
-\paragraph{2D to 1D}: For this function, we use a simple Parabola which is embedded in a 2D space.
-This function is supposed to check that the complexity of the model does not hinder simpler possibilities, i.e. that the complexity does not sacrifice finding simple models.
-\paragraph{5D to 2D}: For this function, we use a simple Camelback function which is embedded in a 5D space.
+\paragraph{2D to 1D}: A simple Parabola which is embedded in a 2D space.
+This function is supposed to check that the complexity of the model does not hinder discovering simpler structures - in other words, the model complexity should still allow for finding simpler embeddings and functions.
+\paragraph{5D to 2D}: The Camelback function which is embedded in a 5D space.
 This checks if simple models can be found within certain, higher dimensional spaces.
-\paragraph{5D to 2D}: For this function, we use a simple Camelback function which is enclosed in a sinusoidal function (with decreasing amplitude), which is embedded in a 5D space.
-This is the most important dataset, as it measures if small perturbations are covered by the more complicated model (our proposed model).
+\paragraph{5D to 2D}: A simple exponential function which is enclosed in a sinusoidal function (with decreasing amplitude), which is embedded in a 5D space.
+This function measures if small perturbations are covered by the more complicated model (our proposed model).
 
 \subsection{Real Datasets}
 It is more difficult to test algorithms on real datasets, as one cannot test on a metric such as regret.

@@ -11,30 +11,28 @@
     \graphicspath{{Chapter2/Figs/Vector/}{Chapter2/Figs/}}
 \fi
 
-This section will cover approaches taken so far to solve the problem.
-We will present algorithms that solve the approach.
-We will shortly discuss the effectiveness of this algorithm based on the dataset that the authors work on.
+This section covers current methods solving Bayesian Optimization in high dimensions that are considered state-of-the-art.
+This is not an exhaustive review. 
+For each algorithm, I discuss the effectiveness with regards to the dataset or function that the respective paper does the evaluation on.
 
-Some convention that we use is the following:
+Conventions that I use is the following:
 
 \begin{enumerate}
-\item $f$ is the function that we want to approximate
-\item $g$ and any subscripted or superscripted derivative of $g$ is a component that we use to approximate $f$.
-\item Anything that has a "hat" on (caret symbol \^ ), refers to the empirical estimate. 
+\item $f$ is the real function to be approximated / optimized.
+\item $g$ and any subscripted or superscripted derivative of $g$ is a component that one uses to approximate $f$.
+\item Anything that has a "hat" on (caret symbol on f is $\hat{f}$ ), refers to an empirical estimate. 
 \end{enumerate}
 
-We will focus on the three points: 
-% Identification of the subspace)
+I will focus on three categories of Bayesian Optimization algorithms: Algorithms that make use of a projection matrix, algorithms that, algorithms that exploit additive substructures and "additional approaches" that are uncategorised.
 
 \section{Projection matrix based algorithms}
 
-We start with enumerating some existing algorithms that are based on projecting the optimization domain.
-Generally, for this family of algorithms, there is always a term $f(x) \sim g(Ax)$ present, where the properties and generation of $A$ are algorithmic specific.
+Generally, for this family of algorithms, the approximation is a function of $f(x) \sim g(Ax)$, where the properties and identification of $A$ are algorithmic specific.
 
 \subsection{Active learning of linear subspace}
 
 \begin{algorithm}
-\caption{Simultaneous active learning of functions and their linear embeddings (pseudocode) :: Active learning of linear subspace CITE GARNETT 2013}
+\caption{Simultaneous active learning of functions and their linear embeddings (pseudocode) :: Active learning of linear subspace \citep{Garnett2013}}
 
 \begin{algorithmic} 
 \REQUIRE $d, D;$ kernel $\kappa$, mean function $\mu$; prior $p(R)$ 
@@ -55,33 +53,30 @@ Generally, for this family of algorithms, there is always a term $f(x) \sim g(Ax
 
 \end{algorithm}
 
-\citep{Garnett2013} Assume $f$ depends only on $ x := uR^T $ with $ R \in \mathbf{R}^{d \times D}$ where $d << D$. 
-Learn an algorithm that learns $g(u) = f(x)$ and $R$.
+\citep{Garnett2013} The assumption of this algorithm is that $f$ depends only on $ x := uR^T $ with $ R \in \mathbf{R}^{d \times D}$, $ u \in \mathbf{R}^d $ and where $d << D$. 
+The algorithm learns a projection matrix $R$ and the surrogate function$g(u)$, with $f(x) \sim g(u) $. \\
 
-The proposed algorithm takes the following steps to learn $g$ and $R$:
+The \textbf{Laplace approximation} for $R$ is using the mode of the probability distribution $\log P (R | D) $ as a mean, and the covariance is taken as the inverse Hessian of the negative logarithm of the posterior evaluated at the mean of the distribution.
+Together, this describes the probability distribution $p(R|X, Y, \kappa, \mu )$, where $\mu$ is the mean function, and $\kappa$ is the covariance function.\\
 
-\begin{enumerate}
-\item Create a probability distribution over possible embeddings to learn $R$ (Laplace approximation).
-\item We use the calculated embeddings to create a posterior probability distribution over $f$.
-\item Perform active selection over all possible points.
-\end{enumerate}
+% TODO: be more accurate here
+The \textbf{approximate marginal} subroutine is a novel method proposed in the paper that integrates over the different parameters in the paper.
+This marginal approximation does a local expansion of $q(x_* | \theta) $ to $p(x_* | D, \theta)$. \\
 
-The choice of next point is done using Bayesian Active Learning by disagreement, where the utility function is the expected reduction in entropy (equal to the mutual information), as opposed to uncertainty sampling, which simply minimizes the entropy. \\
+The \textbf{optimization of utility} (choice of next best point) is done using Bayesian Active Learning by disagreement, where the utility function is the expected reduction in the mutual information, as opposed to uncertainty sampling reducing entropy, which  is not well defined for all values. \\
 
-The metrics used in this paper are negative log-likelihoods for the test points, and the mean SKLD (nat) between approximate and true posteriors.
-The proposed method always outperforms the naive MAP method.
+The metrics used in this paper are negative log-likelihoods for the test points, and the mean symmetric kullback leiber divergence between approximate and true posteriors.
+The proposed method always outperforms the naive MAP method for the presented functions close to a factor of 2 for both loss functions.
 Tests are conducted on a real, and synthetic dataset with up to $D = 318$ and selecting $N = 100$ observations. 
-
-% TODO : Go more into detail here, potentially read the paper
 
 \subsection{High dimensional Gaussian bandits}
 
-\citep{Djolonga2013} Assume there exists a function $g : \mathbf{R}^k \implies [0, 1]$ and a matrix $A \in \mathbf{R}{d \times D}$ with orthogonal rows, such that $f(x) = g(Ax) $. Assume $g \in \mathcal{C}^2$. 
-Assume that $B = \mathbf{B}^D (1 + \epsilon ) $.
-We want to maximize $f: B \implies [0, 1] $.\\
+\citep{Djolonga2013} This model assumes that there exists a function $g : \mathbf{R}^k \implies [0, 1]$ and a matrix $A \in \mathbf{R}^{d \times D}$ with orthogonal rows, such that $f(x) \sim g(Ax) $. Assume $g \in \mathcal{C}^2$. 
+% Assume that $B = \mathbf{B}^D (1 + \epsilon ) $.
+% We want to maximize $f: B \implies [0, 1] $.\\
 
 \begin{algorithm}
-\caption{The SI-BO algorithm CITE DJOLONGA2013}
+\caption{The SI-BO algorithm \citep{Djolonga2013}}
 
 \begin{algorithmic} 
 \REQUIRE $m_X, m_{\Phi}, \lambda, \epsilon, k$, oracle for the function $f$, kernel $\kappa$ 
@@ -100,27 +95,32 @@ We want to maximize $f: B \implies [0, 1] $.\\
 
 \end{algorithm}
 
-The SI-BO algorithm has a two-step approach:
-1.) subspace identification.
-2.) Bayesian Optimization on the learned subspace.
+The SI-BO algorithm consists of a subspace identification step, and an optimization step using GP-UCB.
+
+% TODO: understand this part of the paper better
+
+The \textbf{subspace identification} is treated as a low-rank matrix recovery problem as presentedin \citep{CevherSubspaceIdentificationKrause}.
 
 
 \subsection{Random embeddings (REMBO)}
 \citep{Wang2013} Let $x \in \mathbb{R}^D$ and $y \in \mathbb{R}^d$. Assume, that $f(x) = f(Ax)$. We can generate $A \in \mathbb{R}^{D \times d}$ by randomly generating this matrix.
 
 \subsection{Applications to high-dimensional uncertainty propogation}
-\citep{Tripathy} Assume $f(x) \approx g( \mathbf{W}^T y)$ where $ \mathbf{W} \in \mathbb{R}^{D \times d} $ and $D >> d$.
-We assume that $ \mathbf{W} $ is orthogonal.
+Because the algorithm we propose uses this method to identify the subspace projection matrix, I will discuss this algorithm in more detail.
 
-This algorithm does not require gradient-information (thus, easier to implement, and robust to noise).
-The standard-deviation, kernel parameters and  $ \mathbf{W} $ can be found iteratively.
-First we fix $ \mathbf{W} $, and optimize over the standard-deviation, kernel parameters.
-Then we fix the standard-deviation, kernel parameters. and optimize over $ \mathbf{W} $.
-We repeat this procedure until the change of the log-likelihood between iterations is below some $ \epsilon_l $.\\
+\citep{Tripathy} This algorithm assumes that  $f(x) \sim g( \mathbf{W}^T y)$ where $ \mathbf{W} \in \mathbb{R}^{D \times d} $ and $D >> d$.
+$ \mathbf{W} $ is orthogonal. \\
 
-A more detailed description:
+This algorithm does not require gradient-information.
+This makes it easier to implement, and more robust to noise according to the authors of this paper. \\
+The GP nosie variance, kernel parameters and  $ \mathbf{W} $ can be found iteratively.
+The main idea of the algorithm is to fix the kernel parameters and the GP nosie variance, and identify $ \mathbf{W} $.
+Then, we fix $ \mathbf{W} $ and train over the kernel parameters and the GP nosie variance.
+This procedure is repeated until the change of the log-likelihood between iterations is below some $ \epsilon_l $, or if the maximum number of steps of optimization is reached.
+We repeat this procedure .\\
 
-The quantities of interest are:
+\paragraph{I now proceed with a more detailed description of the algorithm.}
+The quantities of interest are
 
 \begin{align}
 \mu_f &= \int f(x) p(x) dx \\
@@ -128,28 +128,23 @@ The quantities of interest are:
 f \sim p(f) &= \int \delta( f - f(x) ) p(x) dx
 \end{align}
 
-We further assume that the response surface has the form of 
+The authors argue that w.l.o.g., one can regard only on orthogonal matrices, as this does not restrict the search space of projection matrices, the main reason being that no projection subspace is neglected by doing this.
+Here, the family of orthogonal matrices of dimension $d \times D$ is denoted by $\mathbf{W} \in V_d(\mathbb{R}^D) $.
+This quantity is also known as the \textbf{Stiefel manifold}, where $d$ is the found effective dimension of the function, and $D$ is the real input dimension to the function. \\
 
-$$
-f(x) \approx g(W^T x)
-$$.
+\subsubsection{Kernel used}
+As in the paper, I use the Matern-32 kernel function.
+This function has two input vectors $a$ and $b$.
 
-Because all matrices yield identical approximations, one can focus on orthogonal approximations.
+\begin{align}
+K(a,  b, \theta) = s^2 \left( 1 + \sqrt{3} \sum_{i=1}^l \frac{(a_i - b_i)^2}{ \textit{l}_i} \right) exp\left( - \sqrt{3} \sum_{i=1}^l \frac{(a_i - b_i)^2}{ \textit{l}_i} \right)
+\end{align}
 
-For the family of orthogonal matrices of dimension $d \times D$, we write $\mathbf{W} \in V_d(\mathbb{R}^D) $.
-This quantity is also known as the Stiefel manifold. \\
+Because I want to avoid numerical testing and implementation, I use the derivative as provided in the GPy library.
+The $s, l_1, \ldots, l_l $ are hyper-parameters of the kernel. 
+The concatenated vector of all these kernel hyperparameters is denoted by $\theta$. \\
 
-The paper focuses on identifying the low dimensional map $g( \dot )$, the effective dimensionality $d$ and the orthogonal matrix $W$.\\
-
-We determine the hyperparameters by optimizing over the following loss function, where $Q$ are the input samples, $t$ are the corresponding output samples, $\theta$ are the ... , and $t$ are the .
-
-$$
-\mathcal{L} (\theta, s_n; Q, t) = \log p(t | Q, \theta, s_n)
-$$
-
-where we find the individual variables by maximizing this log-likelihood. \\
-
-The authors introduce a new kernel function 
+The only modification made to this kernel is the additional parameter $W$:
 
 \begin{equation}
 k_{AS} : \mathbb{R}^D \times \mathbb{R}^D \times V_d(\mathbb{R}^D) \times \phi -> \mathbb{R} \\
@@ -159,60 +154,77 @@ k_{AS} : \mathbb{R}^D \times \mathbb{R}^D \times V_d(\mathbb{R}^D) \times \phi -
 k_{AS} (x, x'; W, \phi) = k_d(W^T x, W^T x'; \phi)
 \end{equation}
 
-Within the paper, we use the following kernel function
 
-\begin{align}
-1
-\end{align}
+\subsubsection{Step 1.: Determine the active projection matrix W}.
+In this step, the algorithm optimizes $W \in V_d(\mathbb{R}^D)$ while keeping the kernel hyperparameters $\phi$ and the GP noise variance $s_n$ fixed.
 
-\subsubsection{Optimize $W \in V_d(\mathbb{R}^D)$ and keep $\phi$ and $s_n^2$ fixed}
+To simplify calculations later, we define the function, where all parameters but $W$ are fixed as $F$. 
+The other parameters are determined from previous runs, or are freshly sampled:
 
-For this subsection, redefine the loss function as ($\phi$ are the hyperparameters of the covariance function):
-
-(We instantiate $\theta$ with $W$)
 \begin{align}
 F(W) &:= \mathcal{L}(W, s_n; X, y) \\
 & = \log p(y | X, W, s_n) \\
 & =  -\frac{1}{2} (y - m)^T (K + s_n^2 I_N)^{-1} (y - m) -\frac{1}{2} \log|K + s_n^2 I_N| -\frac{N}{2} \log 2 \pi   \\
 \end{align}
 
-where $\phi, s_n; X, y$ are fixed and $m$ is the prior mean function.
+where $\phi, s_n; X, y$ are fixed and $m$ is the prior mean function, which is 0 in our specific case.
 
-The derivative of this function $F$ with respect to the weights-matrix is:
-
-\begin{align}
-\nabla_W F(W) &:= \nabla_W \mathcal{L}(W, s_n; X, y) \\
-& = \frac{1}{2} \text{tr} \left[ \{ (K + s_n^2 I_N)^{-1} (y-m) \left( (K + s_n^2 I_N)^{-1} (y-m) \right)^T - (K + s_n^2 I_N)^{-1} \} \nabla_W (K + s_n^2 I_N) \right]
-\end{align}
-
-both these functions depend on the kernel $K$, and it's derivative $\nabla_W K$.
-
-We use the 32-Matern kernel function (for two vectors $a$ and $b$) with derivative:
+To optimize over the loss function, the algorithm defines the derivative of $F$ with regards to each individual element of the weights-matrix:
 
 \begin{align}
-K(a,  b, \theta) = s^2 \left( 1 + \sqrt{3} \sum_{i=1}^l \frac{(a_i - b_i)^2}{ \textit{l}_i} \right) exp\left( - \sqrt{3} \sum_{i=1}^l \frac{(a_i - b_i)^2}{ \textit{l}_i} \right)
+\nabla_{w_{i,j}} F(W) &:= \nabla_{w_{i,j}} \mathcal{L}(W, s_n; X, y) \\
+& = \frac{1}{2} \text{tr} \left[ \{ (K + s_n^2 I_N)^{-1} (y-m) \left( (K + s_n^2 I_N)^{-1} (y-m) \right)^T - (K + s_n^2 I_N)^{-1} \} \nabla_{w_{i,j}} (K + s_n^2 I_N) \right]
 \end{align}
 
-\begin{align}
-\nabla_W K(a,  b, \theta) = s^2 \left( 1 + \sqrt{3} \sum_{i=1}^l \frac{(a_i - b_i)^2}{ \textit{l}_i} \right) exp\left( - \sqrt{3} \sum_{i=1}^l \frac{(a_i - b_i)^2}{ \textit{l}_i} \right)
-\end{align}
+both these functions depend on the kernel $K$, and it's derivative $\nabla_{w_{i,j}} K$. \\
 
-where $s, l_1, \ldots, l_l $ are hyper-parameters included within $\theta$
+To optimize over $F$, a more sophisticated algorithm is used, that resembles iterative hill-climbing algorithms.
+First, the paper defines the function whose output is a matrix in the Stiefel manifold
 
-We optimize over this non-convex optimization problem by using a gradient-descent technique that optimizes over the Stiefel manifold (class of orthogonal matrices).
+\begin{equation}
+\gamma(\tau; W) = (I_D - \frac{\tau}{2} A(W) )^{-1} (I_D + \frac{\tau}{2} A(W) ) W
+\end{equation}
 
 
+where $W$ is a fix parameter, and $\tau$ is the variable which modifies the direction that we move on in the Stiefel manifold and with
+
+\begin{equation}
+A(W) = \nabla_{W} F(W) W - W ( \nabla_{W} F(W) )^T
+\end{equation}
+
+One iteratively chooses fixed $W$, and does a grid-search over $\tau$ such that at each step, the log-likelihood $\mathcal{L}$ is increased.
+
+\subsubsection{Step 2.: Optimizing over GP noise variance and the kernel hyperparameters}
+
+We determine the hyperparameters by optimizing over the following loss function, where $X$ are the input values, $Y$ are the corresponding output samples. $\phi$ is the concatenated vector of the kernel hyperparameters and the GP noise variance. \\
+
+One keeps the $W$ fixed (either by taking $W$ from the last iteration, or freshly sampling it), and then defines the loss function
+
+\begin{equation}
+	L(\phi) = \mathcal{L}(W, \phi, \sigma_n; X, y) 
+\end{equation}
+
+To optimize this loss function, a simple optimization algorithm such as $L-BFGS$ is used to individually maximize each element of the hyperparameter vector with regards to the log-likelihood.
+This is done for a maximum number of steps, or until the change of improvement becomes marginal. \\
+
+\subsubsection{Additional details}
+Because initialization is a major factor in this algorithm, these steps are iteratively applied for many hundred steps.
+There are also many tens or hundreds of restarts to ensure that the search on the Stiefel manifold results in a good local optimum, and does not get stuck on a flat region with no improvement.
+This algorithm is very sensitive on the initially sampled parameter $W$.
 
 \subsubsection{Identification of active subspace dimension }
-
-
+One cannot know the real active dimension of a problem that one does not know the solution to.
+As such, the proposed to apply the above algorithms iteratively by increasing the selected active dimension $d$.
+The moment where the relative change between the best found matrix between two iterations is below a relative threshold $\epsilon_s$, the previous active dimension is chosen as the real active dimension. 
 
 \section{Algorithms that exploit additive substructures}
 
-We turn our attention to algorithms that assume that the function can be decomposed into a summation over subfunctions, such that
+Functions with additive substructures can be decomposed into a summation over subfunctions, such that
 $ f(x) \sim g_0(x) + g_1(x) + \ldots g_2(x) $ where each $g_i$ may operate only on a subset of dimensions of $x$.
 
 \subsection{Independent additive structures within the target function}
+% TODO: work on this algorithm a little more extensively, such that you can show the intuition, and potentially a short algorithm outline
+
 \citep{Gardner2017} Assume that $f(x) = \sum_{i=1}^{ |P| } f_i (x[P_i] )$, i.e. $f$ is fully additive, and can be represented as a sum of smaller-dimensional functions $f_i$, each of which accepts a subset of the input-variables.
 The kernel also results in an additive structure: $f(x) = \sum_{i=1}^{ |P| } k_i (x[P_i], x[P_i])$.
 The posterior is calculated using the Metropolis Hastings algorithm.
@@ -222,6 +234,8 @@ $k$ models are sampled, and we respectively approximate $p(f_* | D, x^*) = \frac
 \section{Additional approaches}
 
 \subsection{Elastic Gaussian Processes}
+% TODO: Shortly touch on this, give an intuition, but nothing more
+
 \citep{Rana2017} Use a process where the space is iteratively explored.
 The key insight here is that with low length-scales, the acquisition function is extremely flat, but with higher length-scales, the acquisition function starts to have significant gradients.
 The two key-steps is to 1.) additively increase the length-scale for the gaussian process if the length-scale is not maximal and if $|| x_{init} - x^* || = 0$.
@@ -229,6 +243,8 @@ And 2.) exponentially decrease the length-scale for the gaussian process if the 
 
 
 \subsection{Bayesian Optimization using Dropout}
+% TODO: Shortly touch on this, give an intuition, but nothing more
+
 \citep{Li2018} propose that the assumption of an active subspace is restrictive and often not fulfilled in real-world applications.
 They propose three algorithms, to iteratively optimize amongst certain dimensions that are not within the $d$ 'most influential' dimensions: 1.) Dropout Random, which picks dimensions to be optimized at random, 2.) Dropout copy, which continuous optimizing the function values from the found local optimum configuration, and 3.) which does method 1. with probability $p$, and else method 2.
 The $d$ 'most influential' dimensions are picked at random at each iteration.
