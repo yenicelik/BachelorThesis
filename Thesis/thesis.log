@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  8 JUL 2018 16:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  8 JUL 2018 17:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1676,7 +1676,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 114.
 \PHD@crest=\box56
 
-<Figs/University_Crest.pdf, id=188, 59.22125pt x 69.25874pt>
+<Figs/University_Crest.pdf, id=184, 59.22125pt x 69.25874pt>
 File: Figs/University_Crest.pdf Graphic file (type pdf)
 
 <use Figs/University_Crest.pdf>
@@ -1746,7 +1746,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 Package natbib Warning: Citation `Wang' on page iii undefined on input line 69.
 
 
-<Figs/./../src/Embedding_optimization.png, id=213, 636.3775pt x 241.90375pt>
+<Figs/./../src/Embedding_optimization.png, id=209, 636.3775pt x 241.90375pt>
 File: Figs/./../src/Embedding_optimization.png Graphic file (type png)
 
 <use Figs/./../src/Embedding_optimization.png>
@@ -1987,41 +1987,51 @@ Underfull \hbox (badness 10000) in paragraph at lines 26--27
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 43--46
+Underfull \hbox (badness 10000) in paragraph at lines 43--47
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 48--50
 
  []
 
 [20] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 131--133
+Underfull \hbox (badness 10000) in paragraph at lines 137--139
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 134--137
+Underfull \hbox (badness 10000) in paragraph at lines 140--143
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 173--175
 
  []
 
 [22]
-Underfull \hbox (badness 10000) in paragraph at lines 167--168
+Underfull \hbox (badness 10000) in paragraph at lines 181--184
 
  []
 
-[23] [24]) [25]
+[23]) [24]
 \openout2 = `07_Chapter6/chapter6.aux'.
 
- (./07_Chapter6/chapter6.tex [26
-
-
-
-]
+ (./07_Chapter6/chapter6.tex
 Chapter 5.
 
 Underfull \hbox (badness 10000) in paragraph at lines 35--36
 
  []
 
-[27] [28]
-<07_Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png, id=609, 462.528pt x 346.
+[25
+
+
+
+] [26]
+<07_Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png, id=597, 462.528pt x 346.
 896pt>
 File: 07_Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png Graphic file (type p
 ng)
@@ -2031,7 +2041,7 @@ sed on input line 76.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
 <07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png, 
-id=610, 462.528pt x 346.896pt>
+id=598, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.
 png Graphic file (type png)
 
@@ -2058,7 +2068,7 @@ ns_5d_to_2d_boring.png used on input line 98.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
 <07_Chapter6/Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.png, id
-=611, 462.528pt x 346.896pt>
+=599, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.pn
 g Graphic file (type png)
 
@@ -2092,7 +2102,7 @@ Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
 ns_5d_to_2d_boring.png used on input line 131.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
-<07_Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png, id=612, 462.528pt x 346
+<07_Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png, id=600, 462.528pt x 346
 .896pt>
 File: 07_Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png Graphic file (type 
 png)
@@ -2124,10 +2134,10 @@ ng>
 Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
 ns_5d_to_2d_boring.png used on input line 164.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
- [29 <./07_Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png> <./07_Chapter6/Fi
+ [27 <./07_Chapter6/Figs/orig/embedded_parabola_2d_to_1d.png> <./07_Chapter6/Fi
 gs/embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png> <./07_Chapter6/
 Figs/orig/embedded_sinusoidal_small_perturbations_5d_to_2d.png>]
-<07_Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png, id=620, 462.528pt x 3
+<07_Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png, id=608, 462.528pt x 3
 46.896pt>
 File: 07_Chapter6/Figs/orig/embedded_rosenbrock_10d_to_5d.png Graphic file (typ
 e png)
@@ -2159,21 +2169,21 @@ ng>
 Package pdftex.def Info: 07_Chapter6/Figs/embedded_sinusoidal_small_perturbatio
 ns_5d_to_2d_boring.png used on input line 197.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-) [30 <./07_Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png> <./07_Chapter6/
-Figs/orig/embedded_rosenbrock_10d_to_5d.png>] (./thesis.bbl [31
+) [28 <./07_Chapter6/Figs/orig/embedded_camelback_5d_to_2d.png> <./07_Chapter6/
+Figs/orig/embedded_rosenbrock_10d_to_5d.png>] (./thesis.bbl [29
 
 
 
-]) [32]
+]) [30]
 \openout2 = `Appendix1/appendix1.aux'.
 
 
 (./Appendix1/appendix1.tex
 Appendix A.
-[33
+[31
 
 
-]) [34] (./thesis.ind)
+]) [32] (./thesis.ind)
 
 Package natbib Warning: There were undefined citations.
 
@@ -2185,37 +2195,46 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 199.
 (./07_Chapter6/chapter6.aux) (./Appendix1/appendix1.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 199.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 199.
-Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 468F50DE6B0A786937831D088D63A595;10347.
 
+
+Package rerunfilecheck Warning: File `thesis.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `thesis.out':
+(rerunfilecheck)             Before: 47B668680CA6C49375526E2F3CFBEA58;9814
+(rerunfilecheck)             After:  6807138F7393EB71A4D04837A1795C74;9488.
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 26785 strings out of 492995
- 468352 string characters out of 6132704
- 545597 words of memory out of 5000000
- 29442 multiletter control sequences out of 15000+600000
+ 26779 strings out of 492995
+ 468305 string characters out of 6132704
+ 546597 words of memory out of 5000000
+ 29441 multiletter control sequences out of 15000+600000
  67123 words of font info for 197 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,17n,92p,10383b,911s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
-xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
-live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texli
-ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
-e/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/te
-xlive/2017/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/20
-17/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-di
-st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
-pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
-mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
-a.pfb>
-Output written on thesis.pdf (46 pages, 939662 bytes).
+pdfTeX warning (dest): name{subsection.4.1.2} has been referenced but does no
+t exist, replaced by a fixed one
+
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texl
+ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texli
+ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
+/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
+2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texl
+ive/2017/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/2017
+/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist
+/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
+1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/time
+s/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8a.
+pfb>
+Output written on thesis.pdf (44 pages, 937590 bytes).
 PDF statistics:
- 813 PDF objects out of 1000 (max. 8388607)
- 720 compressed objects within 8 object streams
- 277 named destinations out of 1000 (max. 500000)
- 35220 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 800 PDF objects out of 1000 (max. 8388607)
+ 709 compressed objects within 8 object streams
+ 272 named destinations out of 1000 (max. 500000)
+ 35212 words of extra memory for PDF output out of 35830 (max. 10000000)
 
