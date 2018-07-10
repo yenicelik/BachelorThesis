@@ -1,15 +1,20 @@
 \contentsline {figure}{\numberline {1}{\ignorespaces This function in D=2 dimesions only has d=1 effective dimension. Hence, the 1-dimensional embedding includes the 2-dimensional function\IeC {\textquoteright }s optimizer. It is more efficient to search for the optimum along the 1-dimensional random embedding than in the original 2-dimensional space\relax }}{iv}{figure.caption.1}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Parabola Original\relax }}{10}{figure.caption.6}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Taken from \citep {Wang2013}: Embedding from $d = 1$ into $D=2$. The box illustrates the 2D constrained space $\mathsf {X}$, while the thicker red line illustrates the 1D constrained space $\mathsf {Y}$. Note that if $Ay$ is outside $\mathsf {X}$, it is projected onto $\mathsf {X}$. The set $\mathsf {Y}$ must be chosen large enough so that the projection of its image, $A\mathsf {Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box). \relax }}{10}{figure.caption.6}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Parabola Original\relax }}{11}{figure.caption.7}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Taken from \citep {Wang2013} Fig. 2: This function in D=2 dimesions only has d=1 effective dimension: the vertical axis indicated with the word important on the right hand side figure. Hence, the 1-dimensional embedding includes the 2-dimensional function\IeC {\textquoteright }s optimizer. It is more efficient to search for the optimum along the 1-dimensional random embedding than in the original 2-dimensional space. \relax }}{11}{figure.caption.7}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{26}{figure.caption.24}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{26}{figure.caption.24}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Real matrix\relax }}{26}{figure.caption.25}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Matrix found by optimization algorithm\relax }}{26}{figure.caption.25}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Top-Left: The 1D Parabola which is embedded in a 2D space.\relax }}{28}{figure.caption.26}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.\relax }}{29}{figure.caption.27}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{29}{figure.caption.28}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{28}{figure.caption.26}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{28}{figure.caption.26}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Real matrix\relax }}{28}{figure.caption.27}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Matrix found by optimization algorithm\relax }}{28}{figure.caption.27}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Top-Left: The 1D Parabola which is embedded in a 2D space.\relax }}{30}{figure.caption.28}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.\relax }}{31}{figure.caption.29}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{32}{figure.caption.30}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{33}{figure.caption.31}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

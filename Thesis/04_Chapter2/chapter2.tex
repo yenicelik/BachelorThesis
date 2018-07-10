@@ -6,9 +6,9 @@
 \chapter{Related Work}
 
 \ifpdf
-    \graphicspath{{Chapter2/Figs/Raster/}{Chapter2/Figs/PDF/}{Chapter2/Figs/}}
+    \graphicspath{{04_Chapter2/Figs/Raster/}{04_Chapter2/Figs/PDF/}{04_Chapter2/Figs/}}
 \else
-    \graphicspath{{Chapter2/Figs/Vector/}{Chapter2/Figs/}}
+    \graphicspath{{04_Chapter2/Figs/Vector/}{04_Chapter2/Figs/}}
 \fi
 
 This section covers current methods solving Bayesian Optimization in high dimensions that are considered state-of-the-art.
@@ -103,7 +103,43 @@ The \textbf{subspace identification} is treated as a low-rank matrix recovery pr
 
 
 \subsection{Random embeddings (REMBO)}
-\citep{Wang2013} Let $x \in \mathbb{R}^D$ and $y \in \mathbb{R}^d$. Assume, that $f(x) = f(Ax)$. We can generate $A \in \mathbb{R}^{D \times d}$ by randomly generating this matrix.
+REMBO is an algorithm that allows the user to search in a smaller search space.
+More specifically, REMBO proposes the following model to optimize in:
+
+
+\citep{Wang2013} Let $x \in \mathbb{R}^D$ and $y \in \mathbb{R}^d$. Assume, that $f(x) = g(Ay)$. We can generate $A \in \mathbb{R}^{D \times d}$ by randomly generating this matrix.
+The space over which the user searches, as such, is $d$-dimensional.
+This implies that BO can run much faster. \\
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{rembo_convex_projection.png}
+        \caption{Parabola Original}
+        \label{fig:gull}
+    \caption{
+    Taken from \citep{Wang2013}: Embedding from $d = 1$ into $D=2$.
+    The box illustrates the 2D constrained space $\mathsf{X}$, while the thicker red line illustrates the 1D constrained space $\mathsf{Y}$.
+    Note that if $Ay$ is outside $\mathsf{X}$, it is projected onto $\mathsf{X}$.
+    The set $\mathsf{Y}$ must be chosen large enough so that the projection of its image, $A\mathsf{Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box).
+    }\label{fig:animals}
+\end{figure}
+
+The key point of REMBO is that the matrix $A$ can be chosen as a random orthogonal matrix.
+The authors follow with a proof, that if the optimization domain's parameters are well-chosen, that the chance of getting a bad projection matrix has a certain threshold. \\
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{rembo_sinus_function.png}
+        \caption{Parabola Original}
+        \label{fig:gull}
+    \caption{
+    Taken from \citep{Wang2013} Fig. 2: This function in D=2 dimesions only has d=1 effective dimension: the vertical axis indicated with the word important on the right hand side figure. 
+    Hence, the 1-dimensional embedding includes the 2-dimensional function’s optimizer. 
+    It is more efficient to search for the optimum along the 1-dimensional random embedding than in the original 2-dimensional space.
+    }\label{fig:animals}
+\end{figure}
+
+Because the authors point at being able to decrease this threshold, they propose interlaved runs, where for each fifth point selection, a differently sampled orthogonal random matrix is chosen. \\
 
 Extensions to REMBO include \citep{RemboExtension}.
 

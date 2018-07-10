@@ -19,47 +19,47 @@
 \contentsline {subsection}{\numberline {2.1.1}Active learning of linear subspace}{7}{subsection.2.1.1}
 \contentsline {subsection}{\numberline {2.1.2}High dimensional Gaussian bandits}{9}{subsection.2.1.2}
 \contentsline {subsection}{\numberline {2.1.3}Random embeddings (REMBO)}{9}{subsection.2.1.3}
-\contentsline {subsection}{\numberline {2.1.4}Applications to high-dimensional uncertainty propogation}{9}{subsection.2.1.4}
-\contentsline {paragraph}{I now proceed with a more detailed description of the algorithm.}{10}{section*.6}
-\contentsline {subsubsection}{Kernel used}{10}{section*.7}
-\contentsline {subsubsection}{Step 1.: Determine the active projection matrix W}{11}{section*.8}
-\contentsline {subsubsection}{Step 2.: Optimizing over GP noise variance and the kernel hyperparameters}{12}{section*.9}
-\contentsline {subsubsection}{Additional details}{12}{section*.10}
-\contentsline {subsubsection}{Identification of active subspace dimension }{12}{section*.11}
-\contentsline {section}{\numberline {2.2}Algorithms that exploit additive substructures}{13}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Independent additive structures within the target function}{13}{subsection.2.2.1}
-\contentsline {section}{\numberline {2.3}Additional approaches}{13}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}Elastic Gaussian Processes}{13}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}Bayesian Optimization using Dropout}{13}{subsection.2.3.2}
-\contentsline {chapter}{\numberline {3}Fields of Improvement}{15}{chapter.3}
-\contentsline {section}{\numberline {3.1}Shortcomings of current methods}{15}{section.3.1}
-\contentsline {paragraph}{REMBO}{15}{section*.12}
-\contentsline {paragraph}{Active subgradients}{16}{section*.13}
-\contentsline {paragraph}{Tripathy's method}{16}{section*.14}
-\contentsline {section}{\numberline {3.2}Method of measuring improvements}{17}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Synthetic Datasets}{17}{subsection.3.2.1}
-\contentsline {paragraph}{5 dimensional function with 2 dimensional linear embedding}{17}{section*.15}
-\contentsline {paragraph}{2D to 1D}{17}{section*.16}
-\contentsline {paragraph}{5D to 2D}{18}{section*.17}
-\contentsline {paragraph}{5D to 2D}{18}{section*.18}
-\contentsline {subsection}{\numberline {3.2.2}Real Datasets}{18}{subsection.3.2.2}
-\contentsline {paragraph}{SwissFEL dataset}{18}{section*.19}
-\contentsline {chapter}{\numberline {4}Model Design and Extensions to the state of the art}{19}{chapter.4}
-\contentsline {section}{\numberline {4.1}The BORING Algorithm}{19}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Algorithm Description}{20}{subsection.4.1.1}
-\contentsline {subsubsection}{Overview}{20}{section*.20}
-\contentsline {subsubsection}{Finding a basis for the passive subspace (a subspace orthogonal to the active subspace)}{21}{section*.21}
-\contentsline {subsubsection}{Additive UCB acquisition function}{23}{section*.22}
-\contentsline {subsubsection}{How does our algorithm address the shortcomings from chapter 3?}{23}{section*.23}
-\contentsline {chapter}{\numberline {5}Evaluation}{25}{chapter.5}
-\contentsline {section}{\numberline {5.1}Evaluation Settings}{25}{section.5.1}
-\contentsline {section}{\numberline {5.2}Quantitative evaluation}{25}{section.5.2}
-\contentsline {section}{\numberline {5.3}Qualitative evaluation}{25}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Feature selection}{25}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Subspace identification}{27}{subsection.5.3.2}
-\contentsline {chapter}{\numberline {6}Conclusion}{31}{chapter.6}
-\contentsline {section}{\numberline {6.1}Main Contributions}{31}{section.6.1}
-\contentsline {section}{\numberline {6.2}Conclusion}{31}{section.6.2}
-\contentsline {chapter}{References}{33}{chapter*.29}
-\contentsline {chapter}{Appendix \numberline {A}}{35}{Appendix.a.A}
-\contentsline {section}{\numberline {A.1}Benchmarking functions}{35}{section.a.A.1}
+\contentsline {subsection}{\numberline {2.1.4}Applications to high-dimensional uncertainty propogation}{11}{subsection.2.1.4}
+\contentsline {paragraph}{I now proceed with a more detailed description of the algorithm.}{12}{section*.8}
+\contentsline {subsubsection}{Kernel used}{12}{section*.9}
+\contentsline {subsubsection}{Step 1.: Determine the active projection matrix W}{13}{section*.10}
+\contentsline {subsubsection}{Step 2.: Optimizing over GP noise variance and the kernel hyperparameters}{14}{section*.11}
+\contentsline {subsubsection}{Additional details}{14}{section*.12}
+\contentsline {subsubsection}{Identification of active subspace dimension }{14}{section*.13}
+\contentsline {section}{\numberline {2.2}Algorithms that exploit additive substructures}{15}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Independent additive structures within the target function}{15}{subsection.2.2.1}
+\contentsline {section}{\numberline {2.3}Additional approaches}{15}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Elastic Gaussian Processes}{15}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Bayesian Optimization using Dropout}{15}{subsection.2.3.2}
+\contentsline {chapter}{\numberline {3}Fields of Improvement}{17}{chapter.3}
+\contentsline {section}{\numberline {3.1}Shortcomings of current methods}{17}{section.3.1}
+\contentsline {paragraph}{REMBO}{17}{section*.14}
+\contentsline {paragraph}{Active subgradients}{18}{section*.15}
+\contentsline {paragraph}{Tripathy's method}{18}{section*.16}
+\contentsline {section}{\numberline {3.2}Method of measuring improvements}{19}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Synthetic Datasets}{19}{subsection.3.2.1}
+\contentsline {paragraph}{5 dimensional function with 2 dimensional linear embedding}{19}{section*.17}
+\contentsline {paragraph}{2D to 1D}{19}{section*.18}
+\contentsline {paragraph}{5D to 2D}{20}{section*.19}
+\contentsline {paragraph}{5D to 2D}{20}{section*.20}
+\contentsline {subsection}{\numberline {3.2.2}Real Datasets}{20}{subsection.3.2.2}
+\contentsline {paragraph}{SwissFEL dataset}{20}{section*.21}
+\contentsline {chapter}{\numberline {4}Model Design and Extensions to the state of the art}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}The BORING Algorithm}{21}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Algorithm Description}{22}{subsection.4.1.1}
+\contentsline {subsubsection}{Overview}{22}{section*.22}
+\contentsline {subsubsection}{Finding a basis for the passive subspace (a subspace orthogonal to the active subspace)}{23}{section*.23}
+\contentsline {subsubsection}{Additive UCB acquisition function}{25}{section*.24}
+\contentsline {subsubsection}{How does our algorithm address the shortcomings from chapter 3?}{25}{section*.25}
+\contentsline {chapter}{\numberline {5}Evaluation}{27}{chapter.5}
+\contentsline {section}{\numberline {5.1}Evaluation Settings}{27}{section.5.1}
+\contentsline {section}{\numberline {5.2}Quantitative evaluation}{27}{section.5.2}
+\contentsline {section}{\numberline {5.3}Qualitative evaluation}{27}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Feature selection}{27}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Subspace identification}{29}{subsection.5.3.2}
+\contentsline {chapter}{\numberline {6}Conclusion}{35}{chapter.6}
+\contentsline {section}{\numberline {6.1}Main Contributions}{35}{section.6.1}
+\contentsline {section}{\numberline {6.2}Conclusion}{36}{section.6.2}
+\contentsline {chapter}{References}{37}{chapter*.32}
+\contentsline {chapter}{Appendix \numberline {A}}{39}{Appendix.a.A}
+\contentsline {section}{\numberline {A.1}Benchmarking functions}{39}{section.a.A.1}

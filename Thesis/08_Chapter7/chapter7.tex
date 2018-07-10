@@ -14,6 +14,13 @@
 \section{Main Contributions}
 I present this thesis as a result of a systematic treatment of the topic "Bayesian Optimization in High Dimensions".
 
+\begin{enumerate}
+\item BORING allows the number of dimensions to be smaller than the real active subspace.
+Additional vector elements can be added at a very small cost, keeping the major principal axis untouched.
+\item BORING is more robust to smaller perturbations, as it does not rely on finding the exact active subspace (which can be ambigious if we want the "major" active subspace).
+It allows to optimize over smaller perturbations aswell, whereas current algorithms usually don't take these into consideration.
+\end{enumerate}
+
 After doing a throughout literature review, I was able to identify shortcomings of current methods.
 Together with my supervisors, were able to come up with the new algorithm "BORING" that improves on the state-of-the-art for Bayesian Optimization algorithms that are able to identify the subspace projection matrix as part of the optimization procedure.
 In contrast to other algorithms that solely focus on finding a projection, "BORING" takes into consideration smaller perturbations, and makes the GP process more robust by allowing addition projection matrices to optimize over other axis of the subspace. \\

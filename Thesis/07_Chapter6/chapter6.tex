@@ -194,9 +194,10 @@ The points shown below were not used for training at any point, as these are inc
     \caption{Top-Left: The 1D Parabola which is embedded in a 2D space.}\label{fig:animals}
 \end{figure}
 
-I set the number of restarts to $14$.
+I set the number of restarts to $14$ and number of randomly sampled datapoints to 100.
 Notice that the Tripathy approximation is slightly more accurate than the BORING approximation. 
-This is because one of Tripathy's initial starting points were well selected, such that algorithm 3 ran many times before the relative loss terminated the algorithm.
+This is because one of Tripathy's initial starting points were selected better, such that algorithm 3 ran many times before the relative loss terminated the algorithm.
+The active subspace projection matrix is of size $\mathbf{R}^{1 \times 2}$
 
 % SINUSOIDAL FUNCTION
 \begin{figure}[H]
@@ -231,6 +232,11 @@ This is because one of Tripathy's initial starting points were well selected, su
     \caption{Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.}\label{fig:animals}
 \end{figure}
 
+I set the number of restarts to $28$ and number of randomly sampled datapoints to 100.
+The active subspace projection matrix is of size $\mathbf{R}^{1\times 5}$, as this is a function that exhibits a strong principal component, but that still attains small perturbations among a different dimension.
+One can see very well here, that BORING is able to take into account the small perturbations, at a considerably lower cost than Tripathy would be able to.
+REMBO ???
+
 % CAMELBACK FUNCTION
 \begin{figure}[H]
     \centering
@@ -264,4 +270,49 @@ This is because one of Tripathy's initial starting points were well selected, su
     \caption{Top-Left: The 2D Camelback Function which is embedded in a 5D space.}\label{fig:animals}
 \end{figure}
 
+I set the number of restarts to $28$ and number of randomly sampled datapoints to 100.
+The active subspace projection matrix is of size $\mathbf{R}^{2 \times 5}$, as this is a function that lives in a 2D space, and has two strong principal components.
+Notice that Tripathy and BORING use the exact same algorithm, as the visualization does not allow to add a third axis. 
+In other words, BORING does not add any additional orthogonal vector to the model.
+As such, it does not add any additional kernels to the model aswell, and is equivalent to tripathy.
+REMBO ???
 
+% CAMELBACK 1D PROJECTION
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{orig/Camelback-5D->2D.png}
+        \caption{Camelback Original}
+        \label{fig:gull}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{orig/Camelback-5D->2D_BORING_1D.png}
+        \caption{Camelback Boring}
+        \label{fig:tiger}
+    \end{subfigure}
+        \vskip\baselineskip
+ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{orig/Camelback-5D->2D_TRIPATHY_1D.png}
+        \caption{Camelback Tripathy}
+        \label{fig:mouse}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{orig/Camelback-5D->2D_REMBO_1D.png}
+        \caption{Camelback Rembo}
+        \label{fig:mouse}
+    \end{subfigure}
+    \caption{Top-Left: The 2D Camelback Function which is embedded in a 5D space.}\label{fig:animals}
+\end{figure}
+
+I set the number of restarts to $28$ and number of randomly sampled datapoints to 100.
+The active subspace projection matrix is of size $\mathbf{R}^{1 \times 5}$, as I want to explore to what extent complicated functions are explored, when we set the effective dimension lower than the real number of active dimensions.
+One can see that tripathy has a much smoother function surface, and that BORING allows to take into consideration smaller local perturbations, as it includes a third random axis.
+Whichever is better depends on the application, and BORGIN will be able to adapt better to more points, whereas Tripathy will project multiple points onto the same space.
+One can see very well here, that BORING is able to take into account the small perturbations, at a considerably lower cost than Tripathy would be able to.
+REMBO ??? 
