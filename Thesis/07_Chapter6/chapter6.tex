@@ -161,7 +161,6 @@ Orange points shows the sampled mean prediction of the trained GP.
 The GPs were each trained on 100 datapoints. 
 The points shown below were not used for training at any point, as these are included in the test-set.
 
-\newpage
 % PARABOLA FUNCTION
 \begin{figure}[H]
     \centering
@@ -194,6 +193,10 @@ The points shown below were not used for training at any point, as these are inc
     \end{subfigure}
     \caption{Top-Left: The 1D Parabola which is embedded in a 2D space.}\label{fig:animals}
 \end{figure}
+
+I set the number of restarts to $14$.
+Notice that the Tripathy approximation is slightly more accurate than the BORING approximation. 
+This is because one of Tripathy's initial starting points were well selected, such that algorithm 3 ran many times before the relative loss terminated the algorithm.
 
 % SINUSOIDAL FUNCTION
 \begin{figure}[H]
