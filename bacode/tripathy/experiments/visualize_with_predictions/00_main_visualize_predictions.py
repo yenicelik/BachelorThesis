@@ -44,7 +44,7 @@ def initialize_boring(domain):
 # Helper algorithms to generate test and training set
 def get_training_set(points, fnc):
     # Generate training set
-    X_train = np.random.rand(points, fnc.d) - 0.5
+    X_train = np.random.rand(points, fnc.d) - 0.5 # TODO: do we need to multiply by 2 first, bcs rn it's [-0.5, 0.5]!
     print("Center is: ", fnc._domain.center)
     print("Range is: ", fnc._domain.range)
     X_train = (X_train * fnc._domain.range) + fnc._domain.center
