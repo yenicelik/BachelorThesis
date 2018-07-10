@@ -2,7 +2,7 @@ from sys import platform
 
 DEV = False
 QDev = False
-HALFDEV = True
+HALFDEV = False
 
 if DEV:
 
@@ -53,8 +53,8 @@ elif QDev:
         "max_iter_parameter_optimization": 30,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 1.e-3,  # -12,
-        "eps_alg3": 1.e-3,  # -12,
+        "eps_alg1": 1.e-4,  # -12,
+        "eps_alg3": 1.e-4,  # -12,
         "eps_alg4": 1.e-3,
 
         "tau_max": 1.e-1,
@@ -69,7 +69,7 @@ elif QDev:
 elif HALFDEV:
 
     config = {
-        "no_restarts": 100, # 1000
+        "no_restarts": 25, # 1000
 
         "max_iter_alg1": 200, # int(1e5),
         "max_iter_alg3": 200, # int(1e5),
@@ -91,20 +91,20 @@ elif HALFDEV:
 else:
 
     config = {
-        "no_restarts": 4*14,
+        "no_restarts": 14,
 
-        "max_iter_alg1": int(200),
-        "max_iter_alg3": int(200),
+        "max_iter_alg1": int(10000),
+        "max_iter_alg3": int(10000),
 
-        "max_iter_parameter_optimization": 1,
+        "max_iter_parameter_optimization": 200,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 5.e-7, # -12,
-        "eps_alg3": 5.e-7, # -12,
-        "eps_alg4": 1.e-3,
+        "eps_alg1": 5.e-12, # -12,
+        "eps_alg3": 5.e-12, # -12,
+        "eps_alg4": 1.e-4,
 
         "tau_max": 1.e-1,
-        "no_taus": 6,
+        "no_taus": 5,
 
         "test_single_dimension": True,
 
@@ -122,7 +122,7 @@ elif platform == "darwin":
 config['active_dimension'] = 1
 
 config['restict_cores'] = True
-config['max_cores'] = 8
+config['max_cores'] = 16
 
 config['visualize_vanilla_path'] = config['basepath'] + "visualize_vanilla/"
 config['visualize_vanilla_vs_gp_path'] = config['basepath'] + "visualize_vanilla_vs_gp/"

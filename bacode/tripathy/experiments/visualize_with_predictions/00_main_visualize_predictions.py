@@ -17,8 +17,8 @@ import sys
 
 FNC_TUPLES = [
     ["Parabola-2D->1D", ParabolaEmbedded2D(), 1],
-    ["Camelback-5D->2D", CamelbackEmbedded5D(), 2],
-    ["Sinusoidal-5D->2D", DecreasingSinusoidalEmbedded5D(), 2]
+    # ["Camelback-5D->2D", CamelbackEmbedded5D(), 2],
+    # ["Sinusoidal-5D->2D", DecreasingSinusoidalEmbedded5D(), 2]
 ]
 
 
@@ -44,10 +44,13 @@ def initialize_boring(domain):
 # Helper algorithms to generate test and training set
 def get_training_set(points, fnc):
     # Generate training set
-    X_train = np.random.rand(points, fnc.d)
-    X_train = (X_train * fnc._domain.range) + fnc._domain._center
+    X_train = np.random.rand(points, fnc.d) - 0.5
+    print("Center is: ", fnc._domain.center)
+    print("Range is: ", fnc._domain.range)
+    X_train = (X_train * fnc._domain.range) + fnc._domain.center
     Y_train = fnc.f(X_train.T).reshape(-1, 1)
     print("Shape of X, Y: ", (X_train.shape, Y_train.shape))
+    print("X train is: ", X_train)
     return X_train, Y_train
 
 

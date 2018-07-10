@@ -10,8 +10,13 @@ import matplotlib.pyplot as plt
 def calculate_angle_between_two_matrices(A, B):
     M1 = np.dot(A, A.T)
     M2 = np.dot(B, B.T)
+    assert M1.shape == M2.shape, ("Not same shapes!", M1.shape, M2.shape)
+    assert M1.shape[0] > 1
     diff = np.linalg.norm(M1 - M2, ord=2)
-    return np.arcsin(diff)
+    print("Diff is: ", diff)
+    out = np.arcsin(diff)
+    print("Out is: ", out)
+    return out
 
 def visualize_angle_given_W_array(real_projection_A, found_Ws):
     angles = list(map(

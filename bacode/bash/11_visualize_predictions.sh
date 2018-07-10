@@ -17,8 +17,8 @@ then
     BASEPATH="/Users/davidal/GoogleDrive/BachelorThesis/bacode/experiment_yamls/"
 else
     BASEPATH="/home/yedavid/BachelorThesis/bacode/experiment_yamls/"
+    cd /home/yedavid/BachelorThesis/bacode/
 fi
 
-cd /home/yedavid/BachelorThesis/bacode/
 
 python tripathy/experiments/visualize_with_predictions/00_main_visualize_predictions.py

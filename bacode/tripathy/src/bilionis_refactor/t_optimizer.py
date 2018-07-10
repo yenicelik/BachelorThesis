@@ -367,6 +367,8 @@ class TripathyOptimizer:
         losses = [x[4] for x in all_responses]
         configs = [(x[0], x[1], x[2], x[3]) for x in all_responses]
 
+        print([x[0] for x in configs])
+
         # print("Losses are: ", losses)
 
         best_index = int(np.argmax( losses )) # TODO: do we take the argmax, or the argmin? argmax seems to work well!
@@ -376,6 +378,8 @@ class TripathyOptimizer:
         if best_config[0] is None:
             best_index = int(np.argsort(losses)[-2])
             best_config = configs[best_index]
+
+        print("Best config is: ", best_config)
 
         return best_config[0], best_config[1], best_config[2], best_config[3] # W, sn, l, s
 
