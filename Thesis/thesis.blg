@@ -23,64 +23,86 @@ Warning--entry type for "Li2018" isn't style-file defined
 --line 57 of file References/references.bib
 Warning--entry type for "Rana2017" isn't style-file defined
 --line 66 of file References/references.bib
-Warning--entry type for "Gardner2017" isn't style-file defined
+Warning--entry type for "AngleMeasurement" isn't style-file defined
 --line 73 of file References/references.bib
-Warning--entry type for "BayesianOptimizationNAS" isn't style-file defined
+Warning--entry type for "Gardner2017" isn't style-file defined
 --line 80 of file References/references.bib
-Warning--entry type for "BOIncreasingPopularityEmpirically" isn't style-file defined
+Warning--entry type for "BayesianOptimizationNAS" isn't style-file defined
 --line 87 of file References/references.bib
+Warning--entry type for "BOIncreasingPopularityEmpirically" isn't style-file defined
+--line 94 of file References/references.bib
 Warning--entry type for "AcquisitionFunctions" isn't style-file defined
---line 101 of file References/references.bib
+--line 116 of file References/references.bib
+Warning--entry type for "AcquisitionFunctionsMaximizing" isn't style-file defined
+--line 123 of file References/references.bib
 Warning--entry type for "Djolonga2013" isn't style-file defined
---line 108 of file References/references.bib
+--line 130 of file References/references.bib
 Warning--entry type for "Garnett2013" isn't style-file defined
---line 115 of file References/references.bib
+--line 149 of file References/references.bib
 Warning--entry type for "Tripathy" isn't style-file defined
---line 124 of file References/references.bib
+--line 158 of file References/references.bib
+Warning--entry type for "RemboExtension" isn't style-file defined
+--line 169 of file References/references.bib
 Warning--entry type for "Wang2013" isn't style-file defined
---line 135 of file References/references.bib
+--line 177 of file References/references.bib
 Warning--entry type for "Rolland" isn't style-file defined
---line 144 of file References/references.bib
+--line 186 of file References/references.bib
+Warning--entry type for "KernelGibbsSampler" isn't style-file defined
+--line 196 of file References/references.bib
+Warning--entry type for "GPforML" isn't style-file defined
+--line 203 of file References/references.bib
+Warning--entry type for "VirtualVsReal" isn't style-file defined
+--line 211 of file References/references.bib
+Warning--entry type for "SensorPlacement" isn't style-file defined
+--line 218 of file References/references.bib
+Warning--entry type for "BatchedBO" isn't style-file defined
+--line 225 of file References/references.bib
+Warning--entry type for "StiefelBayesianInference" isn't style-file defined
+--line 233 of file References/references.bib
+Warning--entry type for "StatisticsStiefelIntro" isn't style-file defined
+--line 240 of file References/references.bib
+Warning--entry type for "StiefelNonparametric" isn't style-file defined
+--line 247 of file References/references.bib
 Warning--I didn't find a database entry for "Wang"
-You've used 18 entries,
+You've used 31 entries,
             1935 wiz_defined-function locations,
-            563 strings with 6983 characters,
-and the built_in function-call counts, 5743 in all, are:
-= -- 538
-> -- 350
-< -- 5
-+ -- 120
-- -- 120
-* -- 471
-:= -- 1117
-add.period$ -- 39
-call.type$ -- 18
-change.case$ -- 149
-chr.to.int$ -- 18
-cite$ -- 18
-duplicate$ -- 192
-empty$ -- 293
-format.name$ -- 140
-if$ -- 1033
+            624 strings with 9297 characters,
+and the built_in function-call counts, 10336 in all, are:
+= -- 971
+> -- 637
+< -- 10
++ -- 218
+- -- 218
+* -- 855
+:= -- 1980
+add.period$ -- 68
+call.type$ -- 31
+change.case$ -- 260
+chr.to.int$ -- 31
+cite$ -- 31
+duplicate$ -- 345
+empty$ -- 529
+format.name$ -- 257
+if$ -- 1883
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 3
-newline$ -- 78
-num.names$ -- 54
-pop$ -- 136
+missing$ -- 6
+newline$ -- 132
+num.names$ -- 95
+pop$ -- 239
 preamble$ -- 1
-purify$ -- 150
+purify$ -- 262
 quote$ -- 0
-skip$ -- 151
+skip$ -- 276
 stack$ -- 0
-substring$ -- 216
-swap$ -- 2
-text.length$ -- 0
+substring$ -- 412
+swap$ -- 15
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 106
+type$ -- 182
 warning$ -- 0
-while$ -- 36
+while$ -- 66
 width$ -- 0
-write$ -- 188
-(There were 16 warnings)
+write$ -- 324
+(There were 27 warnings)

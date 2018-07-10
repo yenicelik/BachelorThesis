@@ -10,15 +10,29 @@ Berkenkamp, F., Turchetta, M., Schoellig, A.~P., and Krause, A. (2017).
 \newblock Safe model-based reinforcement learning with stability guarantees.
 \newblock In {\em Neural Information Processing Systems (NIPS)}.
 
+\bibitem[Binois et~al., 2014]{RemboExtension}
+Binois, M., Ginsbourger, D., and Roustant, O. (2014).
+\newblock {A warped kernel improving robustness in Bayesian optimization via
+  random embeddings}.
+
 \bibitem[Brochu et~al., 2010]{AcquisitionFunctions}
 Brochu, E., Cora, V.~M., and De~Freitas, N. (2010).
 \newblock {A tutorial on Bayesian optimization of expensive cost functions,
   with application to active user modeling and hierarchical reinforcement
   learning}.
 
+\bibitem[Camano-Garcia, 2006]{StatisticsStiefelIntro}
+Camano-Garcia, G. (2006).
+\newblock {Statistics on Stiefel manifolds}.
+
 \bibitem[Djolonga et~al., 2013]{Djolonga2013}
 Djolonga, J., Krause, A., and Cevher, V. (2013).
 \newblock {High-Dimensional Gaussian Process Bandits}.
+
+\bibitem[Friedman and Stuetzle, 1981]{ProjectionPursuit}
+Friedman, J. and Stuetzle, W. (1981).
+\newblock {\em Projection Pursuit Regression}.
+\newblock Journal of the American Statistical Association.
 
 \bibitem[Gardner et~al., 2017]{Gardner2017}
 Gardner, J.~R., Guo, C., Weinberger, K.~Q., Garnett, R., and Grosse, R. (2017).
@@ -33,6 +47,21 @@ Garnett, R., Osborne, M.~A., and Hennig, P. (2013).
 {GPy} (since 2012).
 \newblock {GPy}: A gaussian process framework in python.
 \newblock \url{http://github.com/SheffieldML/GPy}.
+
+\bibitem[Graepel and Herbrich, 2001]{KernelGibbsSampler}
+Graepel, T. and Herbrich, R. (2001).
+\newblock {The Kernel Gibbs Sampler}.
+
+\bibitem[GSeshadri et~al., 2018]{AngleMeasurement}
+GSeshadri, P., Yuchi, S., and Parks, G.~T. (2018).
+\newblock {Dimension Reduction via Gaussian Ridge Functions}.
+
+\bibitem[Hemant and Cevher, 2012]{CevherSubspaceIdentificationKrause}
+Hemant, T. and Cevher, V. (2012).
+\newblock Active learning of multi-index function models.
+\newblock In Pereira, F., Burges, C. J.~C., Bottou, L., and Weinberger, K.~Q.,
+  editors, {\em Advances in Neural Information Processing Systems 25}, pages
+  1466--1474. Curran Associates, Inc.
 
 \bibitem[Jamil and Yang, 2018]{Jamil2013}
 Jamil, M. and Yang, X.-S. (2018).
@@ -49,9 +78,24 @@ Kandasamy, K., Neiswanger, W., Schneider, J., Poczos, B., and Xing, E. (2018).
 Li, C., Gupta, S., Rana, S., Nguyen, V., Venkatesh, S., and Shilton, A. (2018).
 \newblock {High Dimensional Bayesian Optimization Using Dropout}.
 
+\bibitem[Lin et~al., 2014]{StiefelNonparametric}
+Lin, L., Rao, V., and Dunson, D.~B. (2014).
+\newblock {BAYESIAN NONPARAMETRIC INFERENCE ON THE STIEFEL MANIFOLD}.
+
+\bibitem[Lin et~al., 2017]{SensorPlacement}
+Lin, X., Chowdhury, A., Wang, X., and Terejanu, G. (2017).
+\newblock {Approximate Computational Approaches for Bayesian Sensor Placement
+  in High Dimensions}.
+
 \bibitem[Lizotte, 2008]{Lizotte2008}
 Lizotte, D. (2008).
 \newblock {Practical Bayesian Optimization}.
+
+\bibitem[Marco et~al., 2017]{VirtualVsReal}
+Marco, A., Berkenkamp, F., Hennig, P., Schoellig, A.~P., Krause, A., Schaal,
+  S., and Trimpe, S. (2017).
+\newblock {Virtual vs. Real: Trading Off Simulations and Physical Experiments
+  in Reinforcement Learning with Bayesian Optimization}.
 
 \bibitem[Murphy, 2012]{Murphy}
 Murphy, K.~P. (2012).
@@ -62,6 +106,15 @@ Murphy, K.~P. (2012).
 Rana, S., Li, C., Gupta, S., Nguyen, V., and Venkatesh, S. (2017).
 \newblock {High Dimensional Bayesian Optimization with Elastic Gaussian
   Process}.
+
+\bibitem[Rao et~al., 2013]{StiefelBayesianInference}
+Rao, V., Lin, L., Dunson, D.~B., and Dunson, D. (2013).
+\newblock {Bayesian inference on the Stiefel manifold}.
+
+\bibitem[Rasmussen et~al., 2006]{GPforML}
+Rasmussen, C.~E., Williams, C. K.~I., Sutton, R.~S., Barto, A.~G., Spirtes, P.,
+  Glymour, C., Scheines, R., Schölkopf, B., and Smola, A.~J. (2006).
+\newblock {Gaussian Processes for Machine Learning}.
 
 \bibitem[Rolland et~al., 2018]{Rolland}
 Rolland, P., Scarlett, J., Bogunovic, I., and Cevher, V. (2018).
@@ -83,8 +136,17 @@ University, S.~F. (2017).
 \newblock Virtual library of simulation experiments: Test functions and
   datasets - optimization test problems.
 
+\bibitem[Wang et~al., 2017]{BatchedBO}
+Wang, Z., Gehring, C., Kohli, P., and Jegelka, S. (2017).
+\newblock {Batched Large-scale Bayesian Optimization in High-dimensional
+  Spaces}.
+
 \bibitem[Wang et~al., 2013]{Wang2013}
 Wang, Z., Hutter, F., Zoghi, M., Matheson, D., and De~Freitas, N. (2013).
 \newblock {Bayesian Optimization in High Dimensions via Random Embeddings}.
+
+\bibitem[Wilson et~al., 2018]{AcquisitionFunctionsMaximizing}
+Wilson, J.~T., Hutter, F., and Deisenroth, M.~P. (2018).
+\newblock {Maximizing acquisition functions for Bayesian optimization}.
 
 \end{thebibliography}

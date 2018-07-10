@@ -81,10 +81,11 @@ Besides that, we offer the following possibilities to check how well our model d
 \item Test if the expectation $$ E[ f(A x) - \hat{f}(\hat{A} x) ] $$ decreases / approaches zero (for methods that identify a projection matrix).
 \item Check if the test log-likelihood decreases for functions that are provided by a finite number of data-points.
 \item Check if the regret for the methods at hand are competitive, for synthetic functions.
+\item Check if the angle between the real projection matrix, and the found projection matrix decreases, as given in \citep{AngleMeasurement}.
 \end{itemize}
 
 
-\subsection{Synthetic Datasets}
+\subsection{Synthetic Datasets} \label{syntheticFunction}
 \paragraph{5 dimensional function with 2 dimensional linear embedding}
 
 One can evaluate synthetic functions at any point, and immediately get a regret value.

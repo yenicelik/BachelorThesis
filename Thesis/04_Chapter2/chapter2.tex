@@ -105,6 +105,8 @@ The \textbf{subspace identification} is treated as a low-rank matrix recovery pr
 \subsection{Random embeddings (REMBO)}
 \citep{Wang2013} Let $x \in \mathbb{R}^D$ and $y \in \mathbb{R}^d$. Assume, that $f(x) = f(Ax)$. We can generate $A \in \mathbb{R}^{D \times d}$ by randomly generating this matrix.
 
+Extensions to REMBO include \citep{RemboExtension}.
+
 \subsection{Applications to high-dimensional uncertainty propogation}
 Because the algorithm we propose uses this method to identify the subspace projection matrix, I will discuss this algorithm in more detail.
 
@@ -130,7 +132,7 @@ f \sim p(f) &= \int \delta( f - f(x) ) p(x) dx
 
 The authors argue that w.l.o.g., one can regard only on orthogonal matrices, as this does not restrict the search space of projection matrices, the main reason being that no projection subspace is neglected by doing this.
 Here, the family of orthogonal matrices of dimension $d \times D$ is denoted by $\mathbf{W} \in V_d(\mathbb{R}^D) $.
-This quantity is also known as the \textbf{Stiefel manifold}, where $d$ is the found effective dimension of the function, and $D$ is the real input dimension to the function. \\
+This quantity is also known as the \textbf{Stiefel manifold} \citep{StiefelBayesianInference} \citep{StatisticsStiefelIntro} \citep{StiefelNonparametric}, where $d$ is the found effective dimension of the function, and $D$ is the real input dimension to the function. \\
 
 \subsubsection{Kernel used}
 As in the paper, I use the Matern-32 kernel function.
@@ -247,4 +249,6 @@ And 2.) exponentially decrease the length-scale for the gaussian process if the 
 
 \citep{Li2018} propose that the assumption of an active subspace is restrictive and often not fulfilled in real-world applications.
 They propose three algorithms, to iteratively optimize amongst certain dimensions that are not within the $d$ 'most influential' dimensions: 1.) Dropout Random, which picks dimensions to be optimized at random, 2.) Dropout copy, which continuous optimizing the function values from the found local optimum configuration, and 3.) which does method 1. with probability $p$, and else method 2.
-The $d$ 'most influential' dimensions are picked at random at each iteration.
+The $d$ 'most influential' dimensions are picked at random at each iteration. \\
+
+Additional works I explored as background research or additional methods include \citep{KernelGibbsSampler}, \citep{VirtualVsReal}, \citep{SensorPlacement}, \citep{BatchedBO}, \citep{GPforML}.

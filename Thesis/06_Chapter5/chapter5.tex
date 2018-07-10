@@ -192,18 +192,20 @@ Using this information about each individual kernel component results in the sim
 \end{align}
 
 
---> Possible extension to the Projection pursuit regression?
-
 \subsubsection{How does our algorithm address the shortcomings from chapter 3?}
 
 \begin{enumerate}
-\item Our algorithm intrinsically uses multiple restarts, firstly proposed as an extension to REMBO.
-This makes training more reliable.
+\item Our algorithm intrinsically uses multiple restarts.
+As such, bad initial states and bad projection matrices are discarded as better ones are identified.
+This makes our algorithm more reliable than algorithms like REMBO.
 \item Our algorithm allows to not only optimize on a given domain, but also identify the subspace on which the maximal embedding is allocated on.
+In addition to that, no gradient information is needed.
 \item Our algorithms uses a "burn-in-rate" for the first few samples, which allows for efficient point search at the beginning, and later on switches to finding the actual, real subspace.
-\item Our algorithm has faster convergence onto the real subspace, as we use the most promising models during optimization, instead of going through all possible restarts. (Approximate enhancement of loss by taking sum of last 10 losses - extrapolate, and compare it to the best example so far!)
-\item Our algorithm is more accurate, as we don't assume that there is a singular maximal subspace. 
+This means that we need to compute the embedding only once, and can then apply optimization on that domain.
+Our algorithm allows for comfortable choice of how much computation should be put into identifying the subspace.
+\item Our algorithm is more accurate and robust, as we don't assume that there is a singular maximal subspace. 
 We also take into consideration that there might be perturbation on lower dimensions!
+In that sense, our algorithm mimicks the idea of projection pursuit \citep{ProjectionPursuit}, as it identifies multiple vectors to project to the lower subspace.
 \end{enumerate}
 
 

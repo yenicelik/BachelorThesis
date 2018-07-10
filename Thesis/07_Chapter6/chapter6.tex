@@ -13,41 +13,137 @@
 
 \section{Evaluation Settings}
 
-Appendix A presents a list of synthetic functions and real datasets that are used to evaluate the effectiveness of a bayesian optimization algorithm. 
-We will briefly go over some synthetic functions that we will be using for the evaluation of our algorithm.
+Appendix A presents a list of synthetic functions and real datasets that are used to evaluate the effectiveness of a Bayesian Optimization algorithm. 
+I conduct experiments in the following settings as mentioned in chapter \ref{syntheticFunction}.
 Furthermore, we will shortly discuss the underlying real dataset, which is hyper-parameter-configurations from the SwissFEL x-ray laser.
 
 \section{Quantitative evaluation}
+To recapitulate, I will use log-likelihood measures and cumulative regret to compare the performance of different algorithms.
 
-We will conduct experiments in the following settings (as mentioned in some other chapter REEEE):
-
-\begin{enumerate}
-\item a 2D embedded function in a 3D (synthetic).
-\item a 2D embedded function in a 10D (synthetic).
-\item a 5D embedded function in a 25D setting (synthetic).
-\item A function that has the exact same structure that we propose.
-\item SwissFEL data (5D real dimensional domain).
-\end{enumerate}
 
 \section{Qualitative evaluation}
 
-\subsection{Finding a matrix when we apply a polynomial kernel onto the input first}
-We want to analyse if the gpregression can identify the random matrix, if the input is first put through a polynomial kernel of degree 2. \\
-
-More specifically, the problem looks as follows.
-We want to approximate the real function $ f $ through a gaussian process $ g $, with the following condition:
+\subsection{Feature selection}
+The goal of this task is to see, if the revised active subspace identification algorithms can effectively do feature selection.
+For this task, I set up a function $ f $ that looks as follows:
 
 \def\B{
 \begin{bmatrix}
-    (x - x_0)^2 \\
-    (x - x_1)^2
+    (x - a_0)^2 \\
+    (y - a_1)^2
 \end{bmatrix}}
 
-\begin{equation}
+\begin{equation} \label{eq:FeatureExtension}
 f \left( W \B \right) \approx g \left( x \right)
 \end{equation} 
 
-where $x_0, x_1$ are constants.
+where $x_0, x_1$ are constants. \\
+
+For this specific experiment, the function $f$ is chosen to be a one-dimensional parabola. 
+As such, $W$ is chosen as a matrix on the Stiefel manifold with dimensions $\mathbf{R}^{d \times D}$
+
+Doing a feature extension over $x$ and $y$, we can get the following feature representation:
+
+\def\PHI{
+\begin{bmatrix}
+	x_0^2 \\
+	x_1^2 \\
+	x_0 \\
+	x_1 \\
+    1
+\end{bmatrix}}
+
+
+\def\WtoPhi{
+\begin{bmatrix}
+	w_0 \\
+    w_1 \\
+	-2 w_0 a_0 \\
+	-2 w_1 a_1 \\
+	w_0 a_0^2 + w_1 a_1^2
+\end{bmatrix}}
+
+\begin{figure}[h]
+
+\begin {minipage}{0.47\textwidth}
+  \centering
+  \begin{equation}
+    \PHI
+  \end{equation}
+  \caption{Polynomial Kernel applied to vector $[x_0, x_1]$}
+\end{minipage}
+\hfill
+\begin {minipage}{0.47\textwidth}
+  \centering
+  \begin{equation}
+    \WtoPhi
+  \end{equation}
+  \caption{Corresponding weight matrix equivalent to \ref{eq:FeatureExtension} when applied on a parabola}
+\end{minipage}
+
+\end{figure}
+
+To run experiments, I instantiate the "real" matrix, which should be found by the algorithm with the values $w_0 = 0.589$, $w_1 = 0.808$ (randomly sampled as a matrix on the Stiefel manifold), $a_0 = -0.1$, $a_1 = 0.1$ (chosen by me as coefficients). \\
+
+I apply the algorithm 1. from \citep{Tripathy} to identify the active projection matrix.
+The optimization algorithm has 50 samples to discover the hidden matrix, which it seemingly does up do a certain degree of accuracy.
+Similar results are achieved for repeated tries.
+The following figure shows the real matrix, and the matrix the algorithm has found.
+
+\def\realW{
+\begin{bmatrix}
+	0.589 \\
+    0.808 \\
+	0.118 \\
+	-0.162 \\
+	0.823
+\end{bmatrix}}
+
+\def\okW1{
+\begin{bmatrix}
+	-0.355 \\
+    	-0.533 \\
+    	-0.908 \\
+    	0.099 \\
+    -0.756 
+\end{bmatrix}}
+
+\begin{figure}[h] 
+\begin {minipage}{0.47\textwidth}
+  \centering
+  \begin{equation} \label{fig:realMatrix}
+    \realW
+  \end{equation}
+  \caption{Real matrix}
+\end{minipage}
+\hfill
+\begin {minipage}{0.47\textwidth}
+  \centering
+  \begin{equation} \label{fig:foundMatrix}
+    \okW1
+  \end{equation}
+  \caption{Matrix found by optimization algorithm}
+\end{minipage}
+\end{figure}
+
+Although one can see that the element wise difference between the two matrices \ref{fig:realMatrix} and \ref{fig:foundMatrix} are high (between $0.05$ and $0.15$), one can see that the matrix recovery is successful in finding an approximate structure that resembles the original structure of the features.
+One should observe that the found matrix is an approximate solution to the real matrix in the projection. I.e. the matrix found is close to the real matrix, but multiplied by $-1$. \\
+
+Because in this case, I applied the feature selection algorithm on a vector-matrix (only one column), one can quantify the reconstruction of the real matrix through the found matrix by the normalized scalar product.
+This quantity is a metric between $0$ and $1$, where $0$ means that both vectors are orthogonal, and $1$ means that both vectors overlap.
+
+\begin{equation}
+\text{overlap}(u, v) = \frac{| \langle u, v \rangle |}{\langle u, u \rangle}
+\end{equation}
+where $u$ is the real vector, and $v$ is the found vector.
+
+Inserting the actual values into the field, we get $0.79$, which is a good value for the feature vector found, and the trained number of datapoints which is 50. \\
+ 
+ This experiment shows that algorithm 1. from \citep{Tripathy} successfully allows a viable option to other feature selection algorithms, by providing a measure, where the optimal linear projection is found. 
+ However, one must notice that other feature selection algorithms (such as SVM), are more efficient, and will provide better results with higher probability if applied on a similar kernel. \\
+ 
+ One major observation I made was the the increase in the log likelihood of the data w.r.t. the projection matrix did not correlate with the decrease in the angle between the real vs the found projection matrix.
+ Also, most often, the angle was at around 40 degrees, which means that only slight improvements over a fully random embedding were made.
 
 
 \subsection{Subspace identification}
@@ -58,29 +154,26 @@ We have the following functions:
 \item 1D Parabola embedded in a 2D space
 \item 2D Camelback embedded in a 5D space
 \item 2D Sinusoidal and Exponential function embedded in a 5D space
-\item 5D Rosenbrock function embedded in a 10D space
 \end{enumerate}
 
-In the following figure, any blue point shows the real function value.
-Any orange point shows the point that the mean prediction of the Gaussian Process predicted.
-The function was learned using 100 datapoints. 
-The points shown below were not used for training at any point.
-The predominantly orange figures are respective surrogate functions of this real function.
-For each of the methods, the embedding is learned using the respective algorithm.
+In the following figures, blue point shows the sampled real function value.
+Orange points shows the sampled mean prediction of the trained GP.
+The GPs were each trained on 100 datapoints. 
+The points shown below were not used for training at any point, as these are included in the test-set.
 
 \newpage
 % PARABOLA FUNCTION
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.30\textwidth}
-        \includegraphics[width=\textwidth]{orig/embedded_parabola_2d_to_1d.png}
+        \includegraphics[width=\textwidth]{orig/Parabola-2D->1D.png}
         \caption{Parabola Original}
         \label{fig:gull}
     \end{subfigure}
     %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.30\textwidth}
-        \includegraphics[width=\textwidth]{embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png}
+        \includegraphics[width=\textwidth]{orig/Parabola-2D->1D_BORING.png}
         \caption{Parabolanusoidal Boring}
         \label{fig:tiger}
     \end{subfigure}
@@ -88,14 +181,14 @@ For each of the methods, the embedding is learned using the respective algorithm
     %(or a blank line to force the subfigure onto a new line)
     \vskip\baselineskip
     \begin{subfigure}[b]{0.30\textwidth}
-        \includegraphics[width=\textwidth]{embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png}
+        \includegraphics[width=\textwidth]{orig/Parabola-2D->1D_TRIPATHY.png}
         \caption{Parabola Tripathy}
         \label{fig:mouse}
     \end{subfigure}
             %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.30\textwidth}
-        \includegraphics[width=\textwidth]{embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png}
+        \includegraphics[width=\textwidth]{orig/Parabola-2D->1D_REMBO.png}
         \caption{Parabola Rembo}
         \label{fig:mouse}
     \end{subfigure}
@@ -106,14 +199,14 @@ For each of the methods, the embedding is learned using the respective algorithm
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{orig/embedded_sinusoidal_small_perturbations_5d_to_2d.png}
+        \includegraphics[width=\textwidth]{orig/Sinusoidal-5D->2D.png}
         \caption{Sinusoidal Original}
         \label{fig:gull}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png}
+        \includegraphics[width=\textwidth]{orig/Sinusoidal-5D->2D_BORING.png}
         \caption{Sinusoidal Boring}
         \label{fig:tiger}
     \end{subfigure}
@@ -121,14 +214,14 @@ For each of the methods, the embedding is learned using the respective algorithm
  %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png}
+        \includegraphics[width=\textwidth]{orig/Sinusoidal-5D->2D_TRIPATHY.png}
         \caption{Sinusoidal Tripathy}
         \label{fig:mouse}
     \end{subfigure}
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png}
+        \includegraphics[width=\textwidth]{orig/Sinusoidal-5D->2D_REMBO.png}
         \caption{Sinusoidal Rembo}
         \label{fig:mouse}
     \end{subfigure}
@@ -139,14 +232,14 @@ For each of the methods, the embedding is learned using the respective algorithm
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{orig/embedded_camelback_5d_to_2d.png}
+        \includegraphics[width=\textwidth]{orig/Camelback-5D->2D.png}
         \caption{Camelback Original}
         \label{fig:gull}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png}
+        \includegraphics[width=\textwidth]{orig/Camelback-5D->2D_BORING.png}
         \caption{Camelback Boring}
         \label{fig:tiger}
     \end{subfigure}
@@ -154,50 +247,18 @@ For each of the methods, the embedding is learned using the respective algorithm
  %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png}
+        \includegraphics[width=\textwidth]{orig/Camelback-5D->2D_TRIPATHY.png}
         \caption{Camelback Tripathy}
         \label{fig:mouse}
     \end{subfigure}
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png}
+        \includegraphics[width=\textwidth]{orig/Camelback-5D->2D_REMBO.png}
         \caption{Camelback Rembo}
         \label{fig:mouse}
     \end{subfigure}
     \caption{Top-Left: The 2D Camelback Function which is embedded in a 5D space.}\label{fig:animals}
 \end{figure}
 
-% ROSENBROCK FUNCTION
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{orig/embedded_rosenbrock_10d_to_5d.png}
-        \caption{Rosenbrock Original}
-        \label{fig:gull}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png}
-        \caption{Rosenbrock Boring}
-        \label{fig:tiger}
-    \end{subfigure}
-        \vskip\baselineskip
- %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-    %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png}
-        \caption{Rosenbrock Tripathy}
-        \label{fig:mouse}
-    \end{subfigure}
-        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-    %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{embedded_sinusoidal_small_perturbations_5d_to_2d_boring.png}
-        \caption{Rosenbrock Rembo}
-        \label{fig:mouse}
-    \end{subfigure}
-    \caption{Top-Left: The 5D Rosenbrock-Exponential Function which is embedded in a 10D space. We visualize the function using the first two principal components (projection using PCA)}\label{fig:animals}
-\end{figure}
 
