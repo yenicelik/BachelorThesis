@@ -127,6 +127,16 @@ This implies that BO can run much faster. \\
 The key point of REMBO is that the matrix $A$ can be chosen as a random orthogonal matrix.
 The authors follow with a proof, that if the optimization domain's parameters are well-chosen, that the chance of getting a bad projection matrix has a certain threshold. \\
 
+\cite{Wang}
+A function $f : \mathbf{R}^D \rightarrow \mathbf{R}$ is said to have effective dimensionality $d_e$ (where $d_e < D$), if there exists a linear subspace $\mathcal{T}$ of dimension $d_e$ such that for all $ x_\top \in \mathcal{T} \subset \mathbf{R}^D $ and $x_\perp \in \mathcal{T_\perp} \subset \mathbf{R}^D $, we have $ f(x) = f(x_\top +x_\perp ) = f(x_\top)$.
+$\mathcal{T^\perp}$ is the orthogonal complement of $\mathcal{T}$.
+
+Assume $ f : \mathbf{R}^D \rightarrow \mathbf{R} $ has effective dimensionality $d_e$.
+Given a random matrix $ \mathbf{A} \in \mathbf{R}^{D \times d} $ (where $d \geq d_e$) with independent entries sampled from $ \mathcal{N}(0, 1) $.
+For any $ x \in \mathbf{R}^D $, there exists a $y \in \mathbf{R}^d $ such that $ f(x) = f(\mathbf{A} y ) $.
+We now only need to optimize over all possible $y \in \mathbf{R}^d$, instead of all possible $x \in \mathbf{R}^D $. \\
+
+
 \begin{figure}[H]
     \centering
         \includegraphics[width=\textwidth]{rembo_sinus_function.png}

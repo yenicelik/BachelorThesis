@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  10 JUL 2018 23:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  11 JUL 2018 17:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1940,60 +1940,69 @@ Underfull \hbox (badness 10000) in paragraph at lines 127--129
 
  []
 
+
+Package natbib Warning: Citation `Wang' on page 10 undefined on input line 130.
+
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 134--138
+
+ []
+
 <04_Chapter2/Figs/rembo_sinus_function.png, id=453, 1192.455pt x 527.9725pt>
 File: 04_Chapter2/Figs/rembo_sinus_function.png Graphic file (type png)
 
 <use 04_Chapter2/Figs/rembo_sinus_function.png>
 Package pdftex.def Info: 04_Chapter2/Figs/rembo_sinus_function.png used on inpu
-t line 132.
+t line 142.
 (pdftex.def)             Requested size: 437.46112pt x 193.68718pt.
  [10 <./04_Chapter2/Figs/rembo_convex_projection.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 142--143
+Underfull \hbox (badness 10000) in paragraph at lines 152--153
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 149--151
+Underfull \hbox (badness 10000) in paragraph at lines 159--161
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 152--159
+Underfull \hbox (badness 10000) in paragraph at lines 162--169
 
  []
 
 [11 <./04_Chapter2/Figs/rembo_sinus_function.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 169--172
+Underfull \hbox (badness 10000) in paragraph at lines 179--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 181--184
+Underfull \hbox (badness 10000) in paragraph at lines 191--194
 
  []
 
 [12]
-Overfull \hbox (35.02855pt too wide) in paragraph at lines 215--215
+Overfull \hbox (35.02855pt too wide) in paragraph at lines 225--225
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 217--218
+Underfull \hbox (badness 10000) in paragraph at lines 227--228
 
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 237--238
+Underfull \hbox (badness 10000) in paragraph at lines 247--248
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 245--247
+Underfull \hbox (badness 10000) in paragraph at lines 255--257
 
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 286--289
+Underfull \hbox (badness 10000) in paragraph at lines 296--299
 
  []
 
@@ -2092,45 +2101,46 @@ Underfull \hbox (badness 10000) in paragraph at lines 142--144
 
  []
 
-<07_Chapter6/Figs/orig/Parabola-2D->1D.png, id=667, 462.528pt x 346.896pt>
+[29]
+<07_Chapter6/Figs/orig/Parabola-2D->1D.png, id=675, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/orig/Parabola-2D->1D.png Graphic file (type png)
 
 <use 07_Chapter6/Figs/orig/Parabola-2D->1D.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Parabola-2D->1D.png used on inpu
-t line 168.
+t line 177.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
-<07_Chapter6/Figs/orig/Parabola-2D->1D_BORING.png, id=668, 462.528pt x 346.896p
+<07_Chapter6/Figs/orig/Parabola-2D->1D_BORING.png, id=676, 462.528pt x 346.896p
 t>
 File: 07_Chapter6/Figs/orig/Parabola-2D->1D_BORING.png Graphic file (type png)
  <use 07_Chapter6/Figs/orig/Parabola-2D->1D_BORING.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Parabola-2D->1D_BORING.png used 
-on input line 175.
+on input line 184.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
-<07_Chapter6/Figs/orig/Parabola-2D->1D_TRIPATHY.png, id=669, 462.528pt x 346.89
+<07_Chapter6/Figs/orig/Parabola-2D->1D_TRIPATHY.png, id=677, 462.528pt x 346.89
 6pt>
 File: 07_Chapter6/Figs/orig/Parabola-2D->1D_TRIPATHY.png Graphic file (type png
 )
  <use 07_Chapter6/Figs/orig/Parabola-2D->1D_TRIPATHY.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Parabola-2D->1D_TRIPATHY.png use
-d on input line 183.
+d on input line 192.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
-<07_Chapter6/Figs/orig/Parabola-2D->1D_REMBO.png, id=670, 462.528pt x 346.896pt
+<07_Chapter6/Figs/orig/Parabola-2D->1D_REMBO.png, id=678, 462.528pt x 346.896pt
 >
 File: 07_Chapter6/Figs/orig/Parabola-2D->1D_REMBO.png Graphic file (type png)
  <use 07_Chapter6/Figs/orig/Parabola-2D->1D_REMBO.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Parabola-2D->1D_REMBO.png used o
-n input line 190.
+n input line 199.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
- [29]
+
 <07_Chapter6/Figs/orig/Sinusoidal-5D->2D.png, id=679, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/orig/Sinusoidal-5D->2D.png Graphic file (type png)
 
 <use 07_Chapter6/Figs/orig/Sinusoidal-5D->2D.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Sinusoidal-5D->2D.png used on in
-put line 206.
+put line 215.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
 <07_Chapter6/Figs/orig/Sinusoidal-5D->2D_BORING.png, id=680, 462.528pt x 346.89
@@ -2139,7 +2149,7 @@ File: 07_Chapter6/Figs/orig/Sinusoidal-5D->2D_BORING.png Graphic file (type png
 )
  <use 07_Chapter6/Figs/orig/Sinusoidal-5D->2D_BORING.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Sinusoidal-5D->2D_BORING.png use
-d on input line 213.
+d on input line 222.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
 <07_Chapter6/Figs/orig/Sinusoidal-5D->2D_TRIPATHY.png, id=681, 462.528pt x 346.
@@ -2148,7 +2158,7 @@ File: 07_Chapter6/Figs/orig/Sinusoidal-5D->2D_TRIPATHY.png Graphic file (type p
 ng)
  <use 07_Chapter6/Figs/orig/Sinusoidal-5D->2D_TRIPATHY.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Sinusoidal-5D->2D_TRIPATHY.png u
-sed on input line 221.
+sed on input line 230.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
 <07_Chapter6/Figs/orig/Sinusoidal-5D->2D_REMBO.png, id=682, 462.528pt x 346.896
@@ -2157,7 +2167,7 @@ File: 07_Chapter6/Figs/orig/Sinusoidal-5D->2D_REMBO.png Graphic file (type png)
 
  <use 07_Chapter6/Figs/orig/Sinusoidal-5D->2D_REMBO.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Sinusoidal-5D->2D_REMBO.png used
- on input line 228.
+ on input line 237.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
  [30 <./07_Chapter6/Figs/orig/Parabola-2D->1D.png> <./07_Chapter6/Figs/orig/Par
 abola-2D->1D_BORING.png> <./07_Chapter6/Figs/orig/Parabola-2D->1D_TRIPATHY.png>
@@ -2167,7 +2177,7 @@ File: 07_Chapter6/Figs/orig/Camelback-5D->2D.png Graphic file (type png)
 
 <use 07_Chapter6/Figs/orig/Camelback-5D->2D.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Camelback-5D->2D.png used on inp
-ut line 244.
+ut line 253.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
 <07_Chapter6/Figs/orig/Camelback-5D->2D_BORING.png, id=692, 462.528pt x 346.896
@@ -2176,7 +2186,7 @@ File: 07_Chapter6/Figs/orig/Camelback-5D->2D_BORING.png Graphic file (type png)
 
  <use 07_Chapter6/Figs/orig/Camelback-5D->2D_BORING.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Camelback-5D->2D_BORING.png used
- on input line 251.
+ on input line 260.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
 <07_Chapter6/Figs/orig/Camelback-5D->2D_TRIPATHY.png, id=693, 462.528pt x 346.8
@@ -2185,7 +2195,7 @@ File: 07_Chapter6/Figs/orig/Camelback-5D->2D_TRIPATHY.png Graphic file (type pn
 g)
  <use 07_Chapter6/Figs/orig/Camelback-5D->2D_TRIPATHY.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Camelback-5D->2D_TRIPATHY.png us
-ed on input line 259.
+ed on input line 268.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
 <07_Chapter6/Figs/orig/Camelback-5D->2D_REMBO.png, id=694, 462.528pt x 346.896p
@@ -2193,7 +2203,7 @@ t>
 File: 07_Chapter6/Figs/orig/Camelback-5D->2D_REMBO.png Graphic file (type png)
  <use 07_Chapter6/Figs/orig/Camelback-5D->2D_REMBO.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Camelback-5D->2D_REMBO.png used 
-on input line 266.
+on input line 275.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
  [31 <./07_Chapter6/Figs/orig/Sinusoidal-5D->2D.png> <./07_Chapter6/Figs/orig/S
 inusoidal-5D->2D_BORING.png> <./07_Chapter6/Figs/orig/Sinusoidal-5D->2D_TRIPATH
@@ -2202,7 +2212,7 @@ File: 07_Chapter6/Figs/orig/Camelback-5D->2D.png Graphic file (type png)
 
 <use 07_Chapter6/Figs/orig/Camelback-5D->2D.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Camelback-5D->2D.png used on inp
-ut line 284.
+ut line 293.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
 <07_Chapter6/Figs/orig/Camelback-5D->2D_BORING_1D.png, id=704, 462.528pt x 346.
@@ -2211,7 +2221,7 @@ File: 07_Chapter6/Figs/orig/Camelback-5D->2D_BORING_1D.png Graphic file (type p
 ng)
  <use 07_Chapter6/Figs/orig/Camelback-5D->2D_BORING_1D.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Camelback-5D->2D_BORING_1D.png u
-sed on input line 291.
+sed on input line 300.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
 <07_Chapter6/Figs/orig/Camelback-5D->2D_TRIPATHY_1D.png, id=705, 462.528pt x 34
@@ -2220,7 +2230,7 @@ File: 07_Chapter6/Figs/orig/Camelback-5D->2D_TRIPATHY_1D.png Graphic file (type
  png)
  <use 07_Chapter6/Figs/orig/Camelback-5D->2D_TRIPATHY_1D.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Camelback-5D->2D_TRIPATHY_1D.png
- used on input line 299.
+ used on input line 308.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
 
 <07_Chapter6/Figs/orig/Camelback-5D->2D_REMBO_1D.png, id=706, 462.528pt x 346.8
@@ -2229,7 +2239,7 @@ File: 07_Chapter6/Figs/orig/Camelback-5D->2D_REMBO_1D.png Graphic file (type pn
 g)
  <use 07_Chapter6/Figs/orig/Camelback-5D->2D_REMBO_1D.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Camelback-5D->2D_REMBO_1D.png us
-ed on input line 306.
+ed on input line 315.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
  [32 <./07_Chapter6/Figs/orig/Camelback-5D->2D.png> <./07_Chapter6/Figs/orig/Ca
 melback-5D->2D_BORING.png> <./07_Chapter6/Figs/orig/Camelback-5D->2D_TRIPATHY.p
@@ -2303,7 +2313,7 @@ t/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/typ
 e1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/tim
 es/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8a
 .pfb>
-Output written on thesis.pdf (52 pages, 2833931 bytes).
+Output written on thesis.pdf (52 pages, 2835843 bytes).
 PDF statistics:
  930 PDF objects out of 1000 (max. 8388607)
  801 compressed objects within 9 object streams

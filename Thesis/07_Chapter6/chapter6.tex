@@ -154,7 +154,15 @@ We have the following functions:
 \item 1D Parabola embedded in a 2D space
 \item 2D Camelback embedded in a 5D space
 \item 2D Sinusoidal and Exponential function embedded in a 5D space
-\end{enumerate}
+\end{enumerate} //
+
+To be able to visualize the points, I proceed with the following procedure:
+
+I generate testing points (points to be visualized) within the 2D-space in a uniform grid.
+I then project these testing points to the dimension of the original function ($2d$ for parabola, else $5d$).
+I then let each algorithm learn and predict the projection matrix and GP mean predictions.
+If because the transformation from $2D$ space, to $5D$ space and to GP mean prediction is each bijective, we can visualize the $2D$ points with the GP mean prediction right away.
+As such, the dimension of the embedding learned does not have impact on the visualization!
 
 In the following figures, blue point shows the sampled real function value.
 Orange points shows the sampled mean prediction of the trained GP.
