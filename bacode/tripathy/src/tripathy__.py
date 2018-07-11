@@ -208,6 +208,13 @@ class TripathyGP(ConfidenceBoundModel):
 
         if self.i % 600 == 100 or self.calculate_always:
 
+            # print("Printing X value")
+            # print(self.gp.X)
+            # print("Printing Y value")
+            # print(self.gp.Y)
+            # print("Done printing UCB samples. Now save them in a file with the correct name!")
+            # exit(0)
+
             self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(X, Y)
 
             # print("Optimized parameters are: ")

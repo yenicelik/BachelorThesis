@@ -315,6 +315,7 @@ class BoringGP(ConfidenceBoundModel):
             # print(self.active_projection_matrix)
             #
             passive_dimensions = max(self.domain.d - d, 0)
+            passive_dimensions = max(self.domain.d - d, 2)
             # passive_dimensions = 1 # TODO: take out this part!
             # # passive_dimensions = 0
             #
