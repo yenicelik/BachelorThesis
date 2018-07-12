@@ -210,25 +210,8 @@ class TripathyGP(ConfidenceBoundModel):
 
         if self.i % 600 == 100 or self.calculate_always:
 
-            # print("Printing X value")
-            # print(self.gp.X)
-            # print("Printing Y value")
-            # print(self.gp.Y)
-            # print("Done printing UCB samples. Now save them in a file with the correct name!")
-            # exit(0)
-
-            print("LOADING FROM PROJECTION!")
-            # data = np.load(config['projection_datapath'] + "00_parabola_ucb_hidden.npz")
-            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = data['W'], data['noise_var'], data['l'], data['var'], data['d']
-
             self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(X, Y)
 
-            # print("Optimized parameters are: ")
-            # print(self.noise_var)
-            # print(self.lengthscale)
-            # print(self.variance)
-            # print(self.active_d)
-            # del optimizer
             gc.collect()
 
             print("Found parameters are: ")
@@ -236,20 +219,6 @@ class TripathyGP(ConfidenceBoundModel):
             print("noise_var: ", self.noise_var)
             print("lengthscale: ", self.lengthscale)
             print("variance: ", self.variance)
-
-
-            # print("Adapting projection! ")
-            #
-            # # TODO: use optimizer instead of real projection matrix?
-            # self.active_d = 2
-            # self.W_hat = np.asarray([
-            #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
-            #     [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
-            # ]).T
-            # self.variance = np.asarray(5.)
-            # self.lengthscale = np.ones((self.active_d,)) * 1.5
-            #
-            # self.noise_var = None
 
             # For the sake of creating a kernel with new dimensions!
             self.create_new_gp_and_kernel(
@@ -260,40 +229,7 @@ class TripathyGP(ConfidenceBoundModel):
                 noise_var=self.noise_var
             )
 
-            # Recalculate the kernel and gp with optimized values
-            ######
-            # Optimize over all parameters
-            # self.parameter_optimizer = t_ParameterOptimizer(
-            #     self.W_hat,
-            #     self.kernel,
-            #     X,
-            #     Y
-            # )
-            #
-            # self.variance, self.lengthscale, new_noise = self.parameter_optimizer.optimize_s_sn_l(
-            #     self.config.noise_var,
-            #     self.variance,
-            #     self.lengthscale
-            # )
-            #
-            # self.create_new_gp_and_kernel(
-            #     active_d=self.active_d,
-            #     W=self.W_hat,
-            #     variance=self.variance,
-            #     lengtscale=self.lengthscale,
-            #     noise_var=self.noise_var
-            # )
-
             self._set_data(X, Y)
-
-
-            # print("Optimized parameters are: ")
-            # print(self.variance)
-            # print(self.lengthscale)
-            # print(new_noise)
-            # print("Printing the entire gp now")
-            # print(self.gp)
-            ####
 
         else:
 
