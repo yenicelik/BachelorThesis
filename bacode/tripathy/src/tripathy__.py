@@ -71,7 +71,7 @@ class TripathyGP(ConfidenceBoundModel):
         self.gp = GPRegression(
             self.domain.d,
             self.kernel,
-            noise_var=noise_var if noise_var is not None else self.config.noise_var,
+            noise_var=0.01, #noise_var if noise_var is not None else self.config.noise_var,
             calculate_gradients=self.config.calculate_gradients
         )
 
@@ -85,6 +85,8 @@ class TripathyGP(ConfidenceBoundModel):
         self.create_new_gp(
             noise_var=noise_var
         )
+        print("Got kernel: ")
+        print(self.kernel)
 
     def __init__(self, domain, calculate_always=False):
         super(TripathyGP, self).__init__(domain)
@@ -109,7 +111,6 @@ class TripathyGP(ConfidenceBoundModel):
         # number of data points
         self.t = 0
         self.i = 0
-        self.kernel = self.kernel.copy()
         self._woodbury_chol = np.asfortranarray(
             self.gp.posterior._woodbury_chol)  # we create a copy of the matrix in fortranarray, such that we can directly pass it to lapack dtrtrs without doing another copy
         self._woodbury_vector = self.gp.posterior._woodbury_vector.copy()
@@ -217,8 +218,8 @@ class TripathyGP(ConfidenceBoundModel):
             # exit(0)
 
             print("LOADING FROM PROJECTION!")
-            data = np.load(config['projection_datapath'] + "00_parabola_ucb_hidden.npz")
-            self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = data['W'], data['noise_var'], data['l'], data['var'], data['d']
+            # data = np.load(config['projection_datapath'] + "00_parabola_ucb_hidden.npz")
+            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = data['W'], data['noise_var'], data['l'], data['var'], data['d']
 
             self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(X, Y)
 

@@ -306,7 +306,7 @@ class BoringGP(ConfidenceBoundModel):
         if self.burn_in_samples == self.i or self.always_calculate:  # (self.i >= self.burn_in_samples and self.i % self.recalculate_projection_every == 1) or
             import time
             start_time = time.time()
-            print("Adding data: ", self.i)
+            # print("Adding data: ", self.i)
 
             optimizer = TripathyOptimizer()
 
@@ -374,13 +374,13 @@ class BoringGP(ConfidenceBoundModel):
 
         # Add the points to the newly shapes GP!
         if (self.i < self.burn_in_samples or self.Q is None) and (not self.always_calculate):
-            print("Still using the old method!")
+            # print("Still using the old method!")
             self.gp.set_XY(X, Y)
         else:
-            print("We use the dot product thingy from now on!")
+            # print("We use the dot product thingy from now on!")
             Z = np.dot(X, self.Q)
-            print("Old shape: ", X.shape)
-            print("New shape: ", Z.shape)
+            # print("Old shape: ", X.shape)
+            # print("New shape: ", Z.shape)
             self.gp.set_XY(Z, Y)
 
         # print("Added data: ", self.i)
