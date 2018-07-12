@@ -79,6 +79,21 @@ Besides that, we offer the following possibilities to check how well our model d
 
 \begin{itemize}
 \item Test if the expectation $$ E[ f(A x) - \hat{f}(\hat{A} x) ] $$ decreases / approaches zero (for methods that identify a projection matrix).
+Often, the root mean square error is a good empirical approximate of this quantity:
+\begin{equation}
+RMSE = \sqrt{ \frac{1}{T} \sum_{t=1}^{T} f(A x_t) - \hat{f}(\hat{A} x_t) }
+\end{equation}
+
+\item For optimization problems, one is often interested in the quantity of cumulative regret.
+Regret is defined as the difference between the best found function value so far, minus the function value chosen at this timestep $t$ \citep{RegretDef}.
+
+\begin{equation}
+R_T = \frac{1}{T} \sum_{t=1}^{T} \max_x f(x) - f(x_t)
+\end{equation}
+
+The cumulative regret sums all the entire episode of the run.
+This is a measure of how fast an optimizer can learn the optima of a function.
+
 \item Check if the test log-likelihood decreases for functions that are provided by a finite number of data-points.
 \item Check if the regret for the methods at hand are competitive, for synthetic functions.
 \item Check if the angle between the real projection matrix, and the found projection matrix decreases, as given in \citep{AngleMeasurement}.

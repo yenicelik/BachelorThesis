@@ -94,7 +94,7 @@ From the above posterior, we now want to predict for an arbitrary $x_*$ the func
 Predicting $y_*$ for every possible $x_*$ in the domain results in the surrogate response surface that the GP models. \\
 
 We assume that the value $y_*$ we want to predict is also distributed as a Gaussian probability distribution. 
-Because the $y_*$ that we want to predict relies on all the values collected in the past (which are again normally distributed), the probability distribution can be modelled as jointly Gaussian.
+Because the $y_*$ that we want to predict relies on all the values collected in the past (which are again normally distributed), the probability distribution can be modelled as jointly Gaussian:
 
 \begin{equation}
 \begin{pmatrix} y \\
@@ -113,7 +113,7 @@ A good recent summary is given by \citep{AcquisitionFunctionsMaximizing}.
 % Most formulae taken from "A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning
 
 \subsection{Upper Confident Bound (UCB)}
-\citep{UCBRegretProof} show a proof, that for a certain tuning of the parameter $\beta$, the acquisition function has certain asymptotic regret bounds.
+\citep{UCBRegretProof} show a proof, that for a certain tuning of the parameter $\beta$, the acquisition function has asymptotic regret bounds.
 
 The upper confidence bound allows the user to control exploitation and exploration through a parameter $\beta > 0$, which can be chosen as specified in \citep{UCBRegretProof} , to offer regret bounds.
 In addition to that, GP-UCB shows state-of-the-art empirical performance \citep{Djolonga2013}.

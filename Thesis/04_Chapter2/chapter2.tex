@@ -264,6 +264,8 @@ This algorithm is very sensitive on the initially sampled parameter $W$.
 One cannot know the real active dimension of a problem that one does not know the solution to.
 As such, the proposed to apply the above algorithms iteratively by increasing the selected active dimension $d$.
 The moment where the relative change between the best found matrix between two iterations is below a relative threshold $\epsilon_s$, the previous active dimension is chosen as the real active dimension. 
+The algorithm identifies the loss for each possible active dimension.
+It then chooses a dimension, where the relative difference to the previous loss (of the one-lower dimension) is below a certain threshold.
 
 \section{Algorithms that exploit additive substructures}
 

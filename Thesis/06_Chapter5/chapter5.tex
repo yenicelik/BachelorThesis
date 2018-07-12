@@ -40,12 +40,11 @@ I will now proceed with a more detailed description.
 
 \subsubsection{Overview}
 
-We propose a novel method which is based on additive GPs and an active subspace projection matrix.
+We explore a novel method which is based on additive GPs and an active subspace projection matrix.
 We use different kinds of kernels.
-We want to calculate $g_i$ and $A$ within \ref{eq:dimRedEquation}, such that the log-likelihood of the data we have accumulated so far is maximized.
- Because the term can be written as a sum of expressions, we can maximize each summand individually, which will lead to maximizing the entire expression (after we have calculate the active subspace). \\
+We want to calculate $g_i$ and $A$ as defined in \ref{eq:dimRedEquation}, such that the log-likelihood of the data we have accumulated so far is maximized.\\
  
- The following few steps are applied after a "burn-in" phase, in which we use random sampleing to acquire new points.
+ The following few steps are applied after a "burn-in" period, in which we use random sampling to acquire new points.
  We do a random sampling as we want an unbiased dataset from which we can identify the active subspace projection matrix. \\
  
  In simple terms, the algorithm proceeds as follows:
@@ -54,13 +53,14 @@ We want to calculate $g_i$ and $A$ within \ref{eq:dimRedEquation}, such that the
  \item Pick the first $n$ samples using random sampling.
  Do not apply UCB or any acquisition function to select the next best point yet.
  From the collected points, approximate the active projection matrix $A$ using algorithm 1 from \citep{Tripathy}.
- \item Generate a basis that are bi-orthonormal to every element in $A$.
+ \item Generate a basis that is orthonormal to every element in $A$.
  Concatenating these basis vectors $v_1, \ldots, v_{n-{q}}$ amongst the column-dimension gives us the passive projection matrix $A^\bot$.
  \item Maximize the GP for each individual expression of the space within $A$, and parallel to that also orthogonal to $A$ (as given by $A^\bot x$) individually. 
  \end{enumerate}
  
  This fights the curse of dimensionality, as we can freely choose $q \geq d_e$ to set the complexity of the second term while the first term still allows for creating proximity amongst different vectors by projecting the vectors onto a smaller subspace.
- The additive terms that get projected onto the passive subspace allows to incorporate smaller perturbations in the space orthogonal to $A$ to occur.
+The active subspace captures the direction of strongest direction, whereas the passive subspace projection captures an additional GP that adds to the robustness of the algorithm
+The additive terms that get projected onto the passive subspace also allows to incorporate smaller perturbations in the space orthogonal to $A$ to occur.
 
 \begin{algorithm}[H]
 \caption{BORING Alg. 1 - Bayesian Optimization using BORING}
@@ -191,6 +191,8 @@ Using this information about each individual kernel component results in the sim
 \kappa(x, x') &= \sum_{i=1}^{M} \kappa^{(i)} ( x^{(i)}, x'^{(i)}  )
 \end{align}
 
+One should notice that this additive acquisition function is an approximation of the real acquisition function. 
+For lower dimensions - such as $d<3$ - it is not required to decompose the acquisition function into separate additive components.
 
 \subsubsection{How does our algorithm address the shortcomings from chapter 3?}
 
