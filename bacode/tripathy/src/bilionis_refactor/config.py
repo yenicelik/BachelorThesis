@@ -119,7 +119,7 @@ elif platform == "darwin":
     config['basepath'] = "/Users/davidal/GoogleDrive/BachelorThesis/bacode/"
     config['dev'] = True
 
-config['active_dimension'] = 1
+config['active_dimension'] = 2
 
 config['restict_cores'] = True
 config['max_cores'] = 16

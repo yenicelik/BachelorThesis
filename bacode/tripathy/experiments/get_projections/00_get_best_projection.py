@@ -17,12 +17,15 @@ from bacode.tripathy.src.tripathy__ import TripathyGP
 from bacode.tripathy.experiments.get_projections.parabola_matrices import get_parabola_training
 from bacode.tripathy.experiments.get_projections.sinusoidal_matrices import get_sinusoidal_training
 
+from bacode.tripathy.src.bilionis_refactor.config import config
+
 import sys
 
 FNC_TUPLES = [
-    ["0_PROJ_Parabola-2D->1D", ParabolaEmbedded2D(), 1],
+    # ["0_PROJ_Parabola-2D->1D", ParabolaEmbedded2D(), 1],
     # ["0_PROJ_Camelback-5D->2D", CamelbackEmbedded5D(), 2],
-    # ["0_PROJ_Sinusoidal-5D->2D", DecreasingSinusoidalEmbedded5D(), 2]
+    ["0_PROJ_Sinusoidal-5D->2D", DecreasingSinusoidalEmbedded5D(), 2]
+    # ["0_PROJ_Sinusoidal-5D->1D", DecreasingSinusoidalEmbedded5D(), 1]
 ]
 
 
@@ -111,7 +114,7 @@ def visualize_predictions():
         # Generate test set
 
         # X_train, Y_train = get_training_set(NUM_TRAINING_POINTS, fnc)
-        X_train, Y_train = get_parabola_training()
+        X_train, Y_train = get_sinusoidal_training()
         X_viz, X_test, Y_test = get_test_set(80, fnc)
 
         for name, algo in [
@@ -122,7 +125,7 @@ def visualize_predictions():
 
             print("Getting the found values...")
             W, noise_var, l, var, d = algo.W_hat, algo.noise_var, algo.lengthscale, algo.variance, algo.active_d
-            title = time.strftime("%d %b %H_%M_%S")
+            title = time.strftime("%d %b %H_%M_%S") + "_" + str(config['active_dimension'])
 
             print("Has time: ", title)
 
