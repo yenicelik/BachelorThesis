@@ -268,7 +268,7 @@ class TripathyOptimizer:
     # then we can also simply call the 'optimize' function over it!
     def find_active_subspace(self, X, Y):
         # Input dimension is always constant!
-        data = np.load(config['projection_datapath'] + "00_parabola_ucb_hidden.npz")
+        data = np.load(config['projection_datapath'] + "03_sinusoidal_random_hidden1d.npz")
         return data['W'], data['noise_var'], data['l'], data['var'], data['d']
 
         D = X.shape[1]
