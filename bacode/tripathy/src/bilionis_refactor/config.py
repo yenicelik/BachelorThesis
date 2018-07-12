@@ -129,6 +129,7 @@ config['visualize_vanilla_vs_gp_path'] = config['basepath'] + "visualize_vanilla
 
 ### DATASET SPECIFIC CONFIGURATIONS
 config['swissfel_datapath'] = config['basepath'] + "data/swissfel/evaluations.hdf5"
+config['projection_datapath'] = config['basepath'] + "data/precomputed_projections/"
 
 config['run_rembo'] = True
 config['run_boring'] = True

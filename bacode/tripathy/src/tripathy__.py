@@ -17,6 +17,7 @@ import GPy
 from scipy.linalg import lapack
 from scipy.optimize import minimize
 
+from bacode.tripathy.src.bilionis_refactor.config import config
 from bacode.tripathy.src.bilionis_refactor.t_optimization_functions import t_ParameterOptimizer
 
 logger = get_logger('tripathy')
@@ -214,6 +215,10 @@ class TripathyGP(ConfidenceBoundModel):
             # print(self.gp.Y)
             # print("Done printing UCB samples. Now save them in a file with the correct name!")
             # exit(0)
+
+            print("LOADING FROM PROJECTION!")
+            data = np.load(config['projection_datapath'] + "00_parabola_ucb_hidden.npz")
+            self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = data['W'], data['noise_var'], data['l'], data['var'], data['d']
 
             self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(X, Y)
 

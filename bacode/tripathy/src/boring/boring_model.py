@@ -89,6 +89,8 @@ class BoringGP(ConfidenceBoundModel):
                 )
 
                 self.kernel += cur_kernel
+        print("Got kernel: ")
+        print(self.kernel)
 
     def create_gp(self):
 
@@ -315,7 +317,7 @@ class BoringGP(ConfidenceBoundModel):
             # print(self.active_projection_matrix)
             #
             passive_dimensions = max(self.domain.d - d, 0)
-            passive_dimensions = max(self.domain.d - d, 2)
+            passive_dimensions = min(passive_dimensions, 2)
             # passive_dimensions = 1 # TODO: take out this part!
             # # passive_dimensions = 0
             #
@@ -347,8 +349,8 @@ class BoringGP(ConfidenceBoundModel):
 
             assert not np.isnan(self.Q).all(), ("The projection matrix contains nan's!", self.Q)
 
-            print("BORING sampled the following matrix: ")
-            print(self.Q)
+            # print("BORING sampled the following matrix: ")
+            # print(self.Q)
 
             assert d == self.active_projection_matrix.shape[1]
 
@@ -359,11 +361,11 @@ class BoringGP(ConfidenceBoundModel):
                 k_variance=s,
                 k_lengthscales=l)
 
-            print("Projection matrix is: ", self.Q.shape)
-            print("Dimensions found are: ", d)
-            print("Active projection matrix is ", self.active_projection_matrix.shape)
-            print("How many datapoints do we have in the kernel?", self.gp.X.shape)
-            print("How many datapoints do we have in the kernel?", self.datasaver_gp.X.shape)
+            # print("Projection matrix is: ", self.Q.shape)
+            # print("Dimensions found are: ", d)
+            # print("Active projection matrix is ", self.active_projection_matrix.shape)
+            # print("How many datapoints do we have in the kernel?", self.gp.X.shape)
+            # print("How many datapoints do we have in the kernel?", self.datasaver_gp.X.shape)
 
             print("--- %s seconds ---" % (time.time() - start_time))
 
@@ -381,9 +383,9 @@ class BoringGP(ConfidenceBoundModel):
             print("New shape: ", Z.shape)
             self.gp.set_XY(Z, Y)
 
-        print("Added data: ", self.i)
-        print("Datasave has shape: ", self.datasaver_gp.X.shape)
-        print("Another shape: ", self.gp.X.shape)
+        # print("Added data: ", self.i)
+        # print("Datasave has shape: ", self.datasaver_gp.X.shape)
+        # print("Another shape: ", self.gp.X.shape)
 
         self.t = X.shape[0]
         self._update_cache()

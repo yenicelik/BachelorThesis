@@ -113,8 +113,8 @@ def visualize_predictions():
         print("Working on function: ", fnc)
         # Generate test set
 
-        # X_train, Y_train = get_training_set(NUM_TRAINING_POINTS, fnc)
-        X_train, Y_train = get_sinusoidal_training()
+        X_train, Y_train = get_training_set(NUM_TRAINING_POINTS, fnc)
+        # X_train, Y_train = get_sinusoidal_training()
         X_viz, X_test, Y_test = get_test_set(80, fnc)
 
         for name, algo in [
