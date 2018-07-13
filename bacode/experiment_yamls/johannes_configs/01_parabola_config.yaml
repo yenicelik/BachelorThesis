@@ -46,6 +46,7 @@ experiment.benchmark:
   - experiment.simple:algorithm: bacode.tripathy.src.rembo.rembo_algorithm.RemboAlgorithm
     experiment.simple:environment: febo.environment.benchmarks.functions.ParabolaEmbedded2D
   - experiment.simple:algorithm: bacode.tripathy.src.boring.boring_algorithm.BoringAlgorithm # febo.algorithms.ucb.UCB
+    algorithm:model: bacode.tripathy.src.boring.boring_model.BoringGP
     experiment.simple:environment: febo.environment.benchmarks.functions.ParabolaEmbedded2D
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB # TODO: there is a bug, when we move this element to the top of the list!
     algorithm:model: bacode.tripathy.src.tripathy__.TripathyGP
