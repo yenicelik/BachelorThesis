@@ -25,6 +25,7 @@ logger = get_logger('tripathy')
 from febo.utils import locate, get_logger
 import gc
 
+
 class TripathyGPConfig(ModelConfig):
     """
     * kernels: List of kernels
@@ -43,7 +44,7 @@ class TripathyGPConfig(ModelConfig):
 config_manager.register(TripathyGPConfig)
 
 from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
-from GPy.kern import Matern32
+from GPy.kern import Matern32, RBF
 from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer
 
 
@@ -57,12 +58,13 @@ class TripathyGP(ConfidenceBoundModel):
 
     def create_new_kernel(self, active_d, W=None, variance=None, lengthscale=None):
         print("Creating a new kernel!")
-        self.kernel = TripathyMaternKernel(
-            real_dim=self.domain.d,
-            active_dim=active_d,
-            W=W,
+        self.kernel = Matern32(
+            input_dim=active_d,
             variance=variance,
-            lengthscale=lengthscale
+            lengthscale=lengthscale,
+            ARD=True,
+            active_dims=np.arange(active_d),
+            name="active_subspace_kernel"
         )
 
     def create_new_gp(self, noise_var=None):
@@ -71,7 +73,7 @@ class TripathyGP(ConfidenceBoundModel):
         self.gp = GPRegression(
             self.domain.d,
             self.kernel,
-            noise_var=0.01, #noise_var if noise_var is not None else self.config.noise_var,
+            noise_var=0.01,  # noise_var if noise_var is not None else self.config.noise_var,
             calculate_gradients=self.config.calculate_gradients
         )
 
@@ -108,6 +110,17 @@ class TripathyGP(ConfidenceBoundModel):
             noise_var=None if self.active_d is None else self.noise_var,
         )
 
+        # Create the datasaver GP
+        placeholder_kernel = RBF(
+            input_dim=self.domain.d
+        )
+        self.datasaver_gp = GPRegression(
+            input_dim=self.domain.d,
+            kernel=placeholder_kernel,
+            noise_var=0.01,
+            calculate_gradients=False
+        )
+
         # number of data points
         self.t = 0
         self.i = 0
@@ -132,7 +145,7 @@ class TripathyGP(ConfidenceBoundModel):
         if self.gp.kern.name == 'sum':
             return sum([part.variance for part in self.gp.kern.parts])
         else:
-            return np.sqrt(self.gp.kern.inner_kernel.variance)
+            return np.sqrt(self.gp.kern.variance)
 
     @property
     def bias(self):
@@ -165,7 +178,7 @@ class TripathyGP(ConfidenceBoundModel):
         # if not self.config.calculate_gradients:
         self._woodbury_chol = np.asfortranarray(self.gp.posterior._woodbury_chol)
         self._woodbury_vector = self.gp.posterior._woodbury_vector.copy()
-        self._X = self.gp.X.copy()
+        self._X = self.gp.X.copy()  # TODO: should it be gp, or datasaver_gp?
 
         self._update_beta()
 
@@ -189,7 +202,11 @@ class TripathyGP(ConfidenceBoundModel):
         """
         x = np.atleast_2d(x)
 
-        if self.config.calculate_gradients and False: # or True:
+        # Need to project x to the matrix(
+        if self.W_hat is not None:
+            x = np.dot(x, self.W_hat)
+
+        if self.config.calculate_gradients and False:  # or True:
             mean, var = self.gp.predict_noiseless(x)
         else:
             mean, var = self._raw_predict(x)
@@ -205,12 +222,13 @@ class TripathyGP(ConfidenceBoundModel):
     # TODO: Implement the thing finder in here!
     def set_data(self, X, Y, append=True):
         if append:
-            X = np.concatenate((self.gp.X, X))
-            Y = np.concatenate((self.gp.Y, Y))
+            X = np.concatenate((self.datasaver_gp.X, X), axis=0)
+            Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0)
+        self._set_datasaver_data(X, Y)
 
         if self.i % 600 == 100 or self.calculate_always:
-
-            self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(X, Y)
+            self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
+                X, Y)
 
             gc.collect()
 
@@ -229,16 +247,19 @@ class TripathyGP(ConfidenceBoundModel):
                 noise_var=self.noise_var
             )
 
+        if self.W_hat is None:
             self._set_data(X, Y)
-
         else:
+            Z = np.dot(X, self.W_hat)
+            self._set_data(Z, Y)
 
-            self._set_data(X, Y)
+    def _set_datasaver_data(self, X, Y):
+        self.datasaver_gp.set_XY(X, Y)
 
     def _set_data(self, X, Y):
-       self.gp.set_XY(X, Y)
-       self.t = X.shape[0]
-       self._update_cache()
+        self.gp.set_XY(X, Y)
+        self.t = X.shape[0]
+        self._update_cache()
 
     def _raw_predict(self, Xnew):
 

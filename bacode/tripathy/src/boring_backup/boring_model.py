@@ -299,6 +299,7 @@ class BoringGP(ConfidenceBoundModel):
 
         # Now, save everything in the other GP but with a projected X value
         #
+        # TODO: This is pretty wrong!
         X = self.datasaver_gp.X
         Y = self.datasaver_gp.Y
 
