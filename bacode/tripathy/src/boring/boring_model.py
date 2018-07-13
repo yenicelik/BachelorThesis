@@ -19,6 +19,7 @@ from scipy.optimize import minimize
 
 from bacode.tripathy.src.bilionis_refactor.config import config
 from bacode.tripathy.src.bilionis_refactor.t_optimization_functions import t_ParameterOptimizer
+from bacode.tripathy.src.boring.generate_orthogonal_basis import generate_orthogonal_matrix_to_A
 
 logger = get_logger('tripathy')
 
@@ -56,7 +57,7 @@ class BoringGP(ConfidenceBoundModel):
 
     """
 
-    def create_new_kernel(self, active_d, W=None, variance=None, lengthscale=None):
+    def create_new_kernel(self, active_d, passive_d=0, W=None, variance=None, lengthscale=None):
         print("Creating a new kernel!")
         self.kernel = Matern32(
             input_dim=active_d,
@@ -66,6 +67,19 @@ class BoringGP(ConfidenceBoundModel):
             active_dims=np.arange(active_d),
             name="active_subspace_kernel"
         )
+
+        for i in range(passive_d):
+            cur_kernel = Matern32(
+                input_dim=1,
+                variance=variance,
+                lengthscale=lengthscale,
+                ARD=True,
+                active_dims=[active_d + i],
+                name="passive_subspace_kernel_" + str(i)
+            )
+            self.kernel += cur_kernel
+
+        print("New resulting kernel is: ", self.kernel)
 
     def create_new_gp(self, noise_var=None):
         # Take over data from the old GP, if existent
@@ -80,6 +94,7 @@ class BoringGP(ConfidenceBoundModel):
     def create_new_gp_and_kernel(self, active_d, passive_d, W, variance, lengtscale, noise_var):
         self.create_new_kernel(
             active_d=active_d,
+            passive_d=passive_d,
             W=W,
             variance=variance,
             lengthscale=lengtscale
@@ -228,10 +243,30 @@ class BoringGP(ConfidenceBoundModel):
         self._set_datasaver_data(X, Y)
 
         if self.i % 600 == 100 or self.calculate_always:
-            self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
+            self.A, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
                 X, Y)
 
             gc.collect()
+
+            passive_dimensions = 1
+
+            # Generate the subspace projection
+            # Generate A^{bot} if there's more dimensions
+            if passive_dimensions > 0:
+                self.AT = generate_orthogonal_matrix_to_A(
+                    A=self.A,
+                    n=passive_dimensions
+                )
+                self.W_hat = np.concatenate(
+                    (self.A, self.AT),
+                    axis=1
+                )
+            else:
+                self.AT = None
+                self.W_hat = self.A
+
+            assert not np.isnan(self.W_hat).all(), ("The projection matrix contains nan's!", self.Q)
+            assert self.W_hat.shape == (self.domain.d, self.active_d+passive_dimensions), ("Created wrong projectoin shape: ", self.At.shape, self.active_d, passive_dimensions)
 
             print("Found parameters are: ")
             print("W: ", self.W_hat)
@@ -242,7 +277,7 @@ class BoringGP(ConfidenceBoundModel):
             # For the sake of creating a kernel with new dimensions!
             self.create_new_gp_and_kernel(
                 active_d=self.active_d,
-                passive_d=0,
+                passive_d=passive_dimensions,
                 W=self.W_hat,
                 variance=self.variance,
                 lengtscale=self.lengthscale,
