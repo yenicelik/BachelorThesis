@@ -91,16 +91,16 @@ elif HALFDEV:
 else:
 
     config = {
-        "no_restarts": 40, # 14,
+        "no_restarts": 4, # 14,
 
         "max_iter_alg1": int(200), # 100
-        "max_iter_alg3": int(200),
+        "max_iter_alg3": int(2000),
 
         "max_iter_parameter_optimization": 200,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 5.e-12, # -12,
-        "eps_alg3": 5.e-12, # -12,
+        "eps_alg1": 5.e-3, # -12,
+        "eps_alg3": 5.e-3, # -12,
         "eps_alg4": 1.e-4,
 
         "tau_max": 1.e-1,
@@ -119,7 +119,7 @@ elif platform == "darwin":
     config['basepath'] = "/Users/davidal/GoogleDrive/BachelorThesis/bacode/"
     config['dev'] = True
 
-config['active_dimension'] = 1
+config['active_dimension'] = 2
 
 config['restict_cores'] = True
 config['max_cores'] = 16

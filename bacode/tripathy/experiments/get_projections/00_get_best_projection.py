@@ -114,21 +114,21 @@ def visualize_predictions():
         print("Working on function: ", fnc)
         # Generate test set
 
-        X_train, Y_train = get_training_set(NUM_TRAINING_POINTS, fnc)
-        # X_train, Y_train = get_camelback_training()
+        # X_train, Y_train = get_training_set(NUM_TRAINING_POINTS, fnc)
+        X_train, Y_train = get_camelback_training()
         X_viz, X_test, Y_test = get_test_set(80, fnc)
 
         for name, algo in [
             ("TRIPATHY", initialize_tripathy(fnc._domain)),
         ]:
             print("Training ", name)
-            # algo.add_data(X_train, Y_train)
+            algo.add_data(X_train, Y_train)
 
             print("Getting the found values...")
-            # W, noise_var, l, var, d = algo.W_hat, algo.noise_var, algo.lengthscale, algo.variance, algo.active_d
-            data = np.load("./02_camelback_random_hidden2d.npz")
-            W, noise_var, l, var, d = data['W'], data['noise_var'], data['l'], data['var'], data['d']
-            title = time.strftime("%d %b %H_%M_%S") + "_" + str(config['active_dimension']) + "_random"
+            W, noise_var, l, var, d = algo.W_hat, algo.noise_var, algo.lengthscale, algo.variance, algo.active_d
+            # data = np.load("./02_camelback_random_hidden2d.npz")
+            # W, noise_var, l, var, d = data['W'], data['noise_var'], data['l'], data['var'], data['d']
+            title = time.strftime("%d %b %H_%M_%S") + "_" + str(config['active_dimension']) + "_ucb"
 
             print("Has time: ", title)
 

@@ -266,10 +266,11 @@ class TripathyOptimizer:
     ###############################
     # TODO: instead of taking sn, s, and l, simply take the gaussian process.
     # then we can also simply call the 'optimize' function over it!
-    def find_active_subspace(self, X, Y):
+    def find_active_subspace(self, X, Y, load=False):
         # Input dimension is always constant!
-        data = np.load(config['projection_datapath'] + "01_parabola_ucb_hidden.npz")
-        return data['W'], data['noise_var'], data['l'], data['var'], data['d']
+        if load:
+            data = np.load(config['projection_datapath'] + "01_parabola_ucb_hidden.npz")
+            return data['W'], data['noise_var'], data['l'], data['var'], data['d']
 
         D = X.shape[1]
 

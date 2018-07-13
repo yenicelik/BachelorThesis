@@ -228,7 +228,7 @@ class TripathyGP(ConfidenceBoundModel):
 
         if self.i % 600 == 100 or self.calculate_always:
             self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
-                X, Y)
+                X, Y, load=True)
 
             gc.collect()
 

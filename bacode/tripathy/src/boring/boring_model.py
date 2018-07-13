@@ -72,7 +72,7 @@ class BoringGP(ConfidenceBoundModel):
             cur_kernel = Matern32(
                 input_dim=1,
                 variance=variance,
-                lengthscale=lengthscale,
+                lengthscale=1.,
                 ARD=True,
                 active_dims=[active_d + i],
                 name="passive_subspace_kernel_" + str(i)
@@ -242,13 +242,24 @@ class BoringGP(ConfidenceBoundModel):
             Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0)
         self._set_datasaver_data(X, Y)
 
-        if self.i % 600 == 100 or self.calculate_always:
+        if self.i % 100 == 50 or self.calculate_always:
+
+            # print("Datasaver X is: ")
+            # print(self.datasaver_gp.X)
+            #
+            # print("Datasaver Y is: ")
+            # print(self.datasaver_gp.Y)
+            #
+            # print("That's it")
+            # exit(0)
+
             self.A, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
                 X, Y)
 
             gc.collect()
 
-            passive_dimensions = 1
+            passive_dimensions = max(self.domain.d - self.active_d, 0)
+            passive_dimensions = min(passive_dimensions, 1)
 
             # Generate the subspace projection
             # Generate A^{bot} if there's more dimensions
