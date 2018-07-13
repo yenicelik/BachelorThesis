@@ -51,7 +51,7 @@ experiment.benchmark:
     algorithm:model: bacode.tripathy.src.tripathy__.TripathyGP
     experiment.simple:environment: febo.environment.benchmarks.functions.ParabolaEmbedded2D
   fixed_environment: false  # If true, onlyucb_embed_benchmark.yaml one environment for the whole batch will be created. Use this, if you randomly genrate your environment, but the whole batch should use the same random instance of the environment.
-  repetitions: 5 # Number of repetitions each experiment is run.
+  repetitions: 1 # Number of repetitions each experiment is run.
 experiment.simple:
   T: 349 #498  # Horizon
   load_previous_data: false
