@@ -8,13 +8,15 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{28}{figure.caption.26}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{28}{figure.caption.26}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Real matrix\relax }}{28}{figure.caption.27}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Matrix found by optimization algorithm\relax }}{28}{figure.caption.27}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Top-Left: The 1D Parabola which is embedded in a 2D space.\relax }}{30}{figure.caption.28}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.\relax }}{31}{figure.caption.29}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{32}{figure.caption.30}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{33}{figure.caption.31}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Parabola Regret Curves\relax }}{28}{figure.caption.26}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Sinusoidal Regret Curves\relax }}{29}{figure.caption.27}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{30}{figure.caption.28}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{30}{figure.caption.28}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Real matrix\relax }}{30}{figure.caption.29}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Matrix found by optimization algorithm\relax }}{30}{figure.caption.29}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Top-Left: The 1D Parabola which is embedded in a 2D space.\relax }}{32}{figure.caption.30}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.\relax }}{33}{figure.caption.31}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{34}{figure.caption.32}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{35}{figure.caption.33}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -81,7 +81,7 @@ Besides that, we offer the following possibilities to check how well our model d
 \item Test if the expectation $$ E[ f(A x) - \hat{f}(\hat{A} x) ] $$ decreases / approaches zero (for methods that identify a projection matrix).
 Often, the root mean square error is a good empirical approximate of this quantity:
 \begin{equation}
-RMSE = \sqrt{ \frac{1}{T} \sum_{t=1}^{T} f(A x_t) - \hat{f}(\hat{A} x_t) }
+RMSE = \sqrt{ \frac{1}{T} (\sum_{t=1}^{T} f(A x_t) - \hat{f}(\hat{A} x_t))^2 }
 \end{equation}
 
 \item For optimization problems, one is often interested in the quantity of cumulative regret.

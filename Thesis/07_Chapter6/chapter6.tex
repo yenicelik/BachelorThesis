@@ -19,6 +19,89 @@ Furthermore, we will shortly discuss the underlying real dataset, which is hyper
 
 \section{Quantitative evaluation}
 To recapitulate, I will use log-likelihood measures and cumulative regret to compare the performance of different algorithms.
+We present how the different algorithms operate on the UCB.
+
+% PARABOLA FUNCTION
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{ucb/parabola/run1.png}
+        \caption{Parabola Regret Curves}
+        \label{fig:gull}
+    \end{subfigure}
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{ucb/parabola/run2.png}
+        \caption{Parabola Regret Curves}
+        \label{fig:tiger}
+    \end{subfigure}
+     %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \vskip\baselineskip
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{ucb/parabola/run3.png}
+        \caption{Parabola Regret Curves}
+        \label{fig:mouse}
+    \end{subfigure}
+            %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.4\textwidth}
+        \includegraphics[width=\textwidth]{ucb/parabola/run4.png}
+        \caption{Parabola Regret Curves}
+        \label{fig:mouse}
+    \end{subfigure}
+    \caption{Parabola Regret Curves}\label{fig:animals}
+\end{figure}
+
+
+The subspace is sampled using UCB. 
+Because of time constraints, (and because I had to use my laptop for computation), I identified the subspace once using a set of UCB-sampled datapoints, and imported them when looking for the subspace.
+The regret plots are create by repeating the calculations 5 times.
+
+% CAMELBACK FUNCTION
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.35\textwidth}
+        \includegraphics[width=\textwidth]{ucb/sinusoidal/run1.png}
+        \caption{Sinusoidal Regret Curves}
+        \label{fig:gull}
+    \end{subfigure}
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.35\textwidth}
+        \includegraphics[width=\textwidth]{ucb/sinusoidal/run1.png}
+        \caption{Sinusoidal Regret Curves}
+        \label{fig:tiger}
+    \end{subfigure}
+     %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \vskip\baselineskip
+    \begin{subfigure}[b]{0.35\textwidth}
+        \includegraphics[width=\textwidth]{ucb/sinusoidal/run1.png}
+        \caption{Sinusoidal Regret Curves}
+        \label{fig:mouse}
+    \end{subfigure}
+            %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.35\textwidth}
+        \includegraphics[width=\textwidth]{ucb/sinusoidal/run1.png}
+        \caption{Sinusoidal Regret Curves}
+        \label{fig:mouse}
+    \end{subfigure}
+    \caption{Sinusoidal Regret Curves}\label{fig:animals}
+\end{figure}
+
+The subspace is sampled using random sampling.
+The projection matrix projects from 5 dimensions, to 1 dimension. 
+Because of time constraints, (and because I had to use my laptop for computation), I identified the subspace once using a set of UCB-sampled datapoints, and imported them when looking for the subspace.
+
+
+
+% SINUSOIDAL FUNCTION
+The subspace is sampled using random sampling.
+The projection matrix projects from 5 dimensions, to 1 dimension. 
+Because of time constraints, (and because I had to use my laptop for computation), I identified the subspace once using a set of UCB-sampled datapoints, and imported them when looking for the subspace.
 
 
 \section{Qualitative evaluation}

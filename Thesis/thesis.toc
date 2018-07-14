@@ -54,12 +54,12 @@
 \contentsline {chapter}{\numberline {5}Evaluation}{27}{chapter.5}
 \contentsline {section}{\numberline {5.1}Evaluation Settings}{27}{section.5.1}
 \contentsline {section}{\numberline {5.2}Quantitative evaluation}{27}{section.5.2}
-\contentsline {section}{\numberline {5.3}Qualitative evaluation}{27}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Feature selection}{27}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Subspace identification}{29}{subsection.5.3.2}
-\contentsline {chapter}{\numberline {6}Conclusion}{35}{chapter.6}
-\contentsline {section}{\numberline {6.1}Main Contributions}{35}{section.6.1}
-\contentsline {section}{\numberline {6.2}Conclusion}{36}{section.6.2}
-\contentsline {chapter}{References}{37}{chapter*.32}
-\contentsline {chapter}{Appendix \numberline {A}}{39}{Appendix.a.A}
-\contentsline {section}{\numberline {A.1}Benchmarking functions}{39}{section.a.A.1}
+\contentsline {section}{\numberline {5.3}Qualitative evaluation}{29}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Feature selection}{29}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Subspace identification}{31}{subsection.5.3.2}
+\contentsline {chapter}{\numberline {6}Conclusion}{37}{chapter.6}
+\contentsline {section}{\numberline {6.1}Main Contributions}{37}{section.6.1}
+\contentsline {section}{\numberline {6.2}Conclusion}{38}{section.6.2}
+\contentsline {chapter}{References}{39}{chapter*.34}
+\contentsline {chapter}{Appendix \numberline {A}}{41}{Appendix.a.A}
+\contentsline {section}{\numberline {A.1}Benchmarking functions}{41}{section.a.A.1}
