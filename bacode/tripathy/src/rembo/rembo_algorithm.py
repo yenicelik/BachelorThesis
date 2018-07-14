@@ -75,7 +75,8 @@ class RemboAlgorithm(Algorithm):
 
         x = self.project_high_to_low(x)
         self.gp.add_data(x, data['y'])
-        self.gp.optimize()  # TODO: How do we optimize the kernel parameters?
+        self.gp.optimize()
+        self.gp.gp.optimize()
 
     def initialize(self, **kwargs):
         """

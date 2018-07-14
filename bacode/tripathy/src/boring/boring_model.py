@@ -87,7 +87,7 @@ class BoringGP(ConfidenceBoundModel):
         self.gp = GPRegression(
             self.domain.d,
             self.kernel,
-            noise_var=0.01,  # noise_var if noise_var is not None else self.config.noise_var,
+            noise_var=0.1,  # noise_var if noise_var is not None else self.config.noise_var,
             calculate_gradients=self.config.calculate_gradients
         )
 
@@ -133,7 +133,7 @@ class BoringGP(ConfidenceBoundModel):
         self.datasaver_gp = GPRegression(
             input_dim=self.domain.d,
             kernel=placeholder_kernel,
-            noise_var=0.01,
+            noise_var=0.1,
             calculate_gradients=False
         )
 
@@ -242,7 +242,9 @@ class BoringGP(ConfidenceBoundModel):
             Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0)
         self._set_datasaver_data(X, Y)
 
-        if self.i % 100 == 50 or self.calculate_always:
+        if self.i % 500 == 100 or self.calculate_always:
+
+            print("Adding datapoint: ", self.i)
 
             # print("Datasaver X is: ")
             # print(self.datasaver_gp.X)
@@ -254,7 +256,7 @@ class BoringGP(ConfidenceBoundModel):
             # exit(0)
 
             self.A, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
-                X, Y)
+                X, Y, load=False)
 
             gc.collect()
 
@@ -300,6 +302,8 @@ class BoringGP(ConfidenceBoundModel):
         else:
             Z = np.dot(X, self.W_hat)
             self._set_data(Z, Y)
+
+        # self.gp.optimize()
 
     def _set_datasaver_data(self, X, Y):
         self.datasaver_gp.set_XY(X, Y)

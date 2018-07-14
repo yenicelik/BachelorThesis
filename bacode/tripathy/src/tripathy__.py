@@ -73,7 +73,7 @@ class TripathyGP(ConfidenceBoundModel):
         self.gp = GPRegression(
             self.domain.d,
             self.kernel,
-            noise_var=0.01,  # noise_var if noise_var is not None else self.config.noise_var,
+            noise_var=0.1,  # noise_var if noise_var is not None else self.config.noise_var,
             calculate_gradients=self.config.calculate_gradients
         )
 
@@ -226,9 +226,12 @@ class TripathyGP(ConfidenceBoundModel):
             Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0)
         self._set_datasaver_data(X, Y)
 
-        if self.i % 600 == 100 or self.calculate_always:
+        if self.i % 500 == 100 or self.calculate_always:
+
+            print("Adding datapoint: ", self.i)
+
             self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
-                X, Y, load=True)
+                X, Y, load=False)
 
             gc.collect()
 
