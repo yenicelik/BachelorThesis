@@ -96,7 +96,7 @@ def visualize_angle_loss():
 
         # Check if the loss decreases after we receive the individual parameters
 
-        visualize_angle_given_W_array(fnc.W.T, all_Ws)
+        visualize_angle_given_W_array(fnc.W.T, all_Ws, name)
 
 if __name__ == "__main__":
     print("Starting to visualize functions")

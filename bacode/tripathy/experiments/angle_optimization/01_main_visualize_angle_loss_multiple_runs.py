@@ -51,6 +51,7 @@ def visualize_angle_loss():
 
     for name, fnc, active_d in FNC_TUPLES:
         # Generate training points
+        title = name
         X_train = (
                 np.random.rand(NUM_TRAINING_POINTS, fnc.d) * fnc._domain.range
         ) + ((fnc._domain.u + fnc._domain.l) / 2.)
@@ -96,7 +97,7 @@ def visualize_angle_loss():
 
         # Check if the loss decreases after we receive the individual parameters
 
-        visualize_angle_given_W_array(fnc.W.T, all_Ws)
+        visualize_angle_given_W_array(fnc.W.T, all_Ws, title)
 
 if __name__ == "__main__":
     print("Starting to visualize functions")

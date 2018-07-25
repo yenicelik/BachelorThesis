@@ -1,6 +1,6 @@
 from sys import platform
 
-DEV = False
+DEV = True
 QDev = False
 HALFDEV = False
 
@@ -126,6 +126,7 @@ config['max_cores'] = 16
 
 config['visualize_vanilla_path'] = config['basepath'] + "visualize_vanilla/"
 config['visualize_vanilla_vs_gp_path'] = config['basepath'] + "visualize_vanilla_vs_gp/"
+config['visualize_angle_loss_path'] = config['basepath'] + "visualize_angle_loss/"
 
 ### DATASET SPECIFIC CONFIGURATIONS
 config['swissfel_datapath'] = config['basepath'] + "data/swissfel/evaluations.hdf5"
