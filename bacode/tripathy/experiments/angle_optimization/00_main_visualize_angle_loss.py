@@ -25,21 +25,21 @@ def visualize_angle_loss():
     }
 
     # Optimizer parameters
-    # local_config = {
-    #     "M_l": 100,
-    #     "m": 300,
-    #     "n": 300,
-    #     "losses": [],
-    #     "leps": 1e-6
-    # }
-
     local_config = {
-        "M_l": 10,
-        "m": 10,
-        "n": 10,
+        "M_l": 100,
+        "m": 300,
+        "n": 300,
         "losses": [],
         "leps": 1e-6
     }
+
+    # local_config = {
+    #     "M_l": 10,
+    #     "m": 10,
+    #     "n": 10,
+    #     "losses": [],
+    #     "leps": 1e-6
+    # }
 
     class dotdict(dict):
         """dot.notation access to dictionary attributes"""
