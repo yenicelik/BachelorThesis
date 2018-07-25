@@ -7,6 +7,7 @@ from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
 
 import numpy as np
 
+from bacode.tripathy.src.bilionis_refactor.t_loss import loss
 from bacode.tripathy.src.bilionis_refactor.t_optimizer import run_two_step_optimization
 
 FNC_TUPLES = [
@@ -24,10 +25,18 @@ def visualize_angle_loss():
     }
 
     # Optimizer parameters
+    # local_config = {
+    #     "M_l": 100,
+    #     "m": 300,
+    #     "n": 300,
+    #     "losses": [],
+    #     "leps": 1e-6
+    # }
+
     local_config = {
-        "M_l": 100,
-        "m": 300,
-        "n": 300,
+        "M_l": 10,
+        "m": 10,
+        "n": 10,
         "losses": [],
         "leps": 1e-6
     }
@@ -70,6 +79,22 @@ def visualize_angle_loss():
         )
 
         print(all_Ws)
+        losses = [
+            loss(
+                t_kernel,
+                W,
+                sn,
+                s,
+                l * np.ones((W.shape[1],)),
+                X_train,
+                Y_train
+            ) for W, sn, s, l in all_Ws
+        ]
+        all_Ws = [x[0] for x in all_Ws]
+        print("All losses are: ", local_config.losses)
+        print("All        are: ", losses)
+
+        # Check if the loss decreases after we receive the individual parameters
 
         visualize_angle_given_W_array(fnc.W.T, all_Ws)
 

@@ -95,8 +95,18 @@ The cumulative regret sums all the entire episode of the run.
 This is a measure of how fast an optimizer can learn the optima of a function.
 
 \item Check if the test log-likelihood decreases for functions that are provided by a finite number of data-points.
+
+\item Check if the angle between the real projection matrix, and the found projection matrix decreases, as given in \citep{AngleMeasurement}. 
+
+\begin{align}
+dist(A, B) &= \left\Vert A A^T - B B^T\right\Vert_2 \\
+& = sin( \phi )
+\end{align}
+
+where $ A, B \in \mathbf{R}^{D \times d}  $
+
 \item Check if the regret for the methods at hand are competitive, for synthetic functions.
-\item Check if the angle between the real projection matrix, and the found projection matrix decreases, as given in \citep{AngleMeasurement}.
+
 \end{itemize}
 
 
