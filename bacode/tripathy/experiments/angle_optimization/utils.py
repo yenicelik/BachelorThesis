@@ -90,7 +90,7 @@ def visualize_angle_array_stddev(angles, title):
     stddev = np.std(angles, axis=0) # Rowwise stddev
 
     print("Mean shape is: ", mean.shape)
-    assert mean.shape[0] > 3, "Wrong axis!"
+    # assert mean.shape[0] > 3, "Wrong axis!"
 
     t = np.arange(mean.shape[0])
 
@@ -102,16 +102,16 @@ def visualize_angle_array_stddev(angles, title):
     ax.set_title('Angle between real and found embeddings')
     ax.legend(loc='upper left')
     ax.set_xlabel('Optimization step')
-    ax.set_ylabel('Angle between real embedding projection, and found embedding projection')
+    ax.set_ylabel('Angle between real and found embedding projection')
     ax.grid()
 
     if not os.path.exists(config['visualize_angle_loss_path']):
         os.makedirs(config['visualize_angle_loss_path'])
 
-    fig.savefig(config['visualize_angle_loss_path'] + title + "_multiple_angle" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") )
+    fig.savefig(config['visualize_angle_loss_path'] + "_" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "_" + title  + "_multiple_angle" )
     plt.clf()
 
-def visualize_loss_array_stddev(loss, title):
+def visualize_loss_array_stddev(loss, title, subtract_mean=False):
     """
 
     :param losses: A two dimensional numpy array,
@@ -119,11 +119,23 @@ def visualize_loss_array_stddev(loss, title):
     :param title:
     :return:
     """
+    length = loss.shape[1]
+
+    # print("Old loss: ", loss)
+    # print("Old loss: ", loss.shape)
+
+    if subtract_mean:
+        title = title + "_subtract_mean_"
+        loss = loss - np.repeat(np.mean(loss, axis=1).reshape(-1, 1), repeats=length, axis=1)
+
+    # print("New loss: ", loss)
+    # print("New loss: ", loss.shape)
+
     mean = np.mean(loss, axis=0) # Rowwise mean
     stddev = np.std(loss, axis=0) # Rowwise stddev
 
     print("Mean shape is: ", mean.shape)
-    assert mean.shape[0] > 3, "Wrong axis!"
+    # assert mean.shape[0] > 3, "Wrong axis!"
 
     t = np.arange(mean.shape[0])
 
@@ -141,5 +153,5 @@ def visualize_loss_array_stddev(loss, title):
     if not os.path.exists(config['visualize_angle_loss_path']):
         os.makedirs(config['visualize_angle_loss_path'])
 
-    fig.savefig(config['visualize_angle_loss_path'] + title + "_multiple_loss" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") )
+    fig.savefig(config['visualize_angle_loss_path'] + "_" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "_" + title + "_multiple_loss" )
     plt.clf()

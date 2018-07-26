@@ -95,7 +95,7 @@ def single_run(self, t_kernel, X, Y):
         print("Some error happened!")
         return None, None, None, None, -1e13
 
-def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False):
+def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False, save_best_config=False):
     # First of all, deepcopy the kernel, such that any modifications are not thread-overlapping!
 
     # TODO: Here, we simply copy the W, and work on the same W all the time. This is a major bug!
@@ -105,8 +105,9 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False):
     s = t_kernel.inner_kernel.variance
     l = t_kernel.inner_kernel.lengthscale
 
-    if save_Ws:
-        all_Ws = []
+    all_Ws = []
+
+    best_config = (W, sn, s, l)
 
     for i in range(self.M_l):
 
@@ -117,16 +118,6 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False):
         # PERFORM m ITERATIONS TOWARDS THE SOLUTION OF THE STIEFEL OPTIMIZATION PROBLEM #
         #################################################################################
         # Create the optimizers
-        t_kernel.update_params(W=W, s=s, l=l)
-        w_optimizer = t_WOptimizer(
-            kernel=t_kernel,
-            fix_sn=sn,
-            fix_s=s,
-            fix_l=l,
-            X=X,
-            Y=Y
-        )
-
         L0 = loss(
             t_kernel,
             W,
@@ -135,6 +126,16 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False):
             l,
             X,
             Y
+        )
+
+        t_kernel.update_params(W=W, s=s, l=l)
+        w_optimizer = t_WOptimizer(
+            kernel=t_kernel,
+            fix_sn=sn,
+            fix_s=s,
+            fix_l=l,
+            X=X,
+            Y=Y
         )
 
         for i in range(self.m):
@@ -151,15 +152,15 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False):
         #################################################################################
         #  INTERMEDIATE LOSS
         ##################################################################################
-        L01 = loss(
-            t_kernel,
-            W,
-            sn,
-            s,
-            l,
-            X,
-            Y
-        )
+        # L01 = loss(
+        #     t_kernel,
+        #     W,
+        #     sn,
+        #     s,
+        #     l,
+        #     X,
+        #     Y
+        # )
 
         #################################################################################
         #  PERFORM n ITERATIONS TOWARDS THE SOLUTION OF PARAMETER OPTIMIZATION PROBLEM  #
@@ -199,6 +200,9 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False):
 
         # print("Tuples is: ", (self.W, self.s, self.l, self.sn))
 
+        print("Because we cannot believe that the same W is chosen every time...")
+        print("Found W is: ", W)
+
         if save_Ws:
             all_Ws.append((W, sn, l, s))
         self.losses.append(L1)
@@ -212,11 +216,16 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False):
 
         #assert L0 != L01 TODO: check if there are any such conditions!
 
-        if abs( (L1 - L0) / L0) < self.leps:
-            # print("Break Alg. 1", abs(L1 - L0) / L0)
+        if  ( ((L1 - L0) / L0) < self.leps ) and ( i > 5 ):
+            print("Break Alg. 1", (L1 - L0) / L0)
+            print("Breaking with i value: ", i)
             break
 
-    if save_Ws:
+        best_config = (W, sn, l, s)
+
+    if save_Ws and save_best_config:
+        return all_Ws, best_config
+    elif save_Ws:
         return all_Ws
     else:
         return W, sn, l, s

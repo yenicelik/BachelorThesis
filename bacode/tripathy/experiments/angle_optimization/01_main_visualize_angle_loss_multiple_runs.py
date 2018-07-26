@@ -20,7 +20,7 @@ FNC_TUPLES = [
 
 def visualize_angle_loss():
 
-    NUM_TRIES = 50
+    NUM_TRIES = 1
 
     # Training parameters
     NUM_TRAINING_POINTS = 100
@@ -29,21 +29,29 @@ def visualize_angle_loss():
     }
 
     # Optimizer parameters
+    local_config = {
+        "M_l": 10,
+        "m": 1,
+        "n": 1,
+        "losses": [],
+        "leps": 1e-16
+    }
+
     # local_config = {
     #     "M_l": 100,
     #     "m": 300,
     #     "n": 300,
     #     "losses": [],
-    #     "leps": 1e-6
+    #     "leps": 1e-12
     # }
 
-    local_config = {
-        "M_l": 10,
-        "m": 10,
-        "n": 10,
-        "losses": [],
-        "leps": 1e-6
-    }
+    # local_config = {
+    #     "M_l": 10,
+    #     "m": 10,
+    #     "n": 10,
+    #     "losses": [],
+    #     "leps": 1e-6
+    # }
 
     class dotdict(dict):
         """dot.notation access to dictionary attributes"""
@@ -63,7 +71,7 @@ def visualize_angle_loss():
 
         all_angles = []
         all_losses = []
-        title = name
+        title = name + "_"+ str(NUM_TRIES)
 
         # Run for a few times
         for n in range(NUM_TRIES):
@@ -85,13 +93,14 @@ def visualize_angle_loss():
 
             # Run the two-step-optimization on the respective function
             # Retrieve intermediate matrices from there
-            all_Ws = run_two_step_optimization(
+            all_Ws, best_config = run_two_step_optimization(
                 local_config,
                 t_kernel=t_kernel,
                 sn=fnc_config['noise_var'],
                 X=X_train,
                 Y=Y_train,
-                save_Ws=True
+                save_Ws=True,
+                save_best_config=True
             )
 
             print(all_Ws)
@@ -104,7 +113,7 @@ def visualize_angle_loss():
                     l * np.ones((W.shape[1],)),
                     X_train,
                     Y_train
-                ) for W, sn, s, l in all_Ws
+                ) for W, sn, l, s in all_Ws
             ]
             all_Ws = [x[0] for x in all_Ws]
             print("All losses are: ", local_config.losses)
@@ -130,6 +139,7 @@ def visualize_angle_loss():
 
         visualize_angle_array_stddev(all_angles, title=title)
         visualize_loss_array_stddev(all_losses, title=title)
+        visualize_loss_array_stddev(all_losses, title=title, subtract_mean=True)
 
 if __name__ == "__main__":
     print("Starting to visualize functions")

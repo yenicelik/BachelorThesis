@@ -1,1 +1,1 @@
-rsync -r yedavid@lazy.inf.ethz.ch:/home/yedavid/BachelorThesis/bacode/visualize_vanilla_vs_gp/ /Users/davidal/GoogleDrive/BachelorThesis/visualizations/ --progress
+rsync -r yedavid@greedy.inf.ethz.ch:/home/yedavid/BachelorThesis/bacode/visualize_angle_loss/ /Users/davidal/GoogleDrive/BachelorThesis/bacode/visualize_angle_loss/ --progress

@@ -119,6 +119,9 @@ class t_WOptimizer:
 
         for i in range(self.M_s):
             # if i % max(self.M_s//50, 1) == 0:
+
+            F_0 = F_1
+
             if i % 1000 == 999:
                 print("Alg. 3 Progress: " + str((i * 100) / self.M_s) + "%")
                 print("Alg. 3: ", (i, self.M_s) )
@@ -127,11 +130,11 @@ class t_WOptimizer:
 
             self.kernel.update_params(W=self.W, l=self.fix_l, s=self.fix_s)
 
-            F_0 = F_1
             F_1 = loss(self.kernel, self.W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
-            if abs( (F_1 - F_0) / F_0) < self.stol:
+            if (F_1 - F_0) / F_0 < self.stol:
                 break
+
         return self.W
 
     ###############################
