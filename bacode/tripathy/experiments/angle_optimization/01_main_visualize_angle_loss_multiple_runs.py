@@ -30,9 +30,9 @@ def visualize_angle_loss():
 
     # Optimizer parameters
     local_config = {
-        "M_l": 10,
+        "M_l": 100,
         "m": 1,
-        "n": 1,
+        "n": 10,
         "losses": [],
         "leps": 1e-16
     }

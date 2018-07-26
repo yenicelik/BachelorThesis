@@ -138,11 +138,14 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False, save_best
             Y=Y
         )
 
-        for i in range(self.m):
+        for j in range(self.m):
             # NOT the W which was found at last
             # print("Old W: ", self.W)
+            # print("Older W: ", W)
             W = w_optimizer.optimize_stiefel_manifold(W=W.copy())
             # print("New W: ", W)
+            # print("Newer W: ", W)
+            # exit(0)
             self.W = W # TODO: Very weird!
             t_kernel.update_params(
                 W=W,
@@ -172,7 +175,7 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False, save_best
             Y=Y
         )
 
-        for i in range(self.n):
+        for j in range(self.n):
             # print("\n\n\nOld s, l, sn", (self.s, self.l, self.sn))
             s, l, sn = parameter_optimizer.optimize_s_sn_l(
                 sn=sn,

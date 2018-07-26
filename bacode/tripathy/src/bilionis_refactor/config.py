@@ -1,6 +1,6 @@
 from sys import platform
 
-DEV = True
+DEV = False
 QDev = False
 HALFDEV = False
 
@@ -15,14 +15,7 @@ if DEV:
         "max_iter_parameter_optimization": 1,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 1.e-2, # -12,
-        "eps_alg3": 1.e-2, # -12,
         "eps_alg4": 1.e-3,
-
-        "tau_max": 1.e-1,
-        "no_taus": 5,
-
-        "max_dimensions": 3,
     }
 
 elif QDev:
@@ -53,15 +46,9 @@ elif QDev:
         "max_iter_parameter_optimization": 30,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 1.e-4,  # -12,
-        "eps_alg3": 1.e-4,  # -12,
         "eps_alg4": 1.e-3,
 
-        "tau_max": 1.e-1,
-        "no_taus": 5,
-
         "test_single_dimension": True,
-        "max_dimensions": 2,
     }
 
 
@@ -77,15 +64,9 @@ elif HALFDEV:
         "max_iter_parameter_optimization": 100,
         "max_iter_W_optimization": 10,
 
-        "eps_alg1": 1.e-12, # -12,
-        "eps_alg3": 1.e-12, # -12,
         "eps_alg4": 8.e-2,
 
-        "tau_max": 1.e-1,
-        "no_taus": 6,
-
         "test_single_dimension": True,
-        "max_dimensions": 3,
     }
 
 else:
@@ -99,17 +80,18 @@ else:
         "max_iter_parameter_optimization": 200,
         "max_iter_W_optimization": 1,
 
-        "eps_alg1": 5.e-12, # -12,
-        "eps_alg3": 5.e-12, # -12,
         "eps_alg4": 1.e-4,
 
-        "tau_max": 1.e-1,
-        "no_taus": 5,
-
         "test_single_dimension": True,
-
-        "max_dimensions": 100,
     }
+
+# Stuff that should be true for all runs:
+config['eps_alg1'] = 1.e-16
+config['eps_alg3'] = 1.e-16
+config['tau_max'] = 1.e-1
+config['no_taus'] = 5
+config['max_dimensions'] = 2
+
 
 # In either case, add linux and mac paths
 if platform == "linux" or platform == "linux2":
