@@ -21,4 +21,4 @@ else
 fi
 
 
-python /home/yedavid/BachelorThesis/bacode/tripathy/experiments/visualize_with_predictions/01_main_visualize_angle_loss_multiple_runs.py
+python /home/yedavid/BachelorThesis/bacode/tripathy/experiments/angle_optimization/01_main_visualize_angle_loss_multiple_runs.py

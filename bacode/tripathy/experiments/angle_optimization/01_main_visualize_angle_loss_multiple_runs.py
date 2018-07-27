@@ -21,7 +21,7 @@ FNC_TUPLES = [
 
 def visualize_angle_loss():
 
-    NUM_TRIES = 2
+    NUM_TRIES = 50
 
     # Training parameters
     NUM_TRAINING_POINTS = 100
@@ -41,7 +41,7 @@ def visualize_angle_loss():
 
     # Following is ok for camelback
     local_config = {
-        "M_l": 10,
+        "M_l": 1000,
         "m": 1,
         "n": 1,
         "losses": [],
