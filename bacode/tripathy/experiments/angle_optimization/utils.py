@@ -58,27 +58,10 @@ def visualize_angle_given_W_array(real_projection_A, found_Ws, title):
     if not os.path.exists(config['visualize_angle_loss_path']):
         os.makedirs(config['visualize_angle_loss_path'])
 
-    plt.savefig(config['visualize_angle_loss_path'] + title + "_angle" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") )
+    plt.savefig(config['visualize_angle_loss_path'] + title + "_angle" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M") )
     plt.clf()
 
-# def visualize_angle_given_W_array(real_projection_A, found_Ws, title):
-#     angles = list(map(
-#         lambda x: calculate_angle_between_two_matrices(real_projection_A, x),
-#         found_Ws
-#     ))
-#
-#     plt.plot(np.arange(len(angles)), angles)
-#     plt.ylabel('Angle of found subspace')
-#     plt.xlabel('Step of training')
-#     plt.show()
-#
-#     if not os.path.exists(config['visualize_angle_loss_path']):
-#         os.makedirs(config['visualize_angle_loss_path'])
-#
-#     plt.savefig(config['visualize_angle_loss_path'] + title + "_angle" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") )
-#     plt.clf()
-
-def visualize_angle_array_stddev(angles, title):
+def visualize_angle_array_stddev(angles, title, max_index=False):
     """
 
     :param losses: A two dimensional numpy array,
@@ -86,8 +69,14 @@ def visualize_angle_array_stddev(angles, title):
     :param title:
     :return:
     """
-    mean = np.mean(angles, axis=0) # Rowwise mean
-    stddev = np.std(angles, axis=0) # Rowwise stddev
+
+    if max_index:
+        mean = angles[max_index] # Rowwise mean
+        stddev = angles[max_index] * 0. # Rowwise stddev
+        title = title + "_max_run_"
+    else:
+        mean = np.mean(angles, axis=0) # Rowwise mean
+        stddev = np.std(angles, axis=0) # Rowwise stddev
 
     print("Mean shape is: ", mean.shape)
     # assert mean.shape[0] > 3, "Wrong axis!"
@@ -108,10 +97,13 @@ def visualize_angle_array_stddev(angles, title):
     if not os.path.exists(config['visualize_angle_loss_path']):
         os.makedirs(config['visualize_angle_loss_path'])
 
-    fig.savefig(config['visualize_angle_loss_path'] + "_" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "_" + title  + "_multiple_angle" )
+    if not os.path.exists(config['visualize_angle_loss_path'] + "/" + datetime.datetime.now().strftime("%Y-%m-%d %H-%M")):
+        os.makedirs(config['visualize_angle_loss_path'] + "/" + datetime.datetime.now().strftime("%Y-%m-%d %H-%M"))
+
+    fig.savefig(config['visualize_angle_loss_path'] + "/" + datetime.datetime.now().strftime("%Y-%m-%d %H-%M") + "/" + title  + "_multiple_angle" )
     plt.clf()
 
-def visualize_loss_array_stddev(loss, title, subtract_mean=False):
+def visualize_loss_array_stddev(loss, title, subtract_mean=False, max_index=False):
     """
 
     :param losses: A two dimensional numpy array,
@@ -131,8 +123,13 @@ def visualize_loss_array_stddev(loss, title, subtract_mean=False):
     # print("New loss: ", loss)
     # print("New loss: ", loss.shape)
 
-    mean = np.mean(loss, axis=0) # Rowwise mean
-    stddev = np.std(loss, axis=0) # Rowwise stddev
+    if max_index:
+        mean = loss[max_index]
+        stddev = loss[max_index] * 0.
+        title = title + "_max_run_"
+    else:
+        mean = np.mean(loss, axis=0) # Rowwise mean
+        stddev = np.std(loss, axis=0) # Rowwise stddev
 
     print("Mean shape is: ", mean.shape)
     # assert mean.shape[0] > 3, "Wrong axis!"
@@ -150,8 +147,8 @@ def visualize_loss_array_stddev(loss, title, subtract_mean=False):
     ax.set_ylabel('Log likelihood loss of the Gaussian Process of the found parameters')
     ax.grid()
 
-    if not os.path.exists(config['visualize_angle_loss_path']):
-        os.makedirs(config['visualize_angle_loss_path'])
+    if not os.path.exists(config['visualize_angle_loss_path'] + "/" + datetime.datetime.now().strftime("%Y-%m-%d %H-%M")):
+        os.makedirs(config['visualize_angle_loss_path'] + "/" + datetime.datetime.now().strftime("%Y-%m-%d %H-%M"))
 
-    fig.savefig(config['visualize_angle_loss_path'] + "_" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "_" + title + "_multiple_loss" )
+    fig.savefig(config['visualize_angle_loss_path'] + "/" + datetime.datetime.now().strftime("%Y-%m-%d %H-%M") + "/" + title + "_multiple_loss" )
     plt.clf()

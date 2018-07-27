@@ -106,6 +106,7 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False, save_best
     l = t_kernel.inner_kernel.lengthscale
 
     all_Ws = []
+    self.losses = []
 
     best_config = (W, sn, s, l)
 
@@ -141,9 +142,9 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False, save_best
         for j in range(self.m):
             # NOT the W which was found at last
             # print("Old W: ", self.W)
-            # print("Older W: ", W)
+            print("Older W: ", W)
             W = w_optimizer.optimize_stiefel_manifold(W=W.copy())
-            # print("New W: ", W)
+            print("Newer W: ", W)
             # print("Newer W: ", W)
             # exit(0)
             self.W = W # TODO: Very weird!
@@ -175,20 +176,22 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False, save_best
             Y=Y
         )
 
-        for j in range(self.n):
+        # for j in range(self.n):
             # print("\n\n\nOld s, l, sn", (self.s, self.l, self.sn))
-            s, l, sn = parameter_optimizer.optimize_s_sn_l(
-                sn=sn,
-                s=s,
-                l=l.copy()
-            )
-            # print("\n\n\nNew s, l, sn", (self.s, self.l, self.sn))
-            # print("self.l is: ", self.l)
-            t_kernel.update_params(
-                W=W,
-                s=s,
-                l=l
-            )
+        print("Old parameters: ", (s, sn))
+        s, l, sn = parameter_optimizer.optimize_s_sn_l(
+            sn=sn,
+            s=s,
+            l=l.copy()
+        )
+        print("New parameters: ", (s, sn))
+        # print("\n\n\nNew s, l, sn", (self.s, self.l, self.sn))
+        # print("self.l is: ", self.l)
+        t_kernel.update_params(
+            W=W,
+            s=s,
+            l=l
+        )
 
         t_kernel.update_params(W=W, s=s, l=l)
         L1 = loss(
@@ -203,8 +206,8 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False, save_best
 
         # print("Tuples is: ", (self.W, self.s, self.l, self.sn))
 
-        print("Because we cannot believe that the same W is chosen every time...")
-        print("Found W is: ", W)
+        # print("Because we cannot believe that the same W is chosen every time...")
+        # print("Found W is: ", W)
 
         if save_Ws:
             all_Ws.append((W, sn, l, s))
@@ -217,10 +220,13 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False, save_best
 
         # print(L0, L01, L1)
 
-        #assert L0 != L01 TODO: check if there are any such conditions!
-
-        if  ( ((L1 - L0) / L0) < self.leps ) and ( i > 5 ):
+        if  ( ((L1 - L0) / L0) < self.leps ) and ( i > 1 ):
+            if L1 > L0 + 2*self.leps:
+                best_config = (W, sn, l, s)
+                continue
             print("Break Alg. 1", (L1 - L0) / L0)
+            print("Break Alg. 1", L0, L1)
+            print("Break Alg. 1", L1 - L0, L0)
             print("Breaking with i value: ", i)
             break
 

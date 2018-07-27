@@ -13,14 +13,14 @@ from bacode.tripathy.src.bilionis_refactor.t_loss import loss
 from bacode.tripathy.src.bilionis_refactor.t_optimizer import run_two_step_optimization
 
 FNC_TUPLES = [
-    ["Parabola-2D->1D", ParabolaEmbedded2D(), 1],
-    # ["Camelback-5D->2D", CamelbackEmbedded5D(), 2],
+    # ["Parabola-2D->1D", ParabolaEmbedded2D(), 1],
+    ["Camelback-5D->2D", CamelbackEmbedded5D(), 2],
     # ["Sinusoidal-5D->2D", DecreasingSinusoidalEmbedded5D(), 2]
 ]
 
 def visualize_angle_loss():
 
-    NUM_TRIES = 1
+    NUM_TRIES = 10
 
     # Training parameters
     NUM_TRAINING_POINTS = 100
@@ -29,10 +29,20 @@ def visualize_angle_loss():
     }
 
     # Optimizer parameters
+    # Following is ok for parabola
+    # local_config = {
+    #     "M_l": 100,
+    #     "m": 1,
+    #     "n": 1,
+    #     "losses": [],
+    #     "leps": 1e-16
+    # }
+
+    # Following is ok for camelback
     local_config = {
-        "M_l": 100,
+        "M_l": 50,
         "m": 1,
-        "n": 10,
+        "n": 1,
         "losses": [],
         "leps": 1e-16
     }
@@ -140,6 +150,12 @@ def visualize_angle_loss():
         visualize_angle_array_stddev(all_angles, title=title)
         visualize_loss_array_stddev(all_losses, title=title)
         visualize_loss_array_stddev(all_losses, title=title, subtract_mean=True)
+
+        # TODO: take max index for log-likelihood, and visualize angle and log-likelihood
+        max_index = np.argmax(all_losses[:,-1].reshape(-1))
+        print("Best found loss is: ")
+        visualize_angle_array_stddev(all_angles, title=title, max_index=max_index)
+        visualize_loss_array_stddev(all_losses, title=title, max_index=max_index)
 
 if __name__ == "__main__":
     print("Starting to visualize functions")

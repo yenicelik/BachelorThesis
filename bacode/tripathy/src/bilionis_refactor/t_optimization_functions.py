@@ -41,7 +41,7 @@ class t_ParameterOptimizer:
         self.kernel.update_params(W=self.fix_W, s=s, l=l)
         gp_reg = GPRegression(self.X, self.Y.reshape(-1, 1), self.kernel, noise_var=sn)
         try:
-            gp_reg.optimize(optimizer="lbfgs", max_iters=10) # lbfgs # config['max_iter_parameter_optimization'])
+            gp_reg.optimize(optimizer="lbfgs", max_iters=1) # lbfgs # config['max_iter_parameter_optimization'])
         except Exception as e:
             print(e)
             print(gp_reg.kern.K(gp_reg.X))
@@ -85,6 +85,7 @@ class t_WOptimizer:
         self.W = None
         self.all_losses = []
         self.M_s = config['max_iter_alg3'] # 500 # 10000
+        assert type(self.M_s) == int, ("Not of type int!", self.M_s)
 
         self.no_taus = config['no_taus']
 
@@ -94,7 +95,7 @@ class t_WOptimizer:
         # ) )
         # assert len(self.tau_arr) == (self.no_taus + self.no_taus // 2), self.tau_arr
 
-        self.tau_arr = np.linspace(0., self.tau_max, num=self.no_taus)
+        self.tau_arr = np.logspace(-10, 0, num=self.no_taus)
 
         self.tau_arr = [max(0., x) for x in self.tau_arr]
         self.tau_arr = [min(self.tau_max, x) for x in self.tau_arr]
@@ -133,6 +134,10 @@ class t_WOptimizer:
             F_1 = loss(self.kernel, self.W, self.fix_sn, self.fix_s, self.fix_l, self.X, self.Y)
 
             if (F_1 - F_0) / F_0 < self.stol:
+
+                if F_1 > F_0 + 2 * self.stol:
+                    continue
+
                 break
 
         return self.W
@@ -200,6 +205,11 @@ class t_WOptimizer:
 
         best_index = int( np.argmax( losses ) )
         best_tau = self.tau_arr[best_index]
+
+        print("Tau losses: ")
+        print(self.tau_arr)
+        print(losses)
+        print("Choosing tau: ", best_tau)
 
         assert (not math.isnan(best_tau))
 
