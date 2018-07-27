@@ -8,6 +8,7 @@ from bacode.tripathy.src.bilionis_refactor.config import config
 from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
 
 import numpy as np
+import random
 
 from bacode.tripathy.src.bilionis_refactor.t_loss import loss
 from bacode.tripathy.src.bilionis_refactor.t_optimizer import run_two_step_optimization
@@ -20,7 +21,7 @@ FNC_TUPLES = [
 
 def visualize_angle_loss():
 
-    NUM_TRIES = 10
+    NUM_TRIES = 2
 
     # Training parameters
     NUM_TRAINING_POINTS = 100
@@ -40,7 +41,7 @@ def visualize_angle_loss():
 
     # Following is ok for camelback
     local_config = {
-        "M_l": 50,
+        "M_l": 10,
         "m": 1,
         "n": 1,
         "losses": [],
@@ -81,7 +82,7 @@ def visualize_angle_loss():
 
         all_angles = []
         all_losses = []
-        title = name + "_"+ str(NUM_TRIES)
+        title = name + "_"+ str(NUM_TRIES) + "_" + str(random.randint(1,1000))
 
         # Run for a few times
         for n in range(NUM_TRIES):
@@ -152,10 +153,13 @@ def visualize_angle_loss():
         visualize_loss_array_stddev(all_losses, title=title, subtract_mean=True)
 
         # TODO: take max index for log-likelihood, and visualize angle and log-likelihood
+        print("Retrieving array from: ", all_losses[:,-1].reshape(-1))
         max_index = np.argmax(all_losses[:,-1].reshape(-1))
+        print("Best index is: ", max_index)
         print("Best found loss is: ")
         visualize_angle_array_stddev(all_angles, title=title, max_index=max_index)
         visualize_loss_array_stddev(all_losses, title=title, max_index=max_index)
+        print("Done...")
 
 if __name__ == "__main__":
     print("Starting to visualize functions")
