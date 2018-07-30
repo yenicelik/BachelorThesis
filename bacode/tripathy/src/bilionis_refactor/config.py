@@ -69,7 +69,7 @@ else:
     config = {
         "no_restarts": 24, # 14,
 
-        "max_iter_alg1": int(400), # 100
+        "max_iter_alg1": int(100), # # 300 # 100
 
         "max_iter_parameter_optimization": 200,
         "max_iter_W_optimization": 1,

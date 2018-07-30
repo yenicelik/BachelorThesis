@@ -39,6 +39,8 @@ class t_ParameterOptimizer:
 
         # Create a GP
         self.kernel.update_params(W=self.fix_W, s=s, l=l)
+
+        # TODO:
         gp_reg = GPRegression(self.X, self.Y.reshape(-1, 1), self.kernel, noise_var=sn)
         try:
             gp_reg.optimize(optimizer="lbfgs", max_iters=1) # lbfgs # config['max_iter_parameter_optimization'])
