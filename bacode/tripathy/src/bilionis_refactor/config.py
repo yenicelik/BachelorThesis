@@ -86,6 +86,7 @@ config['tau_max'] = 1.
 config['no_taus'] = 20
 config['max_dimensions'] = 2
 config['max_iter_alg3'] = 1
+config['std_noise_var'] = 1.e-4
 
 
 # In either case, add linux and mac paths

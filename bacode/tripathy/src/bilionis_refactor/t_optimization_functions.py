@@ -41,7 +41,8 @@ class t_ParameterOptimizer:
         self.kernel.update_params(W=self.fix_W, s=s, l=l)
 
         # TODO:
-        gp_reg = GPRegression(self.X, self.Y.reshape(-1, 1), self.kernel, noise_var=sn)
+        gp_reg = GPRegression(self.X, self.Y.reshape(-1, 1), self.kernel, noise_var=config['std_noise_var'])
+        gp_reg['Gaussian_noise.variance'].fix()
         try:
             gp_reg.optimize(optimizer="lbfgs", max_iters=1) # lbfgs # config['max_iter_parameter_optimization'])
         except Exception as e:
@@ -55,6 +56,16 @@ class t_ParameterOptimizer:
         new_variance = gp_reg.kern.inner_kernel.variance
         new_lengthscale = gp_reg.kern.inner_kernel.lengthscale
         new_sn = gp_reg['Gaussian_noise.variance']
+
+        # print("New values: ")
+        # print("variance")
+        # print(new_variance)
+        # print("lengthscales")
+        # print(new_lengthscale)
+        # print("variances")
+        # print(new_sn)
+        #
+        # exit(0)
 
         assert gp_reg.kern.inner_kernel.lengthscale is not None
         assert gp_reg.kern.inner_kernel.variance is not None
