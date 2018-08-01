@@ -21,12 +21,12 @@ FNC_TUPLES = [
 
 def visualize_angle_loss():
 
-    NUM_TRIES = 10 # 50
+    NUM_TRIES = 15 # 50
 
     # Training parameters
     NUM_TRAINING_POINTS = 100
     fnc_config = {
-        "noise_var": 0.01
+        "noise_var": 0.005
     }
 
     # Optimizer parameters
@@ -45,7 +45,7 @@ def visualize_angle_loss():
         "m": 1,
         "n": 1,
         "losses": [],
-        "leps": 1e-16
+        "leps": 1e-13
     }
 
     # local_config = {

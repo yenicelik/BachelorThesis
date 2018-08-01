@@ -41,7 +41,7 @@ class t_ParameterOptimizer:
         self.kernel.update_params(W=self.fix_W, s=s, l=l)
 
         # TODO:
-        gp_reg = GPRegression(self.X, self.Y.reshape(-1, 1), self.kernel, noise_var=config['std_noise_var'])
+        gp_reg = GPRegression(self.X, self.Y.reshape(-1, 1), self.kernel, noise_var=config['std_noise_var']) # config['std_noise_var']
         gp_reg['Gaussian_noise.variance'].fix()
         try:
             gp_reg.optimize(optimizer="lbfgs", max_iters=1) # lbfgs # config['max_iter_parameter_optimization'])

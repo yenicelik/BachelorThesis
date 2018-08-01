@@ -67,7 +67,7 @@ elif HALFDEV:
 else:
 
     config = {
-        "no_restarts": 24, # 14,
+        "no_restarts": 20, # 14,
 
         "max_iter_alg1": int(100), # # 300 # 100
 
@@ -80,13 +80,14 @@ else:
     }
 
 # Stuff that should be true for all runs:
-config['eps_alg1'] = 1.e-16
-config['eps_alg3'] = 1.e-16
+config['eps_alg1'] = 1.e-4
+config['eps_alg3'] = 1.e-6
 config['tau_max'] = 1.
 config['no_taus'] = 20
 config['max_dimensions'] = 2
+config['active_dimension'] = 1
 config['max_iter_alg3'] = 1
-config['std_noise_var'] = 1.e-4
+config['std_noise_var'] = 0.005
 
 
 # In either case, add linux and mac paths
@@ -97,7 +98,6 @@ elif platform == "darwin":
     config['basepath'] = "/Users/davidal/GoogleDrive/BachelorThesis/bacode/"
     config['dev'] = True
 
-config['active_dimension'] = 2
 
 config['restict_cores'] = True
 config['max_cores'] = 16

@@ -56,6 +56,9 @@ class TripathyGP(ConfidenceBoundModel):
 
     """
 
+    # JOHANNES: Die folgenden drei funktionen
+    # sind helper functions welche den kernel und gp neu-spawnend, da wir das später noch einmal machen werden müssen
+
     def create_new_kernel(self, active_d, W=None, variance=None, lengthscale=None):
         print("Creating a new kernel!")
         self.kernel = Matern32(
@@ -96,6 +99,7 @@ class TripathyGP(ConfidenceBoundModel):
         print("Starting tripathy model!")
         self.gp = None
 
+        # Just for completeness
         self.active_d = None
         self.W_hat = None
         self.variance = None
@@ -110,6 +114,10 @@ class TripathyGP(ConfidenceBoundModel):
             noise_var=None if self.active_d is None else self.noise_var,
         )
 
+        # JOHANNES: Damit wir später andere Matrizen zur  Projektion nutzen können,
+        # speichere ich die Daten irgendwoch ab. Ich benutze die GP datenstruktur um
+        # diese Daten abzuspeichern, einfach weil das einfacher ist
+
         # Create the datasaver GP
         placeholder_kernel = RBF(
             input_dim=self.domain.d
@@ -120,6 +128,8 @@ class TripathyGP(ConfidenceBoundModel):
             noise_var=0.01,
             calculate_gradients=False
         )
+
+        # JOHANNES: Die folgenden Operationen habe ich übernommen aus dem febo GP
 
         # number of data points
         self.t = 0
@@ -134,6 +144,8 @@ class TripathyGP(ConfidenceBoundModel):
         self.calculate_always = calculate_always
 
         self.optimizer = TripathyOptimizer()
+
+    # JOHANNES: Die folgenden Operationen habe ich übernommen aus dem febo GP
 
     # Obligatory values
     @property
@@ -202,6 +214,8 @@ class TripathyGP(ConfidenceBoundModel):
         """
         x = np.atleast_2d(x)
 
+        # JOHANNES: HIER FINDET EINE PROJEKTION STATT
+
         # Need to project x to the matrix(
         if self.W_hat is not None:
             x = np.dot(x, self.W_hat)
@@ -224,6 +238,9 @@ class TripathyGP(ConfidenceBoundModel):
         if append:
             X = np.concatenate((self.datasaver_gp.X, X), axis=0)
             Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0)
+
+        # JOHANNES: WIR FÜGEN SCHONMAL ZUM DATASAVER GP HINZU, WEIL WIR IMMER ALLE
+        # DATEN ABGESPEICHERT HABEN WOLLEN FÜR ZUKÜNFTIGE PROJEKTIONEN
         self._set_datasaver_data(X, Y)
 
         if self.i % 500 == 100 or self.calculate_always:
@@ -250,6 +267,9 @@ class TripathyGP(ConfidenceBoundModel):
                 noise_var=self.noise_var
             )
 
+        # JOHANNES: FALLS EIN W_hat KALKULIERT WURDE; DANN PROJIZIEREN WIR MIT W_HAT.
+        # ANSONSTEN FÜGEN WIR DIE DATEN WIE SONST AUCH HINZU
+
         if self.W_hat is None:
             self._set_data(X, Y)
         else:
@@ -265,6 +285,9 @@ class TripathyGP(ConfidenceBoundModel):
         self._update_cache()
 
     def _raw_predict(self, Xnew):
+
+        # JOHANNES: HIER FINDET KEINE PROJEKTION STATT,
+        # DA _raw_predict IMMER VON mean_var AUFGERUFEN WIRD
 
         Kx = self.kernel.K(self._X, Xnew)
         mu = np.dot(Kx.T, self._woodbury_vector)

@@ -184,7 +184,7 @@ def run_two_step_optimization(self, t_kernel, sn, X, Y, save_Ws=False, save_best
             s=s,
             l=l.copy()
         )
-        print("New parameters: ", (s, sn))
+        print("New parameters: ", (s, sn, l))
         # print("\n\n\nNew s, l, sn", (self.s, self.l, self.sn))
         # print("self.l is: ", self.l)
         t_kernel.update_params(
@@ -343,6 +343,8 @@ class TripathyOptimizer:
             if abs( (BIC1 - BIC0) / BIC0) < self.btol:
                 print("Best found dimension is: ", d, BIC1, BIC0)
                 break
+
+        print("Using parameters: ", (W_hat, sn, l, s, d))
 
         return W_hat, sn, l, s, d
 
