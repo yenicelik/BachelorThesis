@@ -243,12 +243,17 @@ class TripathyGP(ConfidenceBoundModel):
         # DATEN ABGESPEICHERT HABEN WOLLEN FÜR ZUKÜNFTIGE PROJEKTIONEN
         self._set_datasaver_data(X, Y)
 
-        if self.i % 500 == 100 or self.calculate_always:
+        if self.i % 500 == 0 or self.calculate_always:
 
             print("Adding datapoint: ", self.i)
 
-            self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
-                X, Y, load=False)
+            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
+            #     X, Y, load=False)
+
+            self.W_hat = np.asarray([[0.49969147, 0.1939272]])
+            self.noise_var = 0.005
+            self.lengthscale = 6
+            self.variance = 2.5
 
             gc.collect()
 
