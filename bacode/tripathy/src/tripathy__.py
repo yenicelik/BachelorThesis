@@ -59,7 +59,7 @@ class TripathyGP(ConfidenceBoundModel):
     # JOHANNES: Die folgenden drei funktionen
     # sind helper functions welche den kernel und gp neu-spawnend, da wir das später noch einmal machen werden müssen
 
-    def create_new_kernel(self, active_d, W=None, variance=None, lengthscale=None):
+    def create_new_kernel(self, active_d, variance, lengthscale):
         print("Creating a new kernel!")
         self.kernel = Matern32(
             input_dim=active_d,
@@ -70,20 +70,19 @@ class TripathyGP(ConfidenceBoundModel):
             name="active_subspace_kernel"
         )
 
-    def create_new_gp(self, noise_var=None):
+    def create_new_gp(self, noise_var):
         # Take over data from the old GP, if existent
         print("Creating a new gp!")
         self.gp = GPRegression(
             self.domain.d,
             self.kernel,
-            noise_var=0.1,  # noise_var if noise_var is not None else self.config.noise_var,
+            noise_var=noise_var,  # noise_var if noise_var is not None else self.config.noise_var,
             calculate_gradients=self.config.calculate_gradients
         )
 
-    def create_new_gp_and_kernel(self, active_d, W, variance, lengtscale, noise_var):
+    def create_new_gp_and_kernel(self, active_d, variance, lengtscale, noise_var):
         self.create_new_kernel(
             active_d=active_d,
-            W=W,
             variance=variance,
             lengthscale=lengtscale
         )
@@ -100,18 +99,23 @@ class TripathyGP(ConfidenceBoundModel):
         self.gp = None
 
         # Just for completeness
-        self.active_d = None
-        self.W_hat = None
-        self.variance = None
-        self.lengthscale = None
-        self.noise_var = None
+        # self.active_d = None
+        # self.W_hat = None
+        # self.variance = None
+        # self.lengthscale = None
+        # self.noise_var = None
+
+        self.W_hat = np.asarray([[0.49969147, 0.1939272]])
+        self.noise_var = 0.005
+        self.lengthscale = 6
+        self.variance = 2.5
+        self.active_d = 1
 
         self.create_new_gp_and_kernel(
-            active_d=self.domain.d if self.active_d is None else self.active_d,
-            W=np.eye(self.domain.d) if self.active_d is None else self.W,
-            variance=1.0 if self.active_d is None else self.variance,
-            lengtscale=1.5 if self.active_d is None else self.lengthscale,
-            noise_var=None if self.active_d is None else self.noise_var,
+            active_d=self.active_d,
+            variance=self.variance,
+            lengtscale=self.lengthscale,
+            noise_var=self.noise_var
         )
 
         # JOHANNES: Damit wir später andere Matrizen zur  Projektion nutzen können,
@@ -125,7 +129,7 @@ class TripathyGP(ConfidenceBoundModel):
         self.datasaver_gp = GPRegression(
             input_dim=self.domain.d,
             kernel=placeholder_kernel,
-            noise_var=0.01,
+            noise_var=0.005,
             calculate_gradients=False
         )
 
@@ -218,7 +222,7 @@ class TripathyGP(ConfidenceBoundModel):
 
         # Need to project x to the matrix(
         if self.W_hat is not None:
-            x = np.dot(x, self.W_hat)
+            x = np.dot(x, self.W_hat.T)
 
         if self.config.calculate_gradients and False:  # or True:
             mean, var = self.gp.predict_noiseless(x)
@@ -243,7 +247,7 @@ class TripathyGP(ConfidenceBoundModel):
         # DATEN ABGESPEICHERT HABEN WOLLEN FÜR ZUKÜNFTIGE PROJEKTIONEN
         self._set_datasaver_data(X, Y)
 
-        if self.i % 500 == 0 or self.calculate_always:
+        if self.i % 500 == 1000 or self.calculate_always:
 
             print("Adding datapoint: ", self.i)
 
@@ -254,6 +258,7 @@ class TripathyGP(ConfidenceBoundModel):
             self.noise_var = 0.005
             self.lengthscale = 6
             self.variance = 2.5
+            self.active_d = 1
 
             gc.collect()
 
@@ -266,7 +271,6 @@ class TripathyGP(ConfidenceBoundModel):
             # For the sake of creating a kernel with new dimensions!
             self.create_new_gp_and_kernel(
                 active_d=self.active_d,
-                W=self.W_hat,
                 variance=self.variance,
                 lengtscale=self.lengthscale,
                 noise_var=self.noise_var
@@ -278,7 +282,7 @@ class TripathyGP(ConfidenceBoundModel):
         if self.W_hat is None:
             self._set_data(X, Y)
         else:
-            Z = np.dot(X, self.W_hat)
+            Z = np.dot(X, self.W_hat.T)
             self._set_data(Z, Y)
 
     def _set_datasaver_data(self, X, Y):

@@ -1,6 +1,2 @@
-2018-08-01 22:53:33 - optimizer.scipy - WARNING: Optimizer Warning (1x): b'ABNORMAL_TERMINATION_IN_LNSRCH'
-2018-08-01 22:53:44 - optimizer.scipy - WARNING: Optimizer Warning (1x): b'ABNORMAL_TERMINATION_IN_LNSRCH'
-2018-08-01 22:53:45 - optimizer.scipy - WARNING: Optimizer Warning (1x): b'ABNORMAL_TERMINATION_IN_LNSRCH'
-2018-08-01 22:53:45 - optimizer.scipy - WARNING: Optimizer Warning (1x): b'ABNORMAL_TERMINATION_IN_LNSRCH'
-2018-08-01 22:53:45 - optimizer.scipy - WARNING: Optimizer Warning (1x): b'ABNORMAL_TERMINATION_IN_LNSRCH'
-2018-08-01 22:53:50 - optimizer.scipy - WARNING: Optimizer Warning (1x): b'ABNORMAL_TERMINATION_IN_LNSRCH'
+2018-08-04 22:07:15 - optimizer.scipy - WARNING: Optimizer Warning (2x): b'ABNORMAL_TERMINATION_IN_LNSRCH'
+2018-08-04 22:07:16 - optimizer.scipy - WARNING: Optimizer Warning (1x): b'ABNORMAL_TERMINATION_IN_LNSRCH'
