@@ -69,12 +69,13 @@ class TripathyGP(ConfidenceBoundModel):
             active_dims=np.arange(active_d),
             name="active_subspace_kernel"
         )
+        print("Kernel is: ", self.kernel)
 
-    def create_new_gp(self, noise_var):
+    def create_new_gp(self, active_d, noise_var):
         # Take over data from the old GP, if existent
         print("Creating a new gp!")
         self.gp = GPRegression(
-            self.domain.d,
+            active_d,
             self.kernel,
             noise_var=noise_var,  # noise_var if noise_var is not None else self.config.noise_var,
             calculate_gradients=self.config.calculate_gradients
@@ -87,6 +88,7 @@ class TripathyGP(ConfidenceBoundModel):
             lengthscale=lengtscale
         )
         self.create_new_gp(
+            active_d=active_d,
             noise_var=noise_var
         )
         print("Got kernel: ")
@@ -105,11 +107,23 @@ class TripathyGP(ConfidenceBoundModel):
         # self.lengthscale = None
         # self.noise_var = None
 
-        self.W_hat = np.asarray([[0.49969147, 0.1939272]])
+        # PARABOLA
+        # self.W_hat = np.asarray([[0.49969147, 0.1939272]]) # np.random.rand(self.d, 1).T
+        # self.noise_var = 0.005
+        # self.lengthscale = 6
+        # self.variance = 2.5
+        # self.active_d = 1
+
+
+        # SINUSOIDAL
+        self.W_hat = np.asarray([
+            [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
+            [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
+        ])
         self.noise_var = 0.005
-        self.lengthscale = 6
-        self.variance = 2.5
-        self.active_d = 1
+        self.lengthscale = 1.3
+        self.variance = 0.15
+        self.active_d = 2
 
         self.create_new_gp_and_kernel(
             active_d=self.active_d,
@@ -129,7 +143,7 @@ class TripathyGP(ConfidenceBoundModel):
         self.datasaver_gp = GPRegression(
             input_dim=self.domain.d,
             kernel=placeholder_kernel,
-            noise_var=0.005,
+            noise_var=self.noise_var,
             calculate_gradients=False
         )
 
@@ -294,6 +308,8 @@ class TripathyGP(ConfidenceBoundModel):
         self._update_cache()
 
     def _raw_predict(self, Xnew):
+
+        assert Xnew.shape[1] == 2, ("Somehow, the input was not project")
 
         # JOHANNES: HIER FINDET KEINE PROJEKTION STATT,
         # DA _raw_predict IMMER VON mean_var AUFGERUFEN WIRD
