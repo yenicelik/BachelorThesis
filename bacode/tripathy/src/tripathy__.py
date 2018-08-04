@@ -78,14 +78,14 @@ class TripathyGP(ConfidenceBoundModel):
             active_d,
             self.kernel,
             noise_var=noise_var,  # noise_var if noise_var is not None else self.config.noise_var,
-            calculate_gradients=self.config.calculate_gradients
+            calculate_gradients=False # self.config.calculate_gradients
         )
 
-    def create_new_gp_and_kernel(self, active_d, variance, lengtscale, noise_var):
+    def create_new_gp_and_kernel(self, active_d, variance, lengthscale, noise_var):
         self.create_new_kernel(
             active_d=active_d,
             variance=variance,
-            lengthscale=lengtscale
+            lengthscale=lengthscale
         )
         self.create_new_gp(
             active_d=active_d,
@@ -116,19 +116,29 @@ class TripathyGP(ConfidenceBoundModel):
 
 
         # SINUSOIDAL
+        # self.W_hat = np.asarray([
+        #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
+        #     [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
+        # ])
+        # self.noise_var = 0.005
+        # self.lengthscale = 1.3
+        # self.variance = 0.15
+        # self.active_d = 2
+
+        # CAMELBACK
         self.W_hat = np.asarray([
-            [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
-            [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
+            [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+            [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
         ])
         self.noise_var = 0.005
-        self.lengthscale = 1.3
-        self.variance = 0.15
+        self.lengthscale = 2.5
+        self.variance = 1.0
         self.active_d = 2
 
         self.create_new_gp_and_kernel(
             active_d=self.active_d,
             variance=self.variance,
-            lengtscale=self.lengthscale,
+            lengthscale=self.lengthscale,
             noise_var=self.noise_var
         )
 
@@ -232,11 +242,8 @@ class TripathyGP(ConfidenceBoundModel):
         """
         x = np.atleast_2d(x)
 
-        # JOHANNES: HIER FINDET EINE PROJEKTION STATT
-
-        # Need to project x to the matrix(
-        if self.W_hat is not None:
-            x = np.dot(x, self.W_hat.T)
+        x = np.dot(x, self.W_hat.T)
+        assert x.shape[1] == self.active_d, ("The projected dimension does not equal to the active dimension: ", (self.active_d, x.shape))
 
         if self.config.calculate_gradients and False:  # or True:
             mean, var = self.gp.predict_noiseless(x)
@@ -256,48 +263,11 @@ class TripathyGP(ConfidenceBoundModel):
         if append:
             X = np.concatenate((self.datasaver_gp.X, X), axis=0)
             Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0)
-
-        # JOHANNES: WIR FÜGEN SCHONMAL ZUM DATASAVER GP HINZU, WEIL WIR IMMER ALLE
-        # DATEN ABGESPEICHERT HABEN WOLLEN FÜR ZUKÜNFTIGE PROJEKTIONEN
         self._set_datasaver_data(X, Y)
 
-        if self.i % 500 == 1000 or self.calculate_always:
-
-            print("Adding datapoint: ", self.i)
-
-            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
-            #     X, Y, load=False)
-
-            self.W_hat = np.asarray([[0.49969147, 0.1939272]])
-            self.noise_var = 0.005
-            self.lengthscale = 6
-            self.variance = 2.5
-            self.active_d = 1
-
-            gc.collect()
-
-            print("Found parameters are: ")
-            print("W: ", self.W_hat)
-            print("noise_var: ", self.noise_var)
-            print("lengthscale: ", self.lengthscale)
-            print("variance: ", self.variance)
-
-            # For the sake of creating a kernel with new dimensions!
-            self.create_new_gp_and_kernel(
-                active_d=self.active_d,
-                variance=self.variance,
-                lengtscale=self.lengthscale,
-                noise_var=self.noise_var
-            )
-
-        # JOHANNES: FALLS EIN W_hat KALKULIERT WURDE; DANN PROJIZIEREN WIR MIT W_HAT.
-        # ANSONSTEN FÜGEN WIR DIE DATEN WIE SONST AUCH HINZU
-
-        if self.W_hat is None:
-            self._set_data(X, Y)
-        else:
-            Z = np.dot(X, self.W_hat.T)
-            self._set_data(Z, Y)
+        Z = np.dot(X, self.W_hat.T)
+        assert Z.shape[1] == self.active_d, ("Projected Z does not conform to active dimension", (Z.shape, self.active_d))
+        self._set_data(Z, Y)
 
     def _set_datasaver_data(self, X, Y):
         self.datasaver_gp.set_XY(X, Y)
@@ -310,9 +280,6 @@ class TripathyGP(ConfidenceBoundModel):
     def _raw_predict(self, Xnew):
 
         assert Xnew.shape[1] == 2, ("Somehow, the input was not project")
-
-        # JOHANNES: HIER FINDET KEINE PROJEKTION STATT,
-        # DA _raw_predict IMMER VON mean_var AUFGERUFEN WIRD
 
         Kx = self.kernel.K(self._X, Xnew)
         mu = np.dot(Kx.T, self._woodbury_vector)
