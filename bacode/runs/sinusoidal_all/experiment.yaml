@@ -49,7 +49,7 @@ experiment.simple:
   T: 349  # Horizon
   load_previous_data: false
   algorithm: febo.algorithms.ucb.UCB
-  environment: febo.environment.benchmarks.functions.CamelbackEmbedded
+  environment: febo.environment.benchmarks.functions.DecreasingSinusoidal
   controller: febo.controller.data.DataController
 main:
   log_level: INFO

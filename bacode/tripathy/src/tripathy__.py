@@ -116,24 +116,24 @@ class TripathyGP(ConfidenceBoundModel):
 
 
         # SINUSOIDAL
-        # self.W_hat = np.asarray([
-        #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
-        #     [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
-        # ])
-        # self.noise_var = 0.005
-        # self.lengthscale = 1.3
-        # self.variance = 0.15
-        # self.active_d = 2
-
-        # CAMELBACK
         self.W_hat = np.asarray([
-            [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
-            [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+            [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
+            [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
         ])
         self.noise_var = 0.005
-        self.lengthscale = 2.5
-        self.variance = 1.0
+        self.lengthscale = 1.3
+        self.variance = 0.15
         self.active_d = 2
+
+        # CAMELBACK
+        # self.W_hat = np.asarray([
+        #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+        #     [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+        # ])
+        # self.noise_var = 0.005
+        # self.lengthscale = 2.5
+        # self.variance = 1.0
+        # self.active_d = 2
 
         self.create_new_gp_and_kernel(
             active_d=self.active_d,
