@@ -32,7 +32,7 @@ class TripathyGPConfig(ModelConfig):
     * noise_var: noise variance
 
     """
-    # kernels = ConfigField([('GPy.kern.Matern32', {'variance': 1., 'lengthscale': 1.5, 'ARD': True})])
+    kernels = ConfigField([('GPy.kern.Matern32', {'variance': 1., 'lengthscale': 1.5, 'ARD': True})])
     noise_var = ConfigField(0.01)
     calculate_gradients = ConfigField(False, comment='Enable/Disable computation of gradient on each update.')
     optimize_bias = ConfigField(False)
@@ -107,6 +107,14 @@ class TripathyGP(ConfidenceBoundModel):
         # self.lengthscale = None
         # self.noise_var = None
 
+        # DEFAULT SETTINGS
+        self.W_hat = np.eye(self.domain.d)
+        print(self.config.kernels[0][1])
+        self.lengthscale = self.config.kernels[0][1]['lengthscale'] # TODO: how to get it from config!!!
+        self.variance = self.config.kernels[0][1]['variance']
+        self.noise_var = 0.005
+        self.active_d = self.domain.d
+
         # PARABOLA
         # self.W_hat = np.asarray([[0.49969147, 0.1939272]]) # np.random.rand(self.d, 1).T
         # self.noise_var = 0.005
@@ -114,16 +122,15 @@ class TripathyGP(ConfidenceBoundModel):
         # self.variance = 2.5
         # self.active_d = 1
 
-
         # SINUSOIDAL
-        self.W_hat = np.asarray([
-            [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
-            [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
-        ])
-        self.noise_var = 0.005
-        self.lengthscale = 1.3
-        self.variance = 0.15
-        self.active_d = 2
+        # self.W_hat = np.asarray([
+        #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
+        #     [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
+        # ])
+        # self.noise_var = 0.005
+        # self.lengthscale = 1.3
+        # self.variance = 0.15
+        # self.active_d = 2
 
         # CAMELBACK
         # self.W_hat = np.asarray([
@@ -265,6 +272,59 @@ class TripathyGP(ConfidenceBoundModel):
             Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0)
         self._set_datasaver_data(X, Y)
 
+
+
+        if self.i % 500 == 100 or self.calculate_always:
+
+            print("Adding datapoint: ", self.i)
+
+            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
+            #     X, Y, load=False)
+
+            # PARABOLA
+            # self.W_hat = np.asarray([[0.49969147, 0.1939272]])  # np.random.rand(self.d, 1).T
+            # self.noise_var = 0.005
+            # self.lengthscale = 6
+            # self.variance = 2.5
+            # self.active_d = 1
+
+            # SINUSOIDAL
+            # self.W_hat = np.asarray([
+            #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
+            #     [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
+            # ])
+            # self.noise_var = 0.005
+            # self.lengthscale = 1.3
+            # self.variance = 0.15
+            # self.active_d = 2
+
+            # CAMELBACK
+            self.W_hat = np.asarray([
+                [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+                [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+            ])
+            self.noise_var = 0.005
+            self.lengthscale = 2.5
+            self.variance = 1.0
+            self.active_d = 2
+
+            gc.collect()
+
+            print("Found parameters are: ")
+            print("W: ", self.W_hat)
+            print("noise_var: ", self.noise_var)
+            print("lengthscale: ", self.lengthscale)
+            print("variance: ", self.variance)
+
+            # For the sake of creating a kernel with new dimensions!
+            self.create_new_gp_and_kernel(
+                active_d=self.active_d,
+                variance=self.variance,
+                lengthscale=self.lengthscale,
+                noise_var=self.noise_var
+            )
+
+
         Z = np.dot(X, self.W_hat.T)
         assert Z.shape[1] == self.active_d, ("Projected Z does not conform to active dimension", (Z.shape, self.active_d))
         self._set_data(Z, Y)
@@ -279,7 +339,7 @@ class TripathyGP(ConfidenceBoundModel):
 
     def _raw_predict(self, Xnew):
 
-        assert Xnew.shape[1] == 2, ("Somehow, the input was not project")
+        assert Xnew.shape[1] == self.active_d, ("Somehow, the input was not project")
 
         Kx = self.kernel.K(self._X, Xnew)
         mu = np.dot(Kx.T, self._woodbury_vector)
