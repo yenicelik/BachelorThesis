@@ -110,37 +110,19 @@ class TripathyGP(ConfidenceBoundModel):
         # DEFAULT SETTINGS
         self.W_hat = np.eye(self.domain.d)
         # print(self.config.kernels[0][1])
-        # self.lengthscale = 2.5  # self.config.kernels[0][1]['lengthscale']  # TODO: how to get it from config!!!
-        # self.variance = 1.  # self.config.kernels[0][1]['variance']
-        # self.noise_var = 0.005
+        self.noise_var = 0.005
+        self.lengthscale = 2.5
+        self.variance = 1.0
         self.active_d = self.domain.d
 
-        # PARABOLA
-        # self.W_hat = np.asarray([[0.49969147, 0.1939272]]) # np.random.rand(self.d, 1).T
+        self.W_hat = np.asarray([
+            [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+            [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+        ])
         self.noise_var = 0.005
-        self.lengthscale = 6
-        self.variance = 2.5
-        # self.active_d = 1
-
-        # SINUSOIDAL
-        # self.W_hat = np.asarray([
-        #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
-        #     [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
-        # ])
-        # self.noise_var = 0.005
-        # self.lengthscale = 1.3
-        # self.variance = 0.15
-        # self.active_d = 2
-
-        # CAMELBACK
-        # self.W_hat = np.asarray([
-        #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
-        #     [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
-        # ])
-        # self.noise_var = 0.005
-        # self.lengthscale = 2.5
-        # self.variance = 1.0
-        # self.active_d = 2
+        self.lengthscale = 2.5
+        self.variance = 1.0
+        self.active_d = 2
 
         self.create_new_gp_and_kernel(
             active_d=self.active_d,
@@ -148,10 +130,6 @@ class TripathyGP(ConfidenceBoundModel):
             lengthscale=self.lengthscale,
             noise_var=self.noise_var
         )
-
-        # JOHANNES: Damit wir später andere Matrizen zur  Projektion nutzen können,
-        # speichere ich die Daten irgendwoch ab. Ich benutze die GP datenstruktur um
-        # diese Daten abzuspeichern, einfach weil das einfacher ist
 
         # Create the datasaver GP
         placeholder_kernel = RBF(
@@ -179,8 +157,7 @@ class TripathyGP(ConfidenceBoundModel):
         self.calculate_always = calculate_always
 
         self.optimizer = TripathyOptimizer()
-
-    # JOHANNES: Die folgenden Operationen habe ich übernommen aus dem febo GP
+        # self.set_data(self._X, self._Y)
 
     # Obligatory values
     @property
@@ -273,31 +250,12 @@ class TripathyGP(ConfidenceBoundModel):
             Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0)
         self._set_datasaver_data(X, Y)
 
-        if self.i % 500 == 100 or self.calculate_always:
+        if self.i % 500 == 1 or self.calculate_always:
             print("Adding datapoint: ", self.i)
-
-            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
-            #     X, Y, load=False)
 
             ####################
             # PRETRAINED VALUES
             ####################
-            # PARABOLA
-            # self.W_hat = np.asarray([[0.92752153, 0.37376973]])  # np.random.rand(self.d, 1).T
-            # self.noise_var = 0.005
-            # self.lengthscale = 6
-            # self.variance = 2.5
-            # self.active_d = 1
-
-            # SINUSOIDAL
-            # self.W_hat = np.asarray([
-            #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
-            #     [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
-            # ])
-            # self.noise_var = 0.005
-            # self.lengthscale = 1.3
-            # self.variance = 0.15
-            # self.active_d = 2
 
             # CAMELBACK
             # self.W_hat = np.asarray(
@@ -315,35 +273,59 @@ class TripathyGP(ConfidenceBoundModel):
             #############
             # REAL VALUES
             #############
+            if self.domain.d == 2:
+                self.W_hat = np.asarray([
+                    [-0.46375963, -0.88596106],
+                    [-0.88596106, 0.46375963]
+                ])
+                self.noise_var = 0.005
+                self.lengthscale = 2.5
+                self.variance = 1.0
+                self.active_d = 2
 
-            # PARABOLA
-            self.W_hat = np.asarray([[0.49969147, 0.1939272]])  # np.random.rand(self.d, 1).T
-            self.noise_var = 0.005
-            self.lengthscale = 6
-            self.variance = 2.5
-            self.active_d = 1
+            elif self.domain.d == 3:
+                # CAMELBACK-5D
+                self.W_hat = np.asarray([
+                    [-0.46554187, -0.36224966, 0.80749362],
+                    [0.69737806, -0.711918, 0.08268378]
+                ])
+                self.noise_var = 0.005
+                self.lengthscale = 2.5
+                self.variance = 1.0
+                self.active_d = 2
 
-            # SINUSOIDAL
-            # self.W_hat = np.asarray([
-            #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
-            #     [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
-            # ])
-            # self.noise_var = 0.005
-            # self.lengthscale = 1.3
-            # self.variance = 0.15
-            # self.active_d = 2
+            elif self.domain.d == 4:
+                # CAMELBACK-4D
+                self.W_hat = np.asarray([
+                    [-0.50445148, -0.40016722, -0.48737089, -0.58980041],
+                    [-0.20042413, -0.65288502, -0.12700055, 0.71933454]
+                ])
+                self.noise_var = 0.005
+                self.lengthscale = 2.5
+                self.variance = 1.0
+                self.active_d = 2
 
-            # CAMELBACK
-            # self.W_hat = np.asarray([
-            #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
-            #     [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
-            # ])
-            # self.noise_var = 0.005
-            # self.lengthscale = 2.5
-            # self.variance = 1.0
-            # self.active_d = 2
+            elif self.domain.d == 5:
+                # CAMELBACK-3D
+                self.W_hat = np.asarray([
+                    [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+                    [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+                ])
+                self.noise_var = 0.005
+                self.lengthscale = 2.5
+                self.variance = 1.0
+                self.active_d = 2
+
+            else:
+                print("Something went terribly wrong!")
+                exit(0)
+
+            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
+            #     X, Y, load=False)
 
             gc.collect()
+
+            print("USING CAMELBACK FUNCTION IN HIGHER D ::: ", self.domain.d)
 
             print("Found parameters are: ")
             print("W: ", self.W_hat)
@@ -363,6 +345,8 @@ class TripathyGP(ConfidenceBoundModel):
 
             print("TRIPATHY :: Likelihood of the current GP is: ", self.gp.log_likelihood())
 
+        assert X.shape[1] == self.W_hat.shape[1], (X.shape, self.W_hat.shape)
+        # print(X.shape, self.W_hat.shape)
         Z = np.dot(X, self.W_hat.T)
         assert Z.shape[1] == self.active_d, (
             "Projected Z does not conform to active dimension", (Z.shape, self.active_d))

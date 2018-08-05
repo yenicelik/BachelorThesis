@@ -43,6 +43,17 @@ experiment.benchmark:
     experiment.simple:environment: febo.environment.benchmarks.functions.Camelback
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB
     experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded5D
+  #- experiment.simple:algorithm: febo.algorithms.ucb.UCB # TODO: there is a bug, when we move this element to the top of the list!
+  #  experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded2D
+  #- experiment.simple:algorithm: febo.algorithms.ucb.UCB # TODO: there is a bug, when we move this element to the top of the list!
+  #  algorithm:model: bacode.tripathy.src.tripathy__camelback.TripathyGP
+  #  experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded2D
+  #- experiment.simple:algorithm: febo.algorithms.ucb.UCB # TODO: there is a bug, when we move this element to the top of the list!
+  #  algorithm:model: bacode.tripathy.src.tripathy__camelback.TripathyGP
+  #  experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded3D
+  #- experiment.simple:algorithm: febo.algorithms.ucb.UCB # TODO: there is a bug, when we move this element to the top of the list!
+  #  algorithm:model: bacode.tripathy.src.tripathy__camelback.TripathyGP
+  #  experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded4D
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB # TODO: there is a bug, when we move this element to the top of the list!
     algorithm:model: bacode.tripathy.src.tripathy__.TripathyGP
     experiment.simple:environment: febo.environment.benchmarks.functions.CamelbackEmbedded5D

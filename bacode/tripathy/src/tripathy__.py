@@ -110,9 +110,9 @@ class TripathyGP(ConfidenceBoundModel):
         # DEFAULT SETTINGS
         self.W_hat = np.eye(self.domain.d)
         # print(self.config.kernels[0][1])
-        self.lengthscale = 2.5  # self.config.kernels[0][1]['lengthscale']  # TODO: how to get it from config!!!
-        self.variance = 1.  # self.config.kernels[0][1]['variance']
-        self.noise_var = 0.005
+        # self.lengthscale = 2.5  # self.config.kernels[0][1]['lengthscale']  # TODO: how to get it from config!!!
+        # self.variance = 1.  # self.config.kernels[0][1]['variance']
+        # self.noise_var = 0.005
         self.active_d = self.domain.d
 
         # PARABOLA
@@ -137,9 +137,9 @@ class TripathyGP(ConfidenceBoundModel):
         #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
         #     [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
         # ])
-        # self.noise_var = 0.005
-        # self.lengthscale = 2.5
-        # self.variance = 1.0
+        self.noise_var = 0.005
+        self.lengthscale = 2.5
+        self.variance = 1.0
         # self.active_d = 2
 
         self.create_new_gp_and_kernel(
@@ -273,11 +273,11 @@ class TripathyGP(ConfidenceBoundModel):
             Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0)
         self._set_datasaver_data(X, Y)
 
-        if self.i % 500 == 50 or self.calculate_always:
+        if self.i % 500 == 100 or self.calculate_always:
             print("Adding datapoint: ", self.i)
 
-            self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
-                X, Y, load=False)
+            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
+            #     X, Y, load=False)
 
             ####################
             # PRETRAINED VALUES
@@ -334,14 +334,14 @@ class TripathyGP(ConfidenceBoundModel):
             # self.active_d = 2
 
             # CAMELBACK
-            # self.W_hat = np.asarray([
-            #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
-            #     [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
-            # ])
-            # self.noise_var = 0.005
-            # self.lengthscale = 2.5
-            # self.variance = 1.0
-            # self.active_d = 2
+            self.W_hat = np.asarray([
+                [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+                [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+            ])
+            self.noise_var = 0.005
+            self.lengthscale = 2.5
+            self.variance = 1.0
+            self.active_d = 2
 
             gc.collect()
 
@@ -358,6 +358,8 @@ class TripathyGP(ConfidenceBoundModel):
                 lengthscale=self.lengthscale,
                 noise_var=self.noise_var
             )
+
+        if self.i % 500 == 299:
 
             print("TRIPATHY :: Likelihood of the current GP is: ", self.gp.log_likelihood())
 
