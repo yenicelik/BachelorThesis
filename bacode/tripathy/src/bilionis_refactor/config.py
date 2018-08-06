@@ -103,7 +103,7 @@ config['restict_cores'] = True
 config['max_cores'] = 16
 
 config['visualize_vanilla_path'] = config['basepath'] + "visualize_vanilla/"
-config['visualize_vanilla_vs_gp_path'] = config['basepath'] + "visualize_vanilla_vs_gp/"
+config['visualize_vanilla_vs_gp_path'] = config['basepath'] + "visualize_vanilla" # "visualize_vanilla_vs_gp/"
 config['visualize_angle_loss_path'] = config['basepath'] + "visualize_angle_loss/"
 
 ### DATASET SPECIFIC CONFIGURATIONS
