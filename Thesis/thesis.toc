@@ -21,16 +21,17 @@
 \contentsline {subsection}{\numberline {2.1.3}Applications to high-dimensional uncertainty propagation}{11}{subsection.2.1.3}
 \contentsline {paragraph}{I now proceed with a more formal description of the algorithm.}{12}{section*.8}
 \contentsline {subsubsection}{Kernel used}{12}{section*.9}
+\contentsline {subsection}{\numberline {2.1.4}Overview of the algorithm}{13}{subsection.2.1.4}
 \contentsline {subsubsection}{Step 1.: Determine the active projection matrix W}{13}{section*.10}
 \contentsline {subsubsection}{Step 2.: Optimizing over GP noise variance and the kernel hyperparameters}{14}{section*.11}
 \contentsline {subsubsection}{Additional details}{15}{section*.12}
 \contentsline {subsubsection}{Identification of active subspace dimension }{15}{section*.13}
 \contentsline {section}{\numberline {2.2}Algorithms that exploit additive substructures}{15}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Independent additive structures within the target function}{15}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.1}Independent additive structures within the target function}{16}{subsection.2.2.1}
 \contentsline {section}{\numberline {2.3}Additional approaches}{16}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Elastic Gaussian Processes}{16}{subsection.2.3.1}
 \contentsline {subsection}{\numberline {2.3.2}High dimensional Gaussian bandits}{16}{subsection.2.3.2}
-\contentsline {subsection}{\numberline {2.3.3}Bayesian Optimization using Dropout}{16}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.3}Bayesian Optimization using Dropout}{17}{subsection.2.3.3}
 \contentsline {chapter}{\numberline {3}Fields of Improvement}{19}{chapter.3}
 \contentsline {section}{\numberline {3.1}Shortcomings of current methods}{19}{section.3.1}
 \contentsline {paragraph}{REMBO}{19}{section*.14}
@@ -54,6 +55,8 @@
 \contentsline {chapter}{\numberline {5}Evaluation}{31}{chapter.5}
 \contentsline {section}{\numberline {5.1}Evaluation Settings}{31}{section.5.1}
 \contentsline {section}{\numberline {5.2}Quantitative evaluation}{31}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Parabola}{31}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}}{32}{subsection.5.2.2}
 \contentsline {section}{\numberline {5.3}Qualitative evaluation}{33}{section.5.3}
 \contentsline {subsection}{\numberline {5.3.1}Feature selection}{33}{subsection.5.3.1}
 \contentsline {subsection}{\numberline {5.3.2}Subspace identification}{35}{subsection.5.3.2}

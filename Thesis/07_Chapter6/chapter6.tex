@@ -20,20 +20,41 @@ Furthermore, we will shortly discuss the underlying real dataset, which is hyper
 \section{Quantitative evaluation}
 To recapitulate, I will use log-likelihood measures and cumulative regret to compare the performance of different algorithms.
 We present how the different algorithms operate on the UCB.
+It is important to point out that all experiments capped the matrix identification step to about 30 minutes.
+This is much less than in the original papers that we base the algorithm on.
+The reason for this is that we want to have an acceptable comparison for medium-sized experiments, where time and computational resources can be restrictive (like on a users laptop).
+
+\subsection{Parabola}
+First, I compare how different algorithms perform on the embedded parabola function which is of the following form:
+
+\def\WParaboa2D{
+\begin{bmatrix}
+    0.500\\
+    0.192
+\end{bmatrix}}
+
+
+\begin{equation}
+f(x) = \left( \WParaboa2D^T x \right)^2
+\end{equation}
+where we have $x \in \mathbf{R}^2$ and $W \in \mathbf{R}^{2 \times 1}$.
+
+We run 4 different independent runs to show the variance between multiple runs.
+The reader should notice that the individual runs do carry the same kernel parameters, and thus should theoretically have similar properties as UCB on the vanilla function.
 
 % PARABOLA FUNCTION
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
         \includegraphics[width=\textwidth]{ucb/parabola/run1.png}
-        \caption{Parabola Regret Curves}
+        \caption{Run 1}
         \label{fig:gull}
     \end{subfigure}
     %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.4\textwidth}
         \includegraphics[width=\textwidth]{ucb/parabola/run2.png}
-        \caption{Parabola Regret Curves}
+        \caption{Run 2}
         \label{fig:tiger}
     \end{subfigure}
      %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
@@ -41,18 +62,33 @@ We present how the different algorithms operate on the UCB.
     \vskip\baselineskip
     \begin{subfigure}[b]{0.4\textwidth}
         \includegraphics[width=\textwidth]{ucb/parabola/run3.png}
-        \caption{Parabola Regret Curves}
+        \caption{Run 3}
         \label{fig:mouse}
     \end{subfigure}
             %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.4\textwidth}
         \includegraphics[width=\textwidth]{ucb/parabola/run4.png}
-        \caption{Parabola Regret Curves}
+        \caption{Run 4}
         \label{fig:mouse}
     \end{subfigure}
-    \caption{Parabola Regret Curves}\label{fig:animals}
+    \caption{Parabola Regret Curves on 1. UCB on vanilla Parabola, 2. }\label{fig:animals}
 \end{figure}
+
+One can see that REMBO without interleavings has very high variance amongst runs. 
+Sometimes it is able to find a suitable subspace (subfigure (c) and (d)), but on other runs, it fails to find an appropriate subspace.
+The reader should notice that most of these lines are linear.
+This may be the result of not tuning the hyperparameters during runs.
+In this case, the BORING algorithm assesses the exact same properties as the tripathy model (as the number of passive dimensions is set to 0), with which the two models perform very similar on the regret curves. \\
+
+\textbf{The log likelihood of the GP w.r.t the collected datapoints} of the tripathy GP with the real matrix is comparable to the log-likelihood of the GP of the tripathy model, where the active projection matrix is calculated using the algorithm.
+One should notice, however, that the angle between the found matrix and the real projection matrix is almost always at $45°$ - a value that does not sound very intuitive, and for which the only reasonable explanation is that the optimization problem stays the same at this projection angle.
+
+
+
+\subsection{}
+
+
 
 
 The subspace is sampled using UCB. 

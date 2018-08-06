@@ -8,7 +8,7 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Parabola Regret Curves\relax }}{32}{figure.caption.26}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Parabola Regret Curves on 1. UCB on vanilla Parabola, 2. \relax }}{32}{figure.caption.26}
 \contentsline {figure}{\numberline {5.2}{\ignorespaces Sinusoidal Regret Curves\relax }}{33}{figure.caption.27}
 \contentsline {figure}{\numberline {5.3}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{34}{figure.caption.28}
 \contentsline {figure}{\numberline {5.4}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{34}{figure.caption.28}

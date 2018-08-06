@@ -162,13 +162,12 @@ f \sim p(f) &= \int \delta( f - f(x) ) p(x) dx
 \end{align}
 
 The authors assume that w.l.o.g., the search space of the projection matrices can be restricted to matrices on the siefel manifold.
-
- the optimizer does not need to focus one can regard only on orthogonal matrices, as this does not restrict the search space of projection matrices, the main reason being that no projection subspace is neglected by doing this.
+The argument for this is that the projected subspace does not change, merely the representation of the subspace.
 Here, the family of orthogonal matrices of dimension $d \times D$ is denoted by $\mathbf{W} \in V_d(\mathbb{R}^D) $.
 This quantity is also known as the \textbf{Stiefel manifold} \citep{StiefelBayesianInference} \citep{StatisticsStiefelIntro} \citep{StiefelNonparametric}, where $d$ is the found effective dimension of the function, and $D$ is the real input dimension to the function. \\
 
 \subsubsection{Kernel used}
-As in the paper, I use the Matern-32 kernel function.
+The optimization processes in the paper use the Matern-32 kernel function.
 This function has two input vectors $a$ and $b$.
 
 \begin{align}
@@ -176,8 +175,8 @@ K(a,  b, \theta) = s^2 \left( 1 + \sqrt{3} \sum_{i=1}^l \frac{(a_i - b_i)^2}{ \t
 \end{align}
 
 Because I want to avoid numerical testing and implementation, I use the derivative as provided in the GPy library.
-The $s, l_1, \ldots, l_l $ are hyper-parameters of the kernel. 
-The concatenated vector of all these kernel hyperparameters is denoted by $\theta$. \\
+The $s, l_1, \ldots, l_l $ are hyper-parameters of the kernel, referred to as the kernel-variance, and the kernel-lengthscales. 
+The concatenated vector of all these kernel hyperparameters is denoted by $\phi$. \\
 
 The only modification made to this kernel is the additional parameter $W$:
 
@@ -188,6 +187,31 @@ k_{AS} : \mathbb{R}^D \times \mathbb{R}^D \times V_d(\mathbb{R}^D) \times \phi -
 \begin{equation}
 k_{AS} (x, x'; W, \phi) = k_d(W^T x, W^T x'; \phi)
 \end{equation}
+
+\subsection{Overview of the algorithm}
+
+I now proceed to explain the components of the algorithm from a top-down approach.
+The algorithm proceeds as follows.
+
+\begin{algorithm}
+\caption{The SI-BO algorithm \citep{Djolonga2013}}
+
+\begin{algorithmic} 
+\REQUIRE $m_X, m_{\Phi}, \lambda, \epsilon, k$, oracle for the function $f$, kernel $\kappa$ 
+
+\STATE $C \leftarrow m_X $ samples uniformly from $\mathbb{S}^{d-1}$
+
+\FOR{$ i \leftarrow 1$ to $M_l$}
+\STATE $\Phi_i \leftarrow m_{\Phi}$ samples uniformly from $\{ -\frac{1}{\sqrt{m}}, \frac{1}{\sqrt{m}} \}^k$
+\ENDFOR
+
+\STATE $ y \leftarrow $ (compute using Equation 1 -- INSERT Eq 1 here, or create a summary of all important equations here)
+
+\STATE select $z_i$ according to a UCB acquisition function, evaluate $f$ on it, and add it to the datasamples found so far
+
+\end{algorithmic}
+
+\end{algorithm}
 
 
 \subsubsection{Step 1.: Determine the active projection matrix W}.
