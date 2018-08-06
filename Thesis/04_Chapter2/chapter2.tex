@@ -15,21 +15,28 @@ This section covers current methods solving Bayesian Optimization in high dimens
 This is not an exhaustive review. 
 For each algorithm, I discuss the effectiveness with regards to the dataset or function that the respective paper does the evaluation on.
 
-Conventions that I use is the following:
+Unless specified differently, I use the following terminology during my discussion.
 
 \begin{enumerate}
-\item $f$ is the real function to be approximated / optimized.
+\item $f$ is the real function to be optimized. Often I will use the term approximate, as many algorithms rely on a surrogate approximation of the function $f$ such that the global optimum can be found.
+\item Assuming the function $f$ is of the form $f(x) = y$ with $x \in \mathbf{R}^D$, where $D$ denotes the dimensionality of $x$, then we define the optimized value of $f$ to be $x^* = \arg \max_{x} f(x)$.
 \item $g$ and any subscripted or superscripted derivative of $g$ is a component that one uses to approximate $f$.
 \item Anything that has a "hat" on (caret symbol on f is $\hat{f}$ ), refers to an empirical estimate. 
+$\hat{f}$ would be an empirical estimate given datapoints $\mathit{D}$ of $f$.
 \end{enumerate}
 
 I will focus on three categories of Bayesian Optimization algorithms: Algorithms that make use of a projection matrix, algorithms that, algorithms that exploit additive substructures and "additional approaches" that are uncategorised.
 
 \section{Projection matrix based algorithms}
 
-Generally, for this family of algorithms, the approximation is a function of $f(x) \sim g(Ax)$, where the properties and identification of $A$ are algorithmic specific.
+In my work, I focus on algorithms that optimize the black box function $f$ by using a lower-dimensional projection.
+I proceed with discussing some algorithms that I have implemented for my experiments in the next subsection (all except the algorithm "Active learning of linear subspaces").
+I will briefly describe additional interesting algorithms that raise interesting ideas for possible future work afterwards.
+For this family of algorithms, the approximation is a function of $f(x) \sim g(x; A)$, where the properties of $A$ are algorithm-specific.
+The following descriptions aims at giving a brief overview at the methods at hand. 
+I refer the curious reader to the individual paper for a more detailed and formal description of the respective topic.
 
-\subsection{Active learning of linear subspace}
+\subsection{Active learning of linear subspaces}
 
 \begin{algorithm}
 \caption{Simultaneous active learning of functions and their linear embeddings (pseudocode) :: Active learning of linear subspace \citep{Garnett2013}}
@@ -63,53 +70,21 @@ Together, this describes the probability distribution $p(R|X, Y, \kappa, \mu )$,
 The \textbf{approximate marginal} subroutine is a novel method proposed in the paper that integrates over the different parameters in the paper.
 This marginal approximation does a local expansion of $q(x_* | \theta) $ to $p(x_* | D, \theta)$. \\
 
-The \textbf{optimization of utility} (choice of next best point) is done using Bayesian Active Learning by disagreement, where the utility function is the expected reduction in the mutual information, as opposed to uncertainty sampling reducing entropy, which  is not well defined for all values. \\
+The \textbf{sequential optimization of utility} (choice of next best point) is done using Bayesian Active Learning by disagreement, where the utility function is the expected reduction in the mutual information, as opposed to uncertainty sampling reducing entropy, which  is not well defined for all values. \\
 
 The metrics used in this paper are negative log-likelihoods for the test points, and the mean symmetric kullback leiber divergence between approximate and true posteriors.
 The proposed method always outperforms the naive MAP method for the presented functions close to a factor of 2 for both loss functions.
 Tests are conducted on a real, and synthetic dataset with up to $D = 318$ and selecting $N = 100$ observations. 
 
-\subsection{High dimensional Gaussian bandits}
-
-\citep{Djolonga2013} This model assumes that there exists a function $g : \mathbf{R}^k \implies [0, 1]$ and a matrix $A \in \mathbf{R}^{d \times D}$ with orthogonal rows, such that $f(x) \sim g(Ax) $. Assume $g \in \mathcal{C}^2$. 
-% Assume that $B = \mathbf{B}^D (1 + \epsilon ) $.
-% We want to maximize $f: B \implies [0, 1] $.\\
-
-\begin{algorithm}
-\caption{The SI-BO algorithm \citep{Djolonga2013}}
-
-\begin{algorithmic} 
-\REQUIRE $m_X, m_{\Phi}, \lambda, \epsilon, k$, oracle for the function $f$, kernel $\kappa$ 
-
-\STATE $C \leftarrow m_X $ samples uniformly from $\mathbb{S}^{d-1}$
-
-\FOR{$ i \leftarrow 1$ to $m_X$}
-\STATE $\Phi_i \leftarrow m_{\Phi}$ samples uniformly from $\{ -\frac{1}{\sqrt{m}}, \frac{1}{\sqrt{m}} \}^k$
-\ENDFOR
-
-\STATE $ y \leftarrow $ (compute using Equation 1 -- INSERT Eq 1 here, or create a summary of all important equations here)
-
-\STATE select $z_i$ according to a UCB acquisition function, evaluate $f$ on it, and add it to the datasamples found so far
-
-\end{algorithmic}
-
-\end{algorithm}
-
-The SI-BO algorithm consists of a subspace identification step, and an optimization step using GP-UCB.
-
-% TODO: understand this part of the paper better
-
-The \textbf{subspace identification} is treated as a low-rank matrix recovery problem as presentedin \citep{CevherSubspaceIdentificationKrause}.
-
-
 \subsection{Random embeddings (REMBO)}
-REMBO is an algorithm that allows the user to search in a smaller search space.
-More specifically, REMBO proposes the following model to optimize in:
-
+REMBO is an algorithm that allows the optimizer to search in a smaller search space.
+The result of the optimized value $x^*$ is then projected to the higher dimensional space (including projections), to retrieve the actual optimized argmax value of the function $f$. 
+More specifically, REMBO proposes the following model for Bayesian Optimization: \\
 
 \citep{Wang2013} Let $x \in \mathbb{R}^D$ and $y \in \mathbb{R}^d$. Assume, that $f(x) = g(Ay)$. We can generate $A \in \mathbb{R}^{D \times d}$ by randomly generating this matrix.
+$A$ must have the property that $A^T \times A = I$, where $I \in \mathbf{R}^{d \times d}$ denotes the identity matrix with $d$ diagonal elements.
 The space over which the user searches, as such, is $d$-dimensional.
-This implies that BO can run much faster. \\
+This implies that REMBO is more efficient in sampling datapoints, and learning the structure of a neighborhood in the high-dimensional space (by using the neighborhood of the low-dimensional space). \\
 
 \begin{figure}[H]
     \centering
@@ -117,15 +92,17 @@ This implies that BO can run much faster. \\
         \caption{Parabola Original}
         \label{fig:gull}
     \caption{
-    Taken from \citep{Wang2013}: Embedding from $d = 1$ into $D=2$.
-    The box illustrates the 2D constrained space $\mathsf{X}$, while the thicker red line illustrates the 1D constrained space $\mathsf{Y}$.
-    Note that if $Ay$ is outside $\mathsf{X}$, it is projected onto $\mathsf{X}$.
-    The set $\mathsf{Y}$ must be chosen large enough so that the projection of its image, $A\mathsf{Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box).
+    Source \citep{Wang2013}: Embedding from $d = 1$ into $D=2$.
+    The box illustrates the 2D constrained space $\mathbf{X}$, while the thicker red line illustrates the 1D constrained space $\mathbf{Y}$.
+    Note that if $A \times y$ is outside of $\mathbf{X}$, it is projected onto $\mathbf{X}$ using a convex projection.
+    The set $\mathbf{Y}$ must be chosen large enough so that the projection of its image, $A \times y $ with $y \in \mathbf{Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box.
     }\label{fig:animals}
 \end{figure}
 
-The key point of REMBO is that the matrix $A$ can be chosen as a random orthogonal matrix.
-The authors follow with a proof, that if the optimization domain's parameters are well-chosen, that the chance of getting a bad projection matrix has a certain threshold. \\
+The elegance of REMBO lies in the fact that the matrix $A$ can be chosen as a random orthogonal matrix.
+The authors argue with an empirical proof, that if the optimization domain's parameters are well-chosen, that the chance of getting a bad projection matrix has a certain threshold. \\
+
+I now proceed with a more formal treatment of the intuitive concept explained above: \\
 
 \cite{Wang}
 A function $f : \mathbf{R}^D \rightarrow \mathbf{R}$ is said to have effective dimensionality $d_e$ (where $d_e < D$), if there exists a linear subspace $\mathcal{T}$ of dimension $d_e$ such that for all $ x_\top \in \mathcal{T} \subset \mathbf{R}^D $ and $x_\perp \in \mathcal{T_\perp} \subset \mathbf{R}^D $, we have $ f(x) = f(x_\top +x_\perp ) = f(x_\top)$.
@@ -134,7 +111,7 @@ $\mathcal{T^\perp}$ is the orthogonal complement of $\mathcal{T}$.
 Assume $ f : \mathbf{R}^D \rightarrow \mathbf{R} $ has effective dimensionality $d_e$.
 Given a random matrix $ \mathbf{A} \in \mathbf{R}^{D \times d} $ (where $d \geq d_e$) with independent entries sampled from $ \mathcal{N}(0, 1) $.
 For any $ x \in \mathbf{R}^D $, there exists a $y \in \mathbf{R}^d $ such that $ f(x) = f(\mathbf{A} y ) $.
-We now only need to optimize over all possible $y \in \mathbf{R}^d$, instead of all possible $x \in \mathbf{R}^D $. \\
+The user now only need to optimize over all possible $y \in \mathbf{R}^d$, instead of all possible $x \in \mathbf{R}^D $. \\
 
 
 \begin{figure}[H]
@@ -143,31 +120,39 @@ We now only need to optimize over all possible $y \in \mathbf{R}^d$, instead of 
         \caption{Parabola Original}
         \label{fig:gull}
     \caption{
-    Taken from \citep{Wang2013} Fig. 2: This function in D=2 dimesions only has d=1 effective dimension: the vertical axis indicated with the word important on the right hand side figure. 
-    Hence, the 1-dimensional embedding includes the 2-dimensional function’s optimizer. 
+    Source \citep{Wang2013}: This function in D=2 dimesions only has d=1 effective dimension.
+    Hence, the 1-dimensional embedding includes the 2-dimensional function’s optimized value $x^*$. 
     It is more efficient to search for the optimum along the 1-dimensional random embedding than in the original 2-dimensional space.
     }\label{fig:animals}
 \end{figure}
 
-Because the authors point at being able to decrease this threshold, they propose interlaved runs, where for each fifth point selection, a differently sampled orthogonal random matrix is chosen. \\
-
+REMBO has a fairly high probability of failing (more than 20\% in the experiments conducted in the paper) by choosing an $A$ that lies orthogonal the the directions of highest change in the function $f$.
+The authors propose interleaved runs, where for each $k$'th point selection, a differently sampled orthogonal random matrix is chosen. 
+The probability of generating a bad embedding lower with higher $k$.
+However, each $k$ has a set of observations $X$ which is not shared across the different interleaved runs. \\
 Extensions to REMBO include \citep{RemboExtension}.
 
-\subsection{Applications to high-dimensional uncertainty propogation}
-Because the algorithm we propose uses this method to identify the subspace projection matrix, I will discuss this algorithm in more detail.
+\subsection{Applications to high-dimensional uncertainty propagation}
+I put most emphasis on this algorithm during my experiments. 
+As such, I will be more detailed with the description of this algorithm. \\
 
 \citep{Tripathy} This algorithm assumes that  $f(x) \sim g( \mathbf{W}^T y)$ where $ \mathbf{W} \in \mathbb{R}^{D \times d} $ and $D >> d$.
-$ \mathbf{W} $ is orthogonal. \\
-
+$ \mathbf{W} $ again has the property that $\mathbf{W^T}  \times \mathbf{W} = I$ where $I \in \mathbf{R}^{d \times d}$ denotes the identity matrix in $d$ dimensions. 
 This algorithm does not require gradient-information.
 This makes it easier to implement, and more robust to noise according to the authors of this paper. \\
-The GP nosie variance, kernel parameters and  $ \mathbf{W} $ can be found iteratively.
-The main idea of the algorithm is to fix the kernel parameters and the GP nosie variance, and identify $ \mathbf{W} $.
-Then, we fix $ \mathbf{W} $ and train over the kernel parameters and the GP nosie variance.
-This procedure is repeated until the change of the log-likelihood between iterations is below some $ \epsilon_l $, or if the maximum number of steps of optimization is reached.
-We repeat this procedure .\\
 
-\paragraph{I now proceed with a more detailed description of the algorithm.}
+
+I refer to the set of kernel parameters and the GP noise variance as GP-hyperparameters.
+I refer to the projection matrix $ \mathbf{W} $ as the projection matrix.
+
+The GP noise variance, kernel parameters and  $ \mathbf{W} $ can be found iteratively.
+The main idea of the algorithm is to first fix both the kernel parameters and the GP noise variance, and identify $ \mathbf{W} $.
+Then, we fix $ \mathbf{W} $ and train over the GP-hyperparameters.
+This procedure is repeated until the change of the log-likelihood between iterations is below some $ \epsilon_l $, or if the maximum number of steps of optimization is reached.
+We repeat this procedure many times (as dictated by the number of restarts).
+Empirially, the probability of finding a good projection increases with the number of restarts, and the maximum number of iterations the algorithm is allowed to take during the optimization of the joint parameter set $\mathbf{W}$ and the hyperparameters (as given in the next paragraphs).\\
+
+\paragraph{I now proceed with a more formal description of the algorithm.}
 The quantities of interest are
 
 \begin{align}
@@ -176,7 +161,9 @@ The quantities of interest are
 f \sim p(f) &= \int \delta( f - f(x) ) p(x) dx
 \end{align}
 
-The authors argue that w.l.o.g., one can regard only on orthogonal matrices, as this does not restrict the search space of projection matrices, the main reason being that no projection subspace is neglected by doing this.
+The authors assume that w.l.o.g., the search space of the projection matrices can be restricted to matrices on the siefel manifold.
+
+ the optimizer does not need to focus one can regard only on orthogonal matrices, as this does not restrict the search space of projection matrices, the main reason being that no projection subspace is neglected by doing this.
 Here, the family of orthogonal matrices of dimension $d \times D$ is denoted by $\mathbf{W} \in V_d(\mathbb{R}^D) $.
 This quantity is also known as the \textbf{Stiefel manifold} \citep{StiefelBayesianInference} \citep{StatisticsStiefelIntro} \citep{StiefelNonparametric}, where $d$ is the found effective dimension of the function, and $D$ is the real input dimension to the function. \\
 
@@ -290,6 +277,41 @@ $k$ models are sampled, and we respectively approximate $p(f_* | D, x^*) = \frac
 The key insight here is that with low length-scales, the acquisition function is extremely flat, but with higher length-scales, the acquisition function starts to have significant gradients.
 The two key-steps is to 1.) additively increase the length-scale for the gaussian process if the length-scale is not maximal and if $|| x_{init} - x^* || = 0$.
 And 2.) exponentially decrease the length-scale for the gaussian process if the length-scale is below the optimum length-scale and if $|| x_{init} - x^* || = 0$.
+
+\subsection{High dimensional Gaussian bandits}
+
+\citep{Djolonga2013} This model assumes that there exists a function $g : \mathbf{R}^k \implies [0, 1]$ and a matrix $A \in \mathbf{R}^{d \times D}$ with orthogonal rows, such that $f(x) \sim g(Ax) $. Assume $g \in \mathcal{C}^2$. 
+% Assume that $B = \mathbf{B}^D (1 + \epsilon ) $.
+% We want to maximize $f: B \implies [0, 1] $.\\
+
+The algorithm identifies $A$ by the 
+
+\begin{algorithm}
+\caption{The SI-BO algorithm \citep{Djolonga2013}}
+
+\begin{algorithmic} 
+\REQUIRE $m_X, m_{\Phi}, \lambda, \epsilon, k$, oracle for the function $f$, kernel $\kappa$ 
+
+\STATE $C \leftarrow m_X $ samples uniformly from $\mathbb{S}^{d-1}$
+
+\FOR{$ i \leftarrow 1$ to $m_X$}
+\STATE $\Phi_i \leftarrow m_{\Phi}$ samples uniformly from $\{ -\frac{1}{\sqrt{m}}, \frac{1}{\sqrt{m}} \}^k$
+\ENDFOR
+
+\STATE $ y \leftarrow $ (compute using Equation 1 -- INSERT Eq 1 here, or create a summary of all important equations here)
+
+\STATE select $z_i$ according to a UCB acquisition function, evaluate $f$ on it, and add it to the datasamples found so far
+
+\end{algorithmic}
+
+\end{algorithm}
+
+The SI-BO algorithm consists of a subspace identification step, and an optimization step using GP-UCB.
+
+% TODO: understand this part of the paper better
+
+The \textbf{subspace identification} is treated as a low-rank matrix recovery problem as presentedin \citep{CevherSubspaceIdentificationKrause}.
+
 
 
 \subsection{Bayesian Optimization using Dropout}
