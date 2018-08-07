@@ -1,2 +1,0 @@
-algorithm: {model: bacode.tripathy.src.boring.boring_model.BoringGP}
-experiment.simple: {algorithm: febo.algorithms.ucb.UCB, environment: febo.environment.benchmarks.functions.CamelbackEmbedded5D}
