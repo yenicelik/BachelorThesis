@@ -22,10 +22,26 @@ To recapitulate, I will use log-likelihood measures and cumulative regret to com
 We present how the different algorithms operate on the UCB.
 It is important to point out that all experiments capped the matrix identification step to about 30 minutes.
 This is much less than in the original papers that we base the algorithm on.
-The reason for this is that we want to have an acceptable comparison for medium-sized experiments, where time and computational resources can be restrictive (like on a users laptop).
+The reason for this is that we want to have an acceptable comparison for medium-sized experiments, where time and computational resources can be restrictive (like on a users laptop). \\
+
+I want to have an indication of whether the contribution of the performance comes from our subspace identification, or from the algorithm. 
+For this, I start the discussion of every function in perspective starts with a graph that shows how the respective algorithm performs when the real subspace matrix $W_{\text{true}}$ is injected (instead of running tripathy's subspace identification algorithm). \\
+
+To keep the measurements fair across algorithms, I fix the noise variance of the GP, and the kernel hyperparameters at a fixed value (for each function).
 
 \subsection{Parabola}
-First, I compare how different algorithms perform on the embedded parabola function which is of the following form:
+
+\paragraph{Assume $\hat{W} = W_{\text{true}}$}: I present how the respective algorithms perform if we assume that Tripathy's Stiefel Manifold optimization finds the perfect matrix.
+This measures how the algorithm (and not the subspace identification) performs.
+
+\begin{figure}[H]
+  \centering
+      \includegraphics[width=0.5\textwidth]{reference_W_true/Parabola2D}
+  \caption{A picture of the same gull looking the other way!}
+\end{figure}
+
+\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the embedded parabola function which is of the following form.
+This measures how the algorithm performs when the subtask of identifying the subspace has to be achieved.
 
 \def\WParaboa2D{
 \begin{bmatrix}
@@ -83,6 +99,36 @@ In this case, the BORING algorithm assesses the exact same properties as the tri
 
 \textbf{The log likelihood of the GP w.r.t the collected datapoints} of the tripathy GP with the real matrix is comparable to the log-likelihood of the GP of the tripathy model, where the active projection matrix is calculated using the algorithm.
 One should notice, however, that the angle between the found matrix and the real projection matrix is almost always at $45°$ - a value that does not sound very intuitive, and for which the only reasonable explanation is that the optimization problem stays the same at this projection angle.
+
+
+
+\subsection{Camelback embedded in 3D}
+
+\paragraph{Assume $\hat{W} = W_{\text{true}}$}: I present how the respective algorithms perform if we assume that Tripathy's Stiefel Manifold optimization finds the perfect matrix.
+This measures how the algorithm (and not the subspace identification) performs.
+
+\begin{figure}[H]
+  \centering
+      \includegraphics[width=0.5\textwidth]{reference_W_true/Camelback3D}
+  \caption{A picture of the same gull looking the other way!}
+\end{figure}
+
+\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the embedded parabola function which is of the following form.
+This measures how the algorithm performs when the subtask of identifying the subspace has to be achieved.
+
+\subsection{Camelback embedded in 5D}
+
+\paragraph{Assume $\hat{W} = W_{\text{true}}$}: I present how the respective algorithms perform if we assume that Tripathy's Stiefel Manifold optimization finds the perfect matrix.
+This measures how the algorithm (and not the subspace identification) performs.
+
+\begin{figure}[H]
+  \centering
+      \includegraphics[width=0.5\textwidth]{reference_W_true/Camelback5D}
+  \caption{A picture of the same gull looking the other way!}
+\end{figure}
+
+\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the embedded parabola function which is of the following form.
+This measures how the algorithm performs when the subtask of identifying the subspace has to be achieved.
 
 
 

@@ -55,14 +55,22 @@
 \contentsline {chapter}{\numberline {5}Evaluation}{31}{chapter.5}
 \contentsline {section}{\numberline {5.1}Evaluation Settings}{31}{section.5.1}
 \contentsline {section}{\numberline {5.2}Quantitative evaluation}{31}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Parabola}{31}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}}{32}{subsection.5.2.2}
-\contentsline {section}{\numberline {5.3}Qualitative evaluation}{33}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Feature selection}{33}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Subspace identification}{35}{subsection.5.3.2}
-\contentsline {chapter}{\numberline {6}Conclusion}{41}{chapter.6}
-\contentsline {section}{\numberline {6.1}Main Contributions}{41}{section.6.1}
-\contentsline {section}{\numberline {6.2}Conclusion}{42}{section.6.2}
-\contentsline {chapter}{References}{43}{chapter*.34}
-\contentsline {chapter}{Appendix \numberline {A}}{45}{Appendix.a.A}
-\contentsline {section}{\numberline {A.1}Benchmarking functions}{45}{section.a.A.1}
+\contentsline {subsection}{\numberline {5.2.1}Parabola}{32}{subsection.5.2.1}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{32}{section*.26}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{32}{section*.28}
+\contentsline {subsection}{\numberline {5.2.2}Camelback embedded in 3D}{34}{subsection.5.2.2}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{34}{section*.30}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{34}{section*.32}
+\contentsline {subsection}{\numberline {5.2.3}Camelback embedded in 5D}{34}{subsection.5.2.3}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{34}{section*.33}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{35}{section*.35}
+\contentsline {subsection}{\numberline {5.2.4}}{35}{subsection.5.2.4}
+\contentsline {section}{\numberline {5.3}Qualitative evaluation}{36}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Feature selection}{37}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Subspace identification}{38}{subsection.5.3.2}
+\contentsline {chapter}{\numberline {6}Conclusion}{43}{chapter.6}
+\contentsline {section}{\numberline {6.1}Main Contributions}{43}{section.6.1}
+\contentsline {section}{\numberline {6.2}Conclusion}{44}{section.6.2}
+\contentsline {chapter}{References}{45}{chapter*.43}
+\contentsline {chapter}{Appendix \numberline {A}}{47}{Appendix.a.A}
+\contentsline {section}{\numberline {A.1}Benchmarking functions}{47}{section.a.A.1}
