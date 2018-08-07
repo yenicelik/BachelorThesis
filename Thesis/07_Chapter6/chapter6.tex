@@ -142,6 +142,9 @@ Because of time constraints, (and because I had to use my laptop for computation
 
 \section{Qualitative evaluation}
 
+It is interesting to see, that amongst the 1000 restarts that I generated, many of the resulting matrices are close to the real projection matrix up to an absolute value of 0.01.
+However, because the algorithm decides to choose the matrix with the highest likelihood, tripathy's algorithm in general does not select these matrices, but chooses a matrix that is not amongst the matrices that are very similar to the real matrices.
+
 \subsection{Feature selection}
 The goal of this task is to see, if the revised active subspace identification algorithms can effectively do feature selection.
 For this task, I set up a function $ f $ that looks as follows:
