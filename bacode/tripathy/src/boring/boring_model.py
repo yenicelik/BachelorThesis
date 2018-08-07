@@ -103,7 +103,7 @@ class BoringGP(ConfidenceBoundModel):
                 variance=variance,
                 lengthscale=lengthscale,
                 ARD=True,
-                active_d=[active_d + i],
+                active_dims=[active_d + i],
                 name="passive_subspace_kernel_" + str(i)
             )
             self.kernel += cur_kernel
@@ -153,10 +153,11 @@ class BoringGP(ConfidenceBoundModel):
         self.lengthscale = 2.5
         self.variance = 1.0
         self.active_d = 5
+        self.passive_d = 0
 
         self.create_new_gp_and_kernel(
             active_d=self.active_d,
-            passive_d=0,
+            passive_d=self.passive_d,
             variance=self.variance,
             lengthscale=self.lengthscale,
             noise_var=self.noise_var
@@ -261,7 +262,7 @@ class BoringGP(ConfidenceBoundModel):
         x = np.dot(x, self.W_hat.T)
         # print(x.shape)
         # print(self.W_hat.shape)
-        assert x.shape[1] == self.active_d, ("The projected dimension does not equal to the active dimension: ", (self.active_d, x.shape))
+        assert x.shape[1] == self.active_d + self.passive_d, ("The projected dimension does not equal to the active dimension: ", (self.active_d + self.passive_d, x.shape))
 
         if self.config.calculate_gradients and False:  # or True:
             mean, var = self.gp.predict_noiseless(x)
@@ -288,24 +289,31 @@ class BoringGP(ConfidenceBoundModel):
             # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
             #     X, Y, load=False)
 
-            self.W_hat = np.asarray([
+            self.A = np.asarray([
                 [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
                 [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
             ])
 
-            # passive_dimensions = 1
-            # passive_dimensions = min(passive_dimensions, 1)
-            #
-            # # Generate the A^{\bot} if there's more dimensions
-            # self.AT = generate_orthogonal_matrix_to_A(
-            #     A=self.A,
-            #     n=passive_dimensions
-            # )
-            # self.W_hat = np.concatenate(
-            #     (self.A, self.AT),
-            #     axis=1
-            # )
-            #
+            self.noise_var = 0.005
+            self.lengthscale = 2.5
+            self.variance = 1.0
+            self.active_d = 2
+            self.passive_d = 1
+
+            self.passive_d = max(self.passive_d , 0)
+
+            # Generate the A^{\bot} if there's more dimensions
+            self.AT = generate_orthogonal_matrix_to_A(
+                A=self.A.T,
+                n=self.passive_d
+            ).T
+
+            assert self.AT.shape[1] == self.A.shape[1], (self.AT.shape, self.A.shape)
+
+            self.W_hat = np.concatenate(
+                (self.A, self.AT),
+                axis=0
+            )
 
             # assert not np.isnan(self.W_hat).all(), ("The projection matrix contains nan's!", self.Q)
             # assert self.W_hat.shape == (self.domain.d, self.active_d+passive_dimensions), ("Created wrong projectoin shape: ", self.At.shape, self.active_d, passive_dimensions)
@@ -314,14 +322,13 @@ class BoringGP(ConfidenceBoundModel):
             #     [-0.50445148, -0.40016722, -0.48737089, -0.58980041],
             #     [-0.20042413, -0.65288502, -0.12700055, 0.71933454]
             # ])
-            self.noise_var = 0.005
-            self.lengthscale = 2.5
-            self.variance = 1.0
-            self.active_d = 2
+
+
+            print("Resulting matrix has shape: ", self.active_d, self.passive_d, self.W_hat.shape)
 
             self.create_new_gp_and_kernel(
                 active_d=self.active_d,
-                passive_d=0,
+                passive_d=self.passive_d,
                 variance=self.variance,
                 lengthscale=self.lengthscale,
                 noise_var=self.noise_var
@@ -341,7 +348,7 @@ class BoringGP(ConfidenceBoundModel):
             print("TRIPATHY :: Likelihood of the current GP is: ", self.gp.log_likelihood())
 
         Z = np.dot(X, self.W_hat.T)
-        assert Z.shape[1] == self.active_d, ("Projected Z does not conform to active dimension", (Z.shape, self.active_d))
+        assert Z.shape[1] == self.active_d + self.passive_d, ("Projected Z does not conform to active dimension", (Z.shape, self.active_d + self.passive_d))
         self._set_data(Z, Y)
 
     def _set_datasaver_data(self, X, Y):
@@ -354,7 +361,7 @@ class BoringGP(ConfidenceBoundModel):
 
     def _raw_predict(self, Xnew):
 
-        assert Xnew.shape[1] == self.active_d, ("Somehow, the input was not project")
+        assert Xnew.shape[1] == self.active_d + self.passive_d, ("Somehow, the input was not project", Xnew.shape, self.active_d, self.passive_d)
 
         Kx = self.kernel.K(self._X, Xnew)
         mu = np.dot(Kx.T, self._woodbury_vector)
