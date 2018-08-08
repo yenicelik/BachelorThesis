@@ -20,16 +20,14 @@ Such problems include neural architecture search \citep{BayesianOptimizationNAS}
 
 Bayesian optimization methods are a class of sequential black box optimization methods.
 A surrogate function surface is learned using a Gaussian prior, and a Gaussian likelihood function.
-Combining the prior and the likelihood results in the Gaussian Posterior, which can then be used as a surface over which optimization can take place, with the help of a chosen acquisition function. \\
+Combining the prior and the likelihood results in the Gaussian posterior, which can then be used as a surface over which optimization can take place, with the help of a chosen acquisition function. \\
 
 Bayesian optimization is a method that has increasingly gained attention in the last decades, as it requires relatively few points to find an appropriate response surface for the function over which we want to optimize over.
 It is a sequential model based optimization function, which means that we choose the best point $x^*_i$ given all previous points $x^*_{i-1}, x^*_{i-2}, \ldots, x^*_{0}$.
-Given certain acquisition functions, it offers a good mixture between exploration and exploitation from an empirical standpoint. \\
-
-Bayesian optimization is a method that has increasingly gained popularity, as it shows empirical success in finding a good mixture between exploration the search space (finding new hyper-parameter configurations that outperform all existing configurations), and exploiting currently found best configurations (using the best learned hyper-parameter configurations to get utility out of the system) \citep{BOIncreasingPopularityEmpirically}. \\
+Given certain acquisition functions, it offers a good mixture between exploration and exploitation from an empirical standpoint \citep{BOIncreasingPopularityEmpirically}. \\
 
 However, as machine learning algorithms, and other problems become more complex, bayesian optimization needs to cope with the increasing number of dimensions that define the search space of possible configurations.
-Because BO methods lose effectiveness in higher dimensions due to the loss of information through spatial locality, this thesis work explores methods that work in higher dimensions.
+Because BO methods lose effectiveness in higher dimensions due to the curse of dimensionality, this work  explores Bayesian optimization methods that improve the optimization performance in higher dimensions.
 Finally, we propose a novel method that improves on certain characteristics of the current state-of-the-art.
 
 \section{Gaussian Processes}
@@ -48,10 +46,9 @@ y_* \end{pmatrix} \sim N\Biggl(\mu,\begin{pmatrix} K & K^T_*\\
 \end{equation}
 
 Where $\mu$ is a mean function, $K = \text{kernel}(\mathbf{X}, \mathbf{X})$, $K_* = \text{kernel}(\mathbf{x_*}, \mathbf{X})$ and $K_{**} = \text{kernel}(\mathbf{x_*}, \mathbf{x_*})$.
-Any new point $y_*$ is predicted given all previously sampled points $y$ by estimating the probability $ p(y_*|y) \sim N(K_*K^{-1}y,K_{**}-K_*K^{-1}K'_*) $
+Any new point $y_*$ is predicted given all previously sampled points $y$ by estimating the probability $ p(y_*|y) \sim N(K_*K^{-1}y,K_{**}-K_*K^{-1}K'_*) $\\
 
-This, in turn, can be used to build an acquisition function. 
-This acquisition function describes where to best sample points next.
+These results can then be used by an acquisition function, that described where to best sample the points next.
 Some popular acquisition functions include GP-UCB, Most probable improvement (MPI) and Expected Improvement (EI).
 The choice of the acquisition function has great influence on the performance of the optimization procedure.\\
 
@@ -64,7 +61,7 @@ The \textbf{prior} for the Gaussian Process is the following (assuming the commo
 u \sim GP(0, k(x, x'))
 \end{equation}
 
-Because $u$ is a random variable following a Gaussian Process distribution, its probably distribution is given by a normal distribution:
+$u$ is a random variable following a Gaussian Process distribution and its probability distribution is given by a normal distribution:
 
 \begin{equation}
 p(u) = N ( 0, K )
@@ -73,7 +70,7 @@ p(u) = N ( 0, K )
 Additional data $ X = \{ (x_1, y_1), \ldots, (x_n, y_n) \} $ can be observed.
 The Gaussian Process incorporates an error term that takes into consideration possible noise in the measurement of the experiment.
 Thus, $y$ has some noise term $\epsilon$ such that $y = u(x) + \epsilon$.
-By the central limit theorem, commonly the assumption is held that $\epsilon$ is normally distributed around $0$ with $\sigma_s$ standard deviation.
+By the central limit theorem, commonly the assumption is taken that $\epsilon$ is normally distributed around $0$ with $\sigma_s$ standard deviation.
 Given the sampled datapoints, and the inherent noise that these datapoints have, the \textbf{likelihood} of the Gaussian Process can be represented as follows:
 
 \begin{equation}
@@ -107,16 +104,16 @@ To compute this equation, we use the results from Murphy's textbook \citep{Murph
 \section{Acquisition Functions}
 
 Given the above formula for the posterior mean $\mu$ and the poster variance $\sigma^2$, Bayesian Optimization makes use of an acquisition function.
-The following is a summary of the most popular acquisition functions in current literature.
-A good recent summary is given by \citep{AcquisitionFunctionsMaximizing}.
+The following is a summary of the most popular acquisition functions in recent literature.
+A good summary is given by \citep{AcquisitionFunctionsMaximizing}.
 
 % Most formulae taken from "A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning
 
 \subsection{Upper Confident Bound (UCB)}
-\citep{UCBRegretProof} show a proof, that for a certain tuning of the parameter $\beta$, the acquisition function has asymptotic regret bounds.
+\citep{UCBRegretProof} shows a proof, that for a certain tuning of the parameter $\beta$, the acquisition function has asymptotic regret bounds.
 
-The upper confidence bound allows the user to control exploitation and exploration through a parameter $\beta > 0$, which can be chosen as specified in \citep{UCBRegretProof} , to offer regret bounds.
-In addition to that, GP-UCB shows state-of-the-art empirical performance \citep{Djolonga2013}.
+The upper confidence bound allows the user to control exploitation and exploration through a parameter $\beta > 0$, which can be chosen as specified in \citep{UCBRegretProof} to offer regret bounds.
+In addition to that, GP-UCB shows state-of-the-art empirical performance in numerous use-cases\citep{Djolonga2013}.
 
 \begin{equation}
 UCB(x) = \mu(x) + \sqrt{ \beta } \sigma(x)
@@ -127,7 +124,7 @@ Here, the functions $\mu$ and $\sigma$ are the predicted mean and variance of th
 \subsection{Probability of Improvement (PI)}
 The (maximum) probability of improvement \citep{AcquisitionFunctions} always selects the points where the mean plus uncertainty is above the maximum explored function threshold. 
 The downside to this policy is that this leads to heavy exploitation.
-However, the rate of exploitation can be controlled by a parameter $\xi > 0$.
+However, the intensity of exploitation can be controlled by a parameter $\xi > 0$.
 
 \begin{align}
     PI(x) & = P( f(x) \geq f(x^+) + \xi ) \\
@@ -161,4 +158,4 @@ The combination of Gaussian Processes and Acquisition function together result i
 
 \section{Resources}
 For the experiments and code basis, most of our functions rely on the Sheffield Machine Learning - GPy library \citep{gpy2014}.
-In addition to that, the febo framework developed by Johannes Kirschner from the Learning and Adaptive Systems group at ETH Zurich.
+In addition to that, I use the febo framework developed by Johannes Kirschner from the Learning and Adaptive Systems group at ETH Zurich.

@@ -166,7 +166,7 @@ The argument for this is that the projected subspace does not change, merely the
 Here, the family of orthogonal matrices of dimension $d \times D$ is denoted by $\mathbf{W} \in V_d(\mathbb{R}^D) $.
 This quantity is also known as the \textbf{Stiefel manifold} \citep{StiefelBayesianInference} \citep{StatisticsStiefelIntro} \citep{StiefelNonparametric}, where $d$ is the found effective dimension of the function, and $D$ is the real input dimension to the function. \\
 
-\subsubsection{Kernel used}
+\subsubsection{The Matern32 Kernel}
 The optimization processes in the paper use the Matern-32 kernel function.
 This function has two input vectors $a$ and $b$.
 
@@ -194,7 +194,7 @@ I now proceed to explain the components of the algorithm from a top-down approac
 The algorithm proceeds as follows.
 
 \begin{algorithm}
-\caption{The SI-BO algorithm \citep{Djolonga2013}}
+\caption{The Tripathy Algorithm}}
 
 \begin{algorithmic} 
 \REQUIRE $m_X, m_{\Phi}, \lambda, \epsilon, k$, oracle for the function $f$, kernel $\kappa$ 
@@ -214,7 +214,7 @@ The algorithm proceeds as follows.
 \end{algorithm}
 
 
-\subsubsection{Step 1.: Determine the active projection matrix W}.
+\subsubsection{Step 1.: Determine the active projection matrix W}
 In this step, the algorithm optimizes $W \in V_d(\mathbb{R}^D)$ while keeping the kernel hyperparameters $\phi$ and the GP noise variance $s_n$ fixed.
 
 To simplify calculations later, we define the function, where all parameters but $W$ are fixed as $F$. 

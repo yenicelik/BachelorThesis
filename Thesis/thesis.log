@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  7 AUG 2018 10:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  8 AUG 2018 14:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1901,26 +1901,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 25--28
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 29--30
-
- []
-
 [1
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 36--38
+Underfull \hbox (badness 10000) in paragraph at lines 34--36
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--41
+Underfull \hbox (badness 10000) in paragraph at lines 37--39
 
  []
 
 
-Overfull \hbox (10.99869pt too wide) in paragraph at lines 50--52
+Overfull \hbox (10.99869pt too wide) in paragraph at lines 48--50
 []\T1/ptm/m/n/12 (-20) Where $\OML/ztmcm/m/it/12 ^^V$ \T1/ptm/m/n/12 (-20) is a
  mean func-tion, $\OML/ztmcm/m/it/12 K \OT1/ztmcm/m/n/12 = [](\OT1/ptm/b/n/12 X
 \OML/ztmcm/m/it/12 ; \OT1/ptm/b/n/12 X\OT1/ztmcm/m/n/12 )$\T1/ptm/m/n/12 (-20) 
@@ -1931,17 +1926,17 @@ n/12 (-20) .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 53--57
+Underfull \hbox (badness 10000) in paragraph at lines 51--55
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 93--95
+Underfull \hbox (badness 10000) in paragraph at lines 91--93
 
  []
 
 [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 157--158
+Underfull \hbox (badness 10000) in paragraph at lines 155--156
 
  []
 
@@ -2498,7 +2493,7 @@ st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
 mes/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on thesis.pdf (60 pages, 4294123 bytes).
+Output written on thesis.pdf (60 pages, 4293794 bytes).
 PDF statistics:
  1037 PDF objects out of 1200 (max. 8388607)
  885 compressed objects within 9 object streams
