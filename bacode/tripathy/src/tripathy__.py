@@ -278,6 +278,7 @@ class TripathyGP(ConfidenceBoundModel):
 
             self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
                 X, Y, load=False)
+            self.W_hat = self.W_hat.T
 
             # self.W_hat = np.asarray([
             #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],

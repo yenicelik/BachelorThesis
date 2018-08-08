@@ -80,8 +80,8 @@ else:
     }
 
 # Stuff that should be true for all runs:
-config['eps_alg1'] = 1.e-3
-config['eps_alg3'] = 1.e-4
+config['eps_alg1'] = 1e-3 # 1.e-3
+config['eps_alg3'] = 1e-4 # 1.e-4
 config['tau_max'] = 1.
 config['no_taus'] = 20
 config['max_dimensions'] = 2

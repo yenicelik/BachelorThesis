@@ -297,14 +297,19 @@ class BoringGP(ConfidenceBoundModel):
         #     [-0.46554187, -0.36224966, 0.80749362],
         #     [0.69737806, -0.711918, 0.08268378]
         # ])
-            # PARABOLA:
-            self.A = np.asarray([[0.49969147, 0.1939272]])
 
-            self.noise_var = 0.005
-            self.lengthscale = 6
-            self.variance = 2.5
-            self.active_d = 1
-            self.passive_d = 1
+            self.A, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
+                X, Y, load=False)
+            self.A = self.A.T
+
+            # PARABOLA:
+            # self.A = np.asarray([[0.49969147, 0.1939272]])
+            #
+            # self.noise_var = 0.005
+            # self.lengthscale = 6
+            # self.variance = 2.5
+            # self.active_d = 1
+            # self.passive_d = 1
 
             self.passive_d = max(self.passive_d , 0)
 
