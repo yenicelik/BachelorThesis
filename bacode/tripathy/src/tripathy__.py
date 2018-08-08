@@ -276,8 +276,8 @@ class TripathyGP(ConfidenceBoundModel):
 
         if self.i % 500 == 100:
 
-            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
-            #     X, Y, load=False)
+            self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
+                X, Y, load=False)
 
             # self.W_hat = np.asarray([
             #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
@@ -290,12 +290,12 @@ class TripathyGP(ConfidenceBoundModel):
             # ])
 
             # PARABOLA
-            self.W_hat = np.asarray([[0.49969147, 0.1939272]])
-
-            self.noise_var = 0.005
-            self.lengthscale = 6
-            self.variance = 2.5
-            self.active_d = 1
+            # self.W_hat = np.asarray([[0.49969147, 0.1939272]])
+            #
+            # self.noise_var = 0.005
+            # self.lengthscale = 6
+            # self.variance = 2.5
+            # self.active_d = 1
 
             self.create_new_gp_and_kernel(
                 active_d=self.active_d,
