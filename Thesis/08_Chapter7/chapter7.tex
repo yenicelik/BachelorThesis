@@ -16,19 +16,17 @@ I present this thesis as a result of a systematic treatment of the topic "Bayesi
 
 \begin{enumerate}
 \item BORING allows the number of dimensions to be smaller than the real active subspace.
-Additional vector elements can be added at a very small cost, keeping the major principal axis untouched.
-\item BORING is more robust to smaller perturbations, as it does not rely on finding the exact active subspace (which can be ambigious if we want the "major" active subspace).
-It allows to optimize over smaller perturbations aswell, whereas current algorithms usually don't take these into consideration.
+Although in general, it does not perform better than other subspace identification algorithms (like tripathy's method), it does allow for better values when the subspace identification fails, as it incorporates an additional dimension which acts like a random embedding.
+As such, it allows for a good trade-off between subspace identification, and optimization using random projections.
+\item BORING is more robust to smaller perturbations, as it does not rely on finding the exact active subspace.
+It allows to optimize over smaller perturbations as well, whereas current algorithms usually don't take these into consideration.
 \end{enumerate}
 
-After doing a throughout literature review, I was able to identify shortcomings of current methods.
-Together with my supervisors, were able to come up with the new algorithm "BORING" that improves on the state-of-the-art for Bayesian Optimization algorithms that are able to identify the subspace projection matrix as part of the optimization procedure.
-In contrast to other algorithms that solely focus on finding a projection, "BORING" takes into consideration smaller perturbations, and makes the GP process more robust by allowing addition projection matrices to optimize over other axis of the subspace. \\
+\section{Future work}
 
-\section{Conclusion}
-
-Our empirical results show that "BORING" provides a new state-of-the-art for Bayesian Optimization algorithms that use subspace projection as the main feature.
-This allows for interpretable future work
+Future work could incorporate the synthesis of different methods, including additive GPs and Tripathy's method.
+Although tripathy's method is unbeaten in identifying the active subspace dimension, heuristics could be easily implemented to speed up the calculation time.
+Recalculating the search space for each new point may be too time consuming, with which REMBO would still be considered the state of the art in terms of Bayesian Black Box Optimization.
  
 
 
