@@ -190,29 +190,9 @@ k_{AS} (x, x'; W, \phi) = k_d(W^T x, W^T x'; \phi)
 
 \subsection{Overview of the algorithm}
 
-I now proceed to explain the components of the algorithm from a top-down approach.
-The algorithm proceeds as follows.
-
-\begin{algorithm}
-\caption{The Tripathy Algorithm}}
-
-\begin{algorithmic} 
-\REQUIRE $m_X, m_{\Phi}, \lambda, \epsilon, k$, oracle for the function $f$, kernel $\kappa$ 
-
-\STATE $C \leftarrow m_X $ samples uniformly from $\mathbb{S}^{d-1}$
-
-\FOR{$ i \leftarrow 1$ to $M_l$}
-\STATE $\Phi_i \leftarrow m_{\Phi}$ samples uniformly from $\{ -\frac{1}{\sqrt{m}}, \frac{1}{\sqrt{m}} \}^k$
-\ENDFOR
-
-\STATE $ y \leftarrow $ (compute using Equation 1 -- INSERT Eq 1 here, or create a summary of all important equations here)
-
-\STATE select $z_i$ according to a UCB acquisition function, evaluate $f$ on it, and add it to the datasamples found so far
-
-\end{algorithmic}
-
-\end{algorithm}
-
+In the following, I will explain the individual steps of the algorithm.
+The shown two steps are repeated until the change of the log-likelihood reaches a certain threshold.
+This algorithm is repeated a number of restarts, as the initial sample of $W$ plays a big role in finding a good converged embedding.
 
 \subsubsection{Step 1.: Determine the active projection matrix W}
 In this step, the algorithm optimizes $W \in V_d(\mathbb{R}^D)$ while keeping the kernel hyperparameters $\phi$ and the GP noise variance $s_n$ fixed.
@@ -221,8 +201,8 @@ To simplify calculations later, we define the function, where all parameters but
 The other parameters are determined from previous runs, or are freshly sampled:
 
 \begin{align}
-F(W) &:= \mathcal{L}(W, s_n; X, y) \\
-& = \log p(y | X, W, s_n) \\
+F(W) &:= \mathcal{L}(W, \phi, s_n; X, y) \\
+& = \log p(y | X, W, \phi, s_n) \\
 & =  -\frac{1}{2} (y - m)^T (K + s_n^2 I_N)^{-1} (y - m) -\frac{1}{2} \log|K + s_n^2 I_N| -\frac{N}{2} \log 2 \pi   \\
 \end{align}
 
@@ -255,12 +235,12 @@ One iteratively chooses fixed $W$, and does a grid-search over $\tau$ such that 
 
 \subsubsection{Step 2.: Optimizing over GP noise variance and the kernel hyperparameters}
 
-We determine the hyperparameters by optimizing over the following loss function, where $X$ are the input values, $Y$ are the corresponding output samples. $\phi$ is the concatenated vector of the kernel hyperparameters and the GP noise variance. \\
+We determine the hyperparameters by optimizing over the following loss function, where $X$ are the input values, $Y$ are the corresponding output samples. $\phi$ is the vector of the kernel hyperparameters and $s_n$, the GP noise variance. \\
 
 One keeps the $W$ fixed (either by taking $W$ from the last iteration, or freshly sampling it), and then defines the loss function
 
 \begin{equation}
-	L(\phi) = \mathcal{L}(W, \phi, \sigma_n; X, y) 
+	L(\phi) = \mathcal{L}(W, \phi, \s_n; X, y) 
 \end{equation}
 
 To optimize this loss function, a simple optimization algorithm such as $L-BFGS$ is used to individually maximize each element of the hyperparameter vector with regards to the log-likelihood.

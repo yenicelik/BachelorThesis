@@ -36,7 +36,7 @@ The authors propose that restarting REMBO multiple times would allow for a good 
 \begin{itemize}
 
 \item \textbf{Access to gradients:} For optimization algorithms, the function we want to optimize over is usually a black-box function.
-Practically, most black-box functions don't offer access to gradient information.
+Practically, many black-box functions don't offer access to gradient information.
 To approximate the gradients using sampled points, this would require a high number of datapoints per dimension.
 In addition to that, these points would have to be evenly distributed, such that the gradients can be effectively estimated for more than one region.
 
@@ -47,14 +47,14 @@ Depending on the application, this can make the algorithm ineffective as it is n
 
 Given the nature of real-world data, approximating the active subspace using the gradients of the data-samples is thus not a robust, and viable option.
 
-\paragraph{Tripathy's method} argues that it is more robust to real-world noise. 
+\paragraph{Tripathy} argues that its method is more robust to real-world noise. 
 It also does not rely on gradient information of the response surface.
 Tripathy's method allows for a noise-robust way to identify the active subspace.
 
 \begin{itemize}
 
 \item \textbf{Duration of optimization:} In practice, Tripathy's method takes a long time, especially if the dimensions, or the number of data-points are high. This is due to the high number of matrix multiplications. 
-Especially for easier problems, it is often desirable if the running time of optimizing for the next point is in a few minutes or seconds, rather than hours.
+Especially for easier problems, it is often desirable if the running time of optimizing for the next point is a few minutes or seconds, rather than hours.
 
 \item \textbf{Efficiency:} In practice, Tripathy's method relies on a high number of restarts.
 From our observations, the number of steps to optimize the orthogonal matrix becomes relevant as the number of dimensions grow.
@@ -68,14 +68,9 @@ Although we can control to what extent small perturbations should be part of the
 
 \section{Method of measuring improvements}
 In the following sections, we will discuss and show how we can improve on the shortcomings of the above methods.
-Because practicality is important in our method, we will both use synthetic functions to measure the efficiency of our method, but also real datasets.
-For real datasets, we want to see if the
-\textbf{???} log likelihood improves.
-I will use a real dataset of an electron accelerator.
-I will increasingly train the GP model on a number of data-points.
-As more data-points are added to the GP, the log likelihood of the test points should have the tendency to increase.\\
+Because practicality is important in our method, we will use synthetic functions to measure the efficiency of our method.
 
-Besides that, we offer the following possibilities to check how well our model does.
+Some terms that allow us to measure the performance of a Bayesian optimization algorithm or a GP surrogate function include:
 
 \begin{itemize}
 \item Test if the expectation $$ E[ f(A x) - \hat{f}(\hat{A} x) ] $$ decreases / approaches zero (for methods that identify a projection matrix).
@@ -106,9 +101,6 @@ dist(A, B) &= \left\Vert A A^T - B B^T\right\Vert_2 \\
 \end{align}
 
 where $ A, B \in \mathbf{R}^{D \times d}  $
-
-\item Check if the regret for the methods at hand are competitive, for synthetic functions.
-
 \end{itemize}
 
 
@@ -120,16 +112,8 @@ The following synthetic functions cover different use cases.
 
 \paragraph{2D to 1D}: A simple Parabola which is embedded in a 2D space.
 This function is supposed to check that the complexity of the model does not hinder discovering simpler structures - in other words, the model complexity should still allow for finding simpler embeddings and functions.
+\paragraph{3D to 2D}: The Camelback function which is embedded in a 3D space.
+This checks how tight the model can actually approximate the 2D subspace, or if a 3D UCB performs better than our models.
 \paragraph{5D to 2D}: The Camelback function which is embedded in a 5D space.
-This checks if simple models can be found within certain, higher dimensional spaces.
-\paragraph{5D to 2D}: A simple exponential function which is enclosed in a sinusoidal function (with decreasing amplitude), which is embedded in a 5D space.
-This function measures if small perturbations are covered by the more complicated model (our proposed model).
-
-\subsection{Real Datasets}
-It is more difficult to test algorithms on real datasets, as one cannot test on a metric such as regret.
-However, one can train the GP on a training set, and then compare the log-likelihood on a test set.
-
-\paragraph{SwissFEL dataset}
-\dots and some more 
-
+This checks if more complicated models can be found within higher dimensional spaces.
 
