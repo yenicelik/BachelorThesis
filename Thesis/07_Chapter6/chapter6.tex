@@ -15,10 +15,9 @@
 
 Appendix A presents a list of synthetic functions and real datasets that are used to evaluate the effectiveness of a Bayesian Optimization algorithm. 
 I conduct experiments in the following settings as mentioned in chapter \ref{syntheticFunction}.
-Furthermore, we will shortly discuss the underlying real dataset, which is hyper-parameter-configurations from the SwissFEL x-ray laser.
 
 \section{Quantitative evaluation}
-To recapitulate, I will use log-likelihood measures and cumulative regret to compare the performance of different algorithms.
+To recapitulate, I will use log-likelihood, angle-difference measures and cumulative regret to compare the performance of different algorithms.
 We present how the different algorithms operate on the UCB.
 It is important to point out that all experiments capped the matrix identification step to about 30 minutes.
 This is much less than in the original papers that we base the algorithm on.
@@ -31,17 +30,7 @@ To keep the measurements fair across algorithms, I fix the noise variance of the
 
 \subsection{Parabola}
 
-\paragraph{Assume $\hat{W} = W_{\text{true}}$}: I present how the respective algorithms perform if we assume that Tripathy's Stiefel Manifold optimization finds the perfect matrix.
-This measures how the algorithm (and not the subspace identification) performs.
-
-\begin{figure}[H]
-  \centering
-      \includegraphics[width=0.5\textwidth]{reference_W_true/Parabola2D}
-  \caption{A picture of the same gull looking the other way!}
-\end{figure}
-
-\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the embedded parabola function which is of the following form.
-This measures how the algorithm performs when the subtask of identifying the subspace has to be achieved.
+The function to be learned and optimized over is the following:
 
 \def\WParaboa2D{
 \begin{bmatrix}
@@ -55,8 +44,22 @@ f(x) = \left( \WParaboa2D^T x \right)^2
 \end{equation}
 where we have $x \in \mathbf{R}^2$ and $W \in \mathbf{R}^{2 \times 1}$.
 
+
+\paragraph{Assume $\hat{W} = W_{\text{true}}$}: I present how the respective algorithms perform if we assume that Tripathy's Stiefel Manifold optimization finds the perfect matrix.
+This measures how the algorithm (and not the subspace identification) performs.
+
+\begin{figure}[H]
+  \centering
+      \includegraphics[width=0.5\textwidth]{reference_W_true/Parabola2D}
+  \caption{A picture of the same gull looking the other way!}
+\end{figure}
+
+\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the embedded parabola function which is of the following form.
+This measures how the algorithm performs when the subtask of identifying the subspace has to be achieved.
+
 We run 4 different independent runs to show the variance between multiple runs.
-The reader should notice that the individual runs do carry the same kernel parameters, and thus should theoretically have similar properties as UCB on the vanilla function.
+However, as most of the runs show similar results, I display only one of them
+The reader should notice that the individual runs do carry the same kernel parameters, and thus should theoretically have similar properties as UCB on the vanilla function (once the active subspace is identified).
 
 % PARABOLA FUNCTION
 \begin{figure}[H]
@@ -187,8 +190,7 @@ Because of time constraints, (and because I had to use my laptop for computation
 
 
 \section{Qualitative evaluation}
-
-It is interesting to see, that amongst the 1000 restarts that I generated, many of the resulting matrices are close to the real projection matrix up to an absolute value of 0.01.
+It is interesting to see, that amongst the 1000 restarts that I generated, some of the resulting matrices are close to the real projection matrix up to an absolute value of 0.01.
 However, because the algorithm decides to choose the matrix with the highest likelihood, tripathy's algorithm in general does not select these matrices, but chooses a matrix that is not amongst the matrices that are very similar to the real matrices.
 
 \subsection{Feature selection}
@@ -322,7 +324,7 @@ We have the following functions:
 \item 1D Parabola embedded in a 2D space
 \item 2D Camelback embedded in a 5D space
 \item 2D Sinusoidal and Exponential function embedded in a 5D space
-\end{enumerate} //
+\end{enumerate}
 
 To be able to visualize the points, I proceed with the following procedure:
 
@@ -411,7 +413,7 @@ The active subspace projection matrix is of size $\mathbf{R}^{1 \times 2}$
 I set the number of restarts to $28$ and number of randomly sampled datapoints to 100.
 The active subspace projection matrix is of size $\mathbf{R}^{1\times 5}$, as this is a function that exhibits a strong principal component, but that still attains small perturbations among a different dimension.
 One can see very well here, that BORING is able to take into account the small perturbations, at a considerably lower cost than Tripathy would be able to.
-REMBO ???
+
 
 % CAMELBACK FUNCTION
 \begin{figure}[H]
@@ -451,44 +453,3 @@ The active subspace projection matrix is of size $\mathbf{R}^{2 \times 5}$, as t
 Notice that Tripathy and BORING use the exact same algorithm, as the visualization does not allow to add a third axis. 
 In other words, BORING does not add any additional orthogonal vector to the model.
 As such, it does not add any additional kernels to the model aswell, and is equivalent to tripathy.
-REMBO ???
-
-% CAMELBACK 1D PROJECTION
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{orig/Camelback-5D->2D.png}
-        \caption{Camelback Original}
-        \label{fig:gull}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{orig/Camelback-5D->2D_BORING_1D.png}
-        \caption{Camelback Boring}
-        \label{fig:tiger}
-    \end{subfigure}
-        \vskip\baselineskip
- %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-    %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{orig/Camelback-5D->2D_TRIPATHY_1D.png}
-        \caption{Camelback Tripathy}
-        \label{fig:mouse}
-    \end{subfigure}
-        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-    %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{orig/Camelback-5D->2D_REMBO_1D.png}
-        \caption{Camelback Rembo}
-        \label{fig:mouse}
-    \end{subfigure}
-    \caption{Top-Left: The 2D Camelback Function which is embedded in a 5D space.}\label{fig:animals}
-\end{figure}
-
-I set the number of restarts to $28$ and number of randomly sampled datapoints to 100.
-The active subspace projection matrix is of size $\mathbf{R}^{1 \times 5}$, as I want to explore to what extent complicated functions are explored, when we set the effective dimension lower than the real number of active dimensions.
-One can see that tripathy has a much smoother function surface, and that BORING allows to take into consideration smaller local perturbations, as it includes a third random axis.
-Whichever is better depends on the application, and BORGIN will be able to adapt better to more points, whereas Tripathy will project multiple points onto the same space.
-One can see very well here, that BORING is able to take into account the small perturbations, at a considerably lower cost than Tripathy would be able to.
-REMBO ??? 
