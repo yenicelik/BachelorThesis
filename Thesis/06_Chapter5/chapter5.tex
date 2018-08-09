@@ -2,7 +2,7 @@
 %*******************************************************************************
 %****************************** Fourth Chapter **********************************
 %*******************************************************************************
-\chapter{Model Design and Extensions to the state of the art}
+\chapter{A New Model}
 
 % **************************** Define Graphics Path **************************
 \ifpdf
@@ -11,7 +11,7 @@
     \graphicspath{{Chapter4/Figs/Vector/}{Chapter4/Figs/}}
 \fi
 
-Given the fields of improvements in the above section, we now propose an algorithm which addresses the majority of the issues mentioned in the above section.
+Given the fields of improvements in the above section, we now propose an algorithm which addresses the majority of the issues.
 I will first present that algorithm, and then point out, as to why each individual concern is addressed.
 
 \section{The BORING Algorithm}
@@ -45,21 +45,21 @@ We use different kinds of kernels.
 We want to calculate $g_i$ and $A$ as defined in \ref{eq:dimRedEquation}, such that the log-likelihood of the data we have accumulated so far is maximized.\\
  
  The following few steps are applied after a "burn-in" period, in which we use random sampling to acquire new points.
- We do a random sampling as we want an unbiased dataset from which we can identify the active subspace projection matrix. \\
+ We sample the datapoints using UCB, as empirically, this is similar to a random sampling of the datapoints (with the subspace identification in mind).\\
  
  In simple terms, the algorithm proceeds as follows:
  
  \begin{enumerate}
- \item Pick the first $n$ samples using random sampling.
- Do not apply UCB or any acquisition function to select the next best point yet.
+ \item Pick the first $n$ samples using UCB sampling.
+ During this period, we use UCB with a naive kernel, which has as many dimensions as the domains dimensions.
  From the collected points, approximate the active projection matrix $A$ using algorithm 1 from \citep{Tripathy}.
  \item Generate a basis that is orthonormal to every element in $A$.
  Concatenating these basis vectors $v_1, \ldots, v_{n-{q}}$ amongst the column-dimension gives us the passive projection matrix $A^\bot$.
  \item Maximize the GP for each individual expression of the space within $A$, and parallel to that also orthogonal to $A$ (as given by $A^\bot x$) individually. 
  \end{enumerate}
  
- This fights the curse of dimensionality, as we can freely choose $q \geq d_e$ to set the complexity of the second term while the first term still allows for creating proximity amongst different vectors by projecting the vectors onto a smaller subspace.
-The active subspace captures the direction of strongest direction, whereas the passive subspace projection captures an additional GP that adds to the robustness of the algorithm
+ This addresses the curse of dimensionality, as we can freely choose $q \geq d_e$ to set the complexity of the second term while the first term still allows for creating proximity amongst different vectors by projecting the vectors onto a smaller subspace.
+The active subspace captures the direction of strongest direction, whereas the passive subspace projection captures an additional GP that adds to the robustness of the algorithm, should the subspace identification fail.
 The additive terms that get projected onto the passive subspace also allows to incorporate smaller perturbations in the space orthogonal to $A$ to occur.
 
 \begin{algorithm}[H]
@@ -77,13 +77,14 @@ The additive terms that get projected onto the passive subspace also allows to i
 \STATE Add $x_*$ to $X$ and $ f(x_*)$ to $Y$.
 \ENDWHILE
 
-\WHILE{we can choose a next point}
-% TODO: add an if statement that the active subspace is re-calculated every now and then
 \STATE $A, d, \phi \leftarrow $ Calculate active subspace projection using Algorithm 2 from the paper by Tripathy.
 \STATE $A^{\bot} \leftarrow $ Generate passive subspace projection using Algorithm 3.
 \STATE $Q \leftarrow $ colwiseConcat( $[A, A^{\bot}]$ ) 
 \STATE $gp \leftarrow GP( $dot$( Q^T, X), Y)$
 \STATE kernel $\leftarrow$ activeKernel + $\sum_i^{q}$ passiveKernel$_i$ 
+
+\WHILE{we can choose a next point}
+% TODO: add an if statement that the active subspace is re-calculated every now and then
 \STATE $x_* \leftarrow $ argmax$_x$ UCB$(dot(Q^{\bot}, x) )$
 \STATE Add $x_*$ to $X$ and $ f(x_*)$ to $Y$.
 \ENDWHILE
@@ -170,8 +171,9 @@ The procedure is summarised in Algorithm 3:\\
 
 \subsubsection{Additive UCB acquisition function}
 
-Because the function is decomposed into multiple additive components, the computation of the mean and variance needs to be adapted accordingly.
-Refering to \citep{Rolland}, the following method is used. \\
+Because the function is decomposed into multiple additive components, the computation of the mean and variance needs to be adapted accordingly. 
+Although I don't use this method in my experiments, it is still useful to mention one way to approximate these terms for higher dimensional input.
+Referring to \citep{Rolland}, the following method is used. \\
 
 \begin{align}
 \mu_{t-1}^{(j)} &= k^j(x_*^{(j)}, X^j)\Delta^{-1}y \\
@@ -199,7 +201,7 @@ For lower dimensions - such as $d<3$ - it is not required to decompose the acqui
 \begin{enumerate}
 \item Our algorithm intrinsically uses multiple restarts.
 As such, bad initial states and bad projection matrices are discarded as better ones are identified.
-This makes our algorithm more reliable than algorithms like REMBO.
+This makes our algorithm more reliable than algorithms like naive REMBO (without interleavings).
 \item Our algorithm allows to not only optimize on a given domain, but also identify the subspace on which the maximal embedding is allocated on.
 In addition to that, no gradient information is needed.
 \item Our algorithms uses a "burn-in-rate" for the first few samples, which allows for efficient point search at the beginning, and later on switches to finding the actual, real subspace.
