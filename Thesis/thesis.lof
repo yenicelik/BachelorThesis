@@ -8,18 +8,18 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces A picture of the same gull looking the other way!\relax }}{32}{figure.caption.27}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Parabola Regret Curves on 1. UCB on vanilla Parabola, 2. \relax }}{33}{figure.caption.29}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces A picture of the same gull looking the other way!\relax }}{34}{figure.caption.31}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces A picture of the same gull looking the other way!\relax }}{35}{figure.caption.34}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Sinusoidal Regret Curves\relax }}{36}{figure.caption.36}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{37}{figure.caption.37}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{37}{figure.caption.37}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Real matrix\relax }}{38}{figure.caption.38}
-\contentsline {figure}{\numberline {5.9}{\ignorespaces Matrix found by optimization algorithm\relax }}{38}{figure.caption.38}
-\contentsline {figure}{\numberline {5.10}{\ignorespaces Top-Left: The 1D Parabola which is embedded in a 2D space.\relax }}{39}{figure.caption.39}
-\contentsline {figure}{\numberline {5.11}{\ignorespaces Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.\relax }}{40}{figure.caption.40}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{41}{figure.caption.41}
-\contentsline {figure}{\numberline {5.13}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{42}{figure.caption.42}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces UCB on a Parabola embedded in 2D space, when we assume that the real projection matrix is found by tripathy's algorithm.\relax }}{30}{figure.caption.26}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces UCB on a Parabola embedded in 2D space. This is when we apply tripathy's algorithm to find the real projection matrix $W$.\relax }}{31}{figure.caption.28}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces A picture of the same gull looking the other way!\relax }}{32}{figure.caption.30}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces UCB on a Parabola embedded in 2D space. This is when we apply tripathy's algorithm to find the real projection matrix $W$.\relax }}{32}{figure.caption.32}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces A picture of the same gull looking the other way!\relax }}{33}{figure.caption.34}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces UCB on a Parabola embedded in 2D space. This is when we apply tripathy's algorithm to find the real projection matrix $W$.\relax }}{33}{figure.caption.36}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{35}{figure.caption.37}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{35}{figure.caption.37}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Real matrix\relax }}{35}{figure.caption.38}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Matrix found by optimization algorithm\relax }}{35}{figure.caption.38}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Top-Left: The 1D Parabola which is embedded in a 2D space.\relax }}{37}{figure.caption.39}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.\relax }}{38}{figure.caption.40}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{39}{figure.caption.41}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
