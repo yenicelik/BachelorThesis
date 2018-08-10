@@ -198,6 +198,11 @@ More specifically, the time refers to the number of steps that I allow for tripa
 
 \paragraph{Parabola}
 
+From the graphs, we can see that the parabola always seems to converge at a projection that is at a 45° to the real projection matrix. 
+Intuitively, this seems odd.
+One should notice, that the maximum of the optimization problem is the same, when the space is rotated by 45°.
+Another explanation could be that 100 datapoints on a 2D space are numerous enough, such that any matrix (that does not directly map to the nullspace of the real projection matrix), is an acceptable matrix).
+Why the algorithm always converges at a matrix at 45° to the real projection matrix, would be unclear however in this case.
 
 \begin{figure}[H]
     \centering
@@ -227,35 +232,99 @@ More specifically, the time refers to the number of steps that I allow for tripa
         \label{fig:gull}
            \caption{The average of all momentary $W$ from tripathy's algorithm, and it's angle to the real projection matrix (1D Parabola embedded in 2D)}
           \end{subfigure}
-    \caption{Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.}\label{fig:animals}
+    \caption{Log-Likelihood (top) and Angle (bottom) performance measures for a 1D Parabola embedded in a 2D space.
+    The left graphs show the values for the run that was chosen as the "found" projection matrix.
+    The right graphs show the average values over all restarts of tripathy's method.
+    }\label{fig:animals}
 \end{figure}
 
-The matrix identification algorithm seems to consistently converge to a local minima where the projection matrix is at about 45° to the real projection matrix.
-
 \paragraph{Camelback}
-Chosen $W$'s run (log-likelihood):
+Because from the UCB experiments, we assume Camelback to be more instable, we show the results of two independent runs that exhibit different behavior.
+This is evidence, that tripathy's algorithm on Camelback does not run stably, and has high variance (i.e. is not as robust).
+
+
+
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.40\textwidth}
         \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_run__multiple_loss}
         \label{fig:gull}
     \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+   \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multiple_loss}
+        \label{fig:gull}
+    \end{subfigure} 
+ \vskip\baselineskip
+ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+        \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_run__multiple_angle}
+        \label{fig:gull}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multiple_angle}
+        \label{fig:gull}
+    \end{subfigure}
+    \caption{Log-Likelihood (top) and Angle (bottom) performance measures for a 1D Parabola embedded in a 2D space.
+    The left graphs show the values for the run that was chosen as the "found" projection matrix.
+    The right graphs show the average values over all restarts of tripathy's method.
+    }\label{fig:animals}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_run__multiple_loss}
+        \label{fig:gull}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+   \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multiple_loss}
+        \label{fig:gull}
+    \end{subfigure} 
+ \vskip\baselineskip
+ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+        \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_run__multiple_angle}
+        \label{fig:gull}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multiple_angle}
+        \label{fig:gull}
+    \end{subfigure}
+    \caption{Log-Likelihood (top) and Angle (bottom) performance measures for a 1D Parabola embedded in a 2D space.
+    The left graphs show the values for the run that was chosen as the "found" projection matrix.
+    The right graphs show the average values over all restarts of tripathy's method.
+    }\label{fig:animals}
+\end{figure}
+
+
+
+
+
+Chosen $W$'s run (log-likelihood):
+\begin{figure}[H]
+    \centering
     %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.40\textwidth}
         \includegraphics[width=\textwidth]{angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_run__multiple_loss}
         \label{fig:tiger}
     \end{subfigure}   
-           \caption{The momentary $W$ from tripathy's algorithm, and it's log-likelihood to with respect to the sampled data (2D Camelback embedded in 5D)}
 \end{figure}
 
 Chosen $W$'s run (angle):
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.40\textwidth}
-        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_run__multiple_angle}
-        \label{fig:gull}
-    \end{subfigure}
     %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.40\textwidth}
@@ -268,10 +337,6 @@ Chosen $W$'s run (angle):
 Average $W$'s run (log-likelihood):
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.40\textwidth}
-        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multiple_loss}
-        \label{fig:gull}
-    \end{subfigure}
     %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.40\textwidth}
@@ -284,11 +349,7 @@ Average $W$'s run (log-likelihood):
 Average $W$'s run (angle):
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.40\textwidth}
-        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multiple_angle}
-        \label{fig:gull}
-    \end{subfigure}
-    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+        %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.40\textwidth}
         \includegraphics[width=\textwidth]{angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multiple_angle}
