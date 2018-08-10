@@ -380,7 +380,7 @@ In this regards, tripathy's method is more robust, as it does use some sort of h
 
 \paragraph{Camelback3D}
 This example illustrates how REMBO can find an acceptable subspace.
-However, the linear lines are an indication for the hyperparameters to be no well chosen. 
+However, the linear lines are an indication for the hyperparameters to be no well chosen.
 I do not allow hyperparameter optimization, for the reason such that the results may be comparable to the other algorithm's results.
 As one can see, Camelback3D also provides a difficult for REMBO, although REMBO does find an acceptable subspace projection.
 
@@ -406,10 +406,11 @@ As one can see, Camelback3D also provides a difficult for REMBO, although REMBO 
 \end{figure}
 
 \paragraph{Camelback5D}
-This example illustrates how REMBO can find an acceptable subspace.
-However, the linear lines are an indication for the hyperparameters to be no well chosen. 
-I do not allow hyperparameter optimization, for the reason such that the results may be comparable to the other algorithm's results.
-As one can see, Camelback3D also provides a difficult for REMBO, although REMBO does find an acceptable subspace projection.
+The linearity of the UCB curves is still attained.
+Similar to the result with tripathy's method, REMBO is able to reduce the dimensionality of the subspace in almost any case.
+the effectiveness of this reduction can be small thought.
+The viewer can recognize well that there is high variance in the performance amongst runs.
+This emphasizes how important the interleaved runs are, even though the number of datasamples per projection are divided by the total number of projection (i.e. there is slower learning of the GP surface, however, dimensionality reduction is successful).
 
 \begin{figure}[H]
 \center
@@ -431,23 +432,6 @@ As one can see, Camelback3D also provides a difficult for REMBO, although REMBO 
         \caption{UCB using REMBO on a 2D Camelback embedded in a 5D space.
     }\label{fig:animals}
 \end{figure}
-
-
-
-
-
-
-
-
-\begin{enumerate}
-\item Show UCB runs for the same runs as the funtions used for tripathy/boring
-\item Talk about high variance in results
-\item Talk about parameters are very sensitive
-\item Talk about choosing the optimization domain
-\item Talk about having no measure of knowing if the embedding is good or not.
-\end{enumerate}
-
-
 
 
 \section{Qualitative evaluation}

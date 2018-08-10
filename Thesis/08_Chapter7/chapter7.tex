@@ -29,6 +29,10 @@ However, improving over the log-likelihood can reduce the angle-difference in ma
 
 Future work could incorporate the synthesis of different methods, including additive GPs and Tripathy's method.
 Although tripathy's method is unbeaten in identifying the active subspace dimension, heuristics could be easily implemented to speed up the calculation time.
+One of the most important aspects is hyperparameter tuning for the GP models itself.
+These can make or break the identification of the subspace.
+Choosing bad hyperparameters does not allow us to effectively compare different methods.
+In future, it would be beneficial to address this issue to a stronger extent.
 Recalculating the search space for each new point may be too time consuming, with which REMBO would still be considered the state of the art in terms of Bayesian Black Box Optimization.
  
 
