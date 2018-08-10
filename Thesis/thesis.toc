@@ -4,7 +4,7 @@
 \contentsline {subsection}{\numberline {0.1.2}Background}{ii}{subsection.0.1.2}
 \contentsline {subsection}{\numberline {0.1.3}Scope of the Project}{iii}{subsection.0.1.3}
 \contentsline {chapter}{List of figures}{ix}{chapter*.4}
-\contentsline {chapter}{List of tables}{xi}{chapter*.5}
+\contentsline {chapter}{List of tables}{xiii}{chapter*.5}
 \contentsline {chapter}{\numberline {1}Background}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Bayesian Optimization in high dimensions}{1}{section.1.1}
 \contentsline {section}{\numberline {1.2}Gaussian Processes}{2}{section.1.2}
@@ -62,13 +62,17 @@
 \contentsline {subsection}{\numberline {5.2.3}Camelback embedded in 5D}{33}{subsection.5.2.3}
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{33}{section*.33}
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{33}{section*.35}
-\contentsline {subsection}{\numberline {5.2.4}}{34}{subsection.5.2.4}
-\contentsline {section}{\numberline {5.3}Qualitative evaluation}{34}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Feature selection}{34}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Subspace identification}{36}{subsection.5.3.2}
-\contentsline {chapter}{\numberline {6}Conclusion}{41}{chapter.6}
-\contentsline {section}{\numberline {6.1}Main Contributions}{41}{section.6.1}
-\contentsline {section}{\numberline {6.2}Future work}{41}{section.6.2}
-\contentsline {chapter}{References}{43}{chapter*.42}
-\contentsline {chapter}{Appendix \numberline {A}}{45}{Appendix.a.A}
-\contentsline {section}{\numberline {A.1}Benchmarking functions}{45}{section.a.A.1}
+\contentsline {subsection}{\numberline {5.2.4}Log-Likelihood and Angle difference measures}{34}{subsection.5.2.4}
+\contentsline {paragraph}{Parabola}{34}{section*.37}
+\contentsline {paragraph}{Camelback}{35}{section*.42}
+\contentsline {paragraph}{Sinusoidal}{37}{section*.47}
+\contentsline {section}{\numberline {5.3}REMBO}{39}{section.5.3}
+\contentsline {section}{\numberline {5.4}Qualitative evaluation}{40}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}Feature selection}{40}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}Subspace identification}{42}{subsection.5.4.2}
+\contentsline {chapter}{\numberline {6}Conclusion}{47}{chapter.6}
+\contentsline {section}{\numberline {6.1}Main Contributions}{47}{section.6.1}
+\contentsline {section}{\numberline {6.2}Future work}{47}{section.6.2}
+\contentsline {chapter}{References}{49}{chapter*.57}
+\contentsline {chapter}{Appendix \numberline {A}}{51}{Appendix.a.A}
+\contentsline {section}{\numberline {A.1}Benchmarking functions}{51}{section.a.A.1}

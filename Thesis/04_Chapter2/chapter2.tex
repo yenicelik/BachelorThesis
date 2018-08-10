@@ -240,7 +240,7 @@ We determine the hyperparameters by optimizing over the following loss function,
 One keeps the $W$ fixed (either by taking $W$ from the last iteration, or freshly sampling it), and then defines the loss function
 
 \begin{equation}
-	L(\phi) = \mathcal{L}(W, \phi, \s_n; X, y) 
+	L(\phi) = \mathcal{L}(W, \phi, s_n; X, y) 
 \end{equation}
 
 To optimize this loss function, a simple optimization algorithm such as $L-BFGS$ is used to individually maximize each element of the hyperparameter vector with regards to the log-likelihood.

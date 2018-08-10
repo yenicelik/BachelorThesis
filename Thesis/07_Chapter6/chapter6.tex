@@ -66,7 +66,7 @@ This measures how the algorithm performs when the subtask of identifying the sub
   \centering
       \includegraphics[width=0.5\textwidth]{W_hat_tripathy/Parabola2D_0}
   \caption{UCB on a Parabola embedded in 2D space.
-  This is when we apply tripathy's algorithm to find the real projection matrix $W$.}
+  This is when we apply tripathy's algorithm to find the a projection matrix $W$.}
 \end{figure}
 
 I ran multiple experiments, all of which performed similar to the above graph.
@@ -92,7 +92,8 @@ This measures how the algorithm (and not the subspace identification) performs.
 \begin{figure}[H]
   \centering
       \includegraphics[width=0.5\textwidth]{reference_W_true/Camelback3D}
-  \caption{A picture of the same gull looking the other way!}
+  \caption{UCB on a 2D Camelback function embedded in 5D space.
+  This is when we assume that tripathy finds the real projection matrix $W_{\text{true}}$}
 \end{figure}
 
 \paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the embedded parabola function which is of the following form.
@@ -110,8 +111,8 @@ This measures how the algorithm performs when the subtask of identifying the sub
         \includegraphics[width=\textwidth]{W_hat_tripathy/Camelback3D_1}
         \label{fig:tiger}
     \end{subfigure}   
-        \caption{UCB on a Parabola embedded in 2D space. 
-        This is when we apply tripathy's algorithm to find the real projection matrix $W$.}
+        \caption{UCB on a 2D Camelback function embedded in 3D space.
+  This is when we apply tripathy's algorithm to find a projection matrix $W$, that is acceptable for optimization, but is not near close to the real projection matrix.}
 \end{figure}
 
 One can see that the subspace projection of rembo from 3D to 2D is not efficienty. 
@@ -126,7 +127,8 @@ This measures how the algorithm (and not the subspace identification) performs.
 \begin{figure}[H]
   \centering
       \includegraphics[width=0.5\textwidth]{reference_W_true/Camelback5D}
-  \caption{A picture of the same gull looking the other way!}
+  \caption{UCB on a 2D Camelback function embedded in 5D space.
+  This is when we assume that tripathy finds the real projection matrix $W_{\text{true}}$}
 \end{figure}
 
 \paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the embedded parabola function which is of the following form.
@@ -144,8 +146,8 @@ This measures how the algorithm performs when the subtask of identifying the sub
         \includegraphics[width=\textwidth]{W_hat_tripathy/Camelback5D_1}
         \label{fig:tiger}
     \end{subfigure}   
-           \caption{UCB on a Parabola embedded in 2D space.
-  This is when we apply tripathy's algorithm to find the real projection matrix $W$.}
+           \caption{UCB on a 2D Camelback function embedded in 5D space.
+  This is when we apply tripathy's algorithm to find a projection matrix $W$, that is acceptable for optimization, but is not near close to the real projection matrix.}
 \end{figure}
 
 One can see for for higher dimensions, tripathy's method performs well, as it is able to reduce the dimensionality of the optimization problem.
@@ -158,31 +160,165 @@ An interesting quantity to take into consideration is the log-likelihood of the 
 In the following, I describe the evolution of these quantities as tripathy's algorithm runs.
 
 \paragraph{Parabola}
+Chosen $W$'s run (log-likelihood):
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.40\textwidth}
-        \includegraphics[width=\textwidth]{W_hat_tripathy/Camelback5D_0}
+        \includegraphics[width=\textwidth]{angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__multiple_loss}
+        \label{fig:gull}
+    \end{subfigure}
+           \caption{The momentary $W$ from tripathy's algorithm, and it's log-likelihood w.r.t. the sampled data (1D Parabola embedded in 2D.}
+\end{figure}
+
+Chosen $W$'s run (angle):
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__multiple_angle}
+        \label{fig:gull}
+    \end{subfigure}
+           \caption{The momentary $W$ from tripathy's algorithm, and it's angle to the real projection matrix (1D Parabola embedded in 2D)}
+\end{figure}
+
+Average $W$'s run (log-likelihood):
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/parabola/Parabola-2D-_1D_20_695_multiple_loss}
+        \label{fig:gull}
+    \end{subfigure}
+           \caption{The average of all momentary $W$ from tripathy's algorithm, and it's log-likelihood to the sampled data (1D Parabola embedded in 2D)}
+\end{figure}
+
+Average $W$'s run (angle):
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/parabola/Parabola-2D-_1D_20_695_multiple_angle}
+        \label{fig:gull}
+    \end{subfigure}
+           \caption{The average of all momentary $W$ from tripathy's algorithm, and it's angle to the real projection matrix (1D Parabola embedded in 2D)}
+\end{figure}
+
+The matrix identification algorithm seems to consistently converge to a local minima where the projection matrix is at about 45° to the real projection matrix.
+
+\paragraph{Camelback}
+Chosen $W$'s run (log-likelihood):
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_run__multiple_loss}
         \label{fig:gull}
     \end{subfigure}
     %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.40\textwidth}
-        \includegraphics[width=\textwidth]{W_hat_tripathy/Camelback5D_1}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_run__multiple_loss}
         \label{fig:tiger}
     \end{subfigure}   
-           \caption{UCB on a Parabola embedded in 2D space.
-  This is when we apply tripathy's algorithm to find the real projection matrix $W$.}
+           \caption{The momentary $W$ from tripathy's algorithm, and it's log-likelihood to with respect to the sampled data (2D Camelback embedded in 5D)}
 \end{figure}
 
-\paragraph{Camelback}
+Chosen $W$'s run (angle):
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_run__multiple_angle}
+        \label{fig:gull}
+    \end{subfigure}
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_run__multiple_angle}
+        \label{fig:tiger}
+    \end{subfigure}   
+           \caption{The momentary $W$ from tripathy's algorithm, and it's angle difference to the real projection matrix (2D Camelback embedded in 5D)}
+\end{figure}
+
+Average $W$'s run (log-likelihood):
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multiple_loss}
+        \label{fig:gull}
+    \end{subfigure}
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multiple_loss}
+        \label{fig:tiger}
+    \end{subfigure}   
+           \caption{The average of all momentary $W$ from tripathy's algorithm, and it's log-likelihood to the sampled data (2D Camelback embedded in 5D)}
+\end{figure}
+
+Average $W$'s run (angle):
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multiple_angle}
+        \label{fig:gull}
+    \end{subfigure}
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multiple_angle}
+        \label{fig:tiger}
+    \end{subfigure}   
+           \caption{The average of all momentary $W$ from tripathy's algorithm, and it's angle difference to the real projection matrix (2D Camelback embedded in 5D)}
+\end{figure}
 
 
 \paragraph{Sinusoidal}
+Chosen $W$'s run (log-likelihood):
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_max_run__multiple_loss}
+        \label{fig:gull}
+    \end{subfigure}
+           \caption{The momentary $W$ from tripathy's algorithm, and it's log-likelihood w.r.t. the sampled data (2D Sinusoidal embedded in 5D)}
+\end{figure}
+
+Chosen $W$'s run (angle):
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_max_run__multiple_angle}
+        \label{fig:gull}
+    \end{subfigure}
+           \caption{The momentary $W$ from tripathy's algorithm, and it's angle to the real projection matrix (2D Sinusoidal embedded in 5D)}
+\end{figure}
+
+
+Average $W$'s run (log-likelihood):
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_multiple_loss}
+        \label{fig:gull}
+    \end{subfigure}
+           \caption{The average of all momentary $W$ from tripathy's algorithm, and it's log-likelihood w.r.t. the sampled data (2D Sinusoidal embedded in 5D)}
+\end{figure}
+
+
+Average $W$'s run (angle):
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_multiple_angle}
+        \label{fig:gull}
+    \end{subfigure}
+           \caption{The average of all momentary $W$ from tripathy's algorithm, and it's angle to the real projection matrix (2D Sinusoidal embedded in 5D)}
+\end{figure}
+
+Talk about how the algorithm is able to find the matrix, but somehow doesnt
 
 
 \section{REMBO}
 
 \begin{enumerate}
+\item Show UCB runs for the same runs as the funtions used for tripathy/boring
 \item Talk about high variance in results
 \item Talk about parameters are very sensitive
 \item Talk about choosing the optimization domain
