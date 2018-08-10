@@ -344,6 +344,101 @@ Although we don't show the UCB curves for the sinusoidal (which also prove to be
 
 \section{REMBO}
 
+The final algorithm I am investingating is REMBO, as described in chapter 2.
+REMBO generally finds good embeddings under the assumption, that optimization domain is normalized, and scaled to $[-\sqrt{d}, \sqrt{d}]^d$ where $d$ is at least the effective dimensionality of the optimization function at hand. \\
+
+I shortly present results for UCB that use REMBO as their optimization algorithm.
+The high probability of failing implies a high variance amongst runs. 
+As such, I perform 3 runs for each function addressed in the above section.
+
+\paragraph{Parabola}
+As one can see, REMBO usually finds an embedding that is acceptable and accelerates the optimization process.
+However, run 2 shows that it can also fail in the simplest case of the parabola.
+In this regards, tripathy's method is more robust, as it does use some sort of heuristic to check if the chosen matrix delivers good results.
+
+
+\begin{figure}[H]
+\center
+    \begin{subfigure}[b]{0.30\textwidth}
+        \includegraphics[width=\textwidth]{rembo/Parabola_run0}
+        \label{fig:gull}
+         \caption{Run 1}
+    \end{subfigure}
+        \begin{subfigure}[b]{0.30\textwidth}
+        \includegraphics[width=\textwidth]{rembo/Parabola_run1}
+        \label{fig:gull}
+        \caption{Run 2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.30\textwidth}
+        \includegraphics[width=\textwidth]{rembo/Parabola_run2}
+        \label{fig:gull}
+               \caption{Run 3}
+    \end{subfigure}
+        \caption{UCB using REMBO on a 1D Parabola embedded in a 2D space.
+    }\label{fig:animals}
+\end{figure}
+
+\paragraph{Camelback3D}
+This example illustrates how REMBO can find an acceptable subspace.
+However, the linear lines are an indication for the hyperparameters to be no well chosen. 
+I do not allow hyperparameter optimization, for the reason such that the results may be comparable to the other algorithm's results.
+As one can see, Camelback3D also provides a difficult for REMBO, although REMBO does find an acceptable subspace projection.
+
+\begin{figure}[H]
+\center
+    \begin{subfigure}[b]{0.30\textwidth}
+        \includegraphics[width=\textwidth]{rembo/Camelback3D_run0}
+        \label{fig:gull}
+         \caption{Run 1}
+    \end{subfigure}
+        \begin{subfigure}[b]{0.30\textwidth}
+        \includegraphics[width=\textwidth]{rembo/Camelback3D_run1}
+        \label{fig:gull}
+        \caption{Run 2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.30\textwidth}
+        \includegraphics[width=\textwidth]{rembo/Camelback3D_run2}
+        \label{fig:gull}
+               \caption{Run 3}
+    \end{subfigure}
+        \caption{UCB using REMBO on a 2D Camelback embedded in a 3D space.
+    }\label{fig:animals}
+\end{figure}
+
+\paragraph{Camelback5D}
+This example illustrates how REMBO can find an acceptable subspace.
+However, the linear lines are an indication for the hyperparameters to be no well chosen. 
+I do not allow hyperparameter optimization, for the reason such that the results may be comparable to the other algorithm's results.
+As one can see, Camelback3D also provides a difficult for REMBO, although REMBO does find an acceptable subspace projection.
+
+\begin{figure}[H]
+\center
+    \begin{subfigure}[b]{0.30\textwidth}
+        \includegraphics[width=\textwidth]{rembo/Camelback5D_run0}
+        \label{fig:gull}
+         \caption{Run 1}
+    \end{subfigure}
+        \begin{subfigure}[b]{0.30\textwidth}
+        \includegraphics[width=\textwidth]{rembo/Camelback5D_run1}
+        \label{fig:gull}
+        \caption{Run 2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.30\textwidth}
+        \includegraphics[width=\textwidth]{rembo/Camelback5D_run2}
+        \label{fig:gull}
+               \caption{Run 3}
+    \end{subfigure}
+        \caption{UCB using REMBO on a 2D Camelback embedded in a 5D space.
+    }\label{fig:animals}
+\end{figure}
+
+
+
+
+
+
+
+
 \begin{enumerate}
 \item Show UCB runs for the same runs as the funtions used for tripathy/boring
 \item Talk about high variance in results

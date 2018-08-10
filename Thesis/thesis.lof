@@ -18,12 +18,15 @@
 \contentsline {figure}{\numberline {5.8}{\ignorespaces Log-Likelihood (top) and Angle (bottom) performance measures for a 2D Camelback embedded in a 5D space. The left graphs show the values for the run that was chosen as the "found" projection matrix. The right graphs show the average values over all restarts of tripathy's method. These are the results for run 1. \relax }}{37}{figure.caption.40}
 \contentsline {figure}{\numberline {5.9}{\ignorespaces Log-Likelihood (top) and Angle (bottom) performance measures for a 2D Camelback embedded in a 5D space. The left graphs show the values for the run that was chosen as the "found" projection matrix. The right graphs show the average values over all restarts of tripathy's method. These are the results for run 2. \relax }}{38}{figure.caption.41}
 \contentsline {figure}{\numberline {5.10}{\ignorespaces Log-Likelihood (top) and Angle (bottom) performance measures for a 2D Sinusoidal function embedded in a 5D space. The left graphs show the values for the run that was chosen as the "found" projection matrix. The right graphs show the average values over all restarts of tripathy's method. These are the results for run 2. \relax }}{39}{figure.caption.43}
-\contentsline {figure}{\numberline {5.11}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{40}{figure.caption.44}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{40}{figure.caption.44}
-\contentsline {figure}{\numberline {5.13}{\ignorespaces Real matrix\relax }}{41}{figure.caption.45}
-\contentsline {figure}{\numberline {5.14}{\ignorespaces Matrix found by optimization algorithm\relax }}{41}{figure.caption.45}
-\contentsline {figure}{\numberline {5.15}{\ignorespaces Top-Left: The 1D Parabola which is embedded in a 2D space.\relax }}{43}{figure.caption.46}
-\contentsline {figure}{\numberline {5.16}{\ignorespaces Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.\relax }}{44}{figure.caption.47}
-\contentsline {figure}{\numberline {5.17}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{45}{figure.caption.48}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces UCB using REMBO on a 1D Parabola embedded in a 2D space. \relax }}{40}{figure.caption.45}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces UCB using REMBO on a 2D Camelback embedded in a 3D space. \relax }}{40}{figure.caption.47}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces UCB using REMBO on a 2D Camelback embedded in a 5D space. \relax }}{41}{figure.caption.49}
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{42}{figure.caption.50}
+\contentsline {figure}{\numberline {5.15}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{42}{figure.caption.50}
+\contentsline {figure}{\numberline {5.16}{\ignorespaces Real matrix\relax }}{42}{figure.caption.51}
+\contentsline {figure}{\numberline {5.17}{\ignorespaces Matrix found by optimization algorithm\relax }}{42}{figure.caption.51}
+\contentsline {figure}{\numberline {5.18}{\ignorespaces Top-Left: The 1D Parabola which is embedded in a 2D space.\relax }}{44}{figure.caption.52}
+\contentsline {figure}{\numberline {5.19}{\ignorespaces Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.\relax }}{45}{figure.caption.53}
+\contentsline {figure}{\numberline {5.20}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{46}{figure.caption.54}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
