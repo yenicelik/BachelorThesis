@@ -17,20 +17,25 @@ Appendix A presents a list of synthetic functions and real datasets that are use
 I conduct experiments in the following settings as mentioned in chapter \ref{syntheticFunction}.
 
 \section{Quantitative evaluation}
-To recapitulate, I will use log-likelihood, angle-difference measures and cumulative regret to compare the performance of different algorithms.
-We present how the different algorithms operate on the UCB.
+To recapitulate, I will use log-likelihood, angle-difference measure and cumulative regret to compare the performance of different algorithms.
+We present how the different algorithms perform on the regret measure using UCB as the acquisition function.
 It is important to point out that all experiments capped the matrix identification step to about 30 minutes.
 This is much less than in the original papers that we base the algorithm on.
 The reason for this is that we want to have an acceptable comparison for medium-sized experiments, where time and computational resources can be restrictive (like on a users laptop). \\
 
 I want to have an indication of whether the contribution of the performance comes from our subspace identification, or from the algorithm. 
-For this, I start the discussion of every function in perspective starts with a graph that shows how the respective algorithm performs when the real subspace matrix $W_{\text{true}}$ is injected (instead of running tripathy's subspace identification algorithm). \\
+For this, I start the discussion of every function with a plot that shows how the algorithm performs when the real subspace matrix $W_{\text{true}}$ is assumed to be found (tripathy's algorithm does not run, instead we return the $W_{\text{true}}$ instead of an approximated $\hat{W}$. \\
 
-To keep the measurements fair across algorithms, I fix the noise variance of the GP, and the kernel hyperparameters at a fixed value (for each function). \\
+To keep the measurements fair across algorithms, I fix the noise variance of the GP, and the kernel hyperparameters for each function. \\
 
-I run 4 different independent runs to show the variance between multiple runs.
-However, as most of the runs show similar results, I display only one of them
-The reader should notice that the individual runs do carry the same kernel parameters, and thus should theoretically have similar properties as UCB on the vanilla function (once the active subspace is identified).
+I have multiple independent runs for each functions.
+However, as most of the runs show similar results, I display only one of them unless there is something interesting to see.
+The reader should notice that the individual runs do carry the same kernel parameters (unless an algorithm-specific function decides to change these).
+This means that the algorithms should theoretically have similar properties as UCB on the vanilla function, if the active subspace is identified or the dimensionality is effectively reduced. \\
+
+In all of these graphs, we apply the subspace identification at the 100th timestep.
+This means that we use the first 100 sampled points from UCB to identify a subspace.
+Any other future projected point is projected onto this subspace, before one optimization is taken.
 
 
 \subsection{Parabola}
@@ -43,7 +48,6 @@ The function to be learned and optimized over is the following:
     0.192
 \end{bmatrix}}
 
-
 \begin{equation}
 f(x) = \left( \WParaboa2D^T x \right)^2
 \end{equation}
@@ -51,25 +55,24 @@ where we have $x \in \mathbf{R}^2$ and $W \in \mathbf{R}^{2 \times 1}$.
 
 
 \paragraph{Assume $\hat{W} = W_{\text{true}}$}: I present how the respective algorithms perform if we assume that Tripathy's Stiefel Manifold optimization finds the perfect matrix.
-This measures how the algorithm (and not the subspace identification) performs.
+This measures how the algorithm performs when we assume perfect subspace identification.
 
 \begin{figure}[H]
   \centering
       \includegraphics[width=0.5\textwidth]{reference_W_true/Parabola2D}
-  \caption{UCB on a Parabola embedded in 2D space, when we assume that the real projection matrix is found by tripathy's algorithm.}
+  \caption{UCB on a Parabola embedded in 2D space, when we assume that tripathy's method finds the real projection matrix.}
 \end{figure}
 
-\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the embedded parabola function which is of the following form.
-This measures how the algorithm performs when the subtask of identifying the subspace has to be achieved.
+\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the function described above.
+This measures how the algorithm performs, when subspace identification is a part of the optimization process.
 
 \begin{figure}[H]
   \centering
       \includegraphics[width=0.5\textwidth]{W_hat_tripathy/Parabola2D_0}
   \caption{UCB on a Parabola embedded in 2D space.
-  This is when we apply tripathy's algorithm to find the a projection matrix $W$.}
+  Tripathy's algorithm is applied to find the a projection matrix $\hat{W}$.}
 \end{figure}
 
-I ran multiple experiments, all of which performed similar to the above graph.
 One can easily see that the performance on UCB using tripathy's matrix identification algorithm is similar to the case, when we assume that tripathy executes perfectly.
 
 
@@ -79,25 +82,36 @@ One can easily see that the performance on UCB using tripathy's matrix identific
 %This may be the result of not tuning the hyperparameters during runs.
 %In this case, the BORING algorithm assesses the exact same properties as the tripathy model (as the number of passive dimensions is set to 0), with which the two models perform very similar on the regret curves. \\
 
-\textbf{The log likelihood of the GP w.r.t the collected datapoints} of the tripathy GP with the real matrix is comparable to the log-likelihood of the GP of the tripathy model, where the active projection matrix is calculated using the algorithm.
+\textbf{The log likelihood of the GP w.r.t the collected datapoints} of the tripathy GP with the real matrix is comparable to the log-likelihood of the GP of the tripathy model, where the active projection matrix is calculated using the algorithm (values of $-1.37$ and $-1.38$ or for a different run values of $195.32$ and $210.25$, where ranges are between  $-100$ and $700$).
 One should notice, however, that the angle between the found matrix and the real projection matrix is almost always at $45°$ - a value that does not sound very intuitive, and for which the only reasonable explanation is that the optimization problem stays the same at this projection angle.
-
-
+The reader can view graphs in a subsequent subsection.
 
 \subsection{Camelback embedded in 3D}
 
-\paragraph{Assume $\hat{W} = W_{\text{true}}$}: I present how the respective algorithms perform if we assume that Tripathy's Stiefel Manifold optimization finds the perfect matrix.
-This measures how the algorithm (and not the subspace identification) performs.
+The function to be learned and optimized over is the following:
+
+\def\WCamelback3D{
+\begin{bmatrix}
+    -0.46554187 & -0.36224966 & 0.80749362 \\
+     0.69737806 & -0.711918 & 0.08268378
+\end{bmatrix}}
+
+\begin{equation}
+f(z_1, z_2) = \left( 4 - 2.1 * z_1^2 + \frac{z_1^4}{3} \right)  z_1^2 + z_1 *  z_2 + \left(-4 + 4 * z_2^2 \right) * z_2^2
+\end{equation} \\
+
+where we have $z = \left( \WCamelback3D^T x \right)^2 $, and $ x \in \mathbf{R}^3$, $W \in \mathbf{R}^{2 \times 3}$ and where $z_1$ denotes the first entry of the $z$ vector, and $z_2$ denotes the second element of the $z$ vector.
+
+\paragraph{Assume $\hat{W} = W_{\text{true}}$}: Again, I present how the respective algorithms perform if we assume that Tripathy's Stiefel Manifold optimization finds the perfect matrix.
 
 \begin{figure}[H]
   \centering
       \includegraphics[width=0.5\textwidth]{reference_W_true/Camelback3D}
-  \caption{UCB on a 2D Camelback function embedded in 5D space.
+  \caption{UCB on a 2D Camelback function embedded in 3D space.
   This is when we assume that tripathy finds the real projection matrix $W_{\text{true}}$}
 \end{figure}
 
-\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the embedded parabola function which is of the following form.
-This measures how the algorithm performs when the subtask of identifying the subspace has to be achieved.
+\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: Again, I now proceed with the performance, when the subspace identification is part of the optimization process.
 
 \begin{figure}[H]
     \centering
@@ -112,17 +126,31 @@ This measures how the algorithm performs when the subtask of identifying the sub
         \label{fig:tiger}
     \end{subfigure}   
         \caption{UCB on a 2D Camelback function embedded in 3D space.
-  This is when we apply tripathy's algorithm to find a projection matrix $W$, that is acceptable for optimization, but is not near close to the real projection matrix.}
+  		We apply tripathy's algorithm to find a projection matrix $W$.}
 \end{figure}
 
-One can see that the subspace projection of rembo from 3D to 2D is not efficienty. 
+One can see that the subspace projection of tripathy's method from 3D to 2D is not efficient. 
+The difference between BORING and Tripathy is marginal, as they both rely on a similar algorithm.
 This is an indication that the subspace projection is not close to the real subspace, but potentially just finds a subspace which is acceptable when higher dimensions are taken into consideration.
-The difference between BORING and Tripathy is marginal.
+To investigate this further, we increase the dimensionality of the domain in the next section.
 
 \subsection{Camelback embedded in 5D}
 
-\paragraph{Assume $\hat{W} = W_{\text{true}}$}: I present how the respective algorithms perform if we assume that Tripathy's Stiefel Manifold optimization finds the perfect matrix.
-This measures how the algorithm (and not the subspace identification) performs.
+\def\WCamelback5D{
+\begin{bmatrix}
+     -0.31894555 & 0.78400512 & 0.38970008 & 0.06119476 & 0.35776912 \\,
+     -0.27150973 & 0.066002 & 0.42761931 & -0.32079484 &-0.79759551
+\end{bmatrix}}
+
+\begin{equation}
+f(z_1, z_2) = \left( 4 - 2.1 * z_1^2 + \frac{z_1^4}{3} \right)  z_1^2 + z_1 *  z_2 + \left(-4 + 4 * z_2^2 \right) * z_2^2
+\end{equation} \\
+
+where we have \\
+$z = \left( \WCamelback5D^T x \right)^2 $, and $ x \in \mathbf{R}^5$, $W \in \mathbf{R}^{2 \times 5}$
+and where $z_1$ denotes the first entry of the $z$ vector, and $z_2$ denotes the second element of the $z$ vector.
+
+\paragraph{Assume $\hat{W} = W_{\text{true}}$}: The following shows how tripathy performs when we assume perfect projection-matrix identification.
 
 \begin{figure}[H]
   \centering
@@ -131,8 +159,10 @@ This measures how the algorithm (and not the subspace identification) performs.
   This is when we assume that tripathy finds the real projection matrix $W_{\text{true}}$}
 \end{figure}
 
-\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the embedded parabola function which is of the following form.
-This measures how the algorithm performs when the subtask of identifying the subspace has to be achieved.
+The linear curve may be the result of kernel parameters that were not set very well, which may lead to the same point chosen repeatedly over and over again.
+However, because these kernel parameters are chosen by the algorithm, I do not modify these to get square-root behaved UCB curves.
+
+\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: The following curves present the performance of UCB when subspace identification is part of the optimization process.
 
 \begin{figure}[H]
     \centering
@@ -151,53 +181,53 @@ This measures how the algorithm performs when the subtask of identifying the sub
 \end{figure}
 
 One can see for for higher dimensions, tripathy's method performs well, as it is able to reduce the dimensionality of the optimization problem.
-The difference between BORING and Tripathy is marginal.
+However, one can see that the regret achieved from the empirical projection-matrix identification (the real projection-matrix is not found) is much higher.
+This poses the question of how well the found projection matrix is compared to the real projection matrix.
+I analyse the log-likelihood of the GP to get a quick answer. \\
 
+\textbf{The log likelihood of the GP w.r.t the collected datapoints} of the tripathy GP with the real matrix is not comparable to the log-likelihood of the GP of the tripathy model, where the active projection matrix is calculated using the algorithm.
+For different runs, the log-likelihood of the GP including the real matrix is at $-2$ and $-389$, whereas the log-likelihood of the GP with the estimated projection matrix is at $-0.92$ and $-102$. 
+Although the values $-2$ and $-0.92$ are close to each other, the pair ($-389$, $-102$) shows that the subspace identification task for this algorithm is much more unstable than that for the parabola.
+In the following subsection, I will investigate this issue further.
 
 \subsection{Log-Likelihood and Angle difference measures}
 
 An interesting quantity to take into consideration is the log-likelihood of the sampled data with respect to the GP, and the angle between the found projection matrix, and the real projection matrix.
-In the following, I describe the evolution of these quantities as tripathy's algorithm runs.
+In the following, I describe how these quantities change over a function of time.
+More specifically, the time refers to the number of steps that I allow for tripathy's method to optimize over these parameters.
 
 \paragraph{Parabola}
-Chosen $W$'s run (log-likelihood):
+
+
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.40\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
         \includegraphics[width=\textwidth]{angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__multiple_loss}
         \label{fig:gull}
-    \end{subfigure}
            \caption{The momentary $W$ from tripathy's algorithm, and it's log-likelihood w.r.t. the sampled data (1D Parabola embedded in 2D.}
-\end{figure}
-
-Chosen $W$'s run (angle):
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.40\textwidth}
-        \includegraphics[width=\textwidth]{angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__multiple_angle}
-        \label{fig:gull}
     \end{subfigure}
-           \caption{The momentary $W$ from tripathy's algorithm, and it's angle to the real projection matrix (1D Parabola embedded in 2D)}
-\end{figure}
-
-Average $W$'s run (log-likelihood):
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.40\textwidth}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.40\textwidth}
         \includegraphics[width=\textwidth]{angles_loss/parabola/Parabola-2D-_1D_20_695_multiple_loss}
         \label{fig:gull}
-    \end{subfigure}
            \caption{The average of all momentary $W$ from tripathy's algorithm, and it's log-likelihood to the sampled data (1D Parabola embedded in 2D)}
-\end{figure}
-
-Average $W$'s run (angle):
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.40\textwidth}
+    \end{subfigure}    \vskip\baselineskip
+ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__multiple_angle}
+        \label{fig:gull}
+           \caption{The momentary $W$ from tripathy's algorithm, and it's angle to the real projection matrix (1D Parabola embedded in 2D)}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.40\textwidth}
         \includegraphics[width=\textwidth]{angles_loss/parabola/Parabola-2D-_1D_20_695_multiple_angle}
         \label{fig:gull}
-    \end{subfigure}
            \caption{The average of all momentary $W$ from tripathy's algorithm, and it's angle to the real projection matrix (1D Parabola embedded in 2D)}
+          \end{subfigure}
+    \caption{Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.}\label{fig:animals}
 \end{figure}
 
 The matrix identification algorithm seems to consistently converge to a local minima where the projection matrix is at about 45° to the real projection matrix.
