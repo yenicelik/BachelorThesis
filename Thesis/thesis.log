@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.8.10)  10 AUG 2018 19:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.8.10)  10 AUG 2018 19:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2132,23 +2132,23 @@ n__multiple_loss.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-
 5D-_2D_20_489_max_run__multiple_loss.png  used on input line 279.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
-<07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_run__m
-ultiple_angle.png, id=776, 462.528pt x 346.896pt>
-File: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_r
-un__multiple_angle.png Graphic file (type png)
-<use 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_ru
-n__multiple_angle.png>
-Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-
-5D-_2D_20_489_max_run__multiple_angle.png  used on input line 284.
-(pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multiple_l
-oss.png, id=777, 462.528pt x 346.896pt>
+oss.png, id=776, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multi
 ple_loss.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multip
 le_loss.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-
-5D-_2D_20_489_multiple_loss.png  used on input line 291.
+5D-_2D_20_489_multiple_loss.png  used on input line 284.
+(pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
+<07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_run__m
+ultiple_angle.png, id=777, 462.528pt x 346.896pt>
+File: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_r
+un__multiple_angle.png Graphic file (type png)
+<use 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_ru
+n__multiple_angle.png>
+Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-
+5D-_2D_20_489_max_run__multiple_angle.png  used on input line 291.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multiple_a
 ngle.png, id=778, 462.528pt x 346.896pt>
@@ -2202,8 +2202,8 @@ _2D_20_341_multiple_angle.png  used on input line 333.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
  [38 <./07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max
 _run__multiple_loss.png> <./07_Chapter6/Figs/angles_loss/camelback/run2/Camelba
-ck-5D-_2D_20_489_max_run__multiple_angle.png> <./07_Chapter6/Figs/angles_loss/c
-amelback/run2/Camelback-5D-_2D_20_489_multiple_loss.png> <./07_Chapter6/Figs/an
+ck-5D-_2D_20_489_multiple_loss.png> <./07_Chapter6/Figs/angles_loss/camelback/r
+un2/Camelback-5D-_2D_20_489_max_run__multiple_angle.png> <./07_Chapter6/Figs/an
 gles_loss/camelback/run2/Camelback-5D-_2D_20_489_multiple_angle.png>] [39 <./07
 _Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_max_run__multipl
 e_loss.png> <./07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341
@@ -2397,7 +2397,7 @@ st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2018/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/ti
 mes/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on thesis.pdf (64 pages, 4113699 bytes).
+Output written on thesis.pdf (64 pages, 4113746 bytes).
 PDF statistics:
  1092 PDF objects out of 1200 (max. 8388607)
  910 compressed objects within 10 object streams
