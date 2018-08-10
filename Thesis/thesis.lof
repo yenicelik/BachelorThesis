@@ -15,21 +15,15 @@
 \contentsline {figure}{\numberline {5.5}{\ignorespaces UCB on a 2D Camelback function embedded in 5D space. This is when we assume that tripathy finds the real projection matrix $W_{\text {true}}$\relax }}{34}{figure.caption.34}
 \contentsline {figure}{\numberline {5.6}{\ignorespaces UCB on a 2D Camelback function embedded in 5D space. This is when we apply tripathy's algorithm to find a projection matrix $W$, that is acceptable for optimization, but is not near close to the real projection matrix.\relax }}{34}{figure.caption.36}
 \contentsline {figure}{\numberline {5.7}{\ignorespaces Log-Likelihood (top) and Angle (bottom) performance measures for a 1D Parabola embedded in a 2D space. The left graphs show the values for the run that was chosen as the "found" projection matrix. The right graphs show the average values over all restarts of tripathy's method. \relax }}{36}{figure.caption.38}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Log-Likelihood (top) and Angle (bottom) performance measures for a 1D Parabola embedded in a 2D space. The left graphs show the values for the run that was chosen as the "found" projection matrix. The right graphs show the average values over all restarts of tripathy's method. \relax }}{37}{figure.caption.40}
-\contentsline {figure}{\numberline {5.9}{\ignorespaces The momentary $W$ from tripathy's algorithm, and it's log-likelihood to with respect to the sampled data (2D Camelback embedded in 5D)\relax }}{37}{figure.caption.41}
-\contentsline {figure}{\numberline {5.10}{\ignorespaces The momentary $W$ from tripathy's algorithm, and it's angle difference to the real projection matrix (2D Camelback embedded in 5D)\relax }}{38}{figure.caption.42}
-\contentsline {figure}{\numberline {5.11}{\ignorespaces The average of all momentary $W$ from tripathy's algorithm, and it's log-likelihood to the sampled data (2D Camelback embedded in 5D)\relax }}{38}{figure.caption.43}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces The average of all momentary $W$ from tripathy's algorithm, and it's angle difference to the real projection matrix (2D Camelback embedded in 5D)\relax }}{39}{figure.caption.44}
-\contentsline {figure}{\numberline {5.13}{\ignorespaces The momentary $W$ from tripathy's algorithm, and it's log-likelihood w.r.t. the sampled data (2D Sinusoidal embedded in 5D)\relax }}{39}{figure.caption.46}
-\contentsline {figure}{\numberline {5.14}{\ignorespaces The momentary $W$ from tripathy's algorithm, and it's angle to the real projection matrix (2D Sinusoidal embedded in 5D)\relax }}{40}{figure.caption.47}
-\contentsline {figure}{\numberline {5.15}{\ignorespaces The average of all momentary $W$ from tripathy's algorithm, and it's log-likelihood w.r.t. the sampled data (2D Sinusoidal embedded in 5D)\relax }}{40}{figure.caption.48}
-\contentsline {figure}{\numberline {5.16}{\ignorespaces The average of all momentary $W$ from tripathy's algorithm, and it's angle to the real projection matrix (2D Sinusoidal embedded in 5D)\relax }}{41}{figure.caption.49}
-\contentsline {figure}{\numberline {5.17}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{42}{figure.caption.50}
-\contentsline {figure}{\numberline {5.18}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{42}{figure.caption.50}
-\contentsline {figure}{\numberline {5.19}{\ignorespaces Real matrix\relax }}{42}{figure.caption.51}
-\contentsline {figure}{\numberline {5.20}{\ignorespaces Matrix found by optimization algorithm\relax }}{42}{figure.caption.51}
-\contentsline {figure}{\numberline {5.21}{\ignorespaces Top-Left: The 1D Parabola which is embedded in a 2D space.\relax }}{44}{figure.caption.52}
-\contentsline {figure}{\numberline {5.22}{\ignorespaces Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.\relax }}{45}{figure.caption.53}
-\contentsline {figure}{\numberline {5.23}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{46}{figure.caption.54}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Log-Likelihood (top) and Angle (bottom) performance measures for a 2D Camelback embedded in a 5D space. The left graphs show the values for the run that was chosen as the "found" projection matrix. The right graphs show the average values over all restarts of tripathy's method. These are the results for run 1. \relax }}{37}{figure.caption.40}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Log-Likelihood (top) and Angle (bottom) performance measures for a 2D Camelback embedded in a 5D space. The left graphs show the values for the run that was chosen as the "found" projection matrix. The right graphs show the average values over all restarts of tripathy's method. These are the results for run 2. \relax }}{38}{figure.caption.41}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Log-Likelihood (top) and Angle (bottom) performance measures for a 2D Sinusoidal function embedded in a 5D space. The left graphs show the values for the run that was chosen as the "found" projection matrix. The right graphs show the average values over all restarts of tripathy's method. These are the results for run 2. \relax }}{39}{figure.caption.43}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{40}{figure.caption.44}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{40}{figure.caption.44}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Real matrix\relax }}{41}{figure.caption.45}
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Matrix found by optimization algorithm\relax }}{41}{figure.caption.45}
+\contentsline {figure}{\numberline {5.15}{\ignorespaces Top-Left: The 1D Parabola which is embedded in a 2D space.\relax }}{43}{figure.caption.46}
+\contentsline {figure}{\numberline {5.16}{\ignorespaces Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.\relax }}{44}{figure.caption.47}
+\contentsline {figure}{\numberline {5.17}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{45}{figure.caption.48}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

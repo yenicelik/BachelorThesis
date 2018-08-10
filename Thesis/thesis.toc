@@ -65,14 +65,14 @@
 \contentsline {subsection}{\numberline {5.2.4}Log-Likelihood and Angle difference measures}{35}{subsection.5.2.4}
 \contentsline {paragraph}{Parabola}{35}{section*.37}
 \contentsline {paragraph}{Camelback}{36}{section*.39}
-\contentsline {paragraph}{Sinusoidal}{39}{section*.45}
-\contentsline {section}{\numberline {5.3}REMBO}{41}{section.5.3}
-\contentsline {section}{\numberline {5.4}Qualitative evaluation}{41}{section.5.4}
-\contentsline {subsection}{\numberline {5.4.1}Feature selection}{41}{subsection.5.4.1}
-\contentsline {subsection}{\numberline {5.4.2}Subspace identification}{43}{subsection.5.4.2}
+\contentsline {paragraph}{Sinusoidal}{38}{section*.42}
+\contentsline {section}{\numberline {5.3}REMBO}{39}{section.5.3}
+\contentsline {section}{\numberline {5.4}Qualitative evaluation}{40}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}Feature selection}{40}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}Subspace identification}{42}{subsection.5.4.2}
 \contentsline {chapter}{\numberline {6}Conclusion}{47}{chapter.6}
 \contentsline {section}{\numberline {6.1}Main Contributions}{47}{section.6.1}
 \contentsline {section}{\numberline {6.2}Future work}{47}{section.6.2}
-\contentsline {chapter}{References}{49}{chapter*.55}
+\contentsline {chapter}{References}{49}{chapter*.49}
 \contentsline {chapter}{Appendix \numberline {A}}{51}{Appendix.a.A}
 \contentsline {section}{\numberline {A.1}Benchmarking functions}{51}{section.a.A.1}
