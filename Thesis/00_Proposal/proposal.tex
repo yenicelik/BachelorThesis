@@ -1,6 +1,6 @@
 % ************************** Thesis Abstract *****************************
 % Use `abstract' as an option in the document class to print only the titlepage and the abstract.
-\section{Project Proposal for Bachelor Thesis}
+\chapter{Introduction}
 \subsection{Motivation}
 
 Tuning hyperparameters is considered a computationally intensive and tedious task, be it for neural networks, or complex physical instruments such as free electron lasers.
@@ -43,9 +43,9 @@ This project includes, but is not limited to the following methods.\\
 \begin{enumerate}
 \item \cite{Tripathy}
 Assume $f(x) \approx g( \mathbf{W}^T x)$ where $ \mathbf{W} \in \mathbb{R}^{D \times d} $ and $D >> d$.
-We assume that $ \mathbf{W} $ is orthogonal.
+We assume that $ \mathbf{W} $ is orthogonal as proposed in \cite{Tripathy}.
 
-This algorithm does not require gradient-information (thus, easier to implement, and robust to noise).
+The algorithm does not require gradient-information (thus, easier to implement, and robust to noise).
 The standard-deviation, kernel parameters and  $ \mathbf{W} $ can be found iteratively.
 First we fix $ \mathbf{W} $, and optimize over the standard-deviation, kernel parameters.
 Then we fix the standard-deviation, kernel parameters. and optimize over $ \mathbf{W} $.

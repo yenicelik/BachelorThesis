@@ -1,81 +1,79 @@
 \thispagestyle {empty}
-\contentsline {section}{\numberline {0.1}Project Proposal for Bachelor Thesis}{ii}{section.0.1}
-\contentsline {subsection}{\numberline {0.1.1}Motivation}{ii}{subsection.0.1.1}
-\contentsline {subsection}{\numberline {0.1.2}Background}{ii}{subsection.0.1.2}
-\contentsline {subsection}{\numberline {0.1.3}Scope of the Project}{iii}{subsection.0.1.3}
-\contentsline {chapter}{List of figures}{ix}{chapter*.4}
-\contentsline {chapter}{List of tables}{xi}{chapter*.5}
-\contentsline {chapter}{\numberline {1}Background}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}Bayesian Optimization in high dimensions}{1}{section.1.1}
-\contentsline {section}{\numberline {1.2}Gaussian Processes}{2}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}Derivation of the Gaussian Process Formula}{2}{subsection.1.2.1}
-\contentsline {section}{\numberline {1.3}Acquisition Functions}{4}{section.1.3}
-\contentsline {subsection}{\numberline {1.3.1}Upper Confident Bound (UCB)}{4}{subsection.1.3.1}
-\contentsline {subsection}{\numberline {1.3.2}Probability of Improvement (PI)}{4}{subsection.1.3.2}
-\contentsline {subsection}{\numberline {1.3.3}Expected Improvement (EI)}{4}{subsection.1.3.3}
-\contentsline {section}{\numberline {1.4}Resources}{5}{section.1.4}
-\contentsline {chapter}{\numberline {2}Related Work}{7}{chapter.2}
-\contentsline {section}{\numberline {2.1}Projection matrix based algorithms}{7}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Active learning of linear subspaces}{8}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}Random embeddings (REMBO)}{9}{subsection.2.1.2}
-\contentsline {subsection}{\numberline {2.1.3}Applications to high-dimensional uncertainty propagation}{11}{subsection.2.1.3}
-\contentsline {paragraph}{I now proceed with a more formal description of the algorithm.}{12}{section*.8}
-\contentsline {subsubsection}{The Matern32 Kernel}{12}{section*.9}
-\contentsline {subsection}{\numberline {2.1.4}Overview of the algorithm}{13}{subsection.2.1.4}
-\contentsline {subsubsection}{Step 1.: Determine the active projection matrix W}{13}{section*.10}
-\contentsline {subsubsection}{Step 2.: Optimizing over GP noise variance and the kernel hyperparameters}{14}{section*.11}
-\contentsline {subsubsection}{Additional details}{15}{section*.12}
-\contentsline {subsubsection}{Identification of active subspace dimension }{15}{section*.13}
-\contentsline {section}{\numberline {2.2}Algorithms that exploit additive substructures}{15}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Independent additive structures within the target function}{15}{subsection.2.2.1}
-\contentsline {section}{\numberline {2.3}Additional approaches}{16}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}Elastic Gaussian Processes}{16}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}High dimensional Gaussian bandits}{16}{subsection.2.3.2}
-\contentsline {subsection}{\numberline {2.3.3}Bayesian Optimization using Dropout}{17}{subsection.2.3.3}
-\contentsline {chapter}{\numberline {3}Fields of Improvement}{19}{chapter.3}
-\contentsline {section}{\numberline {3.1}Shortcomings of current methods}{19}{section.3.1}
-\contentsline {paragraph}{REMBO}{19}{section*.14}
-\contentsline {paragraph}{Active subgradients}{20}{section*.15}
-\contentsline {paragraph}{Tripathy}{20}{section*.16}
-\contentsline {section}{\numberline {3.2}Method of measuring improvements}{21}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Synthetic Datasets}{22}{subsection.3.2.1}
-\contentsline {paragraph}{5 dimensional function with 2 dimensional linear embedding}{22}{section*.17}
-\contentsline {paragraph}{2D to 1D}{22}{section*.18}
-\contentsline {paragraph}{3D to 2D}{22}{section*.19}
-\contentsline {paragraph}{5D to 2D}{22}{section*.20}
-\contentsline {chapter}{\numberline {4}A New Model}{23}{chapter.4}
-\contentsline {section}{\numberline {4.1}The BORING Algorithm}{23}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Algorithm Description}{24}{subsection.4.1.1}
-\contentsline {subsubsection}{Overview}{24}{section*.21}
-\contentsline {subsubsection}{Finding a basis for the passive subspace (a subspace orthogonal to the active subspace)}{25}{section*.22}
-\contentsline {subsubsection}{Additive UCB acquisition function}{27}{section*.23}
-\contentsline {subsubsection}{How does our algorithm address the shortcomings from chapter 3?}{27}{section*.24}
-\contentsline {chapter}{\numberline {5}Evaluation}{29}{chapter.5}
-\contentsline {section}{\numberline {5.1}Evaluation Settings}{29}{section.5.1}
-\contentsline {section}{\numberline {5.2}Quantitative evaluation}{29}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Parabola}{30}{subsection.5.2.1}
-\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{30}{section*.25}
-\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{31}{section*.27}
-\contentsline {subsection}{\numberline {5.2.2}Camelback embedded in 3D}{32}{subsection.5.2.2}
-\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{32}{section*.29}
-\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{32}{section*.31}
-\contentsline {subsection}{\numberline {5.2.3}Camelback embedded in 5D}{33}{subsection.5.2.3}
-\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{33}{section*.33}
-\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{34}{section*.35}
-\contentsline {subsection}{\numberline {5.2.4}Log-Likelihood and Angle difference measures}{35}{subsection.5.2.4}
-\contentsline {paragraph}{Parabola}{35}{section*.37}
-\contentsline {paragraph}{Camelback}{36}{section*.39}
-\contentsline {paragraph}{Sinusoidal}{38}{section*.42}
-\contentsline {section}{\numberline {5.3}REMBO}{39}{section.5.3}
-\contentsline {paragraph}{Parabola}{40}{section*.44}
-\contentsline {paragraph}{Camelback3D}{40}{section*.46}
-\contentsline {paragraph}{Camelback5D}{41}{section*.48}
-\contentsline {section}{\numberline {5.4}Qualitative evaluation}{41}{section.5.4}
-\contentsline {subsection}{\numberline {5.4.1}Feature selection}{41}{subsection.5.4.1}
-\contentsline {subsection}{\numberline {5.4.2}Subspace identification}{43}{subsection.5.4.2}
-\contentsline {chapter}{\numberline {6}Conclusion}{47}{chapter.6}
-\contentsline {section}{\numberline {6.1}Main Contributions}{47}{section.6.1}
-\contentsline {section}{\numberline {6.2}Future work}{47}{section.6.2}
-\contentsline {chapter}{References}{49}{chapter*.55}
-\contentsline {chapter}{Appendix \numberline {A}}{51}{Appendix.a.A}
-\contentsline {section}{\numberline {A.1}Benchmarking functions}{51}{section.a.A.1}
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {subsection}{\numberline {1.0.1}Motivation}{1}{subsection.1.0.1}
+\contentsline {subsection}{\numberline {1.0.2}Background}{1}{subsection.1.0.2}
+\contentsline {subsection}{\numberline {1.0.3}Scope of the Project}{2}{subsection.1.0.3}
+\contentsline {chapter}{\numberline {2}Background}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Bayesian Optimization in high dimensions}{5}{section.2.1}
+\contentsline {section}{\numberline {2.2}Gaussian Processes}{6}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Derivation of the Gaussian Process Formula}{6}{subsection.2.2.1}
+\contentsline {section}{\numberline {2.3}Acquisition Functions}{8}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Upper Confident Bound (UCB)}{8}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Probability of Improvement (PI)}{8}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Expected Improvement (EI)}{8}{subsection.2.3.3}
+\contentsline {section}{\numberline {2.4}Resources}{9}{section.2.4}
+\contentsline {chapter}{\numberline {3}Related Work}{11}{chapter.3}
+\contentsline {section}{\numberline {3.1}Projection matrix based algorithms}{11}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Active learning of linear subspaces}{12}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Random embeddings (REMBO)}{13}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}GPs with builtin dimensionality reduction}{15}{subsection.3.1.3}
+\contentsline {paragraph}{Formal description of the algorithm.}{16}{section*.6}
+\contentsline {subsubsection}{The Matern32 Kernel}{16}{section*.7}
+\contentsline {subsection}{\numberline {3.1.4}Overview of the algorithm}{17}{subsection.3.1.4}
+\contentsline {subsubsection}{Step 1.: Determine the active projection matrix W}{17}{section*.8}
+\contentsline {subsubsection}{Step 2.: Optimizing over GP noise variance and the kernel hyperparameters}{18}{section*.9}
+\contentsline {subsubsection}{Additional details}{18}{section*.10}
+\contentsline {subsubsection}{Identification of active subspace dimension }{19}{section*.11}
+\contentsline {section}{\numberline {3.2}Algorithms that exploit additive substructures}{19}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Independent additive structures within the target function}{19}{subsection.3.2.1}
+\contentsline {section}{\numberline {3.3}Additional approaches}{19}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Elastic Gaussian Processes}{19}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}High dimensional Gaussian bandits}{20}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Bayesian Optimization using Dropout}{20}{subsection.3.3.3}
+\contentsline {chapter}{\numberline {4}Fields of Improvement}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}Shortcomings of current methods}{21}{section.4.1}
+\contentsline {paragraph}{REMBO}{21}{section*.12}
+\contentsline {paragraph}{Active subgradients}{22}{section*.13}
+\contentsline {paragraph}{Tripathy}{22}{section*.14}
+\contentsline {section}{\numberline {4.2}Method of measuring improvements}{23}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Synthetic Datasets}{24}{subsection.4.2.1}
+\contentsline {paragraph}{5 dimensional function with 2 dimensional linear embedding}{24}{section*.15}
+\contentsline {paragraph}{2D to 1D}{24}{section*.16}
+\contentsline {paragraph}{3D to 2D}{24}{section*.17}
+\contentsline {paragraph}{5D to 2D}{24}{section*.18}
+\contentsline {chapter}{\numberline {5}A New Model}{25}{chapter.5}
+\contentsline {section}{\numberline {5.1}The BORING Algorithm}{25}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Algorithm Description}{26}{subsection.5.1.1}
+\contentsline {subsubsection}{Overview}{26}{section*.19}
+\contentsline {subsubsection}{Finding a basis for the passive subspace (a subspace orthogonal to the active subspace)}{27}{section*.20}
+\contentsline {subsubsection}{Additive UCB acquisition function}{29}{section*.21}
+\contentsline {subsubsection}{How does our algorithm address the shortcomings from chapter 3?}{29}{section*.22}
+\contentsline {chapter}{\numberline {6}Evaluation}{31}{chapter.6}
+\contentsline {section}{\numberline {6.1}Evaluation Settings}{31}{section.6.1}
+\contentsline {section}{\numberline {6.2}Quantitative evaluation}{31}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Parabola}{32}{subsection.6.2.1}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{32}{section*.23}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{33}{section*.25}
+\contentsline {subsection}{\numberline {6.2.2}Camelback embedded in 3D}{34}{subsection.6.2.2}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{34}{section*.27}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{34}{section*.29}
+\contentsline {subsection}{\numberline {6.2.3}Camelback embedded in 5D}{35}{subsection.6.2.3}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{35}{section*.31}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{36}{section*.33}
+\contentsline {subsection}{\numberline {6.2.4}Log-Likelihood and Angle difference measures}{37}{subsection.6.2.4}
+\contentsline {paragraph}{Parabola}{37}{section*.35}
+\contentsline {paragraph}{Camelback}{38}{section*.37}
+\contentsline {paragraph}{Sinusoidal}{40}{section*.40}
+\contentsline {section}{\numberline {6.3}REMBO}{41}{section.6.3}
+\contentsline {paragraph}{Parabola}{42}{section*.42}
+\contentsline {paragraph}{Camelback3D}{42}{section*.44}
+\contentsline {paragraph}{Camelback5D}{43}{section*.46}
+\contentsline {section}{\numberline {6.4}Qualitative evaluation}{43}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}Feature selection}{43}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.2}Subspace identification}{45}{subsection.6.4.2}
+\contentsline {chapter}{\numberline {7}Conclusion}{49}{chapter.7}
+\contentsline {section}{\numberline {7.1}Main Contributions}{49}{section.7.1}
+\contentsline {section}{\numberline {7.2}Future work}{49}{section.7.2}
+\contentsline {chapter}{References}{51}{chapter*.53}
+\contentsline {chapter}{Appendix \numberline {A}}{55}{Appendix.a.A}
+\contentsline {section}{\numberline {A.1}Benchmarking functions}{55}{section.a.A.1}

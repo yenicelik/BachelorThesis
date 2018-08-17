@@ -121,6 +121,10 @@ Rolland, P., Scarlett, J., Bogunovic, I., and Cevher, V. (2018).
 \newblock {High-Dimensional Bayesian Optimization via Additive Models with
   Overlapping Groups}.
 
+\bibitem[Scarlett, 2018]{RegretDef}
+Scarlett, J. (2018).
+\newblock {Tight Regret Bounds for Bayesian Optimization in One Dimension}.
+
 \bibitem[Srinivas et~al., 2009]{UCBRegretProof}
 Srinivas, N., Krause, A., Kakade, S., and Seeger, M. (2009).
 \newblock {Gaussian Process Optimization in the Bandit Setting: No Regret and

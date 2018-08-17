@@ -1,108 +1,111 @@
-This is BibTeX, Version 0.99d (TeX Live 2017)
+This is BibTeX, Version 0.99d (TeX Live 2018)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: thesis.aux
-A level-1 auxiliary file: 00_Proposal/proposal.aux
 A level-1 auxiliary file: 01_Abstract/abstract.aux
+A level-1 auxiliary file: 00_Proposal/proposal.aux
 A level-1 auxiliary file: 03_Chapter1/chapter1.aux
 A level-1 auxiliary file: 04_Chapter2/chapter2.aux
 A level-1 auxiliary file: 05_Chapter4/chapter4.aux
 A level-1 auxiliary file: 06_Chapter5/chapter5.aux
 A level-1 auxiliary file: 07_Chapter6/chapter6.aux
+A level-1 auxiliary file: 08_Chapter7/chapter7.aux
 The style file: apalike.bst
 A level-1 auxiliary file: Appendix1/appendix1.aux
 Database file #1: References/references.bib
 Warning--entry type for "OptimizationTestFunctions" isn't style-file defined
 --line 13 of file References/references.bib
+Warning--entry type for "RegretDef" isn't style-file defined
+--line 21 of file References/references.bib
 Warning--entry type for "UCBRegretProof" isn't style-file defined
---line 28 of file References/references.bib
+--line 35 of file References/references.bib
 Warning--entry type for "Lizotte2008" isn't style-file defined
---line 42 of file References/references.bib
+--line 49 of file References/references.bib
 Warning--entry type for "Jamil2013" isn't style-file defined
---line 48 of file References/references.bib
+--line 55 of file References/references.bib
 Warning--entry type for "Li2018" isn't style-file defined
---line 57 of file References/references.bib
+--line 64 of file References/references.bib
 Warning--entry type for "Rana2017" isn't style-file defined
---line 66 of file References/references.bib
-Warning--entry type for "AngleMeasurement" isn't style-file defined
 --line 73 of file References/references.bib
-Warning--entry type for "Gardner2017" isn't style-file defined
+Warning--entry type for "AngleMeasurement" isn't style-file defined
 --line 80 of file References/references.bib
-Warning--entry type for "BayesianOptimizationNAS" isn't style-file defined
+Warning--entry type for "Gardner2017" isn't style-file defined
 --line 87 of file References/references.bib
-Warning--entry type for "BOIncreasingPopularityEmpirically" isn't style-file defined
+Warning--entry type for "BayesianOptimizationNAS" isn't style-file defined
 --line 94 of file References/references.bib
+Warning--entry type for "BOIncreasingPopularityEmpirically" isn't style-file defined
+--line 101 of file References/references.bib
 Warning--entry type for "AcquisitionFunctions" isn't style-file defined
---line 116 of file References/references.bib
-Warning--entry type for "AcquisitionFunctionsMaximizing" isn't style-file defined
 --line 123 of file References/references.bib
-Warning--entry type for "Djolonga2013" isn't style-file defined
+Warning--entry type for "AcquisitionFunctionsMaximizing" isn't style-file defined
 --line 130 of file References/references.bib
+Warning--entry type for "Djolonga2013" isn't style-file defined
+--line 137 of file References/references.bib
 Warning--entry type for "Garnett2013" isn't style-file defined
---line 149 of file References/references.bib
+--line 156 of file References/references.bib
 Warning--entry type for "Tripathy" isn't style-file defined
---line 158 of file References/references.bib
+--line 165 of file References/references.bib
 Warning--entry type for "RemboExtension" isn't style-file defined
---line 169 of file References/references.bib
+--line 176 of file References/references.bib
 Warning--entry type for "Wang2013" isn't style-file defined
---line 177 of file References/references.bib
+--line 184 of file References/references.bib
 Warning--entry type for "Rolland" isn't style-file defined
---line 186 of file References/references.bib
+--line 193 of file References/references.bib
 Warning--entry type for "KernelGibbsSampler" isn't style-file defined
---line 196 of file References/references.bib
-Warning--entry type for "GPforML" isn't style-file defined
 --line 203 of file References/references.bib
+Warning--entry type for "GPforML" isn't style-file defined
+--line 210 of file References/references.bib
 Warning--entry type for "VirtualVsReal" isn't style-file defined
---line 211 of file References/references.bib
-Warning--entry type for "SensorPlacement" isn't style-file defined
 --line 218 of file References/references.bib
-Warning--entry type for "BatchedBO" isn't style-file defined
+Warning--entry type for "SensorPlacement" isn't style-file defined
 --line 225 of file References/references.bib
+Warning--entry type for "BatchedBO" isn't style-file defined
+--line 232 of file References/references.bib
 Warning--entry type for "StiefelBayesianInference" isn't style-file defined
---line 233 of file References/references.bib
-Warning--entry type for "StatisticsStiefelIntro" isn't style-file defined
 --line 240 of file References/references.bib
-Warning--entry type for "StiefelNonparametric" isn't style-file defined
+Warning--entry type for "StatisticsStiefelIntro" isn't style-file defined
 --line 247 of file References/references.bib
+Warning--entry type for "StiefelNonparametric" isn't style-file defined
+--line 254 of file References/references.bib
 Warning--I didn't find a database entry for "Wang"
-You've used 31 entries,
+You've used 32 entries,
             1935 wiz_defined-function locations,
-            624 strings with 9297 characters,
-and the built_in function-call counts, 10336 in all, are:
-= -- 971
-> -- 637
-< -- 10
-+ -- 218
-- -- 218
-* -- 855
-:= -- 1980
-add.period$ -- 68
-call.type$ -- 31
-change.case$ -- 260
-chr.to.int$ -- 31
-cite$ -- 31
-duplicate$ -- 345
-empty$ -- 529
-format.name$ -- 257
-if$ -- 1883
+            629 strings with 9421 characters,
+and the built_in function-call counts, 10572 in all, are:
+= -- 995
+> -- 644
+< -- 11
++ -- 220
+- -- 220
+* -- 870
+:= -- 2027
+add.period$ -- 70
+call.type$ -- 32
+change.case$ -- 266
+chr.to.int$ -- 32
+cite$ -- 32
+duplicate$ -- 355
+empty$ -- 544
+format.name$ -- 260
+if$ -- 1926
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 6
-newline$ -- 132
-num.names$ -- 95
-pop$ -- 239
+newline$ -- 136
+num.names$ -- 98
+pop$ -- 243
 preamble$ -- 1
-purify$ -- 262
+purify$ -- 268
 quote$ -- 0
-skip$ -- 276
+skip$ -- 285
 stack$ -- 0
-substring$ -- 412
+substring$ -- 424
 swap$ -- 15
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 182
+type$ -- 188
 warning$ -- 0
-while$ -- 66
+while$ -- 68
 width$ -- 0
-write$ -- 324
-(There were 27 warnings)
+write$ -- 334
+(There were 28 warnings)

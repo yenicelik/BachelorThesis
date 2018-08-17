@@ -26,13 +26,12 @@ Bayesian optimization is a method that has increasingly gained attention in the 
 It is a sequential model based optimization function, which means that we choose the best point $x^*_i$ given all previous points $x^*_{i-1}, x^*_{i-2}, \ldots, x^*_{0}$.
 Given certain acquisition functions, it offers a good mixture between exploration and exploitation from an empirical standpoint \citep{BOIncreasingPopularityEmpirically}. \\
 
-However, as machine learning algorithms, and other problems become more complex, bayesian optimization needs to cope with the increasing number of dimensions that define the search space of possible configurations.
+However, as machine learning algorithms, and other problems become more complex, Bayesian optimization needs to cope with the increasing number of dimensions that define the search space of possible configurations.
 Because BO methods lose effectiveness in higher dimensions due to the curse of dimensionality, this work  explores Bayesian optimization methods that improve the optimization performance in higher dimensions.
-Finally, we propose a novel method that improves on certain characteristics of the current state-of-the-art.
+Finally, we propose a novel method that can take into consideration small perturbations of the function we want to optimize over.
 
 \section{Gaussian Processes}
-Bayesian Optimization aims at using a Gaussian Process as an intermediate representation to find an optimal parameter setting $\mathbf{x^*}$ that maximizes a given utility function $f$.
-We assume the response surface to be Lipschitz-continuous. \\
+Bayesian Optimization (BO) aims at using a Gaussian Process as an intermediate representation to find an optimal parameter setting $\mathbf{x^*}$ that maximizes a given utility function $f$.\\
 
 Assume we have observations $ \mathcal{Y} = \{ y^{(1)}, \ldots, y^{(N)} \}$, each evaluated at a point $ \mathcal{X} = \{  \mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)} \}$.
 The relationship between the observations $y$ and individual parameter settings $\mathbf{x}$ is $y = f \left( \mathbf{x} \right) + \epsilon$ where $\epsilon \sim  \mathcal{N} \left( 0, \sigma^2_n \right)$. Any quantity to be predicted has a subscript-star (e.g. $y_*$ is the function evaluation we want to predict).\\
@@ -70,7 +69,7 @@ p(u) = N ( 0, K )
 Additional data $ X = \{ (x_1, y_1), \ldots, (x_n, y_n) \} $ can be observed.
 The Gaussian Process incorporates an error term that takes into consideration possible noise in the measurement of the experiment.
 Thus, $y$ has some noise term $\epsilon$ such that $y = u(x) + \epsilon$.
-By the central limit theorem, commonly the assumption is taken that $\epsilon$ is normally distributed around $0$ with $\sigma_s$ standard deviation.
+The common assumption is taken that $\epsilon$ is normally distributed around $0$ with $\sigma_s$ standard deviation.
 Given the sampled datapoints, and the inherent noise that these datapoints have, the \textbf{likelihood} of the Gaussian Process can be represented as follows:
 
 \begin{equation}

@@ -20,7 +20,7 @@ Unless specified differently, I use the following terminology during my discussi
 \begin{enumerate}
 \item $f$ is the real function to be optimized. Often I will use the term approximate, as many algorithms rely on a surrogate approximation of the function $f$ such that the global optimum can be found.
 \item Assuming the function $f$ is of the form $f(x) = y$ with $x \in \mathbf{R}^D$, where $D$ denotes the dimensionality of $x$, then we define the optimized value of $f$ to be $x^* = \arg \max_{x} f(x)$.
-\item $g$ and any subscripted or superscripted derivative of $g$ is a component that one uses to approximate $f$.
+\item $g$ and any subscripted or superscripted derivative of $g$ is part of the surrogate function of $f$.
 \item Anything that has a "hat" on (caret symbol on f is $\hat{f}$ ), refers to an empirical estimate. 
 $\hat{f}$ would be an empirical estimate given datapoints $\mathit{D}$ of $f$.
 \end{enumerate}
@@ -31,12 +31,13 @@ I will focus on three categories of Bayesian Optimization algorithms: Algorithms
 
 In my work, I focus on algorithms that optimize the black box function $f$ by using a lower-dimensional projection.
 I proceed with discussing some algorithms that I have implemented for my experiments in the next subsection (all except the algorithm "Active learning of linear subspaces").
-I will briefly describe additional interesting algorithms that raise interesting ideas for possible future work afterwards.
 For this family of algorithms, the approximation is a function of $f(x) \sim g(x; A)$, where the properties of $A$ are algorithm-specific.
 The following descriptions aims at giving a brief overview at the methods at hand. 
 I refer the curious reader to the individual paper for a more detailed and formal description of the respective topic.
 
 \subsection{Active learning of linear subspaces}
+
+Although the active learning of linear subspaces is not a BO algorithm, it is still relevant, which is why I am presenting it here.
 
 \begin{algorithm}
 \caption{Simultaneous active learning of functions and their linear embeddings (pseudocode) :: Active learning of linear subspace \citep{Garnett2013}}
@@ -61,7 +62,7 @@ I refer the curious reader to the individual paper for a more detailed and forma
 \end{algorithm}
 
 \citep{Garnett2013} The assumption of this algorithm is that $f$ depends only on $ x := uR^T $ with $ R \in \mathbf{R}^{d \times D}$, $ u \in \mathbf{R}^d $ and where $d << D$. 
-The algorithm learns a projection matrix $R$ and the surrogate function$g(u)$, with $f(x) \sim g(u) $. \\
+The algorithm learns a projection matrix $R$ and the surrogate function $g(u)$, with $f(x) \sim g(u) $. \\
 
 The \textbf{Laplace approximation} for $R$ is using the mode of the probability distribution $\log P (R | D) $ as a mean, and the covariance is taken as the inverse Hessian of the negative logarithm of the posterior evaluated at the mean of the distribution.
 Together, this describes the probability distribution $p(R|X, Y, \kappa, \mu )$, where $\mu$ is the mean function, and $\kappa$ is the covariance function.\\
@@ -78,11 +79,10 @@ Tests are conducted on a real, and synthetic dataset with up to $D = 318$ and se
 
 \subsection{Random embeddings (REMBO)}
 REMBO is an algorithm that allows the optimizer to search in a smaller search space.
-The result of the optimized value $x^*$ is then projected to the higher dimensional space (including projections), to retrieve the actual optimized argmax value of the function $f$. 
+The result of the optimized value $x^*$ is then projected to the higher dimensional space, to retrieve the actual optimized argmax value of the function $f$. 
 More specifically, REMBO proposes the following model for Bayesian Optimization: \\
 
 \citep{Wang2013} Let $x \in \mathbb{R}^D$ and $y \in \mathbb{R}^d$. Assume, that $f(x) = g(Ay)$. We can generate $A \in \mathbb{R}^{D \times d}$ by randomly generating this matrix.
-$A$ must have the property that $A^T \times A = I$, where $I \in \mathbf{R}^{d \times d}$ denotes the identity matrix with $d$ diagonal elements.
 The space over which the user searches, as such, is $d$-dimensional.
 This implies that REMBO is more efficient in sampling datapoints, and learning the structure of a neighborhood in the high-dimensional space (by using the neighborhood of the low-dimensional space). \\
 
@@ -99,12 +99,12 @@ This implies that REMBO is more efficient in sampling datapoints, and learning t
     }\label{fig:animals}
 \end{figure}
 
-The elegance of REMBO lies in the fact that the matrix $A$ can be chosen as a random orthogonal matrix.
-The authors argue with an empirical proof, that if the optimization domain's parameters are well-chosen, that the chance of getting a bad projection matrix has a certain threshold. \\
+The elegance of REMBO lies in the fact that the matrix $A$ can be chosen as a random matrix.
+Through an experiment, the authors argue, that the chance of getting a bad projection matrix has a certain threshold, if the optimization domain's parameters are well-chosen. \\
 
 I now proceed with a more formal treatment of the intuitive concept explained above: \\
 
-\cite{Wang}
+\cite{Wang2013}
 A function $f : \mathbf{R}^D \rightarrow \mathbf{R}$ is said to have effective dimensionality $d_e$ (where $d_e < D$), if there exists a linear subspace $\mathcal{T}$ of dimension $d_e$ such that for all $ x_\top \in \mathcal{T} \subset \mathbf{R}^D $ and $x_\perp \in \mathcal{T_\perp} \subset \mathbf{R}^D $, we have $ f(x) = f(x_\top +x_\perp ) = f(x_\top)$.
 $\mathcal{T^\perp}$ is the orthogonal complement of $\mathcal{T}$.
 
@@ -126,13 +126,13 @@ The user now only need to optimize over all possible $y \in \mathbf{R}^d$, inste
     }\label{fig:animals}
 \end{figure}
 
-REMBO has a fairly high probability of failing (more than 20\% in the experiments conducted in the paper) by choosing an $A$ that lies orthogonal the the directions of highest change in the function $f$.
+REMBO has a fairly high probability of failing (more than 20\% in the experiments conducted in the paper) by choosing an $A$ that lies roughly orthogonal the directions of highest change in the function $f$.
 The authors propose interleaved runs, where for each $k$'th point selection, a differently sampled orthogonal random matrix is chosen. 
 The probability of generating a bad embedding lower with higher $k$.
 However, each $k$ has a set of observations $X$ which is not shared across the different interleaved runs. \\
 Extensions to REMBO include \citep{RemboExtension}.
 
-\subsection{Applications to high-dimensional uncertainty propagation}
+\subsection{GPs with builtin dimensionality reduction}
 I put most emphasis on this algorithm during my experiments. 
 As such, I will be more detailed with the description of this algorithm. \\
 
@@ -152,16 +152,9 @@ This procedure is repeated until the change of the log-likelihood between iterat
 We repeat this procedure many times (as dictated by the number of restarts).
 Empirially, the probability of finding a good projection increases with the number of restarts, and the maximum number of iterations the algorithm is allowed to take during the optimization of the joint parameter set $\mathbf{W}$ and the hyperparameters (as given in the next paragraphs).\\
 
-\paragraph{I now proceed with a more formal description of the algorithm.}
-The quantities of interest are
-
-\begin{align}
-\mu_f &= \int f(x) p(x) dx \\
-\sigma^2_f &= \int ( f(x) - \mu_f )^2 p(x) dx \\
-f \sim p(f) &= \int \delta( f - f(x) ) p(x) dx
-\end{align}
-
-The authors assume that w.l.o.g., the search space of the projection matrices can be restricted to matrices on the siefel manifold.
+\paragraph{Formal description of the algorithm.}
+The quantities of interest are the mean of the function $\mu_f$ and the variance $\sigma^2_f$.
+The authors assume that w.l.o.g., the search space of the projection matrices can be restricted to matrices on the Stiefel manifold.
 The argument for this is that the projected subspace does not change, merely the representation of the subspace.
 Here, the family of orthogonal matrices of dimension $d \times D$ is denoted by $\mathbf{W} \in V_d(\mathbb{R}^D) $.
 This quantity is also known as the \textbf{Stiefel manifold} \citep{StiefelBayesianInference} \citep{StatisticsStiefelIntro} \citep{StiefelNonparametric}, where $d$ is the found effective dimension of the function, and $D$ is the real input dimension to the function. \\
@@ -181,7 +174,7 @@ The concatenated vector of all these kernel hyperparameters is denoted by $\phi$
 The only modification made to this kernel is the additional parameter $W$:
 
 \begin{equation}
-k_{AS} : \mathbb{R}^D \times \mathbb{R}^D \times V_d(\mathbb{R}^D) \times \phi -> \mathbb{R} \\
+k_{AS} : \mathbb{R}^D \times \mathbb{R}^D \times V_d(\mathbb{R}^D) \times \phi \rightarrow \mathbb{R} \\
 \end{equation}
 \text{where the kernel has the form}
 \begin{equation}
@@ -197,8 +190,8 @@ This algorithm is repeated a number of restarts, as the initial sample of $W$ pl
 \subsubsection{Step 1.: Determine the active projection matrix W}
 In this step, the algorithm optimizes $W \in V_d(\mathbb{R}^D)$ while keeping the kernel hyperparameters $\phi$ and the GP noise variance $s_n$ fixed.
 
-To simplify calculations later, we define the function, where all parameters but $W$ are fixed as $F$. 
-The other parameters are determined from previous runs, or are freshly sampled:
+To simplify calculations later, we define a function $F$, where all parameters but $W$ are fixed. 
+The other parameters are determined from previous runs, or are randomly initialized:
 
 \begin{align}
 F(W) &:= \mathcal{L}(W, \phi, s_n; X, y) \\
@@ -231,11 +224,12 @@ where $W$ is a fix parameter, and $\tau$ is the variable which modifies the dire
 A(W) = \nabla_{W} F(W) W - W ( \nabla_{W} F(W) )^T
 \end{equation}
 
-One iteratively chooses fixed $W$, and does a grid-search over $\tau$ such that at each step, the log-likelihood $\mathcal{L}$ is increased.
+One iteratively chooses fixed $W$, and does a grid-search over $\tau \geq 0$ such that at each step, the log-likelihood $\mathcal{L}$ is increased.
+The grid-size is between 5 and 100 for our experiments.
 
 \subsubsection{Step 2.: Optimizing over GP noise variance and the kernel hyperparameters}
 
-We determine the hyperparameters by optimizing over the following loss function, where $X$ are the input values, $Y$ are the corresponding output samples. $\phi$ is the vector of the kernel hyperparameters and $s_n$, the GP noise variance. \\
+We determine the hyperparameters by optimizing over the following loss function, where $X$ are the input values, $Y$ are the corresponding output samples. $\phi$ is the vector of the kernel hyperparameters and $s_n$ the GP noise variance. \\
 
 One keeps the $W$ fixed (either by taking $W$ from the last iteration, or freshly sampling it), and then defines the loss function
 
@@ -252,7 +246,7 @@ There are also many tens or hundreds of restarts to ensure that the search on th
 This algorithm is very sensitive on the initially sampled parameter $W$.
 
 \subsubsection{Identification of active subspace dimension }
-One cannot know the real active dimension of a problem that one does not know the solution to.
+One does not know the real active dimension of a problem that one does not know the solution to.
 As such, the proposed to apply the above algorithms iteratively by increasing the selected active dimension $d$.
 The moment where the relative change between the best found matrix between two iterations is below a relative threshold $\epsilon_s$, the previous active dimension is chosen as the real active dimension. 
 The algorithm identifies the loss for each possible active dimension.
@@ -314,7 +308,7 @@ The SI-BO algorithm consists of a subspace identification step, and an optimizat
 
 % TODO: understand this part of the paper better
 
-The \textbf{subspace identification} is treated as a low-rank matrix recovery problem as presentedin \citep{CevherSubspaceIdentificationKrause}.
+The \textbf{subspace identification} is treated as a low-rank matrix recovery problem as presented in \citep{CevherSubspaceIdentificationKrause}.
 
 
 
