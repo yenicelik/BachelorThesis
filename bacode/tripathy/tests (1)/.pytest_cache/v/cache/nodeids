@@ -1,0 +1,4 @@
+[
+  "test_rembo.py::TestNormalizeDenormalize::()::test_norm_denorm_same",
+  "test_rembo.py::TestNormalizeDenormalize::()::test_sampled_matrix_is_orthonormal"
+]

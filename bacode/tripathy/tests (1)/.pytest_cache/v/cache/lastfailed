@@ -1,0 +1,6 @@
+{
+  "test_matrix_recovery.py::TestMatrixRecovery::()::test_if_function_is_found": true,
+  "test_matrix_recovery.py::TestMatrixRecovery::()::test_if_hidden_matrix_is_found_multiple_initializations": true,
+  "test_two_step_optimization.py::TestIndividualFunctions::()::test_finding_active_subspace_does_not_crash": true,
+  "test_two_step_optimization.py::TestIndividualFunctions::()::test_two_step_optimization": true
+}

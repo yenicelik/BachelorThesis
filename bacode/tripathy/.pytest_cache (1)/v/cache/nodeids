@@ -1,0 +1,4 @@
+[
+  "tests/test_kernel.py::TestKernel::()::test_parameters_are_set_successfully",
+  "tests/test_kernel.py::TestKernel::()::test_kernel_returns_gram_matrix_correct_shape"
+]
