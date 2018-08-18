@@ -11,7 +11,7 @@
     \graphicspath{{Chapter4/Figs/Vector/}{Chapter4/Figs/}}
 \fi
 
-Given the fields of improvements in the above section, we now propose an algorithm which addresses the majority of the issues.
+We now propose an algorithm which addresses the majority of the issues.
 I will first present that algorithm, and then point out, as to why each individual concern is addressed.
 
 \section{The BORING Algorithm}
@@ -30,7 +30,7 @@ Where the following variables have the following meaning
 \item $A$ is the active subspace projection (an element of the stiefel manifold) learned through our algorithm, using Algorithm 1
 \item $A^{\bot}$ is an matrix whose subspace is orthonormal to the projection of $A$.
 We randomly generate $A^{\bot}$ using Algorithm 2.
-\item The subscript $i$ in the right additive term denotes that we view each output dimension of $dot(A^{\bot}, X)$ as independent to the other output dimensions.
+\item The subscript $i$ in the right additive term denotes that we view each output dimension of $A^{\bot} X$ as independent to the other output dimensions.
 
 \end{itemize}
 
@@ -45,7 +45,8 @@ We use different kinds of kernels.
 We want to calculate $g_i$ and $A$ as defined in \ref{eq:dimRedEquation}, such that the log-likelihood of the data we have accumulated so far is maximized.\\
  
  The following few steps are applied after a "burn-in" period, in which we use random sampling to acquire new points.
- We sample the datapoints using UCB, as empirically, this is similar to a random sampling of the datapoints (with the subspace identification in mind).\\
+ We sample the datapoints using UCB.
+ This provides a set of datapoints which we can use to identify the subspace and the projection matrix.\\
  
  In simple terms, the algorithm proceeds as follows:
  
@@ -59,7 +60,7 @@ We want to calculate $g_i$ and $A$ as defined in \ref{eq:dimRedEquation}, such t
  \end{enumerate}
  
  This addresses the curse of dimensionality, as we can freely choose $q \geq d_e$ to set the complexity of the second term while the first term still allows for creating proximity amongst different vectors by projecting the vectors onto a smaller subspace.
-The active subspace captures the direction of strongest direction, whereas the passive subspace projection captures an additional GP that adds to the robustness of the algorithm, should the subspace identification fail.
+The active subspace captures the direction of strongest direction, whereas the passive subspace projection captures an additional GP that adds to the robustness of the algorithm, should the subspace identification fail, or if the true function does not have a real subspace (i.e. is of the form $f(x) = f_0(Ax) + f_1(A^{\bot}x) \text{where} \lVert f_1 \rVert_{\infty} << \lVert f_0 \rVert_{\infty})$.
 The additive terms that get projected onto the passive subspace also allows to incorporate smaller perturbations in the space orthogonal to $A$ to occur.
 
 \begin{algorithm}[H]
@@ -69,9 +70,9 @@ The additive terms that get projected onto the passive subspace also allows to i
 \STATE $X \leftarrow \emptyset$
 \STATE $Y \leftarrow \emptyset$
 
-\COMMENT{Burn in rate - don't look for a subspace for the first 50 samples}
+\COMMENT{Burn in rate - don't look for a subspace for the first 100 samples}
 \STATE $i \leftarrow 0$
-\WHILE{i < 50}
+\WHILE{i < 100}
 \STATE $i++$
 \STATE $x_* \leftarrow $ argmax$_x$ acquisitionFunction$(dot(Q^{\bot}, x) )$ using standard UCB over the domain of $X$.
 \STATE Add $x_*$ to $X$ and $ f(x_*)$ to $Y$.
@@ -148,7 +149,6 @@ The procedure is summarised in Algorithm 3:\\
 \begin{algorithmic} 
 \REQUIRE $A$ a matrix to which we want to create $A^{\bot}$ for; $n$, the number of vectors in $A^{\bot}$.
 
-\STATE normedA $ \leftarrow $ normalize each column of $A$
 \STATE $Q \leftarrow$ emptyMatrix()
 \COMMENT{ The final concatenated $Q$ will be $A^{\bot}$. }
 \FOR{i = 1,...,n}
@@ -158,7 +158,7 @@ The procedure is summarised in Algorithm 3:\\
 \STATE $q_i \leftarrow $ random vector with norm 1
 \STATE newBasis = apply gram schmidt single vector( $[A, Q], q_i$ ) 
 
-\IF{ dot(normed$A^T$, newBasis) $\approx \mathbf{0}$ and $|$ newBasis $|$ $> 1e-6$}
+\IF{ dot(normed$A^T$, newBasis) $\approx \mathbf{0}$ \textbf{and} $\lVert$ newBasis $\rVert_2$ $> 1e-6$}
 \STATE $Q \leftarrow$ colwiseConcatenate( $(Q, $ newBasis)
 \STATE break
 \ENDIF
@@ -182,7 +182,7 @@ Referring to \citep{Rolland}, the following method is used. \\
 
 where $k(a, b)$ is the piecewise kernel operator for vectors or matrices $a$ and $b$ and $\Delta = k(X, X) + \eta I_n$.
 A single GP with multiple kernels (where each kernel handles a different dimension of $dot(Q^T, x)$) is used.
-There are $k^{j=1, \ldots, q+1}$ kernels (the $+1$ comes from the first kernel being the kernel for the active subspace). \\
+There are $q+1$ kernels (the $+1$ comes from the first kernel being the kernel for the active subspace). \\
 
 Using this information about each individual kernel component results in the simple additive mean and covariance functions, which can then be used for optimization by UCB:
 
@@ -208,7 +208,7 @@ In addition to that, no gradient information is needed.
 This means that we need to compute the embedding only once, and can then apply optimization on that domain.
 Our algorithm allows for comfortable choice of how much computation should be put into identifying the subspace.
 \item Our algorithm is more accurate and robust, as we don't assume that there is a singular maximal subspace. 
-We also take into consideration that there might be perturbation on lower dimensions!
+We also take into consideration that there might be perturbation on lower dimensions.
 In that sense, our algorithm mimicks the idea of projection pursuit \citep{ProjectionPursuit}, as it identifies multiple vectors to project to the lower subspace.
 \end{enumerate}
 

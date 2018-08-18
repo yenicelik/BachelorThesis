@@ -193,7 +193,7 @@ In this step, the algorithm optimizes $W \in V_d(\mathbb{R}^D)$ while keeping th
 To simplify calculations later, we define a function $F$, where all parameters but $W$ are fixed. 
 The other parameters are determined from previous runs, or are randomly initialized:
 
-\begin{align}
+\begin{align} \label{Eq:LogLikelihoodF}
 F(W) &:= \mathcal{L}(W, \phi, s_n; X, y) \\
 & = \log p(y | X, W, \phi, s_n) \\
 & =  -\frac{1}{2} (y - m)^T (K + s_n^2 I_N)^{-1} (y - m) -\frac{1}{2} \log|K + s_n^2 I_N| -\frac{N}{2} \log 2 \pi   \\
@@ -213,7 +213,7 @@ both these functions depend on the kernel $K$, and it's derivative $\nabla_{w_{i
 To optimize over $F$, a more sophisticated algorithm is used, that resembles iterative hill-climbing algorithms.
 First, the paper defines the function whose output is a matrix in the Stiefel manifold
 
-\begin{equation}
+\begin{equation}\label{Eq:TauFunction}
 \gamma(\tau; W) = (I_D - \frac{\tau}{2} A(W) )^{-1} (I_D + \frac{\tau}{2} A(W) ) W
 \end{equation}
 

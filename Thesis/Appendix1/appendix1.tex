@@ -1,6 +1,12 @@
 %!TEX root = ../thesis.tex
 % ******************************* Thesis Appendix A ****************************
-\chapter{}
+\ifpdf
+    \graphicspath{{Appendix1/Figs/Raster/}{Appendix1/Figs/PDF/}{Appendix1/Figs/}}
+\else
+    \graphicspath{{Appendix1/Figs/Vector/}{Appendix1/Figs/}}
+\fi
+
+\chapter{Appendix A}
 
 \section{Benchmarking functions}
 
@@ -36,3 +42,36 @@ We have $f(x) = \exp( -( \theta^T x - 1 )^2 )$. $\theta$ is of size 17x17, and t
 \item \citep{Jamil2013} A more comprehensive list of general functions can be found here.
 %\item https://github.com/automl/HPOlib2/tree/master/hpolib/benchmarks/synthetic_functions
 \end{enumerate}
+
+\section{The log-likelihood function as a function of $\tau$}
+In \ref{Eq:LogLikelihoodF} I present the formula for the log-likelihood function which is a function of $W$.
+In \ref{Eq:TauFunction} I show how modifying a scalar parameter $\tau$ can modify this loss.
+In a combined formula, this looks as follows:
+
+\begin{equation}
+G: \tau \rightarrow F( \gamma(\tau; W_{ \text{fixed} }) )
+\end{equation}
+where we assume that $W_{ \text{fixed} }$ is fixed. 
+To get an intuition for how smooth this function $G$ is, I randomly sample $W$ and visualize the change of $G(\tau)$ for different values of $\tau$.\\
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{Appendix1/tau_0}
+        \label{fig:gull}
+        \caption{W is randomly sampled as an orthogonal matrix}
+    \end{subfigure}
+    \quad
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{Appendix1/tau_1}
+        \label{fig:tiger}
+        \caption{W is taken to be the identity matrix}
+    \end{subfigure}   
+           \caption{Perturbing $\tau$ and getting a log-likelihood value through $G(\tau)$.
+           The function at hand is a Parabola embedded in a 2D space.
+           The x-axis refers to the individually sampled $\tau$ values (0 is $\tau = 0$, and 100 is $\tau = 1$ and every value in between is linearly interpolated).
+           The y-axis refers to the log-likelihood.
+           One can see that the function is smooth on this scale, and that the meaximum is achieved between $0 \leq \tau \leq 0.3 $. }
+\end{figure}

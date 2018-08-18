@@ -30,12 +30,12 @@
 \contentsline {subsection}{\numberline {3.3.1}Elastic Gaussian Processes}{19}{subsection.3.3.1}
 \contentsline {subsection}{\numberline {3.3.2}High dimensional Gaussian bandits}{20}{subsection.3.3.2}
 \contentsline {subsection}{\numberline {3.3.3}Bayesian Optimization using Dropout}{20}{subsection.3.3.3}
-\contentsline {chapter}{\numberline {4}Fields of Improvement}{21}{chapter.4}
+\contentsline {chapter}{\numberline {4}Analysis of the current state of the art}{21}{chapter.4}
 \contentsline {section}{\numberline {4.1}Shortcomings of current methods}{21}{section.4.1}
 \contentsline {paragraph}{REMBO}{21}{section*.12}
 \contentsline {paragraph}{Active subgradients}{22}{section*.13}
-\contentsline {paragraph}{Tripathy}{22}{section*.14}
-\contentsline {section}{\numberline {4.2}Method of measuring improvements}{23}{section.4.2}
+\contentsline {paragraph}{Bilinois et al.}{22}{section*.14}
+\contentsline {section}{\numberline {4.2}Evaluation methods}{23}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Synthetic Datasets}{24}{subsection.4.2.1}
 \contentsline {paragraph}{5 dimensional function with 2 dimensional linear embedding}{24}{section*.15}
 \contentsline {paragraph}{2D to 1D}{24}{section*.16}
@@ -69,11 +69,12 @@
 \contentsline {paragraph}{Camelback3D}{42}{section*.44}
 \contentsline {paragraph}{Camelback5D}{43}{section*.46}
 \contentsline {section}{\numberline {6.4}Qualitative evaluation}{43}{section.6.4}
-\contentsline {subsection}{\numberline {6.4.1}Feature selection}{43}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.1}Feature selection}{44}{subsection.6.4.1}
 \contentsline {subsection}{\numberline {6.4.2}Subspace identification}{45}{subsection.6.4.2}
 \contentsline {chapter}{\numberline {7}Conclusion}{49}{chapter.7}
 \contentsline {section}{\numberline {7.1}Main Contributions}{49}{section.7.1}
 \contentsline {section}{\numberline {7.2}Future work}{49}{section.7.2}
 \contentsline {chapter}{References}{51}{chapter*.53}
-\contentsline {chapter}{Appendix \numberline {A}}{55}{Appendix.a.A}
+\contentsline {chapter}{Appendix \numberline {A}Appendix A}{55}{Appendix.a.A}
 \contentsline {section}{\numberline {A.1}Benchmarking functions}{55}{section.a.A.1}
+\contentsline {section}{\numberline {A.2}The log-likelihood function as a function of $\tau $}{56}{section.a.A.2}
