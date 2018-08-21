@@ -47,9 +47,9 @@ y_* \end{pmatrix} \sim N\Biggl(\mu,\begin{pmatrix} K & K^T_*\\
 Where $\mu$ is a mean function, $K = \text{kernel}(\mathbf{X}, \mathbf{X})$, $K_* = \text{kernel}(\mathbf{x_*}, \mathbf{X})$ and $K_{**} = \text{kernel}(\mathbf{x_*}, \mathbf{x_*})$.
 Any new point $y_*$ is predicted given all previously sampled points $y$ by estimating the probability $ p(y_*|y) \sim N(K_*K^{-1}y,K_{**}-K_*K^{-1}K'_*) $\\
 
-These results can then be used by an acquisition function, that described where to best sample the points next.
+An acquisition function can then use these results, that described where to best sample the points next.
 Some popular acquisition functions include GP-UCB, Most probable improvement (MPI) and Expected Improvement (EI).
-The choice of the acquisition function has great influence on the performance of the optimization procedure.\\
+The choice of the acquisition function has a significant influence on the performance of the optimization procedure.\\
 
 In the following, I provide a short derivation of the core formulae used for Gaussian Processes.
 
@@ -98,7 +98,7 @@ y_* \end{pmatrix} \sim N\Biggl(\mu,\begin{pmatrix} K & K^T_*\\
  K_* & K_{**} \end{pmatrix}\Biggr),
 \end{equation}
 
-To compute this equation, we use the results from Murphy's textbook \citep{Murphy} pages 110 to 111 to do inference in a joint Gaussian model.
+To compute this equation, we use the results from Murphy's textbook \citep{Murphy} pages 110 to 111 to make inference in a joint Gaussian model.
 
 \section{Acquisition Functions}
 
@@ -133,7 +133,7 @@ However, the intensity of exploitation can be controlled by a parameter $\xi > 0
 
 \subsection{Expected Improvement (EI)}
 As an improvement to the maximum probability of improvement, the expected improvement takes into consideration not only the probability that a point can improve the maximum found so far.
-But that the EI also takes into account the magnitude by which it can improve the maximum function value \citep{AcquisitionFunctions}.
+The EI also takes into account the magnitude by which it can improve the maximum function value \citep{AcquisitionFunctions}.
 As in MPI, one can control the rate of exploitation by setting the parameter $\xi > 0$, which was introduced by \citep{Lizotte2008}.
 
 \begin{align}
@@ -153,7 +153,7 @@ where
 and where $\phi$ denotes the PDF, and $\Phi$ denotes the CDF of the standard normal distribution respectively. \\
 
 Given one of the above acquisition functions, one can then use an optimizer such as $LBFGS$ or monte carlo sampling methods, to find an approximate global maximum of the respective function.
-The combination of Gaussian Processes and Acquisition function together result in a Bayesian Optimization algorithm, which has a prior assumption about the function to be learned and uses data-samples to create a likelihood to further refine the posterior of the initial function assumption.
+The combination of Gaussian Processes and Acquisition function together result in a Bayesian Optimization algorithm, which has a prior assumption about the function to be learned and uses data-samples to create a likelihood to refine the posterior of the initial function assumption further.
 
 \section{Resources}
 For the experiments and code basis, most of our functions rely on the Sheffield Machine Learning - GPy library \citep{gpy2014}.
