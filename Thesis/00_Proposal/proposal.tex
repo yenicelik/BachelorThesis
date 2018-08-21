@@ -47,7 +47,7 @@ We assume that $ \mathbf{W} $ is orthogonal as proposed in \cite{Tripathy}.
 
 The algorithm does not require gradient-information (thus, easier to implement, and robust to noise).
 The standard-deviation, kernel parameters and  $ \mathbf{W} $ can be found iteratively.
-First we fix $ \mathbf{W} $, and optimize over the standard-deviation, kernel parameters.
+First, we fix $ \mathbf{W} $ and optimize over the standard-deviation, kernel parameters.
 Then we fix the standard-deviation, kernel parameters. and optimize over $ \mathbf{W} $.
 We repeat this procedure until the change of the log-likelihood between iterations is below some $ \epsilon_l $.
 
@@ -84,4 +84,4 @@ We now only need to optimize over all possible $y \in \mathbf{R}^d$, instead of 
 
 \end{enumerate}
 
-If, for some reason, finding an active subspace or an effective lower dimension is not possible, we are open to adapt the procedure of optimization.
+If for some reason, finding an active subspace or an effective lower dimension is not possible, we are open to adapt the procedure of optimization.

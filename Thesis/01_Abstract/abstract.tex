@@ -2,9 +2,9 @@
 % Use `abstract' as an option in the document class to print only the titlepage and the abstract.
 \begin{abstract}
 
-In this thesis, I explore the possibilities of conducting bayesian optimization techniques in high dimensional domains.
+In this thesis, I explore the possibilities of conducting Bayesian optimization techniques in high dimensional domains.
 Although high dimensional domains can be defined to be between hundreds and thousands of dimensions, we will primarily focus on problem settings that occur between two and 20 dimensions.
-As such, we focus on solutions to practical problems, such as tuning the parameters for an electron accelerator, or for even simpler tasks that can be run and optimizated just in time with a common laptop at hand. \\
+As such, we focus on solutions to practical problems, such as tuning the parameters for an electron accelerator, or for even simpler tasks that can be run and optimized just in time with a common laptop at hand. \\
 
 I follow a systematic methodology, where we identify problems currently occurring with Bayesian Optimization methods.
 For this, I take on the following steps: \\
@@ -16,18 +16,18 @@ I then shortly discuss the different acquisition functions that are most often u
 I continue by exploring different techniques that are currently considered as state-of-the-art. 
 Most of these techniques concentrate on doing one of three things.
 The most common approach is to do a linear dimensionality reduction.
-The second most common approach is to identify variables that rely on each other, and create different Gaussian Processes for each group of variables that depend on each other. \\
+The second most common approach is to identify variables that rely on each other and create different Gaussian Processes for each group of variables that depend on each other. \\
 
 I identify the shortcomings of the current methods and present quantitative ways on how we can measure improvements for the goal at hand.
 Together with my supervisors, we present a novel algorithm called "BORING" to do Bayesian Optimization at hand.
-This algorithm combines the advantages of linear projection methods, but also allows to take into consideration some small perturbations in the target function.
+This algorithm combines the advantages of linear projection methods but also allows to take into consideration some small perturbations in the target function.
 Taking into account smaller perturbations is something that linear reduction models have not taken into account so far.
 BORING proves to have all the advantages that other state-of-the-art linear dimensionality reduction algorithms have.
 However, BORING improves this state by allowing small perturbations to be taken into account when creating the surrogate function. 
-This feature ultimately allows BORING to be more accurate when modelling functions that we want to optimize over. \\
+This feature ultimately allows BORING to be more accurate when modeling functions that we want to optimize over. \\
 
 Finally, we evaluate BORING and compare it to the competitive state-of-the-art in Bayesian Optimization.
-We do a quantitative analysis by applying the Gaussian Process algorithms on different, well defined functions and measuring the regret during optimization that it achieves.
+We do a quantitative analysis by applying the Gaussian Process algorithms on different, well-defined functions and measuring the regret during optimization that it achieves.
 We do a qualitative analysis by visualizing the predicted surrogate function, and comparing this to the real function.
 In addition to that, we do a short experiment on whether the subspace identification method can be used to do feature selection, by choosing the projection in such a way, that the most important features will receive the highest matrix weights. \\
 

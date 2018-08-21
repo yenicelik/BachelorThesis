@@ -15,19 +15,19 @@
 %********************************** %First Section  **************************************
 \section{Bayesian Optimization in high dimensions} %Section - 1.1 
 
-Many technical problems can be boiled down to some flavour of black box optimization. 
+Many technical problems can be boiled down to some flavor of black box optimization. 
 Such problems include neural architecture search \citep{BayesianOptimizationNAS}, hyper-parameter search for neural networks, parameter optimization for electron accelerators, or drone parameter optimization using safety constraints \citep{berkenkamp17saferl}. \\
 
-Bayesian optimization methods are a class of sequential black box optimization methods.
+Bayesian optimization methods are a class of sequential black-box optimization methods.
 A surrogate function surface is learned using a Gaussian prior, and a Gaussian likelihood function.
 Combining the prior and the likelihood results in the Gaussian posterior, which can then be used as a surface over which optimization can take place, with the help of a chosen acquisition function. \\
 
 Bayesian optimization is a method that has increasingly gained attention in the last decades, as it requires relatively few points to find an appropriate response surface for the function over which we want to optimize over.
 It is a sequential model based optimization function, which means that we choose the best point $x^*_i$ given all previous points $x^*_{i-1}, x^*_{i-2}, \ldots, x^*_{0}$.
-Given certain acquisition functions, it offers a good mixture between exploration and exploitation from an empirical standpoint \citep{BOIncreasingPopularityEmpirically}. \\
+Given certain acquisition functions, it offers a good mixture of exploration and exploitation from an empirical standpoint \citep{BOIncreasingPopularityEmpirically}. \\
 
-However, as machine learning algorithms, and other problems become more complex, Bayesian optimization needs to cope with the increasing number of dimensions that define the search space of possible configurations.
-Because BO methods lose effectiveness in higher dimensions due to the curse of dimensionality, this work  explores Bayesian optimization methods that improve the optimization performance in higher dimensions.
+However, as machine learning algorithms and other problems become more complex, Bayesian optimization needs to cope with the increasing number of dimensions that define the search space of possible configurations.
+Because BO methods lose effectiveness in higher dimensions due to the curse of dimensionality, this work explores Bayesian optimization methods that improve the optimization performance in higher dimensions.
 Finally, we propose a novel method that can take into consideration small perturbations of the function we want to optimize over.
 
 \section{Gaussian Processes}
@@ -76,7 +76,7 @@ Given the sampled datapoints, and the inherent noise that these datapoints have,
 p(y | x, u) = N (u, \sigma_s^2 I)
 \end{equation}
 
-% CITE some part of murphy?
+% CITE some part of Murphy?
 % https://stats.stackexchange.com/questions/84058/derivation-of-predictive-distribution-of-gaussian-process
 
 Given the prior and likelihood of the Gaussian Process, the \textbf{posterior} of the Gaussian Process can be derived by simple application of Bayes rule.
@@ -153,7 +153,7 @@ where
 and where $\phi$ denotes the PDF, and $\Phi$ denotes the CDF of the standard normal distribution respectively. \\
 
 Given one of the above acquisition functions, one can then use an optimizer such as $LBFGS$ or monte carlo sampling methods, to find an approximate global maximum of the respective function.
-The combination of Gaussian Processes and Acquisition function together result in a Bayesian Optimization algorithm, which has a prior assumption about the function to be learned, and uses data-samples to create a likelihood to further refine the posterior of the initial function assumption.
+The combination of Gaussian Processes and Acquisition function together result in a Bayesian Optimization algorithm, which has a prior assumption about the function to be learned and uses data-samples to create a likelihood to further refine the posterior of the initial function assumption.
 
 \section{Resources}
 For the experiments and code basis, most of our functions rely on the Sheffield Machine Learning - GPy library \citep{gpy2014}.
