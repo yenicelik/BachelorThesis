@@ -19,11 +19,11 @@ import sys
 
 FNC_TUPLES = [
     # ["Parabola-2D->1D", ParabolaEmbedded2D(), 1],
-    ["Camelback-2D->2D", CamelbackEmbedded2D(), 2],
-    ["Camelback-3D->2D", CamelbackEmbedded3D(), 2],
-    ["Camelback-4D->2D", CamelbackEmbedded4D(), 2],
-    ["Camelback-5D->2D", CamelbackEmbedded5D(), 2],
-    # ["Sinusoidal-5D->2D", DecreasingSinusoidalEmbedded5D(), 2]
+    # ["Camelback-2D->2D", CamelbackEmbedded2D(), 2],
+    # ["Camelback-3D->2D", CamelbackEmbedded3D(), 2],
+    # ["Camelback-4D->2D", CamelbackEmbedded4D(), 2],
+    # ["Camelback-5D->2D", CamelbackEmbedded5D(), 2],
+    ["Sinusoidal-5D->2D", DecreasingSinusoidalEmbedded5D(), 2]
 ]
 
 

@@ -95,7 +95,7 @@ if platform == "linux" or platform == "linux2":
     config['basepath'] = "/home/yedavid/BachelorThesis/bacode/"
     config['dev'] = False
 elif platform == "darwin":
-    config['basepath'] = "/Users/davidal/GoogleDrive/BachelorThesis/bacode/"
+    config['basepath'] = "/Users/david/GoogleDrive/BachelorThesis/bacode/"
     config['dev'] = True
 
 
