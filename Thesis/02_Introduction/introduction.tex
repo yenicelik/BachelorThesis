@@ -15,7 +15,7 @@
 %********************************** %First Section  **************************************
 \section{Bayesian Optimization in high dimensions} %Section - 1.1 
 
-Many of today's problems can be boiled down to some flavour of black box optimization. 
+Many of today's problems can be boiled down to some flavor of black box optimization. 
 Such problems include neural architecture search, hyper-parameter search for neural networks, parameter optimization for electron accelerators, or drone parameter optimization using safety constraints (CITE Johannes). \\
 
 Bayesian optimization methods are a class of sequential black-box optimization methods, where we learn a surrogate function surface using a Gaussian prior, and a Gaussian likelihood function.
@@ -51,7 +51,7 @@ We predict any new point $y_*$, (given all previously sampled points $y$) by est
 This, in turn, can be used to build an acquisition function. 
 This acquisition function describes where to best sample points next.
 Some popular acquisition functions include GP-UCB, Most probable improvement (MPI) and Expected Improvement (EI).
-The choice of the acquisition function has great influence on the performance of the optimization procedure.\\
+The choice of the acquisition function has significant influence on the performance of the optimization procedure.\\
 
 We will talk about the problems and possible solutions for the task at hand in the next section.
 
@@ -79,14 +79,14 @@ p(y | x, u) = N (u, \sigma^2 I)
 % https://stats.stackexchange.com/questions/84058/derivation-of-predictive-distribution-of-gaussian-process
 
 Now we want to derive the posterior of the Gaussian Process, given the likelihood and the prior.
-We use Bayes rule to derive this
+We use Bayes rule to derive this.
 
 \begin{align}
 p(u | x, y) &= \frac{ p(y | x, u) p(u) }{p(y | x)}
 & = N( K(K +\sigma^2 I)^{-1}y, \sigma^2 (K + \sigma^2 I)^{-1} K )
 \end{align}
 
-At this point, we want to create a surrogate embedding, that predicts $y_*$ for any possible given $x_*$. 
+At this point, we want to create a surrogate embedding, which predicts $y_*$ for any possible given $x_*$. 
 We refer to this as the surrogate response surface.
 
 We use the following formula to derive the posterior distribution for a given predictor $y_*$.
@@ -130,7 +130,7 @@ The downside to this policy is that this leads to exploitation, which can be con
 
 \subsection{Expected Improvement (EI)}
 
-"CITE A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning"
+"CITE A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning."
 \begin{align}
     EI(x) =
     \begin{dcases}
@@ -144,7 +144,7 @@ The downside to this policy is that this leads to exploitation, which can be con
 \end{equation}
 
 Given one of the above acquisition functions, we then use an optimizer such as $L-BFGS$, to find an approximate global maximum of the respective function.
-The combination of Gaussian Processes and Acquisition function together result in a Bayesian Optimization algorithm, which has a prior assumption about the function to be learned and uses data samples to create a likelihood to further refine the posterior of the function assumption.
+The combination of Gaussian Processes and Acquisition function together result in a Bayesian Optimization algorithm, which has a prior assumption about the function to be learned and uses data samples to create a likelihood to refine the posterior of the function assumption further.
 
 \section{Resources}
 (CITE https://github.com/SheffieldML/GPy)

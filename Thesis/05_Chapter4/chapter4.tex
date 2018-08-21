@@ -12,22 +12,22 @@
 \fi
 
 \section{Shortcomings of current methods}
-I will enumerate select models from the section "related work", and will shortly discuss what the shortcomings of these models are:
+I will enumerate select models from the section "related work," and will shortly discuss what the shortcomings of these models are:
 
 \paragraph{REMBO} is a BO algorithm which finds $y^*$ in lower dimensions This $y^*$ is then projected to the higher dimension, which has a chance of being the optimal point $x^* = \arg \max_{x} f(x)$. 
 
 \begin{itemize}
 
 \item \textbf{Suitable choice of the optimization domain:} REMBO is not robust, as there is a considerable probability that no suitable subspace will be found. 
-Empirically, the choice of the optimization domain heavily affects the duration and effectiveness of the optimization.
+Empirically, the choice of the optimization domain profoundly affects the duration and effectiveness of the optimization.
 I have found that the proposed optimization domain $ \left[ -\sqrt{d}, \sqrt{d}  \right]^d $ is not well chosen for smaller environments, such as the Camelback function embedded in 5 dimensions.
-In any case, this is a very sensitive hyperparameter
+In any case, this is a very sensitive hyperparameter.
 
 \item \textbf{Identification of subspace:} In some settings, including optimization with safety constraints, knowing the subspace that the model projects to is advantageous. 
 REMBO is an implicit optimizer, in that it does not find any subspace, but optimizes through a randomly sampled matrix.
 
 \item \textbf{Probability of failure:} REMBO has a relatively high probability of failure. 
-The authors propose that restarting REMBO multiple times would allow for a good optimization domain to be found, which leads to interleaved runs. 
+The authors propose that restarting REMBO multiple times would allow for a proper optimization domain to be found, which leads to interleaved runs. 
 
 \end{itemize}
 
@@ -36,9 +36,9 @@ The authors propose that restarting REMBO multiple times would allow for a good 
 \begin{itemize}
 
 \item \textbf{Access to gradients:} For optimization algorithms, the function we want to optimize over is usually a black-box function.
-Practically, many black-box functions don't offer access to gradient information.
-To approximate the gradients using sampled points, this would require a high number of datapoints per dimension.
-In addition to that, these points would have to be evenly distributed, such that the gradients can be effectively estimated for more than one region.
+Practically, many black-box functions do not offer access to gradient information.
+To approximate the gradients using sampled points, this would require a high number of data points per dimension.
+In addition to that, these points would have to be evenly distributed, such that the gradients can be adequately estimated for more than one region.
 
 \item \textbf{Robustness to noise:} According to \citep{Tripathy}, methods that approximate gradients and use this gradient information to approximate a subspace are very sensitive to noise.
 Depending on the application, this can make the algorithm ineffective as it is not robust to small variations in the response surface.
@@ -53,7 +53,7 @@ Bilinois's method allows for a noise-robust way to identify the active subspace.
 
 \begin{itemize}
 
-\item \textbf{Duration of optimization:} In practice, Bilinois's method takes a long time, especially if the dimensions, or the number of data-points are high. This is due to the high number of matrix multiplications. 
+\item \textbf{Duration of optimization:} In practice, Bilinois's method takes a long time, especially if the dimensions or the number of data-points are high. This is due to the high number of matrix multiplications. 
 Especially for easier problems, it is often desirable if the running time of optimizing for the next point is a few minutes or seconds, rather than hours.
 
 \item \textbf{Efficiency:} In practice, Tripathy's method relies on a high number of restarts.
@@ -62,13 +62,13 @@ Given the nature of accepting any starting point, it does not allow for a very e
 A more efficient way to search all possible matrices - by incorporating heuristics for example - would be desirable.
 
 \item \textbf{Insensitive to small perturbations:} Although Tripathy's model finds an active subspace, it completely neglects other dimensions which could allow for small perturbations to allow for an additional increase the global optimum value.
-Although we can control to what extent small perturbations should be part of the active subdimension, one usually wants to choose a significant cutoff dimension, but still incorporate additional small perturbations without sacrificing the effectiveness of the projection.
+Although we can control to what extent small perturbations should be part of the active subdimension, one usually wants to choose a significant cutoff dimension, but still, incorporate additional small perturbations without sacrificing the effectiveness of the projection.
 
 \end{itemize}
 
 \section{Evaluation methods}
 In the following sections, we will discuss and show how we can improve on the shortcomings of the above methods.
-Because practicality is important in our method, we will use synthetic functions to measure the efficiency of our method.
+Because practicality is vital in our method, we will use synthetic functions to measure the efficiency of our method.
 
 Some terms that allow us to measure the performance of a Bayesian optimization algorithm or a GP surrogate function include:
 
@@ -79,7 +79,7 @@ Often, the root mean square error is a good empirical approximate of this quanti
 RMSE = \sqrt{ \frac{1}{T} (\sum_{t=1}^{T} f(A x_t) - \hat{f}(\hat{A} x_t))^2 }
 \end{equation}
 
-The log likelihood estimate is also an estimate which tests this value for the training data.
+The log-likelihood estimate is also an estimate which tests this value for the training data.
 
 \item For optimization problems, one is often interested in the quantity of cumulative regret.
 Regret is defined as the difference between the best found function value so far, minus the function value chosen at this timestep $t$ \citep{RegretDef}.
@@ -93,7 +93,7 @@ This is a measure of how fast an optimizer can learn the optima of a function.
 
 \item Check if the test log-likelihood decreases for functions that are provided by a finite number of data-points.
 
-\item Check if the angle between the real projection matrix, and the found projection matrix decreases, as given in \citep{AngleMeasurement}. 
+\item Check if the angle between the real projection matrix and the found projection matrix decreases, as given in \citep{AngleMeasurement}. 
 
 \begin{align}
 dist(A, B) &= \left\Vert A A^T - B B^T\right\Vert_2 \\
@@ -108,14 +108,14 @@ where $ A, B \in \mathbf{R}^{D \times d}  $
 \paragraph{5 dimensional function with 2 dimensional linear embedding}
 
 One can evaluate synthetic functions at any point.
-This allows to analyse the regret of a specific BO algorithm.
+This allows analyzing the regret of a specific BO algorithm.
 The following synthetic functions cover different use cases.
 
 \paragraph{2D to 1D}: A simple Parabola which is embedded in a 2D space.
 This function is meant as a sanity check.
 In other, this function is simple, and any algorithm taken into consideration should be able to find an effective subspace for this simple function.
 \paragraph{3D to 2D}: The Camelback function which is embedded in a 3D space.
-This checks how tight the model can actually approximate the 2D subspace, or if a 3D UCB performs better than our models.
+This checks how tight the model can approximate the 2D subspace, or if a 3D UCB performs better than our models.
 \paragraph{5D to 2D}: The Camelback function which is embedded in a 5D space.
 This checks if more complicated models can be found within higher dimensional spaces.
 
