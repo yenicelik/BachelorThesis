@@ -63,17 +63,17 @@
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{35}{section*.35}
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{36}{section*.37}
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$ and active d=$2$ }{37}{section*.39}
-\contentsline {subsection}{\numberline {6.2.5}Log-Likelihood and Angle difference measures}{37}{subsection.6.2.5}
-\contentsline {paragraph}{Parabola}{37}{section*.41}
-\contentsline {paragraph}{Camelback}{38}{section*.43}
-\contentsline {paragraph}{Sinusoidal}{40}{section*.46}
-\contentsline {section}{\numberline {6.3}REMBO}{41}{section.6.3}
-\contentsline {paragraph}{Parabola}{42}{section*.48}
-\contentsline {paragraph}{Camelback3D}{42}{section*.50}
-\contentsline {paragraph}{Camelback5D}{43}{section*.52}
-\contentsline {section}{\numberline {6.4}Qualitative evaluation}{43}{section.6.4}
-\contentsline {subsection}{\numberline {6.4.1}Feature selection}{44}{subsection.6.4.1}
-\contentsline {subsection}{\numberline {6.4.2}Subspace identification}{45}{subsection.6.4.2}
+\contentsline {subsection}{\numberline {6.2.5}Log-Likelihood and Angle difference measures}{38}{subsection.6.2.5}
+\contentsline {paragraph}{Parabola}{38}{section*.41}
+\contentsline {paragraph}{Camelback}{39}{section*.43}
+\contentsline {paragraph}{Sinusoidal}{41}{section*.46}
+\contentsline {section}{\numberline {6.3}REMBO}{42}{section.6.3}
+\contentsline {paragraph}{Parabola}{43}{section*.48}
+\contentsline {paragraph}{Camelback3D}{43}{section*.50}
+\contentsline {paragraph}{Camelback5D}{44}{section*.52}
+\contentsline {section}{\numberline {6.4}Qualitative evaluation}{44}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}Feature selection}{45}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.2}Subspace identification}{46}{subsection.6.4.2}
 \contentsline {chapter}{\numberline {7}Conclusion}{49}{chapter.7}
 \contentsline {section}{\numberline {7.1}Main Contributions}{49}{section.7.1}
 \contentsline {section}{\numberline {7.2}Future work}{49}{section.7.2}

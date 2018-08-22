@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.8.10)  22 AUG 2018 20:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.8.10)  22 AUG 2018 23:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1151,12 +1151,6 @@ LaTeX Warning: Label `fig:tiger' multiply defined.
 LaTeX Warning: Label `sub@fig:tiger' multiply defined.
 
 
-LaTeX Warning: Label `fig:gull' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:gull' multiply defined.
-
-
 LaTeX Warning: Label `fig:tiger' multiply defined.
 
 
@@ -2088,282 +2082,280 @@ Package pdftex.def Info: 07_Chapter6/Figs/reference_W_true/Sinusoidal5D.png  us
 ed on input line 230.
 (pdftex.def)             Requested size: 218.73056pt x 163.67256pt.
 [35]
-File: 07_Chapter6/Figs/W_hat_tripathy/Parabola2D_0.png Graphic file (type png)
-<use 07_Chapter6/Figs/W_hat_tripathy/Parabola2D_0.png>
-Package pdftex.def Info: 07_Chapter6/Figs/W_hat_tripathy/Parabola2D_0.png  used
- on input line 241.
-(pdftex.def)             Requested size: 174.98177pt x 135.53636pt.
-File: 07_Chapter6/Figs/W_hat_tripathy/Parabola2D_0.png Graphic file (type png)
-<use 07_Chapter6/Figs/W_hat_tripathy/Parabola2D_0.png>
-Package pdftex.def Info: 07_Chapter6/Figs/W_hat_tripathy/Parabola2D_0.png  used
- on input line 248.
-(pdftex.def)             Requested size: 174.98177pt x 135.53636pt.
+<07_Chapter6/Figs/W_hat_tripathy/Sinusoidal5D_1D.png, id=691, 588.1975pt x 434.
+62375pt>
+File: 07_Chapter6/Figs/W_hat_tripathy/Sinusoidal5D_1D.png Graphic file (type pn
+g)
+<use 07_Chapter6/Figs/W_hat_tripathy/Sinusoidal5D_1D.png>
+Package pdftex.def Info: 07_Chapter6/Figs/W_hat_tripathy/Sinusoidal5D_1D.png  u
+sed on input line 241.
+(pdftex.def)             Requested size: 218.73056pt x 161.62398pt.
+ [36 <./07_Chapter6/Figs/reference_W_true/Sinusoidal5D.png> <./07_Chapter6/Figs
+/W_hat_tripathy/Sinusoidal5D_1D.png>]
+
+LaTeX Warning: Command \textdegree invalid in math mode on input line 270.
 
 
-LaTeX Warning: Command \textdegree invalid in math mode on input line 266.
-
-
-LaTeX Warning: Command \textdegree invalid in math mode on input line 266.
+LaTeX Warning: Command \textdegree invalid in math mode on input line 270.
 
 Missing character: There is no ° in font zptmcm7t!
-[36 <./07_Chapter6/Figs/reference_W_true/Sinusoidal5D.png>]
-<07_Chapter6/Figs/W_hat_tripathy/Sinusoidal5D_2D.png, id=699, 601.24625pt x 452
+<07_Chapter6/Figs/W_hat_tripathy/Sinusoidal5D_2D.png, id=701, 601.24625pt x 452
 .69125pt>
 File: 07_Chapter6/Figs/W_hat_tripathy/Sinusoidal5D_2D.png Graphic file (type pn
 g)
 <use 07_Chapter6/Figs/W_hat_tripathy/Sinusoidal5D_2D.png>
 Package pdftex.def Info: 07_Chapter6/Figs/W_hat_tripathy/Sinusoidal5D_2D.png  u
-sed on input line 273.
+sed on input line 277.
 (pdftex.def)             Requested size: 218.73056pt x 164.68869pt.
+[37 <./07_Chapter6/Figs/W_hat_tripathy/Sinusoidal5D_2D.png>]
 <07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__multiple
-_loss.png, id=700, 462.528pt x 346.896pt>
+_loss.png, id=712, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__mul
 tiple_loss.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__mult
 iple_loss.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_
-20_695_max_run__multiple_loss.png  used on input line 296.
+20_695_max_run__multiple_loss.png  used on input line 305.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 298.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 307.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 298.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 307.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 298.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 307.
 <07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_multiple_loss.png
-, id=701, 462.528pt x 346.896pt>
+, id=713, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_multiple_los
 s.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_multiple_loss
 .png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_
-20_695_multiple_loss.png  used on input line 302.
+20_695_multiple_loss.png  used on input line 311.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__multiple
-_angle.png, id=702, 462.528pt x 346.896pt>
+_angle.png, id=714, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__mul
 tiple_angle.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__mult
 iple_angle.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_
-20_695_max_run__multiple_angle.png  used on input line 307.
+20_695_max_run__multiple_angle.png  used on input line 316.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_multiple_angle.pn
-g, id=703, 462.528pt x 346.896pt>
+g, id=715, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_multiple_ang
 le.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_multiple_angl
 e.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_
-20_695_multiple_angle.png  used on input line 313.
+20_695_multiple_angle.png  used on input line 322.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
- [37 <./07_Chapter6/Figs/W_hat_tripathy/Sinusoidal5D_2D.png>]
+ [38]
 <07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_run__m
-ultiple_loss.png, id=713, 462.528pt x 346.896pt>
+ultiple_loss.png, id=721, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_r
 un__multiple_loss.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_ru
 n__multiple_loss.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-
-5D-_2D_20_175_max_run__multiple_loss.png  used on input line 331.
+5D-_2D_20_175_max_run__multiple_loss.png  used on input line 340.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multiple_l
-oss.png, id=714, 462.528pt x 346.896pt>
+oss.png, id=722, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multi
 ple_loss.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multip
 le_loss.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-
-5D-_2D_20_175_multiple_loss.png  used on input line 337.
+5D-_2D_20_175_multiple_loss.png  used on input line 346.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_run__m
-ultiple_angle.png, id=715, 462.528pt x 346.896pt>
+ultiple_angle.png, id=723, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_r
 un__multiple_angle.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max_ru
 n__multiple_angle.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-
-5D-_2D_20_175_max_run__multiple_angle.png  used on input line 344.
+5D-_2D_20_175_max_run__multiple_angle.png  used on input line 353.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multiple_a
-ngle.png, id=716, 462.528pt x 346.896pt>
+ngle.png, id=724, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multi
 ple_angle.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_multip
 le_angle.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-
-5D-_2D_20_175_multiple_angle.png  used on input line 350.
+5D-_2D_20_175_multiple_angle.png  used on input line 359.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
- [38 <./07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__m
+ [39 <./07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_695_max_run__m
 ultiple_loss.png> <./07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_20_6
 95_multiple_loss.png> <./07_Chapter6/Figs/angles_loss/parabola/Parabola-2D-_1D_
 20_695_max_run__multiple_angle.png> <./07_Chapter6/Figs/angles_loss/parabola/Pa
 rabola-2D-_1D_20_695_multiple_angle.png>]
 <07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_run__m
-ultiple_loss.png, id=727, 462.528pt x 346.896pt>
+ultiple_loss.png, id=735, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_r
 un__multiple_loss.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_ru
 n__multiple_loss.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-
-5D-_2D_20_489_max_run__multiple_loss.png  used on input line 364.
+5D-_2D_20_489_max_run__multiple_loss.png  used on input line 373.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multiple_l
-oss.png, id=728, 462.528pt x 346.896pt>
+oss.png, id=736, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multi
 ple_loss.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multip
 le_loss.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-
-5D-_2D_20_489_multiple_loss.png  used on input line 370.
+5D-_2D_20_489_multiple_loss.png  used on input line 379.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_run__m
-ultiple_angle.png, id=729, 462.528pt x 346.896pt>
+ultiple_angle.png, id=737, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_r
 un__multiple_angle.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_ru
 n__multiple_angle.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-
-5D-_2D_20_489_max_run__multiple_angle.png  used on input line 377.
+5D-_2D_20_489_max_run__multiple_angle.png  used on input line 386.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multiple_a
-ngle.png, id=730, 462.528pt x 346.896pt>
+ngle.png, id=738, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multi
 ple_angle.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multip
 le_angle.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-
-5D-_2D_20_489_multiple_angle.png  used on input line 383.
+5D-_2D_20_489_multiple_angle.png  used on input line 392.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
- [39 <./07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max
+ [40 <./07_Chapter6/Figs/angles_loss/camelback/run1/Camelback-5D-_2D_20_175_max
 _run__multiple_loss.png> <./07_Chapter6/Figs/angles_loss/camelback/run1/Camelba
 ck-5D-_2D_20_175_multiple_loss.png> <./07_Chapter6/Figs/angles_loss/camelback/r
 un1/Camelback-5D-_2D_20_175_max_run__multiple_angle.png> <./07_Chapter6/Figs/an
 gles_loss/camelback/run1/Camelback-5D-_2D_20_175_multiple_angle.png>]
 <07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_max_run__mult
-iple_loss.png, id=740, 462.528pt x 346.896pt>
+iple_loss.png, id=748, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_max_run_
 _multiple_loss.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_max_run__
 multiple_loss.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-
-_2D_20_341_max_run__multiple_loss.png  used on input line 401.
+_2D_20_341_max_run__multiple_loss.png  used on input line 410.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_multiple_loss
-.png, id=741, 462.528pt x 346.896pt>
+.png, id=749, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_multiple
 _loss.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_multiple_
 loss.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-
-_2D_20_341_multiple_loss.png  used on input line 407.
+_2D_20_341_multiple_loss.png  used on input line 416.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_max_run__mult
-iple_angle.png, id=742, 462.528pt x 346.896pt>
+iple_angle.png, id=750, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_max_run_
 _multiple_angle.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_max_run__
 multiple_angle.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-
-_2D_20_341_max_run__multiple_angle.png  used on input line 416.
+_2D_20_341_max_run__multiple_angle.png  used on input line 425.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
 <07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_multiple_angl
-e.png, id=743, 462.528pt x 346.896pt>
+e.png, id=751, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_multiple
 _angle.png Graphic file (type png)
 <use 07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_multiple_
 angle.png>
 Package pdftex.def Info: 07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-
-_2D_20_341_multiple_angle.png  used on input line 422.
+_2D_20_341_multiple_angle.png  used on input line 431.
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
-
-[40 <./07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max_
-run__multiple_loss.png> <./07_Chapter6/Figs/angles_loss/camelback/run2/Camelbac
-k-5D-_2D_20_489_multiple_loss.png> <./07_Chapter6/Figs/angles_loss/camelback/ru
-n2/Camelback-5D-_2D_20_489_max_run__multiple_angle.png> <./07_Chapter6/Figs/ang
-les_loss/camelback/run2/Camelback-5D-_2D_20_489_multiple_angle.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 436--442
+ [41 <./07_Chapter6/Figs/angles_loss/camelback/run2/Camelback-5D-_2D_20_489_max
+_run__multiple_loss.png> <./07_Chapter6/Figs/angles_loss/camelback/run2/Camelba
+ck-5D-_2D_20_489_multiple_loss.png> <./07_Chapter6/Figs/angles_loss/camelback/r
+un2/Camelback-5D-_2D_20_489_max_run__multiple_angle.png> <./07_Chapter6/Figs/an
+gles_loss/camelback/run2/Camelback-5D-_2D_20_489_multiple_angle.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 445--451
 
  []
 
-[41 <./07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_max_run
+[42 <./07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_2D_20_341_max_run
 __multiple_loss.png> <./07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoidal-5D-_
 2D_20_341_multiple_loss.png> <./07_Chapter6/Figs/angles_loss/sinusoidal/Sinusoi
 dal-5D-_2D_20_341_max_run__multiple_angle.png> <./07_Chapter6/Figs/angles_loss/
 sinusoidal/Sinusoidal-5D-_2D_20_341_multiple_angle.png>]
-<07_Chapter6/Figs/rembo/Parabola_run0.png, id=763, 596.2275pt x 450.68375pt>
+<07_Chapter6/Figs/rembo/Parabola_run0.png, id=771, 596.2275pt x 450.68375pt>
 File: 07_Chapter6/Figs/rembo/Parabola_run0.png Graphic file (type png)
 <use 07_Chapter6/Figs/rembo/Parabola_run0.png>
 Package pdftex.def Info: 07_Chapter6/Figs/rembo/Parabola_run0.png  used on inpu
-t line 456.
+t line 465.
 (pdftex.def)             Requested size: 131.23967pt x 99.19885pt.
-<07_Chapter6/Figs/rembo/Parabola_run1.png, id=764, 572.1375pt x 445.665pt>
+<07_Chapter6/Figs/rembo/Parabola_run1.png, id=772, 572.1375pt x 445.665pt>
 File: 07_Chapter6/Figs/rembo/Parabola_run1.png Graphic file (type png)
 <use 07_Chapter6/Figs/rembo/Parabola_run1.png>
 Package pdftex.def Info: 07_Chapter6/Figs/rembo/Parabola_run1.png  used on inpu
-t line 461.
+t line 470.
 (pdftex.def)             Requested size: 131.23967pt x 102.22878pt.
-<07_Chapter6/Figs/rembo/Parabola_run2.png, id=765, 584.1825pt x 447.6725pt>
+<07_Chapter6/Figs/rembo/Parabola_run2.png, id=773, 584.1825pt x 447.6725pt>
 File: 07_Chapter6/Figs/rembo/Parabola_run2.png Graphic file (type png)
 <use 07_Chapter6/Figs/rembo/Parabola_run2.png>
 Package pdftex.def Info: 07_Chapter6/Figs/rembo/Parabola_run2.png  used on inpu
-t line 466.
+t line 475.
 (pdftex.def)             Requested size: 131.23967pt x 100.57169pt.
-<07_Chapter6/Figs/rembo/Camelback3D_run0.png, id=766, 586.19pt x 449.68pt>
+<07_Chapter6/Figs/rembo/Camelback3D_run0.png, id=774, 586.19pt x 449.68pt>
 File: 07_Chapter6/Figs/rembo/Camelback3D_run0.png Graphic file (type png)
 <use 07_Chapter6/Figs/rembo/Camelback3D_run0.png>
 Package pdftex.def Info: 07_Chapter6/Figs/rembo/Camelback3D_run0.png  used on i
-nput line 483.
+nput line 492.
 (pdftex.def)             Requested size: 131.23967pt x 100.67273pt.
-<07_Chapter6/Figs/rembo/Camelback3D_run1.png, id=767, 595.22375pt x 452.69125pt
+<07_Chapter6/Figs/rembo/Camelback3D_run1.png, id=775, 595.22375pt x 452.69125pt
 >
 File: 07_Chapter6/Figs/rembo/Camelback3D_run1.png Graphic file (type png)
 <use 07_Chapter6/Figs/rembo/Camelback3D_run1.png>
 Package pdftex.def Info: 07_Chapter6/Figs/rembo/Camelback3D_run1.png  used on i
-nput line 488.
+nput line 497.
 (pdftex.def)             Requested size: 131.23967pt x 99.81342pt.
-<07_Chapter6/Figs/rembo/Camelback3D_run2.png, id=768, 593.21625pt x 439.6425pt>
+<07_Chapter6/Figs/rembo/Camelback3D_run2.png, id=776, 593.21625pt x 439.6425pt>
 
 File: 07_Chapter6/Figs/rembo/Camelback3D_run2.png Graphic file (type png)
 <use 07_Chapter6/Figs/rembo/Camelback3D_run2.png>
 Package pdftex.def Info: 07_Chapter6/Figs/rembo/Camelback3D_run2.png  used on i
-nput line 493.
+nput line 502.
 (pdftex.def)             Requested size: 131.23967pt x 97.26501pt.
- [42 <./07_Chapter6/Figs/rembo/Parabola_run0.png> <./07_Chapter6/Figs/rembo/Par
+ [43 <./07_Chapter6/Figs/rembo/Parabola_run0.png> <./07_Chapter6/Figs/rembo/Par
 abola_run1.png> <./07_Chapter6/Figs/rembo/Parabola_run2.png>]
-<07_Chapter6/Figs/rembo/Camelback5D_run0.png, id=779, 587.19376pt x 453.695pt>
+<07_Chapter6/Figs/rembo/Camelback5D_run0.png, id=788, 587.19376pt x 453.695pt>
 File: 07_Chapter6/Figs/rembo/Camelback5D_run0.png Graphic file (type png)
 <use 07_Chapter6/Figs/rembo/Camelback5D_run0.png>
 Package pdftex.def Info: 07_Chapter6/Figs/rembo/Camelback5D_run0.png  used on i
-nput line 511.
+nput line 520.
 (pdftex.def)             Requested size: 131.23967pt x 101.39853pt.
-<07_Chapter6/Figs/rembo/Camelback5D_run1.png, id=780, 577.15625pt x 433.62pt>
+<07_Chapter6/Figs/rembo/Camelback5D_run1.png, id=789, 577.15625pt x 433.62pt>
 File: 07_Chapter6/Figs/rembo/Camelback5D_run1.png Graphic file (type png)
 <use 07_Chapter6/Figs/rembo/Camelback5D_run1.png>
 Package pdftex.def Info: 07_Chapter6/Figs/rembo/Camelback5D_run1.png  used on i
-nput line 516.
+nput line 525.
 (pdftex.def)             Requested size: 131.23967pt x 98.59908pt.
-<07_Chapter6/Figs/rembo/Camelback5D_run2.png, id=781, 606.265pt x 461.725pt>
+<07_Chapter6/Figs/rembo/Camelback5D_run2.png, id=790, 606.265pt x 461.725pt>
 File: 07_Chapter6/Figs/rembo/Camelback5D_run2.png Graphic file (type png)
 <use 07_Chapter6/Figs/rembo/Camelback5D_run2.png>
 Package pdftex.def Info: 07_Chapter6/Figs/rembo/Camelback5D_run2.png  used on i
-nput line 521.
+nput line 530.
 (pdftex.def)             Requested size: 131.23967pt x 99.95233pt.
- [43 <./07_Chapter6/Figs/rembo/Camelback3D_run0.png> <./07_Chapter6/Figs/rembo/
+ [44 <./07_Chapter6/Figs/rembo/Camelback3D_run0.png> <./07_Chapter6/Figs/rembo/
 Camelback3D_run1.png> <./07_Chapter6/Figs/rembo/Camelback3D_run2.png> <./07_Cha
 pter6/Figs/rembo/Camelback5D_run0.png> <./07_Chapter6/Figs/rembo/Camelback5D_ru
 n1.png> <./07_Chapter6/Figs/rembo/Camelback5D_run2.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 548--549
+Underfull \hbox (badness 10000) in paragraph at lines 557--558
 
  []
 
 
-Underfull \hbox (badness 2635) in paragraph at lines 589--589
+Underfull \hbox (badness 2635) in paragraph at lines 598--598
 \T1/ptm/m/n/12 (+20) equiv-a-lent to [][]6.6[][] when ap-plied on a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 594--595
+Underfull \hbox (badness 10000) in paragraph at lines 603--604
 
  []
 
@@ -2371,97 +2363,97 @@ Underfull \hbox (badness 10000) in paragraph at lines 594--595
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 637--639
-
- []
-
-[44]
-Underfull \hbox (badness 10000) in paragraph at lines 648--649
-
- []
-
-
-Package natbib Warning: Citation `SVMFeature' on page 45 undefined on input lin
-e 651.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 650--652
+Underfull \hbox (badness 10000) in paragraph at lines 646--648
 
  []
 
 [45]
-<07_Chapter6/Figs/orig/Parabola-2D-_1D.png, id=819, 462.528pt x 346.896pt>
+Underfull \hbox (badness 10000) in paragraph at lines 657--658
+
+ []
+
+
+Package natbib Warning: Citation `SVMFeature' on page 46 undefined on input lin
+e 660.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 659--661
+
+ []
+
+[46]
+<07_Chapter6/Figs/orig/Parabola-2D-_1D.png, id=827, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/orig/Parabola-2D-_1D.png Graphic file (type png)
 <use 07_Chapter6/Figs/orig/Parabola-2D-_1D.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Parabola-2D-_1D.png  used on inp
-ut line 684.
+ut line 693.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-<07_Chapter6/Figs/orig/Parabola-2D-_1D_BORING.png, id=820, 462.528pt x 346.896p
+<07_Chapter6/Figs/orig/Parabola-2D-_1D_BORING.png, id=828, 462.528pt x 346.896p
 t>
 File: 07_Chapter6/Figs/orig/Parabola-2D-_1D_BORING.png Graphic file (type png)
 <use 07_Chapter6/Figs/orig/Parabola-2D-_1D_BORING.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Parabola-2D-_1D_BORING.png  used
- on input line 691.
+ on input line 700.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-<07_Chapter6/Figs/orig/Parabola-2D-_1D_TRIPATHY.png, id=821, 462.528pt x 346.89
+<07_Chapter6/Figs/orig/Parabola-2D-_1D_TRIPATHY.png, id=829, 462.528pt x 346.89
 6pt>
 File: 07_Chapter6/Figs/orig/Parabola-2D-_1D_TRIPATHY.png Graphic file (type png
 )
 <use 07_Chapter6/Figs/orig/Parabola-2D-_1D_TRIPATHY.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Parabola-2D-_1D_TRIPATHY.png  us
-ed on input line 699.
+ed on input line 708.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-<07_Chapter6/Figs/orig/Parabola-2D-_1D_REMBO.png, id=822, 462.528pt x 346.896pt
+<07_Chapter6/Figs/orig/Parabola-2D-_1D_REMBO.png, id=830, 462.528pt x 346.896pt
 >
 File: 07_Chapter6/Figs/orig/Parabola-2D-_1D_REMBO.png Graphic file (type png)
 <use 07_Chapter6/Figs/orig/Parabola-2D-_1D_REMBO.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Parabola-2D-_1D_REMBO.png  used 
-on input line 706.
+on input line 715.
 (pdftex.def)             Requested size: 131.23967pt x 98.42705pt.
-<07_Chapter6/Figs/orig/Camelback-5D-_2D.png, id=823, 462.528pt x 346.896pt>
+<07_Chapter6/Figs/orig/Camelback-5D-_2D.png, id=831, 462.528pt x 346.896pt>
 File: 07_Chapter6/Figs/orig/Camelback-5D-_2D.png Graphic file (type png)
 <use 07_Chapter6/Figs/orig/Camelback-5D-_2D.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Camelback-5D-_2D.png  used on in
-put line 722.
+put line 731.
 (pdftex.def)             Requested size: 109.36528pt x 82.02342pt.
-<07_Chapter6/Figs/orig/Camelback-5D-_2D_BORING.png, id=824, 462.528pt x 346.896
+<07_Chapter6/Figs/orig/Camelback-5D-_2D_BORING.png, id=832, 462.528pt x 346.896
 pt>
 File: 07_Chapter6/Figs/orig/Camelback-5D-_2D_BORING.png Graphic file (type png)
 
 <use 07_Chapter6/Figs/orig/Camelback-5D-_2D_BORING.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Camelback-5D-_2D_BORING.png  use
-d on input line 729.
+d on input line 738.
 (pdftex.def)             Requested size: 109.36528pt x 82.02342pt.
-<07_Chapter6/Figs/orig/Camelback-5D-_2D_TRIPATHY.png, id=825, 462.528pt x 346.8
+<07_Chapter6/Figs/orig/Camelback-5D-_2D_TRIPATHY.png, id=833, 462.528pt x 346.8
 96pt>
 File: 07_Chapter6/Figs/orig/Camelback-5D-_2D_TRIPATHY.png Graphic file (type pn
 g)
 <use 07_Chapter6/Figs/orig/Camelback-5D-_2D_TRIPATHY.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Camelback-5D-_2D_TRIPATHY.png  u
-sed on input line 737.
+sed on input line 746.
 (pdftex.def)             Requested size: 109.36528pt x 82.02342pt.
-<07_Chapter6/Figs/orig/Camelback-5D-_2D_REMBO.png, id=826, 462.528pt x 346.896p
+<07_Chapter6/Figs/orig/Camelback-5D-_2D_REMBO.png, id=834, 462.528pt x 346.896p
 t>
 File: 07_Chapter6/Figs/orig/Camelback-5D-_2D_REMBO.png Graphic file (type png)
 <use 07_Chapter6/Figs/orig/Camelback-5D-_2D_REMBO.png>
 Package pdftex.def Info: 07_Chapter6/Figs/orig/Camelback-5D-_2D_REMBO.png  used
- on input line 744.
+ on input line 753.
 (pdftex.def)             Requested size: 109.36528pt x 82.02342pt.
- [46 <./07_Chapter6/Figs/orig/Parabola-2D-_1D.png> <./07_Chapter6/Figs/orig/Par
+ [47 <./07_Chapter6/Figs/orig/Parabola-2D-_1D.png> <./07_Chapter6/Figs/orig/Par
 abola-2D-_1D_BORING.png> <./07_Chapter6/Figs/orig/Parabola-2D-_1D_TRIPATHY.png>
- <./07_Chapter6/Figs/orig/Parabola-2D-_1D_REMBO.png>]) [47 <./07_Chapter6/Figs/
+ <./07_Chapter6/Figs/orig/Parabola-2D-_1D_REMBO.png>]) [48 <./07_Chapter6/Figs/
 orig/Camelback-5D-_2D.png> <./07_Chapter6/Figs/orig/Camelback-5D-_2D_BORING.png
 > <./07_Chapter6/Figs/orig/Camelback-5D-_2D_TRIPATHY.png> <./07_Chapter6/Figs/o
 rig/Camelback-5D-_2D_REMBO.png>]
 \openout2 = `08_Chapter7/chapter7.aux'.
 
- (./08_Chapter7/chapter7.tex [48
-
-
-
-]
+ (./08_Chapter7/chapter7.tex
 Chapter 7.
-[49]) [50] (./thesis.bbl [51
+[49
+
+
+
+]) [50] (./thesis.bbl [51
 
 
 
@@ -2496,18 +2488,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 53--56
 
  []
 
-<Appendix1/tau_0.png, id=926, 571.13374pt x 450.68375pt>
+<Appendix1/tau_0.png, id=930, 571.13374pt x 450.68375pt>
 File: Appendix1/tau_0.png Graphic file (type png)
 <use Appendix1/tau_0.png>
 Package pdftex.def Info: Appendix1/tau_0.png  used on input line 60.
 (pdftex.def)             Requested size: 174.98177pt x 138.0738pt.
-<Appendix1/tau_1.png, id=927, 564.1075pt x 439.6425pt>
+<Appendix1/tau_1.png, id=931, 564.1075pt x 439.6425pt>
 File: Appendix1/tau_1.png Graphic file (type png)
 <use Appendix1/tau_1.png>
 Package pdftex.def Info: Appendix1/tau_1.png  used on input line 68.
 (pdftex.def)             Requested size: 174.98177pt x 136.37497pt.
 [56]
-<Appendix1/Figs//visualize_vanillaSinusoidal-5D->2D.png, id=951, 462.528pt x 34
+<Appendix1/Figs//visualize_vanillaSinusoidal-5D->2D.png, id=955, 462.528pt x 34
 6.896pt>
 File: Appendix1/Figs//visualize_vanillaSinusoidal-5D->2D.png Graphic file (type
  png)
@@ -2517,20 +2509,20 @@ Package pdftex.def Info: Appendix1/Figs//visualize_vanillaSinusoidal-5D->2D.png
 (pdftex.def)             Requested size: 174.98177pt x 131.2343pt.
  [57 <./Appendix1/tau_0.png> <./Appendix1/tau_1.png> <./Appendix1/Figs//visuali
 ze_vanillaSinusoidal-5D->2D.png>]
-<Appendix1/Figs/orig/Sinusoidal-5D-_2D.png, id=961, 462.528pt x 346.896pt>
+<Appendix1/Figs/orig/Sinusoidal-5D-_2D.png, id=965, 462.528pt x 346.896pt>
 File: Appendix1/Figs/orig/Sinusoidal-5D-_2D.png Graphic file (type png)
 <use Appendix1/Figs/orig/Sinusoidal-5D-_2D.png>
 Package pdftex.def Info: Appendix1/Figs/orig/Sinusoidal-5D-_2D.png  used on inp
 ut line 100.
 (pdftex.def)             Requested size: 109.36528pt x 82.02342pt.
-<Appendix1/Figs/orig/Sinusoidal-5D-_2D_BORING.png, id=962, 462.528pt x 346.896p
+<Appendix1/Figs/orig/Sinusoidal-5D-_2D_BORING.png, id=966, 462.528pt x 346.896p
 t>
 File: Appendix1/Figs/orig/Sinusoidal-5D-_2D_BORING.png Graphic file (type png)
 <use Appendix1/Figs/orig/Sinusoidal-5D-_2D_BORING.png>
 Package pdftex.def Info: Appendix1/Figs/orig/Sinusoidal-5D-_2D_BORING.png  used
  on input line 107.
 (pdftex.def)             Requested size: 109.36528pt x 82.02342pt.
-<Appendix1/Figs/orig/Sinusoidal-5D-_2D_TRIPATHY.png, id=963, 462.528pt x 346.89
+<Appendix1/Figs/orig/Sinusoidal-5D-_2D_TRIPATHY.png, id=967, 462.528pt x 346.89
 6pt>
 File: Appendix1/Figs/orig/Sinusoidal-5D-_2D_TRIPATHY.png Graphic file (type png
 )
@@ -2538,7 +2530,7 @@ File: Appendix1/Figs/orig/Sinusoidal-5D-_2D_TRIPATHY.png Graphic file (type png
 Package pdftex.def Info: Appendix1/Figs/orig/Sinusoidal-5D-_2D_TRIPATHY.png  us
 ed on input line 115.
 (pdftex.def)             Requested size: 109.36528pt x 82.02342pt.
-<Appendix1/Figs/orig/Sinusoidal-5D-_2D_REMBO.png, id=964, 462.528pt x 346.896pt
+<Appendix1/Figs/orig/Sinusoidal-5D-_2D_REMBO.png, id=968, 462.528pt x 346.896pt
 >
 File: Appendix1/Figs/orig/Sinusoidal-5D-_2D_REMBO.png Graphic file (type png)
 <use Appendix1/Figs/orig/Sinusoidal-5D-_2D_REMBO.png>
@@ -2568,10 +2560,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 27865 strings out of 492649
- 505771 string characters out of 6129622
- 573682 words of memory out of 5000000
- 30674 multiletter control sequences out of 15000+600000
+ 27872 strings out of 492649
+ 506027 string characters out of 6129622
+ 573694 words of memory out of 5000000
+ 30678 multiletter control sequences out of 15000+600000
  623287 words of font info for 280 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,17n,92p,10383b,949s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2587,10 +2579,10 @@ st/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2018/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/ti
 mes/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times/utmri8
 a.pfb>
-Output written on thesis.pdf (64 pages, 5959507 bytes).
+Output written on thesis.pdf (64 pages, 6140687 bytes).
 PDF statistics:
- 1099 PDF objects out of 1200 (max. 8388607)
- 892 compressed objects within 9 object streams
- 354 named destinations out of 1000 (max. 500000)
- 57506 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 1104 PDF objects out of 1200 (max. 8388607)
+ 895 compressed objects within 9 object streams
+ 356 named destinations out of 1000 (max. 500000)
+ 57511 words of extra memory for PDF output out of 61914 (max. 10000000)
 

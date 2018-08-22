@@ -236,25 +236,29 @@ This measures how the algorithm performs when we assume perfect subspace identif
 This measures how the algorithm performs, when subspace identification is a part of the optimization process.
 
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.40\textwidth}
-        \includegraphics[width=\textwidth]{W_hat_tripathy/Parabola2D_0}
-        \label{fig:gull}
-        \caption{Run 1}
-    \end{subfigure}
-    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.40\textwidth}
-        \includegraphics[width=\textwidth]{W_hat_tripathy/Parabola2D_0}
+	\centering
+    \begin{subfigure}[b]{0.5\textwidth}
+        \includegraphics[width=\textwidth]{W_hat_tripathy/Sinusoidal5D_1D}
         \label{fig:tiger}
         \caption{Run 2}
     \end{subfigure}   
-           \caption{UCB on a 2D Camelback function embedded in 5D space.
+           \caption{UCB on the 2D Sinusoidal function embedded in 5D space.
   This is when we apply Tripathy's algorithm to find a projection matrix $W$, that is acceptable for optimization, but is not near close to the real projection matrix.}
 \end{figure}
 
-One can easily see that the performance on UCB using Tripathy's matrix identification algorithm is similar to the case when we assume that Tripathy executes perfectly.
+One can see the performance of Tripathy's method is superior to BORING.
+The reason for this may be one of following:
 
+\begin{enumerate}
+\item Hyperparameters are not optimized as part of the process, when applying the BORING method.
+\item BORING adds another dimension that the optimizer must take into consideration.
+The overhead of this additional dimension is higher than the potential gain that BORING could exploit by looking at the smaller perturbations.
+\end{enumerate}
+
+To test the first assumption, I optimize the GP hyperparameters after the projection matrix (including the passive projection vectors) has been identified and generated.
+This yielded no recognizable improvement to the above curves.
+I was not able to test the second assumption, as my implementation of Tripathy's method was not stable for dimensions bigger than 5, and as this would require a significant amount of time to fix.
+Thus, is it still an open question if it is advantageous to use BORING instead of Tripathy's method for higher dimensions.
 
 %One can see that REMBO without interleavings has very high variance amongst runs. 
 %Sometimes it can find a suitable subspace (subfigure (c) and (d)), but on other runs, it fails to find an appropriate subspace.
