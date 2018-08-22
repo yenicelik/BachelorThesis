@@ -99,6 +99,8 @@ y_* \end{pmatrix} \sim N\Biggl(\mu,\begin{pmatrix} K & K^T_*\\
 \end{equation}
 
 To compute this equation, we use the results from Murphy's textbook \citep{Murphy} pages 110 to 111 to make inference in a joint Gaussian model.
+The transition from the Gaussian Process, to Bayesian Optimization lies in finding the argmax of the above term.
+This argmax can be sequentially estimated using the following estimation functions.
 
 \section{Acquisition Functions}
 

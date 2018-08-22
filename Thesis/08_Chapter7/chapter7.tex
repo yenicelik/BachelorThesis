@@ -29,6 +29,7 @@ However, improving over the log-likelihood can reduce the angle-difference in ma
 
 Future work could incorporate the synthesis of different methods, including additive GPs and Tripathy's method.
 Although Tripathy's method is unbeaten in identifying the active subspace dimension, heuristics could be easily implemented to speed up the calculation time.
+To avoid the (small) possibility of identifying a bad subspace, one could make use of the idea of interleaved runs as used in REMBO on Tripathy's method to marginalize this probability even further.
 One of the most critical aspects is hyperparameter tuning for the GP models itself.
 These can make or break the identification of the subspace.
 Choosing bad hyperparameters does not allow us to compare different methods effectively.

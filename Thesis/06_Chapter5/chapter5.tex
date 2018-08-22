@@ -18,7 +18,7 @@ I will first present that algorithm, and then point out, as to why each concern 
 
 We propose the following algorithm, called BORING. \textbf{BORING} stands for \textbf{B}ayesian \textbf{O}ptimization using \textbf{R}andom and \textbf{I}de\textbf{N}tifyable subspace \textbf{G}eneration.
 
-The general idea of boring can be captured in one formula, where $f$ stands for the real function that one wishes to approximate, and any subsequent function annotated by $g$ refers to a component of the right-hand side.
+The general idea of BORING can be captured in one formula, where $f$ stands for the real function that one wishes to approximate, and any subsequent function annotated by $g$ refers to a component of the right-hand side.
 
 \begin{equation}
 f(x) \approx g_0(A x) + \sum_{i \in \mathbb{Z}^+}^{q} g_i( A^{\bot} x)_i )
@@ -196,7 +196,7 @@ Using this information about each individual kernel component results in the sim
 One should notice that this additive acquisition function is an approximation of the real acquisition function. 
 For lower dimensions - such as $d<3$ - it is not required to decompose the acquisition function into separate additive components.
 
-\subsubsection{How does our algorithm address the shortcomings from chapter 3?}
+\subsubsection{How does our algorithm address the shortcomings from chapter 4?}
 
 \begin{enumerate}
 \item Our algorithm intrinsically uses multiple restarts.

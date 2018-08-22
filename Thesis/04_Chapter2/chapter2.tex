@@ -134,7 +134,8 @@ Extensions to REMBO include \citep{RemboExtension}.
 
 \subsection{GPs with builtin dimensionality reduction}
 I put most emphasis on this algorithm during my experiments. 
-As such, I will be more detailed with the description of this algorithm. \\
+As such, I will be more detailed with the description of this algorithm.
+During the rest of this dissertation, I will refer to this algorithm as "Tripathy's method", or "Tripathy's algorithm".\\
 
 \citep{Tripathy} This algorithm assumes that  $f(x) \sim g( \mathbf{W}^T y)$ where $ \mathbf{W} \in \mathbb{R}^{D \times d} $ and $D >> d$.
 $ \mathbf{W} $ again has the property that $\mathbf{W^T}  \times \mathbf{W} = I$ where $I \in \mathbf{R}^{d \times d}$ denotes the identity matrix in $d$ dimensions. 
@@ -273,8 +274,8 @@ $k$ models are sampled, and we respectively approximate $p(f_* | D, x^*) = \frac
 
 \citep{Rana2017} Use a process where the space is iteratively explored.
 The key insight here is that with low length-scales, the acquisition function is flat, but with higher length-scales, the acquisition function starts to have significant gradients.
-The two key-steps is to 1.) additively increase the length-scale for the gaussian process if the length-scale is not maximal and if $|| x_{init} - x^* || = 0$.
-And 2.) exponentially decrease the length-scale for the gaussian process if the length-scale is below the optimum length-scale and if $|| x_{init} - x^* || = 0$.
+The two key-steps is to 1.) additively increase the length-scale for the Gaussian process if the length-scale is not maximal and if $|| x_{init} - x^* || = 0$.
+And 2.) exponentially decrease the length-scale for the Gaussian process if the length-scale is below the optimum length-scale and if $|| x_{init} - x^* || = 0$.
 
 \subsection{High dimensional Gaussian bandits}
 
@@ -296,7 +297,7 @@ The algorithm identifies $A$ by the
 \STATE $\Phi_i \leftarrow m_{\Phi}$ samples uniformly from $\{ -\frac{1}{\sqrt{m}}, \frac{1}{\sqrt{m}} \}^k$
 \ENDFOR
 
-\STATE $ y \leftarrow $ (compute using Equation 1 -- INSERT Eq 1 here, or create a summary of all important equations here)
+\STATE $ y \leftarrow $ Compute $y$ using Equation 1 from \citep{Djolonga2013}
 
 \STATE select $z_i$ according to a UCB acquisition function, evaluate $f$ on it, and add it to the data samples found so far
 
