@@ -361,8 +361,10 @@ class TripathyOptimizer:
         # print("Number of processes found: ", number_processes)
         # Do "number of reruns by spawning new processes
 
-        all_responses = self.pool.map(wrapper_singlerun, range(self.no_of_restarts))
-        self.pool._clear()
+        all_responses = [wrapper_singlerun(None) for i in range(self.no_of_restarts)]
+
+        # all_responses = self.pool.map(wrapper_singlerun, range(self.no_of_restarts))
+        # self.pool._clear()
 
         # pool.close()
         # pool.terminate()
@@ -372,10 +374,10 @@ class TripathyOptimizer:
 
         # Run garbage collection
         gc.collect()
-
-        for p in multiprocessing.active_children():
-            p.terminate()
-            gc.collect()
+        #
+        # for p in multiprocessing.active_children():
+        #     p.terminate()
+        #     gc.collect()
 
         print("We have so many active children: ", multiprocessing.active_children())
 

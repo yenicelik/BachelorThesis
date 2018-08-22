@@ -67,9 +67,9 @@ elif HALFDEV:
 else:
 
     config = {
-        "no_restarts": 10, # 14,
+        "no_restarts": 20, # 14,
 
-        "max_iter_alg1": int(100), # # 300 # 100
+        "max_iter_alg1": int(500), # # 300 # 100
 
         "max_iter_parameter_optimization": 200,
         "max_iter_W_optimization": 1,

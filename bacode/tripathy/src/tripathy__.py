@@ -33,7 +33,7 @@ class TripathyGPConfig(ModelConfig):
 
     """
     # kernels = ConfigField([('GPy.kern.Matern32', {'variance': 1., 'lengthscale': 1.5, 'ARD': True})])
-    noise_var = ConfigField(0.01)
+    noise_var = ConfigField(0.005)
     calculate_gradients = ConfigField(False, comment='Enable/Disable computation of gradient on each update.')
     optimize_bias = ConfigField(False)
     optimize_var = ConfigField(False)
@@ -110,8 +110,12 @@ class TripathyGP(ConfidenceBoundModel):
         # DEFAULT
         self.W_hat = np.eye(self.domain.d)
         self.noise_var = 0.005
-        self.lengthscale = 6
-        self.variance = 2.5
+        # self.lengthscale = 0.08
+        # self.variance = 0.1
+
+        self.variance = 2.3555752428329177
+        self.lengthscale = 4.8
+
         self.active_d = self.domain.d
 
         # PARABOLA
@@ -276,9 +280,28 @@ class TripathyGP(ConfidenceBoundModel):
 
         if self.i % 500 == 100:
 
-            self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
-                X, Y, load=False)
-            self.W_hat = self.W_hat.T
+            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
+            #     X, Y, load=False)
+            # self.W_hat = self.W_hat.T
+
+            # self.W_hat = np.asarray([
+            #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, -0.71214818],
+            #     [0.00412458, -0.95147725, -0.28612815, -0.06316891, -0.093885]
+            # ])
+
+            self.W_hat = np.asarray([[0.39877165, 0.88585961],
+                                     [-0.23390389, 0.0992073],
+                                     [0.52560395, -0.03363714],
+                                     [0.0815202, 0.06316191],
+                                     [0.70948226, -0.44753746]]
+                                    ).T
+            # self.W_hat = np.asarray([
+            #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, -0.71214818],
+            #     [0.00412458, -0.95147725, -0.28612815, -0.06316891, -0.093885]
+            # ])
+            self.active_d = 2
+            self.lengthscale = np.asarray([0.84471462, 4.75165394])
+            self.variance = 2.3555752428329177
 
             # self.W_hat = np.asarray([
             #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
