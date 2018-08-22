@@ -354,14 +354,16 @@ class TripathyOptimizer:
         configs = []
 
         # Define the throw-aways function:
-        def wrapper_singlerun(_):
+        def wrapper_singlerun(_, i=None):
+            if i is not None:
+                print("Singlerun number: ", i)
             return single_run(self, t_kernel, X, Y)
 
 
         # print("Number of processes found: ", number_processes)
         # Do "number of reruns by spawning new processes
 
-        all_responses = [wrapper_singlerun(None) for i in range(self.no_of_restarts)]
+        all_responses = [wrapper_singlerun(None, i) for i in range(self.no_of_restarts)]
 
         # all_responses = self.pool.map(wrapper_singlerun, range(self.no_of_restarts))
         # self.pool._clear()

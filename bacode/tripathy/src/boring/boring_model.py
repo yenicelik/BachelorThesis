@@ -337,7 +337,7 @@ class BoringGP(ConfidenceBoundModel):
             # self.lengthscale = 6
             # self.variance = 2.5
             # self.active_d = 1
-            self.passive_d = 1
+            self.passive_d = 2
 
             self.passive_d = max(self.passive_d , 0)
 
@@ -353,6 +353,8 @@ class BoringGP(ConfidenceBoundModel):
                 (self.A, self.AT),
                 axis=0
             )
+
+            self.gp.optimize(optimizer="lbfgs", max_iters=50) # lbfgs # config['max_iter_parameter_optimization'])
 
             # assert not np.isnan(self.W_hat).all(), ("The projection matrix contains nan's!", self.Q)
             # assert self.W_hat.shape == (self.domain.d, self.active_d+passive_dimensions), ("Created wrong projectoin shape: ", self.At.shape, self.active_d, passive_dimensions)

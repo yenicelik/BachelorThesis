@@ -46,7 +46,7 @@
 \contentsline {subsubsection}{Overview}{24}{section*.19}
 \contentsline {subsubsection}{Finding a basis for the passive subspace (a subspace orthogonal to the active subspace)}{25}{section*.20}
 \contentsline {subsubsection}{Additive UCB acquisition function}{27}{section*.21}
-\contentsline {subsubsection}{How does our algorithm address the shortcomings from chapter 3?}{27}{section*.22}
+\contentsline {subsubsection}{How does our algorithm address the shortcomings from chapter 4?}{27}{section*.22}
 \contentsline {chapter}{\numberline {6}Evaluation}{29}{chapter.6}
 \contentsline {section}{\numberline {6.1}Evaluation Settings}{29}{section.6.1}
 \contentsline {section}{\numberline {6.2}Quantitative evaluation}{29}{section.6.2}
@@ -62,21 +62,22 @@
 \contentsline {subsection}{\numberline {6.2.4}Exponential Sinusoidal}{35}{subsection.6.2.4}
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{35}{section*.35}
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{36}{section*.37}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$ and active d=$2$ }{37}{section*.39}
 \contentsline {subsection}{\numberline {6.2.5}Log-Likelihood and Angle difference measures}{37}{subsection.6.2.5}
-\contentsline {paragraph}{Parabola}{37}{section*.39}
-\contentsline {paragraph}{Camelback}{38}{section*.41}
-\contentsline {paragraph}{Sinusoidal}{40}{section*.44}
+\contentsline {paragraph}{Parabola}{37}{section*.41}
+\contentsline {paragraph}{Camelback}{38}{section*.43}
+\contentsline {paragraph}{Sinusoidal}{40}{section*.46}
 \contentsline {section}{\numberline {6.3}REMBO}{41}{section.6.3}
-\contentsline {paragraph}{Parabola}{42}{section*.46}
-\contentsline {paragraph}{Camelback3D}{42}{section*.48}
-\contentsline {paragraph}{Camelback5D}{43}{section*.50}
+\contentsline {paragraph}{Parabola}{42}{section*.48}
+\contentsline {paragraph}{Camelback3D}{42}{section*.50}
+\contentsline {paragraph}{Camelback5D}{43}{section*.52}
 \contentsline {section}{\numberline {6.4}Qualitative evaluation}{43}{section.6.4}
 \contentsline {subsection}{\numberline {6.4.1}Feature selection}{44}{subsection.6.4.1}
 \contentsline {subsection}{\numberline {6.4.2}Subspace identification}{45}{subsection.6.4.2}
 \contentsline {chapter}{\numberline {7}Conclusion}{49}{chapter.7}
 \contentsline {section}{\numberline {7.1}Main Contributions}{49}{section.7.1}
 \contentsline {section}{\numberline {7.2}Future work}{49}{section.7.2}
-\contentsline {chapter}{References}{51}{chapter*.56}
+\contentsline {chapter}{References}{51}{chapter*.58}
 \contentsline {chapter}{Appendix \numberline {A}Appendix A}{55}{Appendix.a.A}
 \contentsline {section}{\numberline {A.1}Benchmarking functions}{55}{section.a.A.1}
 \contentsline {section}{\numberline {A.2}The log-likelihood function as a function of $\tau $}{56}{section.a.A.2}

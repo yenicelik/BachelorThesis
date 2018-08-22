@@ -266,6 +266,20 @@ One can easily see that the performance on UCB using Tripathy's matrix identific
 One should notice, however, that the angle between the found matrix and the real projection matrix is almost always at $45°$ - a value that does not sound very intuitive, and for which the only reasonable explanation is that the optimization problem stays the same at this projection angle.
 The reader can view graphs in a subsequent subsection.
 
+\paragraph{Assume $\hat{W} \neq W_{\text{true}}$ and active d=$2$ }: For a quick sanity check, I now investigate how Tripathy's method performs when we set the active number of dimensions to 2.
+
+\begin{figure}[H]
+  \centering
+      \includegraphics[width=0.5\textwidth]{W_hat_tripathy/Sinusoidal5D_2D}
+  \caption{UCB on the Sinusoidal embedded in 2D space, when we assume that Tripathy's method is applied to approximate the real projection matrix.
+  One can see good performance in subspace recovery.}
+\end{figure}
+
+At this point the reader may wonder why adding random orthogonal vectors to the orthogonal projection matrix is necessary, if one can simply increase the number of dimensions for Tripathy's method.
+The answer to this is that each individual small perturbation term would need to have an individual vector added to the projection matrix.
+There number of vectors added to the projection matrix would be linear to the axis of small perturbations.
+By adding a random vector, we account for a multitude of such functional-components, without adding linearly many vectors to the projection matrix.
+
 
 \subsection{Log-Likelihood and Angle difference measures}
 
