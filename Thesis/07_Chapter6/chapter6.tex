@@ -202,6 +202,71 @@ For different runs, the log-likelihood of the GP including the real matrix is at
 Although the values $-2$ and $-0.92$ are close to each other, the pair ($-389$, $-102$) shows that the subspace identification task for this algorithm is much more unstable than that for the parabola.
 In the following subsection, I will investigate this issue further.
 
+\subsection{Exponential Sinusoidal}
+
+The function to be learned and optimized over is the following:
+
+\def\WSinusoidal5D{
+\begin{bmatrix}
+		-0.41108301 & 0.22853536 & -0.51593653 & -0.07373475 & -0.71214818 \\
+           0.00412458 & -0.95147725 & -0.28612815 & -0.06316891 & -0.093885
+\end{bmatrix}}
+
+\begin{align}
+f(z_1, z_2) & = f(z_1) + f(z_2) \\
+& = \exp{\left[-\frac{1}{2} z_1 \right]}   \cos{(2 z_1)} + 0.01   \exp{\left[-\frac{1}{2} z_2 \right] }   \cos{(2 z_2)}
+\end{align}
+
+where we have \\
+$z = \left( \WSinusoidal5D^T x \right) $, and $ x \in \mathbf{R}^5$, $W \in \mathbf{R}^{2 \times 5}$
+and where $z_1$ denotes the first entry of the $z$ vector, and $z_2$ denotes the second element of the $z$.
+The reader can notice that for the domain at hand (where $-3 < z < 3$), we have $ \lVert f_1 \rVert_{\infty} << \lVert f_0 \rVert_{\infty})$
+
+\paragraph{Assume $\hat{W} = W_{\text{true}}$}: I present how the respective algorithms perform if we assume that Tripathy's Stiefel Manifold optimization finds the perfect matrix.
+This measures how the algorithm performs when we assume perfect subspace identification.
+
+\begin{figure}[H]
+  \centering
+      \includegraphics[width=0.5\textwidth]{reference_W_true/Sinusoidal5D}
+  \caption{UCB on the Sinusoidal embedded in 2D space, when we assume that Tripathy's method finds the real projection matrix.
+  One can see that the line is less curvy than then other examples.}
+\end{figure}
+
+\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the function described above.
+This measures how the algorithm performs, when subspace identification is a part of the optimization process.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{W_hat_tripathy/Parabola2D_0}
+        \label{fig:gull}
+        \caption{Run 1}
+    \end{subfigure}
+    %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.40\textwidth}
+        \includegraphics[width=\textwidth]{W_hat_tripathy/Parabola2D_0}
+        \label{fig:tiger}
+        \caption{Run 2}
+    \end{subfigure}   
+           \caption{UCB on a 2D Camelback function embedded in 5D space.
+  This is when we apply Tripathy's algorithm to find a projection matrix $W$, that is acceptable for optimization, but is not near close to the real projection matrix.}
+\end{figure}
+
+One can easily see that the performance on UCB using Tripathy's matrix identification algorithm is similar to the case when we assume that Tripathy executes perfectly.
+
+
+%One can see that REMBO without interleavings has very high variance amongst runs. 
+%Sometimes it can find a suitable subspace (subfigure (c) and (d)), but on other runs, it fails to find an appropriate subspace.
+%The reader should notice that most of these lines are linear.
+%This may be the result of not tuning the hyperparameters during runs.
+%In this case, the BORING algorithm assesses the same properties as the Tripathy model (as the number of passive dimensions is set to 0), with which the two models perform very similar on the regret curves. \\
+
+\textbf{The log likelihood of the GP w.r.t the collected data points} of the Tripathy GP with the real matrix is comparable to the log-likelihood of the GP of the Tripathy model, where the active projection matrix is calculated using the algorithm (values of $-1.37$ and $-1.38$ or for a different run values of $195.32$ and $210.25$, where ranges are between  $-100$ and $700$).
+One should notice, however, that the angle between the found matrix and the real projection matrix is almost always at $45°$ - a value that does not sound very intuitive, and for which the only reasonable explanation is that the optimization problem stays the same at this projection angle.
+The reader can view graphs in a subsequent subsection.
+
+
 \subsection{Log-Likelihood and Angle difference measures}
 
 An interesting quantity to take into consideration is the log-likelihood of the sampled data with respect to the GP, and the angle between the found projection matrix, and the real projection matrix.
@@ -641,55 +706,17 @@ Notice that the Tripathy approximation is slightly more accurate than the BORING
 This is because one of Tripathy's initial starting points were selected better, such that algorithm 3 ran many times before the relative loss terminated the algorithm.
 The active subspace projection matrix is of size $\mathbf{R}^{1 \times 2}$
 
-% SINUSOIDAL FUNCTION
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{orig/Sinusoidal-5D-_2D.png}
-        \caption{Sinusoidal Original}
-        \label{fig:gull}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{orig/Sinusoidal-5D-_2D_BORING.png}
-        \caption{Sinusoidal Boring}
-        \label{fig:tiger}
-    \end{subfigure}
-        \vskip\baselineskip
- %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill, etc. 
-    %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{orig/Sinusoidal-5D-_2D_TRIPATHY.png}
-        \caption{Sinusoidal Tripathy}
-        \label{fig:mouse}
-    \end{subfigure}
-        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-    %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{orig/Sinusoidal-5D-_2D_REMBO.png}
-        \caption{Sinusoidal Rembo}
-        \label{fig:mouse}
-    \end{subfigure}
-    \caption{Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.}\label{fig:animals}
-\end{figure}
-
-I set the number of restarts to $28$ and number of randomly sampled data points to 100.
-The active subspace projection matrix is of size $\mathbf{R}^{1\times 5}$, as this is a function that exhibits a strong principal component, but that still attains small perturbations among a different dimension.
-One can see very well here, that BORING can take into account the small perturbations, at a considerably lower cost than Tripathy would be able to.
-
-
 % CAMELBACK FUNCTION
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.25\textwidth}
         \includegraphics[width=\textwidth]{orig/Camelback-5D-_2D.png}
         \caption{Camelback Original}
         \label{fig:gull}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.25\textwidth}
         \includegraphics[width=\textwidth]{orig/Camelback-5D-_2D_BORING.png}
         \caption{Camelback Boring}
         \label{fig:tiger}
@@ -697,14 +724,14 @@ One can see very well here, that BORING can take into account the small perturba
         \vskip\baselineskip
  %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill, etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.25\textwidth}
         \includegraphics[width=\textwidth]{orig/Camelback-5D-_2D_TRIPATHY.png}
         \caption{Camelback Tripathy}
         \label{fig:mouse}
     \end{subfigure}
         ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
     %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.25\textwidth}
         \includegraphics[width=\textwidth]{orig/Camelback-5D-_2D_REMBO.png}
         \caption{Camelback Rembo}
         \label{fig:mouse}

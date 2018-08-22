@@ -60,21 +60,25 @@
 \contentsline {subsection}{\numberline {6.2.3}Camelback embedded in 5D}{35}{subsection.6.2.3}
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{35}{section*.31}
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{36}{section*.33}
-\contentsline {subsection}{\numberline {6.2.4}Log-Likelihood and Angle difference measures}{37}{subsection.6.2.4}
-\contentsline {paragraph}{Parabola}{37}{section*.35}
-\contentsline {paragraph}{Camelback}{38}{section*.37}
-\contentsline {paragraph}{Sinusoidal}{40}{section*.40}
-\contentsline {section}{\numberline {6.3}REMBO}{41}{section.6.3}
-\contentsline {paragraph}{Parabola}{42}{section*.42}
-\contentsline {paragraph}{Camelback3D}{42}{section*.44}
-\contentsline {paragraph}{Camelback5D}{43}{section*.46}
-\contentsline {section}{\numberline {6.4}Qualitative evaluation}{43}{section.6.4}
-\contentsline {subsection}{\numberline {6.4.1}Feature selection}{44}{subsection.6.4.1}
-\contentsline {subsection}{\numberline {6.4.2}Subspace identification}{45}{subsection.6.4.2}
-\contentsline {chapter}{\numberline {7}Conclusion}{49}{chapter.7}
-\contentsline {section}{\numberline {7.1}Main Contributions}{49}{section.7.1}
-\contentsline {section}{\numberline {7.2}Future work}{49}{section.7.2}
-\contentsline {chapter}{References}{51}{chapter*.53}
-\contentsline {chapter}{Appendix \numberline {A}Appendix A}{55}{Appendix.a.A}
-\contentsline {section}{\numberline {A.1}Benchmarking functions}{55}{section.a.A.1}
-\contentsline {section}{\numberline {A.2}The log-likelihood function as a function of $\tau $}{56}{section.a.A.2}
+\contentsline {subsection}{\numberline {6.2.4}Exponential Sinusoidal}{37}{subsection.6.2.4}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{37}{section*.35}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{38}{section*.37}
+\contentsline {subsection}{\numberline {6.2.5}Log-Likelihood and Angle difference measures}{39}{subsection.6.2.5}
+\contentsline {paragraph}{Parabola}{39}{section*.39}
+\contentsline {paragraph}{Camelback}{40}{section*.41}
+\contentsline {paragraph}{Sinusoidal}{42}{section*.44}
+\contentsline {section}{\numberline {6.3}REMBO}{43}{section.6.3}
+\contentsline {paragraph}{Parabola}{44}{section*.46}
+\contentsline {paragraph}{Camelback3D}{44}{section*.48}
+\contentsline {paragraph}{Camelback5D}{45}{section*.50}
+\contentsline {section}{\numberline {6.4}Qualitative evaluation}{45}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}Feature selection}{46}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.2}Subspace identification}{47}{subsection.6.4.2}
+\contentsline {chapter}{\numberline {7}Conclusion}{51}{chapter.7}
+\contentsline {section}{\numberline {7.1}Main Contributions}{51}{section.7.1}
+\contentsline {section}{\numberline {7.2}Future work}{51}{section.7.2}
+\contentsline {chapter}{References}{53}{chapter*.56}
+\contentsline {chapter}{Appendix \numberline {A}Appendix A}{57}{Appendix.a.A}
+\contentsline {section}{\numberline {A.1}Benchmarking functions}{57}{section.a.A.1}
+\contentsline {section}{\numberline {A.2}The log-likelihood function as a function of $\tau $}{58}{section.a.A.2}
+\contentsline {section}{\numberline {A.3}Additional Visualization}{59}{section.a.A.3}

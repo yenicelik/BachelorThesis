@@ -59,7 +59,7 @@ To get an intuition for how smooth this function $G$ is, I randomly sample $W$ a
     \begin{subfigure}[b]{0.40\textwidth}
         \includegraphics[width=\textwidth]{Appendix1/tau_0}
         \label{fig:gull}
-        \caption{W is randomly sampled as an orthogonal matrix}
+        \caption{W is an orthogonal matrix}
     \end{subfigure}
     \quad
     %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
@@ -75,3 +75,58 @@ To get an intuition for how smooth this function $G$ is, I randomly sample $W$ a
            The y-axis refers to the log-likelihood.
            One can see that the function is smooth on this scale, and that the meaximum is achieved between $0 \leq \tau \leq 0.3 $. }
 \end{figure}
+
+\section{Additional Visualization}
+
+The following is a visualization of the sinusoidal function which we use in first part of the quantitave evaluation (i.e. UCB runs):
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[b]{0.4\textwidth}
+	\includegraphics[width=\textwidth]{/visualize_vanillaSinusoidal-5D->2D.png}
+	\caption{Sinusoidal used for UCB analysis}
+\end{subfigure}
+\end{figure}
+
+The above visualization is in contrast to the function which I use in the second part of the quantitative analysis (measuring development of angle loss and log-likelihood), which I present below.
+The difference between the two functions is the embeddings, which naturally capture a different range.
+However, the embedding is different, and was thus easy to find by Tripathy's method.
+This is the same function whose angle Tripathy's algorithm tries to find in chapter 6.
+
+% SINUSOIDAL FUNCTION
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{orig/Sinusoidal-5D-_2D.png}
+        \caption{Sinusoidal Original}
+        \label{fig:gull}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{orig/Sinusoidal-5D-_2D_BORING.png}
+        \caption{Sinusoidal Boring}
+        \label{fig:tiger}
+    \end{subfigure}
+        \vskip\baselineskip
+ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill, etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{orig/Sinusoidal-5D-_2D_TRIPATHY.png}
+        \caption{Sinusoidal Tripathy}
+        \label{fig:mouse}
+    \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.25\textwidth}
+        \includegraphics[width=\textwidth]{orig/Sinusoidal-5D-_2D_REMBO.png}
+        \caption{Sinusoidal Rembo}
+        \label{fig:mouse}
+    \end{subfigure}
+    \caption{Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.}\label{fig:animals}
+\end{figure}
+
+I set the number of restarts to $28$ and number of randomly sampled data points to 100.
+The active subspace projection matrix is of size $\mathbf{R}^{1\times 5}$, as this is a function that exhibits a strong principal component, but that still attains small perturbations among a different dimension.
+One can see very well here, that BORING can take into account the small perturbations, at a considerably lower cost than Tripathy would be able to.
+
