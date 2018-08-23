@@ -101,7 +101,7 @@ class BoringGP(ConfidenceBoundModel):
             cur_kernel = Matern32(
                 input_dim=1,
                 variance=variance,
-                lengthscale=lengthscale[-1],
+                lengthscale=lengthscale,
                 ARD=True,
                 active_dims=[active_d + i],
                 name="passive_subspace_kernel_" + str(i)
@@ -306,29 +306,41 @@ class BoringGP(ConfidenceBoundModel):
             # self.A, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
             #     X, Y, load=False)
             # self.A = self.A.T
-            self.A = np.asarray([[0.39877165, 0.88585961],
-                                     [-0.23390389, 0.0992073],
-                                     [0.52560395, -0.03363714],
-                                     [0.0815202, 0.06316191],
-                                     [0.70948226, -0.44753746]]
-                                    ).T
-            # self.W_hat = np.asarray([
-            #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, -0.71214818],
-            #     [0.00412458, -0.95147725, -0.28612815, -0.06316891, -0.093885]
-            # ])
-            self.active_d = 2
-            self.lengthscale = np.asarray([0.84471462, 4.75165394])
-            self.variance = 2.3555752428329177
+            # self.A = np.asarray([[0.39877165, 0.88585961],
+            #                          [-0.23390389, 0.0992073],
+            #                          [0.52560395, -0.03363714],
+            #                          [0.0815202, 0.06316191],
+            #                          [0.70948226, -0.44753746]]
+            #                         ).T
+            # # self.W_hat = np.asarray([
+            # #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, -0.71214818],
+            # #     [0.00412458, -0.95147725, -0.28612815, -0.06316891, -0.093885]
+            # # ])
+            # self.active_d = 2
+            # self.lengthscale = np.asarray([0.84471462, 4.75165394])
+            # self.variance = 2.3555752428329177
+            #
+            # self.A = np.asarray([[-0.27219458],
+            #  [0.08779054],
+            #  [-0.28618016],
+            #  [0.16803416],
+            #  [0.89892623]]
+            # ).T
+            # self.lengthscale = [0.02285915]
+            # self.variance = 2.5731190248142437
+            # self.active_d = 1
 
-            self.A = np.asarray([[-0.27219458],
-             [0.08779054],
-             [-0.28618016],
-             [0.16803416],
-             [0.89892623]]
-            ).T
-            self.lengthscale = [0.02285915]
-            self.variance = 2.5731190248142437
+            self.A = np.asarray([[-0.13392005],
+                   [0.0898743],
+                   [-0.16831021],
+                   [-0.02586708],
+                   [0.97210627]]).T
+            # self.lengthscale = np.asarray([0.84471462, 4.75165394]) # np.asarray([0.05191368])
+            # self.variance = 1.7733784121415521
             self.active_d = 1
+
+            self.lengthscale = 4.7 # np.asarray([0.84471462])
+            self.variance = 1.7733784121415521 # 2.3555752428329177
 
             # PARABOLA:
             # self.A = np.asarray([[0.49969147, 0.1939272]])
@@ -337,7 +349,7 @@ class BoringGP(ConfidenceBoundModel):
             # self.lengthscale = 6
             # self.variance = 2.5
             # self.active_d = 1
-            self.passive_d = 2
+            self.passive_d = 1
 
             self.passive_d = max(self.passive_d , 0)
 
@@ -353,8 +365,6 @@ class BoringGP(ConfidenceBoundModel):
                 (self.A, self.AT),
                 axis=0
             )
-
-            self.gp.optimize(optimizer="lbfgs", max_iters=50) # lbfgs # config['max_iter_parameter_optimization'])
 
             # assert not np.isnan(self.W_hat).all(), ("The projection matrix contains nan's!", self.Q)
             # assert self.W_hat.shape == (self.domain.d, self.active_d+passive_dimensions), ("Created wrong projectoin shape: ", self.At.shape, self.active_d, passive_dimensions)
@@ -391,6 +401,14 @@ class BoringGP(ConfidenceBoundModel):
         Z = np.dot(X, self.W_hat.T)
         assert Z.shape[1] == self.active_d + self.passive_d, ("Projected Z does not conform to active dimension", (Z.shape, self.active_d + self.passive_d))
         self._set_data(Z, Y)
+
+        # if self.i % 500 == 101:
+            # print("Optimizing!")
+            # print(self.gp)
+            # print(self.gp.kern.parts[0].variance)
+            # self.gp.optimize(optimizer="lbfgs") # lbfgs # config['max_iter_parameter_optimization'])
+            # print(self.gp.kern.parts[0].variance)
+            # print("Optimized")
 
     def _set_datasaver_data(self, X, Y):
         self.datasaver_gp.set_XY(X, Y)
