@@ -62,50 +62,51 @@ Warning--entry type for "BatchedBO" isn't style-file defined
 --line 232 of file References/references.bib
 Warning--entry type for "StiefelBayesianInference" isn't style-file defined
 --line 240 of file References/references.bib
-Warning--entry type for "StatisticsStiefelIntro" isn't style-file defined
+Warning--entry type for "SVMFeature" isn't style-file defined
 --line 247 of file References/references.bib
-Warning--entry type for "StiefelNonparametric" isn't style-file defined
+Warning--entry type for "StatisticsStiefelIntro" isn't style-file defined
 --line 254 of file References/references.bib
-Warning--I didn't find a database entry for "Wang"
-You've used 32 entries,
+Warning--entry type for "StiefelNonparametric" isn't style-file defined
+--line 261 of file References/references.bib
+You've used 33 entries,
             1935 wiz_defined-function locations,
-            629 strings with 9421 characters,
-and the built_in function-call counts, 10572 in all, are:
-= -- 995
-> -- 644
+            632 strings with 9554 characters,
+and the built_in function-call counts, 10967 in all, are:
+= -- 1030
+> -- 677
 < -- 11
-+ -- 220
-- -- 220
-* -- 870
-:= -- 2027
-add.period$ -- 70
-call.type$ -- 32
-change.case$ -- 266
-chr.to.int$ -- 32
-cite$ -- 32
-duplicate$ -- 355
-empty$ -- 544
-format.name$ -- 260
-if$ -- 1926
++ -- 232
+- -- 232
+* -- 907
+:= -- 2104
+add.period$ -- 72
+call.type$ -- 33
+change.case$ -- 277
+chr.to.int$ -- 33
+cite$ -- 33
+duplicate$ -- 365
+empty$ -- 559
+format.name$ -- 273
+if$ -- 1995
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 6
-newline$ -- 136
-num.names$ -- 98
-pop$ -- 243
+newline$ -- 140
+num.names$ -- 101
+pop$ -- 253
 preamble$ -- 1
-purify$ -- 268
+purify$ -- 279
 quote$ -- 0
-skip$ -- 285
+skip$ -- 293
 stack$ -- 0
-substring$ -- 424
+substring$ -- 436
 swap$ -- 15
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 188
+type$ -- 194
 warning$ -- 0
-while$ -- 68
+while$ -- 70
 width$ -- 0
-write$ -- 334
+write$ -- 344
 (There were 28 warnings)

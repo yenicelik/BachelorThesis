@@ -11,19 +11,6 @@
     \graphicspath{{Chapter7/Figs/Vector/}{Chapter7/Figs/}}
 \fi
 
-\section{Main Contributions}
-I present this thesis as a result of a systematic treatment of the topic "Bayesian Optimization in High Dimensions."
-
-\begin{enumerate}
-\item BORING allows the number of dimensions to be smaller than the real active subspace.
-Although in general, it does not perform better than other subspace identification algorithms (like Tripathy's method), it does allow for better values when the subspace identification fails, as it incorporates an additional dimension which acts as a random embedding.
-As such, it allows for a good trade-off between subspace identification, and optimization using random projections.
-\item BORING is more robust to smaller perturbations, as it does not rely on finding the exact active subspace.
-It allows optimizing over smaller perturbations as well, whereas current algorithms usually don't take these into consideration.
-\item I analyze the relationship between improved log-likelihood and angle difference. 
-I see that it is not surprising that the angle difference between the real projection matrix and the found projection matrix is not tightly coupled to the log-likelihood.
-However, improving over the log-likelihood can reduce the angle-difference in many cases.
-\end{enumerate}
 
 \section{Future work}
 

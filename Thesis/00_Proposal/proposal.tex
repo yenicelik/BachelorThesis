@@ -3,7 +3,7 @@
 \chapter{Introduction}
 
 Tuning hyperparameters is considered a computationally intensive and tedious task, be it for neural networks, or complex physical instruments such as free electron lasers.
-Users for such applications could benefit from a 'one-click-search' feature, which would find optimal parameters in as few function evaluations as possible.
+Users for such applications could benefit from a 'one-click-search' feature, which would find optimal parameters in a few function evaluations as possible.
 This project aims to find such an algorithm which is both efficient and holds certain convergence guarantees.
 We focus our efforts on Bayesian Optimization (BO) and revise techniques for high-dimensional BO. \\
 
@@ -16,9 +16,13 @@ The acquisition function allows for a tradeoff between exploitation of the best 
 Our main contributions are:
 
 \begin{enumerate}
-\item Item 1
-\item Item 2
-\item Item 3
+\item We conduct a systematic analysis of the state of the art and identify shortcomings and strength of some popular method.
+\item We define a new algorithm called "BORING," which is supposed to take into consideration small perturbations that could yield marginal improvement over standard algorithms.
+BORING also provides a more robust framework than some other methods concerning the accuracy of identified subspaces.
+One can say that BORING provides a fallback mechanism when the matrix identification fails, and otherwise only adds a small penalty concerning regret.
+\item We demonstrate that the log-likelihood loss is not a single best metric to optimize over, and demonstrate its correlation to the angle-difference between embeddings for three different types of functions.
+One cannot rely upon that the decreasing log-likelihood will decrease the angle-difference between the real embedding matrix and the found embedding matrix. However, the log-likelihood provides a good heuristic for this task for most functions.
+\item We conduct a short analysis to what extent linear dimensionality reduction techniques can be used for feature selection.
 \end{enumerate}
 
 We will talk about the problems and possible solutions for the task at hand in the next section.

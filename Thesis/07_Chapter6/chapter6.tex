@@ -259,6 +259,7 @@ To test the first assumption, I optimize the GP hyperparameters after the projec
 This yielded no recognizable improvement to the above curves.
 I was not able to test the second assumption, as my implementation of Tripathy's method was not stable for dimensions bigger than 5, and as this would require a significant amount of time to fix.
 Thus, is it still an open question if it is advantageous to use BORING instead of Tripathy's method for higher dimensions.
+The reason why BORING and Tripathy's method perform similary in Camelback can be seen in the next subsection, where we show how well the subspace identification performs from a log-likelihood, and an angle-difference perspective.
 
 %One can see that REMBO without interleavings has very high variance amongst runs. 
 %Sometimes it can find a suitable subspace (subfigure (c) and (d)), but on other runs, it fails to find an appropriate subspace.

@@ -75,8 +75,7 @@
 \contentsline {subsection}{\numberline {6.4.1}Feature selection}{45}{subsection.6.4.1}
 \contentsline {subsection}{\numberline {6.4.2}Subspace identification}{46}{subsection.6.4.2}
 \contentsline {chapter}{\numberline {7}Conclusion}{49}{chapter.7}
-\contentsline {section}{\numberline {7.1}Main Contributions}{49}{section.7.1}
-\contentsline {section}{\numberline {7.2}Future work}{49}{section.7.2}
+\contentsline {section}{\numberline {7.1}Future work}{49}{section.7.1}
 \contentsline {chapter}{References}{51}{chapter*.58}
 \contentsline {chapter}{Appendix \numberline {A}Appendix A}{55}{Appendix.a.A}
 \contentsline {section}{\numberline {A.1}Benchmarking functions}{55}{section.a.A.1}
