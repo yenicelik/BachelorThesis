@@ -57,11 +57,11 @@
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{32}{section*.27}
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{32}{section*.29}
 \contentsline {subsection}{\numberline {6.2.3}Camelback embedded in 5D}{33}{subsection.6.2.3}
-\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{33}{section*.31}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{34}{section*.31}
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{34}{section*.33}
 \contentsline {subsection}{\numberline {6.2.4}Exponential Sinusoidal}{35}{subsection.6.2.4}
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} = W_{\text {true}}$}{35}{section*.35}
-\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$}{36}{section*.37}
+\contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$ and $d=1$}{36}{section*.37}
 \contentsline {paragraph}{Assume $\mathaccentV {hat}05E{W} \not =W_{\text {true}}$ and active d=$2$ }{37}{section*.39}
 \contentsline {subsection}{\numberline {6.2.5}Log-Likelihood and Angle difference measures}{38}{subsection.6.2.5}
 \contentsline {paragraph}{Parabola}{38}{section*.41}

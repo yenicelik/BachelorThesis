@@ -15,7 +15,7 @@
 
 Appendix A presents a list of synthetic functions and real datasets that are used to evaluate the effectiveness of a Bayesian Optimization algorithm. 
 I conduct experiments in the following settings as mentioned in chapter \ref{syntheticFunction}.
-I must emphasize that I modified the algorithm of Tripathy et al., at is got stuck in local minima within the first five steps of algorithm 1.
+I must emphasize that I modified the algorithm of Tripathy et al., as it got stuck in local minima within the first five steps of algorithm 1.
 For this, I set up the constraint that $\tau > 0$ (instead of $\tau \geq 0$). 
 This allowed for small perturbations that kept on improving the loss.
 
@@ -27,7 +27,7 @@ This is much less than in the original papers that we base the algorithm on.
 The reason for this is that we want to have an acceptable comparison for medium-sized experiments, where time and computational resources can be restrictive (like on a users laptop). \\
 
 I want to indicate whether the contribution of the performance comes from our subspace identification, or from the algorithm. 
-For this, I start the discussion of every function with a plot that shows how the algorithm performs when the real subspace matrix $W_{\text{true}}$ is assumed to be found (Tripathy's algorithm is not applied; instead we return the $W_{\text{true}}$ instead of an approximated $\hat{W}$. \\
+For this, I start the discussion of every function with a plot that shows how the algorithm performs when the real subspace matrix $W_{\text{true}}$ is assumed to be found (Tripathy's algorithm is not applied; instead we return the $W_{\text{true}}$ instead of an approximated $\hat{W}$). \\
 
 To keep the measurements fair across algorithms, I fix the noise variance of the GP and the kernel hyperparameters for each function. \\
 
@@ -82,6 +82,7 @@ This measures how the algorithm performs, when subspace identification is a part
 \end{figure}
 
 One can easily see that the performance on UCB using Tripathy's matrix identification algorithm is similar to the case when we assume that Tripathy executes perfectly.
+BORING is equivalent to Tripathy's performance, as the number of passive dimensions is set to 0.
 
 
 %One can see that REMBO without interleavings has very high variance amongst runs. 
@@ -120,6 +121,7 @@ where we have $z = \left( \WCamelback3D^T x \right) $, and $ x \in \mathbf{R}^3$
 \end{figure}
 
 \paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: Again, I now proceed with the performance, when the subspace identification is part of the optimization process.
+Again, BORING equals Tripthay's method, as setting the number of dimensions to 3 would make it use the entire search space (and thus not make it reduce the dimensionality).
 
 \begin{figure}[H]
     \centering
@@ -143,6 +145,8 @@ One can see that the subspace projection of Tripathy's method from 3D to 2D is n
 The difference between BORING and Tripathy is marginal, as they both rely on a similar algorithm.
 This is an indication that the subspace projection is not close to the real subspace, but potentially finds a subspace which is acceptable when higher dimensions are taken into consideration.
 To investigate this further, we increase the dimensionality of the domain in the next section.
+Again, BORING uses only a 1D active subsapce, and has passive-dimensions 1 (i.e. the number of random embedding vectors is 1).
+BORING performs similar to Tripathy's method.
 
 \subsection{Camelback embedded in 5D}
 
@@ -161,6 +165,7 @@ $z = \left( \WCamelback5D^T x \right) $, and $ x \in \mathbf{R}^5$, $W \in \math
 and where $z_1$ denotes the first entry of the $z$ vector, and $z_2$ denotes the second element of the $z$ vector.
 
 \paragraph{Assume $\hat{W} = W_{\text{true}}$}: The following shows how tripathy performs when we assume perfect projection-matrix identification.
+BORING is identical to  Tripathy's method here.
 
 \begin{figure}[H]
   \centering
@@ -195,12 +200,14 @@ However, because the algorithm chooses these kernel parameters, I do not modify 
 One can see for higher dimensions, Tripathy's method performs well, as it can reduce the dimensionality of the optimization problem.
 However, one can see that the regret achieved from the empirical projection-matrix identification (the real projection-matrix is not found) is much higher.
 This poses the question of how well the found projection matrix is compared to the real projection matrix.
+BORING has a passive-dimension of 1 (the active dimensions is equal to Tripathy's number of active dimensions minus 1, which is equal to 1).
+BORING achieves ok performance, as Tripathy's method is not able to identify the real projection matrix very well. 
 I analyze the log-likelihood of the GP to get a quick answer. \\
 
 \textbf{The log likelihood of the GP w.r.t the collected data points} of the Tripathy GP with the real matrix is not comparable to the log-likelihood of the GP of the Tripathy model, where the active projection matrix is calculated using the algorithm.
 For different runs, the log-likelihood of the GP including the real matrix is at $-2$ and $-389$, whereas the log-likelihood of the GP with the estimated projection matrix is at $-0.92$ and $-102$. 
 Although the values $-2$ and $-0.92$ are close to each other, the pair ($-389$, $-102$) shows that the subspace identification task for this algorithm is much more unstable than that for the parabola.
-In the following subsection, I will investigate this issue further.
+In later subsections, I will investigate this issue further.
 
 \subsection{Exponential Sinusoidal}
 
@@ -232,7 +239,7 @@ This measures how the algorithm performs when we assume perfect subspace identif
   One can see that the line is less curvy than then other examples.}
 \end{figure}
 
-\paragraph{Assume $\hat{W} \neq W_{\text{true}}$}: I now proceed with how different algorithms perform on the function described above.
+\paragraph{Assume $\hat{W} \neq W_{\text{true}}$ and $d=1$}: I now proceed with how different algorithms perform on the function described above.
 This measures how the algorithm performs, when subspace identification is a part of the optimization process.
 
 \begin{figure}[H]
@@ -250,7 +257,7 @@ One can see the performance of Tripathy's method is superior to BORING.
 The reason for this may be one of following:
 
 \begin{enumerate}
-\item Hyperparameters are not optimized as part of the process, when applying the BORING method.
+\item Hyperparameters are not optimized as part of the process, when applying the BORING method (according to the new projection matrix of BORING $Q$).
 \item BORING adds another dimension that the optimizer must take into consideration.
 The overhead of this additional dimension is higher than the potential gain that BORING could exploit by looking at the smaller perturbations.
 \end{enumerate}
@@ -276,7 +283,7 @@ The reader can view graphs in a subsequent subsection.
 \begin{figure}[H]
   \centering
       \includegraphics[width=0.5\textwidth]{W_hat_tripathy/Sinusoidal5D_2D}
-  \caption{UCB on the Sinusoidal embedded in 2D space, when we assume that Tripathy's method is applied to approximate the real projection matrix.
+  \caption{UCB on the 2D Sinusoidal embedded in 5D space, when we assume that Tripathy's method is applied to approximate the real projection matrix.
   One can see good performance in subspace recovery.}
 \end{figure}
 
@@ -379,7 +386,7 @@ This is evidence, which Tripathy's algorithm on Camelback does not run stable, a
     \begin{subfigure}[b]{0.40\textwidth}
         \includegraphics[width=\textwidth]{angles_loss/camelback/run2/Camelback-5D-_2D_20_489_multiple_loss}
         \label{fig:tiger}
-               \caption{The momentary $W$ from tripathy's algorithm, and it's angle to the real projection matrix}
+               \caption{The momentary $W$ from tripathy's algorithm, and it's log-likelihood w.r.t. to the GP and the so-far collected data}
     \end{subfigure}   
  \vskip\baselineskip
          \centering
@@ -457,7 +464,7 @@ As such, I perform three runs for each function addressed in the above section.
 \paragraph{Parabola}
 As one can see, REMBO usually finds an embedding that is acceptable and accelerates the optimization process.
 However, run two shows that it can also fail in the simplest case of the parabola.
-In this regards, Tripathy's method is more robust, as it does use some heuristic to check if the chosen matrix delivers good results.
+In this regard, Tripathy's method is more robust, as it does use some heuristic to check if the chosen matrix delivers good results.
 
 
 \begin{figure}[H]
@@ -513,7 +520,7 @@ The linearity of the UCB curves is still attained.
 Similar to the result with Tripathy's method, REMBO can reduce the dimensionality of the subspace in almost any case.
 The effectiveness of this reduction can be small though.
 The viewer can recognize well that there is a high variance in the performance amongst runs.
-This emphasizes how important the interleaved runs are, even though the number of data samples per projection is divided by the total number of projection (i.e., there is slower learning of the GP surface. However, dimensionality reduction is successful).
+This emphasizes how important the interleaved runs are, even though the number of data samples per projection is divided by the total number of projection (i.e., there is slower learning of the GP surface). However, dimensionality reduction is successful.
 
 \begin{figure}[H]
 \center
@@ -555,7 +562,7 @@ For this task, I set up a function $ f $ that looks as follows:
 f \left( W \B \right) \approx g \left( x \right)
 \end{equation} 
 
-where $x_0, x_1$ are constants. \\
+where $a_0, a_1$ are constants. \\
 
 For this specific experiment, the function $f$ is chosen to be a one-dimensional parabola. 
 As such, $W$ is chosen as a matrix on the Stiefel manifold with dimensions $\mathbf{R}^{d \times D}$.
@@ -660,7 +667,7 @@ Inserting the actual values into the field, we get $0.79$, which is a good value
  This experiment shows that algorithm 1. from \citep{Tripathy} successfully allows a viable option to other feature selection algorithms, by providing a measure, where the optimal linear projection is found. 
  However, one must notice that other feature selection algorithms (such as SVM \citep{SVMFeature}), are more efficient, and will provide better results with a higher probability if applied on a similar kernel. \\
  
- One observation I made was the increase in the log-likelihood of the data w.r.t. The projection matrix did not correlate with the decrease in the angle between the real vs. the found projection matrix.
+ One observation I made was the increase in the log-likelihood of the data w.r.t. the projection matrix did not correlate with the decrease in the angle between the real vs. the found projection matrix.
  Also, most often, the angle was at around 40 degrees, which means that only slight improvements over an entirely random embedding were made.
 
 
@@ -671,7 +678,7 @@ We have the following functions:
 \begin{enumerate}
 \item 1D Parabola embedded in a 2D space
 \item 2D Camelback embedded in a 5D space
-\item 2D Sinusoidal and Exponential function embedded in a 5D space
+\item 2D Sinusoidal and Exponential function embedded in a 5D space (see Appendix)
 \end{enumerate}
 
 To be able to visualize the points, I proceed with the following procedure:

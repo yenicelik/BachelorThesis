@@ -47,7 +47,7 @@ Depending on the application, this can make the algorithm ineffective as it is n
 
 Given the nature of real-world data, approximating the active subspace using the gradients of the data-samples is thus not a robust, and viable option.
 
-\paragraph{Bilinois et al.} argue that their method is more robust to real-world noise. 
+\paragraph{Bilinois et al.} (which I also refer to as "Tripathy's method" and refers to the "GP with builtin dimensionality reduction) argue that their method is more robust to real-world noise. 
 It also does not rely on gradient information of the response surface.
 Bilinois's method allows for a noise-robust way to identify the active subspace.
 
@@ -91,7 +91,7 @@ R_T = \frac{1}{T} \sum_{t=1}^{T} \max_x f(x) - f(x_t)
 The cumulative regret sums all the entire episode of the run.
 This is a measure of how fast an optimizer can learn the optima of a function.
 
-\item Check if the test log-likelihood decreases for functions that are provided by a finite number of data-points.
+\item Check if the test log-likelihood w.r.t. to the GP decreases for functions that are provided by a finite number of data-points.
 
 \item Check if the angle between the real projection matrix and the found projection matrix decreases, as given in \citep{AngleMeasurement}. 
 

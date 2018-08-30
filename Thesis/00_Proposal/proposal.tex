@@ -3,7 +3,7 @@
 \chapter{Introduction}
 
 Tuning hyperparameters is considered a computationally intensive and tedious task, be it for neural networks, or complex physical instruments such as free electron lasers.
-Users for such applications could benefit from a 'one-click-search' feature, which would find optimal parameters in a few function evaluations as possible.
+Users for such applications could benefit from a 'one-click-search' feature, which would find optimal parameters in as few function evaluations as possible.
 This project aims to find such an algorithm which is both efficient and holds certain convergence guarantees.
 We focus our efforts on Bayesian Optimization (BO) and revise techniques for high-dimensional BO. \\
 
@@ -16,7 +16,7 @@ The acquisition function allows for a tradeoff between exploitation of the best 
 Our main contributions are:
 
 \begin{enumerate}
-\item We conduct a systematic analysis of the state of the art and identify shortcomings and strength of some popular method.
+\item We conduct a systematic analysis of the state of the art and identify shortcomings and strengths of some popular methods   .
 \item We define a new algorithm called "BORING," which is supposed to take into consideration small perturbations that could yield marginal improvement over standard algorithms.
 BORING also provides a more robust framework than some other methods concerning the accuracy of identified subspaces.
 One can say that BORING provides a fallback mechanism when the matrix identification fails, and otherwise only adds a small penalty concerning regret.

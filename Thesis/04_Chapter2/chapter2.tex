@@ -25,7 +25,7 @@ Unless specified differently, I use the following terminology during my discussi
 $\hat{f}$ would be an empirical estimate given datapoints $\mathit{D}$ of $f$.
 \end{enumerate}
 
-I will focus on three categories of Bayesian Optimization algorithms: Algorithms that make use of a projection matrix, algorithms that, algorithms that exploit additive substructures and "additional approaches" that are uncategorized.
+I will focus on three categories of 33Bayesian Optimization algorithms: Algorithms that make use of a projection matrix, algorithms that exploit additive substructures and "additional approaches" that are uncategorized.
 
 \section{Projection matrix-based algorithms}
 
@@ -256,7 +256,7 @@ It then chooses a dimension, where the relative difference to the previous loss 
 \section{Algorithms that exploit additive substructures}
 
 Functions with additive substructures can be decomposed into a summation over subfunctions, such that
-$ f(x) \sim g_0(x) + g_1(x) + \ldots g_2(x) $ where each $g_i$ may operate only on a subset of dimensions of $x$.
+$ f(x) \sim g_0(x) + g_1(x) + \ldots g_n(x) $ where each $g_i$ may operate only on a subset of dimensions of $x$.
 
 \subsection{Independent additive structures within the target function}
 % TODO: work on this algorithm a little more extensively, such that you can show the intuition, and potentially a short algorithm outline
