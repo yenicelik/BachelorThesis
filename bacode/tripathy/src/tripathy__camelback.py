@@ -215,7 +215,6 @@ class TripathyGP(ConfidenceBoundModel):
 
         x = np.dot(x, self.W_hat.T)
         assert x.shape[1] == self.active_d, ("The projected dimension does not equal to the active dimension: ", (self.active_d, x.shape))
-
         if self.config.calculate_gradients and False:  # or True:
             mean, var = self.gp.predict_noiseless(x)
         else:

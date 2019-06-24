@@ -78,7 +78,7 @@ class TripathyGP(ConfidenceBoundModel):
             active_d,
             self.kernel,
             noise_var=noise_var,  # noise_var if noise_var is not None else self.config.noise_var,
-            calculate_gradients=False # self.config.calculate_gradients
+            calculate_gradients=False  # self.config.calculate_gradients
         )
 
     def create_new_gp_and_kernel(self, active_d, variance, lengthscale, noise_var):
@@ -125,7 +125,6 @@ class TripathyGP(ConfidenceBoundModel):
         # self.variance = 2.5
         # self.active_d = 1
 
-
         # SINUSOIDAL
         # self.W_hat = np.asarray([
         #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
@@ -141,9 +140,9 @@ class TripathyGP(ConfidenceBoundModel):
         #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
         #     [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
         # ])
-        # self.noise_var = 0.005
-        # self.lengthscale = 2.5
-        # self.variance = 1.0
+        self.noise_var = 0.005
+        self.lengthscale = 2.5
+        self.variance = 1.0
         # self.active_d = 2
 
         self.create_new_gp_and_kernel(
@@ -363,7 +362,8 @@ class TripathyGP(ConfidenceBoundModel):
             print("TRIPATHY :: Likelihood of the current GP is: ", self.gp.log_likelihood())
 
         Z = np.dot(X, self.W_hat.T)
-        assert Z.shape[1] == self.active_d, ("Projected Z does not conform to active dimension", (Z.shape, self.active_d))
+        assert Z.shape[1] == self.active_d, (
+            "Projected Z does not conform to active dimension", (Z.shape, self.active_d))
         self._set_data(Z, Y)
 
     def _set_datasaver_data(self, X, Y):
