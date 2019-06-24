@@ -1,0 +1,45 @@
+\contentsline {chapter}{\numberline {1}Project Proposal for Bachelor Thesis}{vii}
+\contentsline {subsection}{\numberline {1.0.1}Motivation}{vii}
+\contentsline {subsection}{\numberline {1.0.2}Background}{viii}
+\contentsline {subsection}{\numberline {1.0.3}Scope of the Project}{ix}
+\contentsline {chapter}{\numberline {2}Bayesian Optimization in high dimensions}{xi}
+\contentsline {section}{\numberline {2.1}Gaussian Processes}{xii}
+\contentsline {subsection}{\numberline {2.1.1}Derivation of the Gaussian Process Formula}{xiii}
+\contentsline {section}{\numberline {2.2}Acquisition Functions}{xv}
+\contentsline {subsection}{\numberline {2.2.1}Upper Confident Bound (UCB)}{xv}
+\contentsline {subsection}{\numberline {2.2.2}Probability of Improvement (PI)}{xv}
+\contentsline {subsection}{\numberline {2.2.3}Expected Improvement (EI)}{xvi}
+\contentsline {section}{\numberline {2.3}Resources}{xvii}
+\contentsline {chapter}{\numberline {3}Related Work}{xix}
+\contentsline {section}{\numberline {3.1}Projection matrix based algorithms}{xx}
+\contentsline {subsection}{\numberline {3.1.1}Active learning of linear subspace}{xx}
+\contentsline {subsection}{\numberline {3.1.2}High dimensional Gaussian bandits}{xxi}
+\contentsline {subsection}{\numberline {3.1.3}Random embeddings (REMBO)}{xxii}
+\contentsline {subsection}{\numberline {3.1.4}Applications to high-dimensional uncertainty propogation}{xxvi}
+\contentsline {paragraph}{\numberline {3.1.4.0.1}I now proceed with a more detailed description of the algorithm.}{xxvi}
+\contentsline {subsubsection}{\numberline {3.1.4.1}Kernel used}{xxvii}
+\contentsline {subsubsection}{\numberline {3.1.4.2}Step 1.: Determine the active projection matrix W}{xxviii}
+\contentsline {subsubsection}{\numberline {3.1.4.3}Step 2.: Optimizing over GP noise variance and the kernel hyperparameters}{xxx}
+\contentsline {subsubsection}{\numberline {3.1.4.4}Additional details}{xxx}
+\contentsline {subsubsection}{\numberline {3.1.4.5}Identification of active subspace dimension }{xxxi}
+\contentsline {section}{\numberline {3.2}Algorithms that exploit additive substructures}{xxxi}
+\contentsline {subsection}{\numberline {3.2.1}Independent additive structures within the target function}{xxxi}
+\contentsline {section}{\numberline {3.3}Additional approaches}{xxxii}
+\contentsline {subsection}{\numberline {3.3.1}Elastic Gaussian Processes}{xxxii}
+\contentsline {subsection}{\numberline {3.3.2}Bayesian Optimization using Dropout}{xxxii}
+\contentsline {chapter}{\numberline {4}Model Design and Training}{xxxv}
+\contentsline {section}{\numberline {4.1}Model}{xxxv}
+\contentsline {section}{\numberline {4.2}Training}{xl}
+\contentsline {section}{\numberline {4.3}Implementation}{xliv}
+\contentsline {section}{\numberline {4.4}Measuring brand perception}{xlviii}
+\contentsline {chapter}{\numberline {5}Evaluation}{li}
+\contentsline {section}{\numberline {5.1}Evaluation setting}{li}
+\contentsline {section}{\numberline {5.2}Quantitative evaluation}{lii}
+\contentsline {subsection}{\numberline {5.2.1}Location}{lii}
+\contentsline {subsection}{\numberline {5.2.2}Gender}{lvi}
+\contentsline {subsection}{\numberline {5.2.3}General Semantic Similarity}{lix}
+\contentsline {section}{\numberline {5.3}Qualitative evaluation}{lx}
+\contentsline {section}{\numberline {5.4}Brand perception analysis}{lxii}
+\contentsline {chapter}{\numberline {6}Conclusions and Future Work}{lxv}
+\contentsline {section}{\numberline {6.1}Summary}{lxv}
+\contentsline {section}{\numberline {6.2}Future work}{lxvii}

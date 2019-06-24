@@ -1,0 +1,2517 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.26)  6 AUG 2018 11:33
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**acs-dissertation.tex
+(./acs-dissertation.tex
+LaTeX2e <2017-04-15>
+Babel <3.10> and hyphenation patterns for 84 language(s) loaded.
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/epsfig.sty
+Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2017/04/14 v1.1b Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2017/01/12 v0.06k Graphics/color for pdfTeX
+
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count88
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+\epsfxsize=\dimen105
+\epsfysize=\dimen106
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/parskip/parskip.sty
+Package: parskip 2001/04/09 non-zero parskip adjustments
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2016/02/03 v2.11 `tabularx' package (DPC)
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/tools/array.sty
+Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
+\col@sep=\dimen107
+\extrarowheight=\dimen108
+\NC@list=\toks15
+\extratabsurround=\skip43
+\backup@length=\skip44
+)
+\TX@col@width=\dimen109
+\TX@old@table=\dimen110
+\TX@old@col=\dimen111
+\TX@target=\dimen112
+\TX@delta=\dimen113
+\TX@cols=\count89
+\TX@ftn=\toks16
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks17
+\verbatim@line=\toks18
+\verbatim@in@stream=\read1
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks19
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/local/texlive/2017/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count90
+\float@exts=\toks20
+\float@box=\box26
+\@float@everytoks=\toks21
+\@floatcapt=\box27
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\@float@every@algorithm=\toks22
+\c@algorithm=\count91
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2016/05/22 v1.7-166 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 67.
+\captionmargin=\dimen114
+\captionmargin@=\dimen115
+\captionwidth=\dimen116
+\caption@tempdima=\dimen117
+\caption@indent=\dimen118
+\caption@parindent=\dimen119
+\caption@hangindent=\dimen120
+)
+\c@ContinuedFloat=\count92
+Package caption Info: float package is loaded.
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2016/05/22 v1.1-161 Sub-captions (AR)
+\c@subfigure=\count93
+\c@subtable=\count94
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2016/11/05 v2.16a AMS math features
+\@mathmargin=\skip45
+
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks23
+\ex@=\dimen121
+))
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen122
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count95
+LaTeX Info: Redefining \frac on input line 213.
+\uproot@=\count96
+\leftroot@=\count97
+LaTeX Info: Redefining \overline on input line 375.
+\classnum@=\count98
+\DOTSCASE@=\count99
+LaTeX Info: Redefining \ldots on input line 472.
+LaTeX Info: Redefining \dots on input line 475.
+LaTeX Info: Redefining \cdots on input line 596.
+\Mathstrutbox@=\box28
+\strutbox@=\box29
+\big@size=\dimen123
+LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
+\macc@depth=\count100
+\c@MaxMatrixCols=\count101
+\dotsspace@=\muskip11
+\c@parentequation=\count102
+\dspbrk@lvl=\count103
+\tag@help=\toks24
+\row@=\count104
+\column@=\count105
+\maxfields@=\count106
+\andhelp@=\toks25
+\eqnshift@=\dimen124
+\alignsep@=\dimen125
+\tagshift@=\dimen126
+\tagwidth@=\dimen127
+\totwidth@=\dimen128
+\lineht@=\dimen129
+\@envbody=\toks26
+\multlinegap=\skip46
+\multlinetaggap=\skip47
+\mathdisplay@stack=\toks27
+LaTeX Info: Redefining \[ on input line 2817.
+LaTeX Info: Redefining \] on input line 2818.
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count107
+\lst@gtempboxa=\box30
+\lst@token=\toks28
+\lst@length=\count108
+\lst@currlwidth=\dimen130
+\lst@column=\count109
+\lst@pos=\count110
+\lst@lostspace=\dimen131
+\lst@width=\dimen132
+\lst@newlines=\count111
+\lst@lineno=\count112
+\lst@maxwidth=\dimen133
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count113
+\lst@skipnumbers=\count114
+\lst@framebox=\box31
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2011/09/28 v3.5.2 Customized lists
+\labelindent=\skip48
+\enit@outerparindent=\dimen134
+\enit@toks=\toks29
+\enit@inbox=\box32
+\enitdp@description=\count115
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/tools/afterpage.sty
+Package: afterpage 2014/10/28 v1.08 After-Page Package (DPC)
+\AP@output=\toks30
+\AP@partial=\box33
+\AP@footins=\box34
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/cleveref/cleveref.sty
+Package: cleveref 2013/12/28 v0.19 Intelligent cross-referencing
+Package cleveref Info: `listings' support loaded on input line 2950.
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2016/11/25 v2.2 Span multiple rows of a table
+\multirow@colwidth=\skip49
+\multirow@cntb=\count116
+\multirow@dima=\skip50
+\bigstrutjot=\dimen135
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/rotating.sty
+Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
+\c@r@tfl@t=\count117
+\rotFPtop=\skip51
+\rotFPbot=\skip52
+\rot@float@box=\box35
+\rot@mess@toks=\toks31
+)
+LaTeX Font Info:    Try loading font information for T1+txtt on input line 36.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/txfonts/t1txtt.fd
+File: t1txtt.fd 2000/12/15 v3.1
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+(./acs-dissertation.aux
+
+LaTeX Warning: Label `fig:gull' multiply defined.
+
+
+LaTeX Warning: Label `fig:gull@cref' multiply defined.
+
+
+LaTeX Warning: Label `fig:animals' multiply defined.
+
+
+LaTeX Warning: Label `fig:animals@cref' multiply defined.
+
+)
+\openout1 = `acs-dissertation.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+ (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count118
+\scratchdimen=\dimen136
+\scratchbox=\box36
+\nofMPsegments=\count119
+\nofMParguments=\count120
+\everyMPshowfont=\toks32
+\MPscratchCnt=\count121
+\MPscratchDim=\dimen137
+\MPnumerator=\count122
+\makeMPintoPDFobject=\count123
+\everyMPtoPDFconversion=\toks33
+) (/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+))
+(/usr/local/texlive/2017/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: listings package is loaded.
+Package caption Info: rotating package is loaded.
+Package caption Info: End \AtBeginDocument code.
+\c@lstlisting=\count124
+
+(./titlepage.tex
+Package epstopdf Info: Source file: <CUni3.eps>
+(epstopdf)                    date: 2010-05-17 14:27:03
+(epstopdf)                    size: 193497 bytes
+(epstopdf)             Output file: <CUni3-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-07-25 16:17:59
+(epstopdf)                    size: 60363 bytes
+(epstopdf)             Command: <repstopdf --outfile=CUni3-eps-converted-to.pdf
+ CUni3.eps>
+(epstopdf)             \includegraphics on input line 17.
+Package epstopdf Info: Output file is already uptodate.
+ <CUni3-eps-converted-to.pdf, id=1, 174.6525pt x 36.135pt>
+File: CUni3-eps-converted-to.pdf Graphic file (type pdf)
+
+<use CUni3-eps-converted-to.pdf>
+Package pdftex.def Info: CUni3-eps-converted-to.pdf used on input line 17.
+(pdftex.def)             Requested size: 174.65207pt x 36.13489pt.
+ [1
+
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./CUni3
+-eps-converted-to.pdf>]) (./declaration.tex
+[2]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 25.
+ (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 25.
+ [3])
+(./abstract.tex [4]
+Underfull \hbox (badness 10000) in paragraph at lines 7--10
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--13
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--17
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 18--22
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 23--30
+
+ []
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 31--35
+
+ []
+
+[6]) [0] (./acs-dissertation.toc
+LaTeX Font Info:    Try loading font information for U+msa on input line 2.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 2.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Overfull \hbox (0.71802pt too wide) detected at line 12
+ []\OT1/cmr/m/n/12 xvii
+ []
+
+
+Overfull \hbox (0.71802pt too wide) detected at line 17
+ []\OT1/cmr/m/n/12 xxii
+ []
+
+
+Overfull \hbox (3.65549pt too wide) detected at line 18
+ []\OT1/cmr/m/n/12 xxvi
+ []
+
+
+Overfull \hbox (3.65549pt too wide) detected at line 19
+ []\OT1/cmr/m/n/12 xxvi
+ []
+
+
+Overfull \hbox (6.91934pt too wide) detected at line 20
+ []\OT1/cmr/m/n/12 xxvii
+ []
+
+
+Overfull \hbox (10.1832pt too wide) detected at line 21
+ []\OT1/cmr/m/n/12 xxviii
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 22
+ []\OT1/cmr/m/n/12 xxx
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 23
+ []\OT1/cmr/m/n/12 xxx
+ []
+
+
+Overfull \hbox (3.65549pt too wide) detected at line 24
+ []\OT1/cmr/m/n/12 xxxi
+ []
+
+
+Overfull \hbox (3.65549pt too wide) detected at line 25
+ []\OT1/cmr/m/n/12 xxxi
+ []
+
+[1
+
+]
+Overfull \hbox (3.65549pt too wide) detected at line 26
+ []\OT1/cmr/m/n/12 xxxi
+ []
+
+
+Overfull \hbox (6.91934pt too wide) detected at line 27
+ []\OT1/cmr/m/n/12 xxxii
+ []
+
+
+Overfull \hbox (6.91934pt too wide) detected at line 28
+ []\OT1/cmr/m/n/12 xxxii
+ []
+
+
+Overfull \hbox (6.91934pt too wide) detected at line 29
+ []\OT1/cmr/m/n/12 xxxii
+ []
+
+
+Overfull \hbox (6.59296pt too wide) detected at line 31
+ []\OT1/cmr/m/n/12 xxxv
+ []
+
+
+Overfull \hbox (0.71802pt too wide) detected at line 33
+ []\OT1/cmr/m/n/12 xliv
+ []
+
+
+Overfull \hbox (7.24573pt too wide) detected at line 34
+ []\OT1/cmr/m/n/12 xlviii
+ []
+
+
+Overfull \hbox (3.98187pt too wide) detected at line 45
+ []\OT1/cmr/m/n/12 lxvii
+ []
+
+)
+\tf@toc=\write3
+\openout3 = `acs-dissertation.toc'.
+
+ [2] (./acs-dissertation.lof
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+
+Overfull \hbox (3.98187pt too wide) detected at line 5
+ []\OT1/cmr/m/n/12 xxiii
+ []
+
+
+Overfull \hbox (3.98187pt too wide) detected at line 6
+ []\OT1/cmr/m/n/12 xxiii
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 7
+ []\OT1/cmr/m/n/12 xxv
+ []
+
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+
+Overfull \hbox (0.39163pt too wide) detected at line 8
+ []\OT1/cmr/m/n/12 xxv
+ []
+
+
+Overfull \hbox (13.12067pt too wide) detected at line 10
+ []\OT1/cmr/m/n/12 xxxvii
+ []
+
+
+Overfull \hbox (9.85681pt too wide) detected at line 11
+ []\OT1/cmr/m/n/12 xxxix
+ []
+
+
+Overfull \hbox (0.71802pt too wide) detected at line 12
+ []\OT1/cmr/m/n/12 xlvi
+ []
+
+)
+\tf@lof=\write4
+\openout4 = `acs-dissertation.lof'.
+
+ [3
+
+] [4
+
+] (./acs-dissertation.lot
+Overfull \hbox (1.0444pt too wide) detected at line 7
+ []\OT1/cmr/m/n/12 lviii
+ []
+
+
+Overfull \hbox (5.14874pt too wide) in paragraph at lines 8--8
+ [][] []\OT1/cmr/m/n/12 Comparison of WordSim-353 and SimLex-999 eval-u-a-tion 
+datasets. [][]  
+ []
+
+
+Overfull \hbox (1.0444pt too wide) detected at line 12
+ []\OT1/cmr/m/n/12 lxiii
+ []
+
+
+Overfull \hbox (1.0444pt too wide) detected at line 13
+ []\OT1/cmr/m/n/12 lxiii
+ []
+
+
+Overfull \hbox (0.71802pt too wide) detected at line 14
+ []\OT1/cmr/m/n/12 lxiv
+ []
+
+)
+\tf@lot=\write5
+\openout5 = `acs-dissertation.lot'.
+
+ [5] [6
+
+]
+Chapter 1.
+
+Underfull \hbox (badness 10000) in paragraph at lines 104--108
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 111--113
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7]
+Underfull \hbox (badness 10000) in paragraph at lines 114--116
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 128--132
+
+ []
+
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 137--140
+
+ []
+
+
+LaTeX Warning: Citation `Tripathy' on page ix undefined on input line 142.
+
+
+LaTeX Warning: Citation `Rolland' on page ix undefined on input line 152.
+
+[9]
+
+LaTeX Warning: Citation `Wang' on page x undefined on input line 167.
+
+<./figs/src/Embedding_optimization.png, id=77, 636.3775pt x 241.90375pt>
+File: ./figs/src/Embedding_optimization.png Graphic file (type png)
+
+<use ./figs/src/Embedding_optimization.png>
+Package pdftex.def Info: ./figs/src/Embedding_optimization.png used on input li
+ne 179.
+(pdftex.def)             Requested size: 195.0pt x 74.12196pt.
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+ [10 <./figs/src/Embedding_optimization.png>]
+Chapter 2.
+
+Underfull \hbox (badness 10000) in paragraph at lines 190--192
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 193--195
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--199
+
+ []
+
+[11
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 200--201
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 206--208
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 209--211
+
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 223--227
+
+ []
+
+[13] [14]
+Underfull \vbox (badness 1769) has occurred while \output is active []
+
+ [15]
+
+! LaTeX Error: Environment dcases undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.312 \end{align}
+                 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra }, or forgotten \endgroup.
+<template> }
+            $}\ifmeasuring@ \savefieldlength@ \fi \set@field \endtemplate 
+l.312 \end{align}
+                 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+! LaTeX Error: \begin{align} on input line 306 ended by \end{dcases}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.312 \end{align}
+                 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing \cr inserted.
+<inserted text> 
+                \cr 
+l.312 \end{align}
+                 
+I'm guessing that you meant to end an alignment here.
+
+! Missing { inserted.
+<inserted text> 
+                {
+l.312 \end{align}
+                 
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+! Missing { inserted.
+<inserted text> 
+                {
+l.312 \end{align}
+                 
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.312 \end{align}
+                 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.312 \end{align}
+                 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Misplaced alignment tab character &.
+\@tempa ->\endgroup &
+                     &
+l.312 \end{align}
+                 
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+\@tempa ->\endgroup &&
+                      
+l.312 \end{align}
+                 
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \omit.
+\math@cr@@@ ...@ \@ne \add@amps \maxfields@ \omit 
+                                                  \kern -\alignsep@ \iftag@ ...
+l.312 \end{align}
+                 
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Misplaced \cr.
+\math@cr@@@ ...wtrue \fi \global \lineht@ \z@ \cr 
+                                                  
+l.312 \end{align}
+                 
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\math@cr@@ ... \iffalse }\fi \math@cr@@@ \noalign 
+                                                  {\vskip #1\relax }
+l.312 \end{align}
+                 
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.312 \end{align}
+                 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Display math should end with $$.
+<to be read again> 
+                   \vskip 
+l.312 \end{align}
+                 
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+! Extra }, or forgotten \endgroup.
+\math@cr@@ ...th@cr@@@ \noalign {\vskip #1\relax }
+                                                  
+l.312 \end{align}
+                 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Misplaced \cr.
+\math@cr@@@ ->\cr 
+                  
+l.312 \end{align}
+                 
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+\@tempa ->\endgroup &
+                     &
+l.312 \end{align}
+                 
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+\@tempa ->\endgroup &&
+                      
+l.312 \end{align}
+                 
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \cr.
+\measure@ ...olumn@ \z@ \add@amps \maxfields@ \cr 
+                                                  }}\restorecounters@ \ifodd...
+l.312 \end{align}
+                 
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Extra }, or forgotten \endgroup.
+\measure@ ...lumn@ \z@ \add@amps \maxfields@ \cr }
+                                                  }\restorecounters@ \ifodd ...
+l.312 \end{align}
+                 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Extra }, or forgotten \endgroup.
+\measure@ ...umn@ \z@ \add@amps \maxfields@ \cr }}
+                                                  \restorecounters@ \ifodd \...
+l.312 \end{align}
+                 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   >
+l.312 \end{align}
+                 
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   >
+l.312 \end{align}
+                 
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+
+! LaTeX Error: Environment dcases undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.312 \end{align}
+                 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra }, or forgotten \endgroup.
+<template> }
+            $}\ifmeasuring@ \savefieldlength@ \fi \set@field \endtemplate 
+l.312 \end{align}
+                 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+! LaTeX Error: \begin{document} ended by \end{dcases}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.312 \end{align}
+                 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing \cr inserted.
+<inserted text> 
+                \cr 
+l.312 \end{align}
+                 
+I'm guessing that you meant to end an alignment here.
+
+! Missing { inserted.
+<inserted text> 
+                {
+l.312 \end{align}
+                 
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+! Missing { inserted.
+<inserted text> 
+                {
+l.312 \end{align}
+                 
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.312 \end{align}
+                 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.312 \end{align}
+                 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.312 \end{align}
+                 
+Things are pretty mixed up, but I think the worst is over.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.312 \end{align}
+                 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Misplaced \cr.
+\math@cr@@@ ->\cr 
+                  
+l.312 \end{align}
+                 
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced \noalign.
+\math@cr@@ ... \iffalse }\fi \math@cr@@@ \noalign 
+                                                  {\vskip #1\relax }
+l.312 \end{align}
+                 
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Misplaced \noalign.
+\black@ #1->\noalign 
+                     {\ifdim #1>\displaywidth \dimen@ \prevdepth \nointerlin...
+l.312 \end{align}
+                 
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+! Too many }'s.
+\endalign ->\math@cr \black@ \totwidth@ \egroup 
+                                                \ifingather@ \restorealignst...
+l.312 \end{align}
+                 
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
+
+
+! LaTeX Error: \begin{document} ended by \end{align}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.312 \end{align}
+                 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.312 \end{align}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Display math should end with $$.
+<to be read again> 
+                   \endgroup 
+l.312 \end{align}
+                 
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+! Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.312 \end{align}
+                 
+Things are pretty mixed up, but I think the worst is over.
+
+
+Overfull \hbox (66.12317pt too wide) in paragraph at lines 322--326
+\OT1/cmr/m/n/12 sian pro-cess frame-work in python" and "CITE https://github.co
+m/SheffieldML/GPyOpt"
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [16]
+[17] [18
+
+]
+Chapter 3.
+
+Underfull \vbox (badness 2050) has occurred while \output is active []
+
+ [19]
+! Undefined control sequence.
+<argument> ... learning of linear subspace \citep 
+                                                  {Garnett2013}\relax }}{\th...
+l.350 ...g of linear subspace \citep{Garnett2013}}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> ... learning of linear subspace \citep 
+                                                  {Garnett2013}
+l.350 ...g of linear subspace \citep{Garnett2013}}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> ... learning of linear subspace \citep 
+                                                  {Garnett2013}
+l.350 ...g of linear subspace \citep{Garnett2013}}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Environment algorithmic undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.352 \begin{algorithmic}
+                         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+l.353 \REQUIRE
+               $d, D;$ kernel $\kappa$, mean function $\mu$; prior $p(R)$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.354 \STATE
+             $X \leftarrow \emptyset$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.355 \STATE
+             $Y \leftarrow \emptyset$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.357 \WHILE
+            {budget not depleted}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.358 \STATE
+             $ q(R) \leftarrow \text{LAPLACEAPPROX}( p(R | X, Y, \kappa, \mu...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.359 \STATE
+             $ q(f) \leftarrow  APPROXMARGINAL( p(f | R), q(R)) $
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.360 \STATE
+             $ x_* \leftarrow OPTIMIZEUTILITY( q(f), q(R) )$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.361 \STATE
+             $ y \leftarrow OBSERVE( f( x_* ) ) $
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.362 \STATE
+             $ X \leftarrow [X; x_*] $
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.363 \STATE
+             $ Y \leftarrow[Y; y_*] $
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.364 \ENDWHILE
+               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 6173) in paragraph at lines 357--365
+[]\OT1/cmr/m/n/12 budget not de-pleted $\OML/cmm/m/it/12 q\OT1/cmr/m/n/12 (\OML
+/cmm/m/it/12 R\OT1/cmr/m/n/12 ) \OMS/cmsy/m/n/12   []\OT1/cmr/m/n/12 (\OML/cmm/
+m/it/12 p\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 R\OMS/cmsy/m/n/12 j\OML/cmm/m/it/12 
+X; Y; ^^T; ^^V\OT1/cmr/m/n/12 ))$
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 357--365
+\OML/cmm/m/it/12 q\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 f\OT1/cmr/m/n/12 ) \OMS/cms
+y/m/n/12   \OML/cmm/m/it/12 APPROXMARGINAL\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 p\O
+T1/cmr/m/n/12 (\OML/cmm/m/it/12 f\OMS/cmsy/m/n/12 j\OML/cmm/m/it/12 R\OT1/cmr/m
+/n/12 )\OML/cmm/m/it/12 ; q\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 R\OT1/cmr/m/n/12 )
+)$ $\OML/cmm/m/it/12 x[] \OMS/cmsy/m/n/12  
+ []
+
+! Undefined control sequence.
+l.366 \RETURN
+              $q(R), q(f)$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: \begin{algorithm} on input line 349 ended by \end{algorithmic}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.367 \end{algorithmic}
+                       
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+l.371 \citep
+            {Garnett2013} The assumption of this algorithm is that $f$ depen...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 371--373
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 374--376
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 378--380
+
+ []
+
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 381--382
+
+ []
+
+! Undefined control sequence.
+l.389 \citep
+            {Djolonga2013} This model assumes that there exists a function $...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> ...respaces The SI-BO algorithm \citep 
+                                                  {Djolonga2013}\relax }}{\t...
+l.394 ...The SI-BO algorithm \citep{Djolonga2013}}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> The SI-BO algorithm \citep 
+                                      {Djolonga2013}
+l.394 ...The SI-BO algorithm \citep{Djolonga2013}}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> The SI-BO algorithm \citep 
+                                      {Djolonga2013}
+l.394 ...The SI-BO algorithm \citep{Djolonga2013}}
+                                                  
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Environment algorithmic undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.396 \begin{algorithmic}
+                         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+l.397 \REQUIRE
+               $m_X, m_{\Phi}, \lambda, \epsilon, k$, oracle for the functio...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.399 \STATE
+             $C \leftarrow m_X $ samples uniformly from $\mathbb{S}^{d-1}$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.401 \FOR
+          {$ i \leftarrow 1$ to $m_X$}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.402 \STATE
+             $\Phi_i \leftarrow m_{\Phi}$ samples uniformly from $\{ -\frac{...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.403 \ENDFOR
+             
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.405 \STATE
+             $ y \leftarrow $ (compute using Equation 1 -- INSERT Eq 1 here,...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.407 \STATE
+             select $z_i$ according to a UCB acquisition function, evaluate ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: \begin{algorithm} on input line 393 ended by \end{algorithmic}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.409 \end{algorithmic}
+                       
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+l.417 ...ix recovery problem as presentedin \citep
+                                                  {CevherSubspaceIdentificat...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+[21]
+! Undefined control sequence.
+l.425 \citep
+            {Wang2013} Let $x \in \mathbb{R}^D$ and $y \in \mathbb{R}^d$. As...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 425--428
+
+ []
+
+
+LaTeX Warning: File `rembo_convex_projection.png' not found on input line 431.
+
+
+! Package pdftex.def Error: File `rembo_convex_projection.png' not found.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.431 ...=\textwidth]{rembo_convex_projection.png}
+                                                  
+Using draft setting for this image.
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+<argument> ...}}{\ignorespaces  Taken from \citep 
+                                                  {Wang2013}: Embedding from...
+l.439     }
+           \label{fig:animals}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument>  Taken from \citep 
+                              {Wang2013}: Embedding from $d = 1$ into $D=2$....
+l.439     }
+           \label{fig:animals}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument>  Taken from \citep 
+                              {Wang2013}: Embedding from $d = 1$ into $D=2$....
+l.439     }
+           \label{fig:animals}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [22]
+Underfull \hbox (badness 10000) in paragraph at lines 442--444
+
+ []
+
+[23]
+
+LaTeX Warning: Citation `Wang' on page xxiv undefined on input line 445.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 449--453
+
+ []
+
+
+LaTeX Warning: File `rembo_sinus_function.png' not found on input line 457.
+
+
+! Package pdftex.def Error: File `rembo_sinus_function.png' not found.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.457 ...dth=\textwidth]{rembo_sinus_function.png}
+                                                  
+Using draft setting for this image.
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+<argument> ...}}{\ignorespaces  Taken from \citep 
+                                                  {Wang2013} Fig. 2: This fu...
+l.464     }
+           \label{fig:animals}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument>  Taken from \citep 
+                              {Wang2013} Fig. 2: This function in D=2 dimesi...
+l.464     }
+           \label{fig:animals}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+! Undefined control sequence.
+<argument>  Taken from \citep 
+                              {Wang2013} Fig. 2: This function in D=2 dimesi...
+l.464     }
+           \label{fig:animals}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [24]
+Underfull \hbox (badness 10000) in paragraph at lines 467--468
+
+ []
+
+[25]
+! Undefined control sequence.
+l.469 Extensions to REMBO include \citep
+                                        {RemboExtension}.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (6.60446pt too wide) in paragraph at lines 471--471
+[]\OT1/cmr/bx/n/14.4 Applications to high-dimensional un-cer-tainty pro-
+ []
+
+! Undefined control sequence.
+l.474 \citep
+            {Tripathy} This algorithm assumes that  $f(x) \sim g( \mathbf{W}...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 474--476
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 477--484
+
+ []
+
+
+Underfull \vbox (badness 3907) has occurred while \output is active []
+
+ [26]
+! Undefined control sequence.
+l.496 ...n as the \textbf{Stiefel manifold} \citep
+                                                  {StiefelBayesianInference}...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.496 ...} \citep{StiefelBayesianInference} \citep
+                                                  {StatisticsStiefelIntro} \...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.496 ...ce} \citep{StatisticsStiefelIntro} \citep
+                                                  {StiefelNonparametric}, wh...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 494--497
+
+ []
+
+
+Overfull \hbox (6.92612pt too wide) in paragraph at lines 506--509
+\OT1/cmr/m/n/12 deriva-tive as pro-vided in the GPy li-brary. The $\OML/cmm/m/i
+t/12 s; l[]; [] ; l[]$ \OT1/cmr/m/n/12 are hyper-parameters
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 506--509
+
+ []
+
+[27] [28]
+Overfull \hbox (135.22499pt too wide) in paragraph at lines 540--540
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 542--543
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 562--563
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [29]
+Underfull \hbox (badness 10000) in paragraph at lines 570--572
+
+ []
+
+
+Underfull \vbox (badness 4569) has occurred while \output is active []
+
+ [30]
+Overfull \hbox (6.3838pt too wide) in paragraph at lines 585--585
+[]\OT1/cmr/bx/n/17.28 Algorithms that ex-ploit ad-di-tive sub-struc-
+ []
+
+! Undefined control sequence.
+l.593 \citep
+            {Gardner2017} Assume that $f(x) = \sum_{i=1}^{ |P| } f_i (x[P_i]...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+[31]
+! Undefined control sequence.
+l.604 \citep
+            {Rana2017} Use a process where the space is iteratively explored.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.613 \citep
+            {Li2018} propose that the assumption of an active subspace is re...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 613--616
+
+ []
+
+! Undefined control sequence.
+l.617 ...arch or additional methods include \citep
+                                                  {KernelGibbsSampler}, \cit...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.617 ...nclude \citep{KernelGibbsSampler}, \citep
+                                                  {VirtualVsReal}, \citep{Se...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.617 ...bsSampler}, \citep{VirtualVsReal}, \citep
+                                                  {SensorPlacement}, \citep{...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.617 ...lVsReal}, \citep{SensorPlacement}, \citep
+                                                  {BatchedBO}, \citep{GPforML}.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.617 ...nsorPlacement}, \citep{BatchedBO}, \citep
+                                                  {GPforML}.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+[32] [33] [34
+
+]
+Chapter 4.
+
+LaTeX Warning: Reference `eq:ch2:output_layer' on page xxxv undefined on input 
+line 629.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 629--632
+
+ []
+
+[35]
+Underfull \hbox (badness 10000) in paragraph at lines 635--639
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [36]
+Underfull \hbox (badness 10000) in paragraph at lines 649--653
+
+ []
+
+<figs/chap4/original_nnlm.png, id=170, 924.45375pt x 349.305pt>
+File: figs/chap4/original_nnlm.png Graphic file (type png)
+
+<use figs/chap4/original_nnlm.png>
+Package pdftex.def Info: figs/chap4/original_nnlm.png used on input line 658.
+(pdftex.def)             Requested size: 227.62204pt x 86.0042pt.
+
+<figs/chap4/hierarchical.png, id=171, 708.6475pt x 519.9425pt>
+File: figs/chap4/hierarchical.png Graphic file (type png)
+
+<use figs/chap4/hierarchical.png>
+Package pdftex.def Info: figs/chap4/hierarchical.png used on input line 666.
+(pdftex.def)             Requested size: 199.16928pt x 146.13033pt.
+
+Overfull \hbox (16.17183pt too wide) in paragraph at lines 656--672
+[]  []  [] 
+ []
+
+
+Underfull \vbox (badness 3407) has occurred while \output is active []
+
+ [37 <./figs/chap4/original_nnlm.png> <./figs/chap4/hierarchical.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 678--681
+
+ []
+
+<figs/chap4/architecture.png, id=178, 1150.2975pt x 349.305pt>
+File: figs/chap4/architecture.png Graphic file (type png)
+
+<use figs/chap4/architecture.png>
+Package pdftex.def Info: figs/chap4/architecture.png used on input line 686.
+(pdftex.def)             Requested size: 569.05511pt x 172.80789pt.
+
+Overfull \hbox (104.84386pt too wide) in paragraph at lines 685--688
+[]  [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 692--695
+
+ []
+
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 701--704
+
+ []
+
+[39 <./figs/chap4/architecture.png>] [40]
+Underfull \hbox (badness 10000) in paragraph at lines 729--733
+
+ []
+
+
+Overfull \hbox (1.59645pt too wide) in paragraph at lines 743--744
+[]\OT1/cmr/m/n/12 As $\OML/cmm/m/it/12 sim \OT1/cmr/m/n/12 = [][]\OML/cmm/m/it/
+12 v[]$\OT1/cmr/m/n/12 , where $\OML/cmm/m/it/12 v[] \OT1/cmr/m/n/12 = [][] \OM
+L/cmm/m/it/12 o[]$ \OT1/cmr/m/n/12 and $\OML/cmm/m/it/12 v[] \OT1/cmr/m/n/12 = 
+(\OML/cmm/m/it/12 M[] \OT1/cmr/m/n/12 + [][] [])[] \OML/cmm/m/it/12 o[]$
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [41]
+[42]
+Underfull \hbox (badness 10000) in paragraph at lines 788--793
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 788--793
+
+ []
+
+[43]
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 815.
+
+ (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omlcmr.fd
+File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <12> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 815.
+ [44]
+[45] <figs/chap4/sigmoid.png, id=211, 578.16pt x 433.62pt>
+File: figs/chap4/sigmoid.png Graphic file (type png)
+
+<use figs/chap4/sigmoid.png>
+Package pdftex.def Info: figs/chap4/sigmoid.png used on input line 844.
+(pdftex.def)             Requested size: 256.0748pt x 192.05052pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 851--854
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [46 <./figs/chap4/sigmoid.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 882--885
+
+ []
+
+[47]
+Underfull \hbox (badness 10000) in paragraph at lines 889--893
+
+ []
+
+[48] [49] [50
+
+]
+Chapter 5.
+[51] [52]
+Overfull \hbox (27.18254pt too wide) in paragraph at lines 940--941
+\OT1/cmr/m/it/12 e.g.\OT1/cmr/m/n/12 , $[]\OML/cmm/m/it/12 ; sim[]\OT1/cmr/m/n/
+12 (\OML/cmm/m/it/12 state; texas\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ; sim[]\OT1/
+cmr/m/n/12 (\OML/cmm/m/it/12 state; arizona\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ; 
+[] 
+ []
+
+
+Overfull \hbox (18.37958pt too wide) in paragraph at lines 941--942
+\OT1/cmr/m/it/12 e.g.\OT1/cmr/m/n/12 , $[]\OML/cmm/m/it/12 ; sim[]\OT1/cmr/m/n/
+12 (\OML/cmm/m/it/12 city; new york\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ; sim[]\OT
+1/cmr/m/n/12 (\OML/cmm/m/it/12 city; houston\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ;
+ [] 
+ []
+
+
+Overfull \hbox (14.4172pt too wide) in paragraph at lines 942--943
+\OT1/cmr/m/it/12 e.g. $[]\OML/cmm/m/it/12 ; sim[]\OT1/cmr/m/n/12 (\OML/cmm/m/it
+/12 basketball \OT1/cmr/m/n/12 + \OML/cmm/m/it/12 team; knicks\OT1/cmr/m/n/12 )
+\OML/cmm/m/it/12 ; [] 
+ []
+
+
+Overfull \hbox (24.53247pt too wide) in paragraph at lines 943--944
+\OT1/cmr/m/it/12 e.g. $[]\OML/cmm/m/it/12 ; sim[]\OT1/cmr/m/n/12 (\OML/cmm/m/it
+/12 baseball \OT1/cmr/m/n/12 + \OML/cmm/m/it/12 team; yankees\OT1/cmr/m/n/12 )\
+OML/cmm/m/it/12 ; [] 
+ []
+
+[53]
+Overfull \hbox (17.5139pt too wide) in paragraph at lines 944--945
+\OT1/cmr/m/it/12 e.g. $[]\OML/cmm/m/it/12 ; sim[]\OT1/cmr/m/n/12 (\OML/cmm/m/it
+/12 football \OT1/cmr/m/n/12 + \OML/cmm/m/it/12 team; giants\OT1/cmr/m/n/12 )\O
+ML/cmm/m/it/12 ; [] 
+ []
+
+<figs/chap5/loc_prec.png, id=240, 578.16pt x 433.62pt>
+File: figs/chap5/loc_prec.png Graphic file (type png)
+
+<use figs/chap5/loc_prec.png>
+Package pdftex.def Info: figs/chap5/loc_prec.png used on input line 951.
+(pdftex.def)             Requested size: 256.0748pt x 192.05052pt.
+
+<figs/chap5/loc_mrr.png, id=241, 578.16pt x 433.62pt>
+File: figs/chap5/loc_mrr.png Graphic file (type png)
+
+<use figs/chap5/loc_mrr.png>
+Package pdftex.def Info: figs/chap5/loc_mrr.png used on input line 958.
+(pdftex.def)             Requested size: 256.0748pt x 192.05052pt.
+
+Overfull \hbox (64.54143pt too wide) in paragraph at lines 949--963
+[]  []  [] 
+ []
+
+[54 <./figs/chap5/loc_prec.png> <./figs/chap5/loc_mrr.png>]
+Overfull \hbox (2.7899pt too wide) in paragraph at lines 976--979
+\OT1/cmr/m/n/12 95% con-fi-dence in-ter-val shown as er-ror bars. It is clear t
+hat context-dependent
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 976--979
+
+ []
+
+[55]
+Underfull \hbox (badness 10000) in paragraph at lines 984--987
+
+ []
+
+
+Overfull \hbox (4.34674pt too wide) in paragraph at lines 990--1007
+ [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1013--1016
+
+ []
+
+[56]
+Underfull \hbox (badness 10000) in paragraph at lines 1020--1026
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1020--1026
+
+ []
+
+
+Overfull \hbox (2.60442pt too wide) in paragraph at lines 1020--1026
+\OT1/cmr/m/n/12 As in lo-ca-tion eval-u-a-tion, three mod-els (SGLM, CDSG, CDSG
+D) were trained
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [57]
+[58]
+Overfull \hbox (2.64278pt too wide) in paragraph at lines 1070--1070
+[][] 
+ []
+
+
+Overfull \hbox (2.50946pt too wide) in paragraph at lines 1078--1078
+[][] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1090--1093
+
+ []
+
+[59] [60]
+Underfull \hbox (badness 10000) in paragraph at lines 1118--1121
+
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1144--1147
+
+ []
+
+[61]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1161--1161
+[][]$\OT1/cmtt/m/n/10 http : / / www . brandindex . com / ranking / us / 2014-[
+]annual / category /
+ []
+
+[62]
+Overfull \hbox (25.6774pt too wide) in paragraph at lines 1168--1179
+[]  [] 
+ []
+
+
+Overfull \hbox (23.98737pt too wide) in paragraph at lines 1183--1184
+[]\OT1/cmr/m/n/12 Overall cor-re-la-tion co-ef-fi-cient was again com-puted via
+ av-er-ag-ing the z-transformed
+ []
+
+
+! LaTeX Error: Unknown float option `c'.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1186 \begin{sidewaystable}[clockwise]
+                                       
+Option `c' ignored and `p' used.
+
+
+! LaTeX Error: Unknown float option `l'.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1186 \begin{sidewaystable}[clockwise]
+                                       
+Option `l' ignored and `p' used.
+
+
+! LaTeX Error: Unknown float option `o'.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1186 \begin{sidewaystable}[clockwise]
+                                       
+Option `o' ignored and `p' used.
+
+
+! LaTeX Error: Unknown float option `c'.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1186 \begin{sidewaystable}[clockwise]
+                                       
+Option `c' ignored and `p' used.
+
+
+! LaTeX Error: Unknown float option `k'.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1186 \begin{sidewaystable}[clockwise]
+                                       
+Option `k' ignored and `p' used.
+
+
+! LaTeX Error: Unknown float option `w'.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1186 \begin{sidewaystable}[clockwise]
+                                       
+Option `w' ignored and `p' used.
+
+
+! LaTeX Error: Unknown float option `i'.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1186 \begin{sidewaystable}[clockwise]
+                                       
+Option `i' ignored and `p' used.
+
+
+! LaTeX Error: Unknown float option `s'.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1186 \begin{sidewaystable}[clockwise]
+                                       
+Option `s' ignored and `p' used.
+
+
+! LaTeX Error: Unknown float option `e'.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1186 \begin{sidewaystable}[clockwise]
+                                       
+Option `e' ignored and `p' used.
+
+
+Overfull \hbox (1.9844pt too wide) in paragraph at lines 1189--1210
+[][] 
+ []
+
+[63] [64]
+Chapter 6.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1225--1234
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1225--1234
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1225--1234
+
+ []
+
+
+Overfull \hbox (8.90836pt too wide) in paragraph at lines 1225--1234
+\OT1/cmr/m/n/12 with strong ge-o-graphic and gen-der cor-re-la-tion, the pro-po
+sed context-dependent
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1225--1234
+
+ []
+
+[65
+
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [66]
+Underfull \hbox (badness 10000) in paragraph at lines 1240--1244
+
+ []
+
+[67]
+Underfull \hbox (badness 10000) in paragraph at lines 1251--1254
+
+ []
+
+[68] (./acs-dissertation.bbl [69] [70
+
+] [71]
+Missing character: There is no é in font cmr12!
+ [72]) [73] (./acs-dissertation.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 7659 strings out of 492995
+ 124376 string characters out of 6132704
+ 205922 words of memory out of 5000000
+ 11043 multiletter control sequences out of 15000+600000
+ 19140 words of font info for 71 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 39i,20n,40p,1034b,1389s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
+usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr
+/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/l
+ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loc
+al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local
+/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/t
+exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texl
+ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive
+/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/20
+17/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/201
+7/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2017/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2017/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2017/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2017/texmf-d
+ist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2017/tex
+mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2017
+/texmf-dist/fonts/type1/public/txfonts/t1xbtt.pfb></usr/local/texlive/2017/texm
+f-dist/fonts/type1/public/txfonts/t1xtt.pfb>
+Output written on acs-dissertation.pdf (80 pages, 795364 bytes).
+PDF statistics:
+ 390 PDF objects out of 1000 (max. 8388607)
+ 263 compressed objects within 3 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+

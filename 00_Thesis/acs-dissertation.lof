@@ -1,0 +1,15 @@
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces This function in D=2 dimesions only has d=1 effective dimension. Hence, the 1-dimensional embedding includes the 2-dimensional function’s optimizer. It is more efficient to search for the optimum along the 1-dimensional random embedding than in the original 2-dimensional space\relax }}{x}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Parabola Original\relax }}{xxiii}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Taken from {Wang2013}: Embedding from $d = 1$ into $D=2$. The box illustrates the 2D constrained space $\mathsf {X}$, while the thicker red line illustrates the 1D constrained space $\mathsf {Y}$. Note that if $Ay$ is outside $\mathsf {X}$, it is projected onto $\mathsf {X}$. The set $\mathsf {Y}$ must be chosen large enough so that the projection of its image, $A\mathsf {Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box). \relax }}{xxiii}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Parabola Original\relax }}{xxv}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Taken from {Wang2013} Fig. 2: This function in D=2 dimesions only has d=1 effective dimension: the vertical axis indicated with the word important on the right hand side figure. Hence, the 1-dimensional embedding includes the 2-dimensional function’s optimizer. It is more efficient to search for the optimum along the 1-dimensional random embedding than in the original 2-dimensional space. \relax }}{xxv}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Vocabulary structures.}}{xxxvii}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Skip-gram network architecture. }}{xxxix}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Discretisation of the sigmoid function. }}{xlvi}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Location evaluation results.}}{liv}
+\addvspace {10\p@ }
