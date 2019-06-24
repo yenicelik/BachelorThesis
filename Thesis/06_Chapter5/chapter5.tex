@@ -2,7 +2,7 @@
 %*******************************************************************************
 %****************************** Fourth Chapter **********************************
 %*******************************************************************************
-\chapter{Model Design and Extensions to the state of the art}
+\chapter{A New Model}
 
 % **************************** Define Graphics Path **************************
 \ifpdf
@@ -11,26 +11,26 @@
     \graphicspath{{Chapter4/Figs/Vector/}{Chapter4/Figs/}}
 \fi
 
-Given the fields of improvements in the above section, we now propose an algorithm which addresses the majority of the issues mentioned in the above section.
-I will first present that algorithm, and then point out, as to why each individual concern is addressed.
+We now propose an algorithm which addresses the majority of the issues.
+I will first present that algorithm, and then point out, as to why each concern is addressed.
 
 \section{The BORING Algorithm}
 
 We propose the following algorithm, called BORING. \textbf{BORING} stands for \textbf{B}ayesian \textbf{O}ptimization using \textbf{R}andom and \textbf{I}de\textbf{N}tifyable subspace \textbf{G}eneration.
 
-The general idea of boring can be captured in one formula, where $f$ stands for the real function that one wishes to approximate, and any subsequent function annotated by $g$ refers to a component of the right hand side.
+The general idea of BORING can be captured in one formula, where $f$ stands for the real function that one wishes to approximate, and any subsequent function annotated by $g$ refers to a component of the right-hand side.
 
 \begin{equation}
-f(x) \approx g_0(A x) + \sum_{i \in \mathbb{Z}^+}^{q} g_i( A^{\bot} x)_i )
+f(x) \approx g_0(A x) + \sum_{i \in \mathbb{Z}^+}^{q} g_i( A^{\bot} x )
 \label{eq:dimRedEquation}
 \end{equation} \\
 
 Where the following variables have the following meaning
 \begin{itemize}
-\item $A$ is the active subspace projection (an element of the stiefel manifold) learned through our algorithm, using Algorithm 1
-\item $A^{\bot}$ is an matrix whose subspace is orthonormal to the projection of $A$.
+\item $A$ is the active subspace projection (an element of the Stiefel manifold) learned through our algorithm, using Algorithm 1
+\item $A^{\bot}$ is a matrix whose subspace is orthonormal to the projection of $A$.
 We randomly generate $A^{\bot}$ using Algorithm 2.
-\item The subscript $i$ in the right additive term denotes that we view each output dimension of $dot(A^{\bot}, X)$ as independent to the other output dimensions.
+\item The subscript $i$ in the right additive term denotes that we view each output dimension of $A^{\bot} X$ as independent to the other output dimensions.
 
 \end{itemize}
 
@@ -45,22 +45,23 @@ We use different kinds of kernels.
 We want to calculate $g_i$ and $A$ as defined in \ref{eq:dimRedEquation}, such that the log-likelihood of the data we have accumulated so far is maximized.\\
  
  The following few steps are applied after a "burn-in" period, in which we use random sampling to acquire new points.
- We do a random sampling as we want an unbiased dataset from which we can identify the active subspace projection matrix. \\
+ We sample the data points using UCB.
+ This provides a set of data points which we can use to identify the subspace and the projection matrix.\\
  
  In simple terms, the algorithm proceeds as follows:
  
  \begin{enumerate}
- \item Pick the first $n$ samples using random sampling.
- Do not apply UCB or any acquisition function to select the next best point yet.
+ \item Pick the first $n$ samples using UCB sampling.
+ During this period, we use UCB with a naive kernel, which has as many dimensions as the domains dimensions.
  From the collected points, approximate the active projection matrix $A$ using algorithm 1 from \citep{Tripathy}.
  \item Generate a basis that is orthonormal to every element in $A$.
  Concatenating these basis vectors $v_1, \ldots, v_{n-{q}}$ amongst the column-dimension gives us the passive projection matrix $A^\bot$.
  \item Maximize the GP for each individual expression of the space within $A$, and parallel to that also orthogonal to $A$ (as given by $A^\bot x$) individually. 
  \end{enumerate}
  
- This fights the curse of dimensionality, as we can freely choose $q \geq d_e$ to set the complexity of the second term while the first term still allows for creating proximity amongst different vectors by projecting the vectors onto a smaller subspace.
-The active subspace captures the direction of strongest direction, whereas the passive subspace projection captures an additional GP that adds to the robustness of the algorithm
-The additive terms that get projected onto the passive subspace also allows to incorporate smaller perturbations in the space orthogonal to $A$ to occur.
+ This addresses the curse of dimensionality, as we can freely choose $q \geq d_e$ to set the complexity of the second term while the first term still allows for creating proximity amongst different vectors by projecting the vectors onto a smaller subspace.
+The active subspace captures the direction of strongest direction, whereas the passive subspace projection captures an additional GP that adds to the robustness of the algorithm, should the subspace identification fail, or if the true function does not have a real subspace (i.e. is of the form $f(x) = f_0(Ax) + f_1(A^{\bot}x) \text{where} \lVert f_1 \rVert_{\infty} << \lVert f_0 \rVert_{\infty})$.
+The additive terms that get projected onto the passive subspace also allow incorporating smaller perturbations in the space orthogonal to $A$ to occur.
 
 \begin{algorithm}[H]
 \caption{BORING Alg. 1 - Bayesian Optimization using BORING}
@@ -69,21 +70,22 @@ The additive terms that get projected onto the passive subspace also allows to i
 \STATE $X \leftarrow \emptyset$
 \STATE $Y \leftarrow \emptyset$
 
-\COMMENT{Burn in rate - don't look for a subspace for the first 50 samples}
+\COMMENT{Burn in rate - don't look for a subspace for the first 100 samples}
 \STATE $i \leftarrow 0$
-\WHILE{i < 50}
+\WHILE{i < 100}
 \STATE $i++$
 \STATE $x_* \leftarrow $ argmax$_x$ acquisitionFunction$(dot(Q^{\bot}, x) )$ using standard UCB over the domain of $X$.
 \STATE Add $x_*$ to $X$ and $ f(x_*)$ to $Y$.
 \ENDWHILE
 
-\WHILE{we can choose a next point}
-% TODO: add an if statement that the active subspace is re-calculated every now and then
 \STATE $A, d, \phi \leftarrow $ Calculate active subspace projection using Algorithm 2 from the paper by Tripathy.
 \STATE $A^{\bot} \leftarrow $ Generate passive subspace projection using Algorithm 3.
 \STATE $Q \leftarrow $ colwiseConcat( $[A, A^{\bot}]$ ) 
 \STATE $gp \leftarrow GP( $dot$( Q^T, X), Y)$
 \STATE kernel $\leftarrow$ activeKernel + $\sum_i^{q}$ passiveKernel$_i$ 
+
+\WHILE{we can choose a next point}
+% TODO: add an if statement that the active subspace is re-calculated every now and then
 \STATE $x_* \leftarrow $ argmax$_x$ UCB$(dot(Q^{\bot}, x) )$
 \STATE Add $x_*$ to $X$ and $ f(x_*)$ to $Y$.
 \ENDWHILE
@@ -109,12 +111,12 @@ A =
 \label{eq:maximalEmbedding}
 \end{equation}
 
-Given that we choose a maximal lower dimensional embedding (maximising the log-likelihood of the embedding for the given points), some other axes may be disregarded.
+Given that we choose a maximal lower dimensional embedding (maximizing the log-likelihood of the embedding for the given points), some other axes may be disregarded.
 However, the axes that are disregarded may still carry information that can make search faster or more robust.
 
-To enable a trade-off between time and searchspace, we propose the following mechanism.
+To enable a trade-off between time and search space, we propose the following mechanism.
 
-%% TODO I think it's the rowspace.. not the columnspace!
+%% TODO I think it's the row space.. not the column space!
 %% Potentially use this to generate these vectors: https://stackoverflow.com/questions/33658620/generating-two-orthogonal-vectors-that-are-orthogonal-to-a-particular-direction
 
 Assume an embedding maximizing \ref{eq:maximalEmbedding} is found.
@@ -122,7 +124,7 @@ Then the active subspace is characterized by it's column vector $  a_1, a_2, ...
 We refer to the space spanned by these vectors as the \textit{active subspace}.
 
 However, we also want to address the subspace which is not addressed by the maximal embedding, which we will refer to \textit{passive subspace}.
-This passive subspace is characterized by a set of vectors, that are pairwise orthogonal to all other column vectors in $A$, i.e. the vector space orthogonal to the active subspace spanned by the column vectors of $A$.
+This passive subspace is characterized by a set of vectors, that are pairwise orthogonal to all other column vectors in $A$, i.e., the vector space orthogonal to the active subspace spanned by the column vectors of $A$.
 
 As such, we define the span of the active and passive subspace is defined by the matrix:
 
@@ -134,10 +136,10 @@ A & A^\bot
 \label{eq:entireSubspace}
 \end{equation}
 
-where $A^\bot$ describes the matrix that is orthogonal to the columnspace of $A$.
+where $A^\bot$ describes the matrix that is orthogonal to the column space of $A$.
 For this, $A^\bot$ consists of any set of vectors that are orthogonal to all other vectors in $A$.\\
 
-The vectors forming $A^\bot$  is generated by taking a random vector, and applying Gram Schmidt.
+The vectors forming $A^\bot$  is generated by taking a random vector and applying Gram Schmidt.
 This procedure is repeated for as many orthogonal vectors as we want. 
 The procedure is summarised in Algorithm 3:\\
 
@@ -147,7 +149,6 @@ The procedure is summarised in Algorithm 3:\\
 \begin{algorithmic} 
 \REQUIRE $A$ a matrix to which we want to create $A^{\bot}$ for; $n$, the number of vectors in $A^{\bot}$.
 
-\STATE normedA $ \leftarrow $ normalize each column of $A$
 \STATE $Q \leftarrow$ emptyMatrix()
 \COMMENT{ The final concatenated $Q$ will be $A^{\bot}$. }
 \FOR{i = 1,...,n}
@@ -157,7 +158,7 @@ The procedure is summarised in Algorithm 3:\\
 \STATE $q_i \leftarrow $ random vector with norm 1
 \STATE newBasis = apply gram schmidt single vector( $[A, Q], q_i$ ) 
 
-\IF{ dot(normed$A^T$, newBasis) $\approx \mathbf{0}$ and $|$ newBasis $|$ $> 1e-6$}
+\IF{ dot(normed$A^T$, newBasis) $\approx \mathbf{0}$ \textbf{and} $\lVert$ newBasis $\rVert_2$ $> 1e-6$}
 \STATE $Q \leftarrow$ colwiseConcatenate( $(Q, $ newBasis)
 \STATE break
 \ENDIF
@@ -170,8 +171,9 @@ The procedure is summarised in Algorithm 3:\\
 
 \subsubsection{Additive UCB acquisition function}
 
-Because the function is decomposed into multiple additive components, the computation of the mean and variance needs to be adapted accordingly.
-Refering to \citep{Rolland}, the following method is used. \\
+Because the function is decomposed into multiple additive components, the computation of the mean and variance needs to be adapted accordingly. 
+Although I do not use this method in my experiments, it is still useful to mention one way to approximate these terms for higher dimensional input.
+The following method proposed in \citep{Rolland}  is used. \\
 
 \begin{align}
 \mu_{t-1}^{(j)} &= k^j(x_*^{(j)}, X^j)\Delta^{-1}y \\
@@ -180,7 +182,7 @@ Refering to \citep{Rolland}, the following method is used. \\
 
 where $k(a, b)$ is the piecewise kernel operator for vectors or matrices $a$ and $b$ and $\Delta = k(X, X) + \eta I_n$.
 A single GP with multiple kernels (where each kernel handles a different dimension of $dot(Q^T, x)$) is used.
-There are $k^{j=1, \ldots, q+1}$ kernels (the $+1$ comes from the first kernel being the kernel for the active subspace). \\
+There are $q+1$ kernels (the $+1$ comes from the first kernel being the kernel for the active subspace). \\
 
 Using this information about each individual kernel component results in the simple additive mean and covariance functions, which can then be used for optimization by UCB:
 
@@ -194,20 +196,20 @@ Using this information about each individual kernel component results in the sim
 One should notice that this additive acquisition function is an approximation of the real acquisition function. 
 For lower dimensions - such as $d<3$ - it is not required to decompose the acquisition function into separate additive components.
 
-\subsubsection{How does our algorithm address the shortcomings from chapter 3?}
+\subsubsection{How does our algorithm address the shortcomings from chapter 4?}
 
 \begin{enumerate}
 \item Our algorithm intrinsically uses multiple restarts.
 As such, bad initial states and bad projection matrices are discarded as better ones are identified.
-This makes our algorithm more reliable than algorithms like REMBO.
-\item Our algorithm allows to not only optimize on a given domain, but also identify the subspace on which the maximal embedding is allocated on.
+This makes our algorithm more reliable than algorithms like naive REMBO (without interleavings).
+\item Our algorithm allows to not only optimize on a given domain but also identify the subspace on which the maximal embedding is allocated on.
 In addition to that, no gradient information is needed.
-\item Our algorithms uses a "burn-in-rate" for the first few samples, which allows for efficient point search at the beginning, and later on switches to finding the actual, real subspace.
+\item Our algorithm uses a "burn-in-rate" for the first few samples, which allows for efficient point search at the beginning, and later on switches to finding the actual, real subspace.
 This means that we need to compute the embedding only once, and can then apply optimization on that domain.
-Our algorithm allows for comfortable choice of how much computation should be put into identifying the subspace.
-\item Our algorithm is more accurate and robust, as we don't assume that there is a singular maximal subspace. 
-We also take into consideration that there might be perturbation on lower dimensions!
-In that sense, our algorithm mimicks the idea of projection pursuit \citep{ProjectionPursuit}, as it identifies multiple vectors to project to the lower subspace.
+Our algorithm allows for a comfortable choice of how much computation should be put into identifying the subspace.
+\item Our algorithm is more accurate and robust, as we do not assume that there is a singular maximal subspace. 
+We also take into consideration that there might be a perturbation on lower dimensions.
+In that sense, our algorithm mimics the idea of projection pursuit \citep{ProjectionPursuit}, as it identifies multiple vectors to project to the lower subspace.
 \end{enumerate}
 
 

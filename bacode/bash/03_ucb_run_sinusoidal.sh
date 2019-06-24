@@ -1,5 +1,5 @@
 # Add to pythonpath
-PYTHONPATH="/Users/davidal/GoogleDrive/BachelorThesis/bacode/:/Users/davidal/GoogleDrive/BachelorThesis/:/home/yedavid/BachelorThesis/bacode/:/home/yedavid/BachelorThesis/"
+PYTHONPATH="/Users/david/GoogleDrive/BachelorThesis/bacode/:/Users/david/GoogleDrive/BachelorThesis/:/home/yedavid/BachelorThesis/bacode/:/home/yedavid/BachelorThesis/"
 export PYTHONPATH
 
 unameOut="$(uname -s)"
@@ -14,7 +14,7 @@ echo ${machine}
 
 if [[ $machine == *"Mac"* ]];
 then
-    BASEPATH="/Users/davidal/GoogleDrive/BachelorThesis/bacode/experiment_yamls/"
+    BASEPATH="/Users/david/GoogleDrive/BachelorThesis/bacode/experiment_yamls/"
 else
     BASEPATH="/home/yedavid/BachelorThesis/bacode/experiment_yamls/"
 fi

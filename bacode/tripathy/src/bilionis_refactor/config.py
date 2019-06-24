@@ -67,10 +67,9 @@ elif HALFDEV:
 else:
 
     config = {
-        "no_restarts": 10, # 14,
+        "no_restarts": 100, # 14,
 
-        "max_iter_alg1": int(300), # # 300 # 100
-
+        "max_iter_alg1": int(200), # # 300 # 100
         "max_iter_parameter_optimization": 200,
         "max_iter_W_optimization": 1,
 
@@ -80,12 +79,12 @@ else:
     }
 
 # Stuff that should be true for all runs:
-config['eps_alg1'] = 1.e-4
-config['eps_alg3'] = 1.e-6
+config['eps_alg1'] = 1e-4 # 1.e-3
+config['eps_alg3'] = 1e-5 # 1.e-4
 config['tau_max'] = 1.
 config['no_taus'] = 20
-config['max_dimensions'] = 2
-config['active_dimension'] = 2
+config['max_dimensions'] = 1
+config['active_dimension'] = 1
 config['max_iter_alg3'] = 1
 config['std_noise_var'] = 0.005
 
@@ -95,7 +94,7 @@ if platform == "linux" or platform == "linux2":
     config['basepath'] = "/home/yedavid/BachelorThesis/bacode/"
     config['dev'] = False
 elif platform == "darwin":
-    config['basepath'] = "/Users/davidal/GoogleDrive/BachelorThesis/bacode/"
+    config['basepath'] = "/Users/david/GoogleDrive/BachelorThesis/bacode/"
     config['dev'] = True
 
 
@@ -103,7 +102,7 @@ config['restict_cores'] = True
 config['max_cores'] = 16
 
 config['visualize_vanilla_path'] = config['basepath'] + "visualize_vanilla/"
-config['visualize_vanilla_vs_gp_path'] = config['basepath'] + "visualize_vanilla_vs_gp/"
+config['visualize_vanilla_vs_gp_path'] = config['basepath'] + "visualize_vanilla" # "visualize_vanilla_vs_gp/"
 config['visualize_angle_loss_path'] = config['basepath'] + "visualize_angle_loss/"
 
 ### DATASET SPECIFIC CONFIGURATIONS

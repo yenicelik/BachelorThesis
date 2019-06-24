@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from bacode.tripathy.src.rembo.utils import sample_orthogonal_matrix
+from bacode.tripathy.src.rembo.utils import sample_random_matrix
 
 import numpy as np
 from febo.algorithms import Algorithm, AlgorithmConfig
@@ -99,7 +99,7 @@ class RemboAlgorithm(Algorithm):
                 [0, 0]
             ])
         else:
-            self.A = sample_orthogonal_matrix(self.domain.d, self.config.dim, seed=None)
+            self.A = sample_random_matrix(self.domain.d, self.config.dim, seed=None)
 
             # self.A = np.asarray(
             #     [[-0.87029532, - 0.1387281],

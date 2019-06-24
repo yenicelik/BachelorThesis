@@ -1,22 +1,33 @@
-\contentsline {figure}{\numberline {1}{\ignorespaces This function in D=2 dimesions only has d=1 effective dimension. Hence, the 1-dimensional embedding includes the 2-dimensional function\IeC {\textquoteright }s optimizer. It is more efficient to search for the optimum along the 1-dimensional random embedding than in the original 2-dimensional space\relax }}{iv}{figure.caption.1}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces This function in D=2 dimesions only has d=1 effective dimension. Hence, the 1-dimensional embedding includes the 2-dimensional function\IeC {\textquoteright }s optimizer. It is more efficient to search for the optimum along the 1-dimensional random embedding than in the original 2-dimensional space\relax }}{3}{figure.caption.5}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Parabola Original\relax }}{10}{figure.caption.6}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Taken from \citep {Wang2013}: Embedding from $d = 1$ into $D=2$. The box illustrates the 2D constrained space $\mathsf {X}$, while the thicker red line illustrates the 1D constrained space $\mathsf {Y}$. Note that if $Ay$ is outside $\mathsf {X}$, it is projected onto $\mathsf {X}$. The set $\mathsf {Y}$ must be chosen large enough so that the projection of its image, $A\mathsf {Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box). \relax }}{10}{figure.caption.6}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Parabola Original\relax }}{11}{figure.caption.7}
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Taken from \citep {Wang2013} Fig. 2: This function in D=2 dimesions only has d=1 effective dimension: the vertical axis indicated with the word important on the right hand side figure. Hence, the 1-dimensional embedding includes the 2-dimensional function\IeC {\textquoteright }s optimizer. It is more efficient to search for the optimum along the 1-dimensional random embedding than in the original 2-dimensional space. \relax }}{11}{figure.caption.7}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Parabola Original\relax }}{14}{figure.caption.6}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Source \citep {Wang2013}: Embedding from $d = 1$ into $D=2$. The box illustrates the 2D constrained space $\mathbf {X}$, while the thicker red line illustrates the 1D constrained space $\mathbf {Y}$. Note that if $A \times y$ is outside of $\mathbf {X}$, it is projected onto $\mathbf {X}$ using a convex projection. The set $\mathbf {Y}$ must be chosen large enough so that the projection of its image, $A \times y $ with $y \in \mathbf {Y}$, onto the effective subspace (vertical axis in this diagram) covers the vertical side of the box. \relax }}{14}{figure.caption.6}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Parabola Original\relax }}{15}{figure.caption.7}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Source \citep {Wang2013}: This function in D=2 dimesions only has d=1 effective dimension. Hence, the 1-dimensional embedding includes the 2-dimensional function\IeC {\textquoteright }s optimized value $x^*$. It is more efficient to search for the optimum along the 1-dimensional random embedding than in the original 2-dimensional space. \relax }}{15}{figure.caption.7}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Parabola Regret Curves\relax }}{30}{figure.caption.26}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Sinusoidal Regret Curves\relax }}{31}{figure.caption.27}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{32}{figure.caption.28}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{32}{figure.caption.28}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Real matrix\relax }}{32}{figure.caption.29}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Matrix found by optimization algorithm\relax }}{32}{figure.caption.29}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Top-Left: The 1D Parabola which is embedded in a 2D space.\relax }}{34}{figure.caption.30}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.\relax }}{35}{figure.caption.31}
-\contentsline {figure}{\numberline {5.9}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{36}{figure.caption.32}
-\contentsline {figure}{\numberline {5.10}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{37}{figure.caption.33}
+\contentsline {figure}{\numberline {6.1}{\ignorespaces UCB on a Parabola embedded in 2D space, when we assume that tripathy's method finds the real projection matrix.\relax }}{35}{figure.caption.26}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces UCB on a Parabola embedded in 2D space. Tripathy's algorithm is applied to find the a projection matrix $\mathaccentV {hat}05E{W}$.\relax }}{35}{figure.caption.28}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces UCB on a 2D Camelback function embedded in 3D space. This is when we assume that tripathy finds the real projection matrix $W_{\text {true}}$\relax }}{36}{figure.caption.30}
+\contentsline {figure}{\numberline {6.4}{\ignorespaces UCB on a 2D Camelback function embedded in 3D space. We apply tripathy's algorithm to find a projection matrix $W$.\relax }}{37}{figure.caption.32}
+\contentsline {figure}{\numberline {6.5}{\ignorespaces UCB on a 2D Camelback function embedded in 5D space. This is when we assume that tripathy finds the real projection matrix $W_{\text {true}}$\relax }}{38}{figure.caption.34}
+\contentsline {figure}{\numberline {6.6}{\ignorespaces UCB on a 2D Camelback function embedded in 5D space. This is when we apply tripathy's algorithm to find a projection matrix $W$, that is acceptable for optimization, but is not near close to the real projection matrix.\relax }}{38}{figure.caption.36}
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Log-Likelihood (top) and Angle (bottom) performance measures for a 1D Parabola embedded in a 2D space. The left graphs show the values for the run that was chosen as the "found" projection matrix. The right graphs show the average values over all restarts of tripathy's method. \relax }}{40}{figure.caption.38}
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Log-Likelihood (top) and Angle (bottom) performance measures for a 2D Camelback embedded in a 5D space. The left graphs show the values for the run that was chosen as the "found" projection matrix. The right graphs show the average values over all restarts of tripathy's method. These are the results for run 1. \relax }}{41}{figure.caption.40}
+\contentsline {figure}{\numberline {6.9}{\ignorespaces Log-Likelihood (top) and Angle (bottom) performance measures for a 2D Camelback embedded in a 5D space. The left graphs show the values for the run that was chosen as the "found" projection matrix. The right graphs show the average values over all restarts of tripathy's method. These are the results for run 2. \relax }}{42}{figure.caption.41}
+\contentsline {figure}{\numberline {6.10}{\ignorespaces Log-Likelihood (top) and Angle (bottom) performance measures for a 2D Sinusoidal function embedded in a 5D space. The left graphs show the values for the run that was chosen as the "found" projection matrix. The right graphs show the average values over all restarts of tripathy's method. These are the results for run 2. \relax }}{43}{figure.caption.43}
+\contentsline {figure}{\numberline {6.11}{\ignorespaces UCB using REMBO on a 1D Parabola embedded in a 2D space. \relax }}{44}{figure.caption.45}
+\contentsline {figure}{\numberline {6.12}{\ignorespaces UCB using REMBO on a 2D Camelback embedded in a 3D space. \relax }}{44}{figure.caption.47}
+\contentsline {figure}{\numberline {6.13}{\ignorespaces UCB using REMBO on a 2D Camelback embedded in a 5D space. \relax }}{45}{figure.caption.49}
+\contentsline {figure}{\numberline {6.14}{\ignorespaces Polynomial Kernel applied to vector $[x_0, x_1]$\relax }}{46}{figure.caption.50}
+\contentsline {figure}{\numberline {6.15}{\ignorespaces Corresponding weight matrix equivalent to \ref {eq:FeatureExtension} when applied on a parabola\relax }}{46}{figure.caption.50}
+\contentsline {figure}{\numberline {6.16}{\ignorespaces Real matrix\relax }}{46}{figure.caption.51}
+\contentsline {figure}{\numberline {6.17}{\ignorespaces Matrix found by optimization algorithm\relax }}{46}{figure.caption.51}
+\contentsline {figure}{\numberline {6.18}{\ignorespaces Top-Left: The 1D Parabola which is embedded in a 2D space.\relax }}{48}{figure.caption.52}
+\contentsline {figure}{\numberline {6.19}{\ignorespaces Top-Left: The 2D Sinusoidal-Exponential Function which is embedded in a 5D space.\relax }}{49}{figure.caption.53}
+\contentsline {figure}{\numberline {6.20}{\ignorespaces Top-Left: The 2D Camelback Function which is embedded in a 5D space.\relax }}{50}{figure.caption.54}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

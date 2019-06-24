@@ -107,12 +107,15 @@ class TripathyGP(ConfidenceBoundModel):
         # self.lengthscale = None
         # self.noise_var = None
 
-        # DEFAULT SETTINGS
+        # DEFAULT
         self.W_hat = np.eye(self.domain.d)
-        # print(self.config.kernels[0][1])
-        # self.lengthscale = 2.5  # self.config.kernels[0][1]['lengthscale']  # TODO: how to get it from config!!!
-        # self.variance = 1.  # self.config.kernels[0][1]['variance']
-        # self.noise_var = 0.005
+        self.noise_var = 0.005
+        # self.lengthscale = 0.08
+        # self.variance = 0.1
+
+        self.variance = 2.3555752428329177
+        self.lengthscale = 4.8
+
         self.active_d = self.domain.d
 
         # PARABOLA
@@ -250,8 +253,9 @@ class TripathyGP(ConfidenceBoundModel):
         x = np.atleast_2d(x)
 
         x = np.dot(x, self.W_hat.T)
-        assert x.shape[1] == self.active_d, (
-            "The projected dimension does not equal to the active dimension: ", (self.active_d, x.shape))
+        # print(x.shape)
+        # print(self.W_hat.shape)
+        assert x.shape[1] == self.active_d, ("The projected dimension does not equal to the active dimension: ", (self.active_d, x.shape))
 
         if self.config.calculate_gradients and False:  # or True:
             mean, var = self.gp.predict_noiseless(x)
@@ -273,85 +277,70 @@ class TripathyGP(ConfidenceBoundModel):
             Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0)
         self._set_datasaver_data(X, Y)
 
-        if self.i % 500 == 100 or self.calculate_always:
-            print("Adding datapoint: ", self.i)
+        if self.i % 500 == 100:
 
             # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
             #     X, Y, load=False)
+            # self.W_hat = self.W_hat.T
 
-            ####################
-            # PRETRAINED VALUES
-            ####################
+            # self.W_hat = np.asarray([
+            #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, -0.71214818],
+            #     [0.00412458, -0.95147725, -0.28612815, -0.06316891, -0.093885]
+            # ])
+
+            # self.W_hat = np.asarray([[-0.27219458],
+            #  [0.08779054],
+            #  [-0.28618016],
+            #  [0.16803416],
+            #  [0.89892623]]
+            # ).T
+            # self.lengthscale = [0.02285915]
+            # self.variance = 2.5731190248142437
+            # self.active_d = 1
+
+            # self.W_hat = np.asarray([[0.39877165, 0.88585961],
+            #                          [-0.23390389, 0.0992073],
+            #                          [0.52560395, -0.03363714],
+            #                          [0.0815202, 0.06316191],
+            #                          [0.70948226, -0.44753746]]
+            #                         ).T
+            # self.W_hat = np.asarray([
+            #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, -0.71214818],
+            #     [0.00412458, -0.95147725, -0.28612815, -0.06316891, -0.093885]
+            # ])
+            # self.lengthscale = np.asarray([0.84471462, 4.75165394])
+            # self.variance = 2.3555752428329177
+
+            # self.W_hat = np.asarray([
+            #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+            #     [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+            # ])
+
+            self.W_hat = np.asarray([[-0.13392005],
+                   [0.0898743],
+                   [-0.16831021],
+                   [-0.02586708],
+                   [0.97210627]]).T
+            self.lengthscale = np.asarray([0.05191368])
+            self.variance = 1.7733784121415521
+            self.active_d = 1
+
+            self.lengthscale = np.asarray([0.84471462])
+            self.variance = 2.3555752428329177
+
+            # self.W_hat = np.asarray([
+            #     [-0.46554187, -0.36224966, 0.80749362],
+            #     [0.69737806, -0.711918, 0.08268378]
+            # ])
+
             # PARABOLA
-            # self.W_hat = np.asarray([[0.92752153, 0.37376973]])  # np.random.rand(self.d, 1).T
+            # self.W_hat = np.asarray([[0.49969147, 0.1939272]])
+            #
             # self.noise_var = 0.005
             # self.lengthscale = 6
             # self.variance = 2.5
             # self.active_d = 1
 
-            # SINUSOIDAL
-            # self.W_hat = np.asarray([
-            #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
-            #     [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
-            # ])
-            # self.noise_var = 0.005
-            # self.lengthscale = 1.3
-            # self.variance = 0.15
-            # self.active_d = 2
-
-            # CAMELBACK
-            # self.W_hat = np.asarray(
-            #     [[-0.33867927, -0.46107057],
-            #      [0.45801778, 0.2080514],
-            #      [0.26060095, 0.65276822],
-            #      [0.56757381, -0.28423894],
-            #      [0.53428755, -0.48706305]
-            #      ]).T
-            # self.noise_var = 0.005
-            # self.lengthscale = np.asarray([1.5, 0.5])
-            # self.variance = 44.0
-            # self.active_d = 2
-
-            #############
-            # REAL VALUES
-            #############
-
-            # PARABOLA
-            # self.W_hat = np.asarray([[0.49969147, 0.1939272]])  # np.random.rand(self.d, 1).T
-            # self.noise_var = 0.005
-            # self.lengthscale = 6
-            # self.variance = 2.5
-            # self.active_d = 1
-
-            # SINUSOIDAL
-            # self.W_hat = np.asarray([
-            #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, 0.71214818],
-            #     [ 0.00412458, -0.95147725, -0.28612815, -0.06316891, 0.093885]
-            # ])
-            # self.noise_var = 0.005
-            # self.lengthscale = 1.3
-            # self.variance = 0.15
-            # self.active_d = 2
-
-            # CAMELBACK
-            self.W_hat = np.asarray([
-                [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
-                [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
-            ])
-            self.noise_var = 0.005
-            self.lengthscale = 2.5
-            self.variance = 1.0
-            self.active_d = 2
-
-            gc.collect()
-
-            print("Found parameters are: ")
-            print("W: ", self.W_hat)
-            print("noise_var: ", self.noise_var)
-            print("lengthscale: ", self.lengthscale)
-            print("variance: ", self.variance)
-
-            # For the sake of creating a kernel with new dimensions!
             self.create_new_gp_and_kernel(
                 active_d=self.active_d,
                 variance=self.variance,
@@ -359,8 +348,17 @@ class TripathyGP(ConfidenceBoundModel):
                 noise_var=self.noise_var
             )
 
-        if self.i % 500 == 299:
+        #     self.W_hat = np.asarray([
+        #         [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+        #         [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+        #     ])
+        #     self.noise_var = 0.005
+        #     self.lengthscale = 2.5
+        #     self.variance = 1.0
+        #     self.active_d = 2
+        #     print("Changed values")
 
+        if self.i % 500 == 299:
             print("TRIPATHY :: Likelihood of the current GP is: ", self.gp.log_likelihood())
 
         Z = np.dot(X, self.W_hat.T)

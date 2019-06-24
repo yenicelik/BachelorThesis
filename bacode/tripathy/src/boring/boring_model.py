@@ -27,6 +27,35 @@ from febo.utils import locate, get_logger
 import gc
 
 
+from bacode.tripathy.src.bilionis_refactor.t_kernel import TripathyMaternKernel
+from GPy.kern import Matern32, RBF
+from bacode.tripathy.src.bilionis_refactor.t_optimizer import TripathyOptimizer
+
+
+from GPy.util.linalg import dpotrs
+from febo.utils import get_logger
+
+import numpy as np
+
+import sys
+
+from febo.models import ConfidenceBoundModel
+from febo.models.model import ModelConfig
+from febo.models.gpy import GPRegression
+from febo.utils.config import ConfigField, assign_config, config_manager
+import GPy
+from scipy.linalg import lapack
+from scipy.optimize import minimize
+
+from bacode.tripathy.src.bilionis_refactor.config import config
+from bacode.tripathy.src.bilionis_refactor.t_optimization_functions import t_ParameterOptimizer
+
+logger = get_logger('boring')
+
+from febo.utils import locate, get_logger
+import gc
+
+
 class BoringGPConfig(ModelConfig):
     """
     * kernels: List of kernels
@@ -39,7 +68,7 @@ class BoringGPConfig(ModelConfig):
     optimize_bias = ConfigField(False)
     optimize_var = ConfigField(False)
     bias = ConfigField(0)
-    _section = 'src.tripathy__'
+    _section = 'src.boring.boring_model'
 
 
 config_manager.register(BoringGPConfig)
@@ -57,7 +86,7 @@ class BoringGP(ConfidenceBoundModel):
 
     """
 
-    def create_new_kernel(self, active_d, passive_d=0, W=None, variance=None, lengthscale=None):
+    def create_new_kernel(self, active_d, passive_d, variance, lengthscale):
         print("Creating a new kernel!")
         self.kernel = Matern32(
             input_dim=active_d,
@@ -72,34 +101,34 @@ class BoringGP(ConfidenceBoundModel):
             cur_kernel = Matern32(
                 input_dim=1,
                 variance=variance,
-                lengthscale=1.,
+                lengthscale=lengthscale,
                 ARD=True,
                 active_dims=[active_d + i],
                 name="passive_subspace_kernel_" + str(i)
             )
             self.kernel += cur_kernel
 
-        print("New resulting kernel is: ", self.kernel)
+        print("Kernel is: ", self.kernel)
 
-    def create_new_gp(self, noise_var=None):
+    def create_new_gp(self, dimensions, noise_var):
         # Take over data from the old GP, if existent
         print("Creating a new gp!")
         self.gp = GPRegression(
-            self.domain.d,
+            dimensions,
             self.kernel,
-            noise_var=0.1,  # noise_var if noise_var is not None else self.config.noise_var,
-            calculate_gradients=self.config.calculate_gradients
+            noise_var=noise_var,  # noise_var if noise_var is not None else self.config.noise_var,
+            calculate_gradients=False # self.config.calculate_gradients
         )
 
-    def create_new_gp_and_kernel(self, active_d, passive_d, W, variance, lengtscale, noise_var):
+    def create_new_gp_and_kernel(self, active_d, passive_d, variance, lengthscale, noise_var):
         self.create_new_kernel(
             active_d=active_d,
             passive_d=passive_d,
-            W=W,
             variance=variance,
-            lengthscale=lengtscale
+            lengthscale=lengthscale
         )
         self.create_new_gp(
+            dimensions=active_d+passive_d,
             noise_var=noise_var
         )
         print("Got kernel: ")
@@ -111,19 +140,32 @@ class BoringGP(ConfidenceBoundModel):
         print("Starting tripathy model!")
         self.gp = None
 
-        self.active_d = None
-        self.W_hat = None
-        self.variance = None
-        self.lengthscale = None
-        self.noise_var = None
+        # Just for completeness
+        # self.active_d = None
+        # self.W_hat = None
+        # self.variance = None
+        # self.lengthscale = None
+        # self.noise_var = None
+
+        # DEFAULT
+        self.W_hat = np.eye(self.domain.d)
+        self.noise_var = 0.005
+
+        self.lengthscale = 4.8
+        # self.lengthscale = 6
+        # self.variance = 2.5
+
+        self.variance = 2.3555752428329177
+
+        self.active_d = self.domain.d
+        self.passive_d = 0
 
         self.create_new_gp_and_kernel(
-            active_d=self.domain.d if self.active_d is None else self.active_d,
-            passive_d=0,
-            W=np.eye(self.domain.d) if self.active_d is None else self.W,
-            variance=1.0 if self.active_d is None else self.variance,
-            lengtscale=1.5 if self.active_d is None else self.lengthscale,
-            noise_var=None if self.active_d is None else self.noise_var,
+            active_d=self.active_d,
+            passive_d=self.passive_d,
+            variance=self.variance,
+            lengthscale=self.lengthscale,
+            noise_var=self.noise_var
         )
 
         # Create the datasaver GP
@@ -133,9 +175,11 @@ class BoringGP(ConfidenceBoundModel):
         self.datasaver_gp = GPRegression(
             input_dim=self.domain.d,
             kernel=placeholder_kernel,
-            noise_var=0.1,
+            noise_var=self.noise_var,
             calculate_gradients=False
         )
+
+        # JOHANNES: Die folgenden Operationen habe ich übernommen aus dem febo GP
 
         # number of data points
         self.t = 0
@@ -150,6 +194,8 @@ class BoringGP(ConfidenceBoundModel):
         self.calculate_always = calculate_always
 
         self.optimizer = TripathyOptimizer()
+
+    # JOHANNES: Die folgenden Operationen habe ich übernommen aus dem febo GP
 
     # Obligatory values
     @property
@@ -218,9 +264,10 @@ class BoringGP(ConfidenceBoundModel):
         """
         x = np.atleast_2d(x)
 
-        # Need to project x to the matrix(
-        if self.W_hat is not None:
-            x = np.dot(x, self.W_hat)
+        x = np.dot(x, self.W_hat.T)
+        # print(x.shape)
+        # print(self.W_hat.shape)
+        assert x.shape[1] == self.active_d + self.passive_d, ("The projected dimension does not equal to the active dimension: ", (self.active_d + self.passive_d, x.shape))
 
         if self.config.calculate_gradients and False:  # or True:
             mean, var = self.gp.predict_noiseless(x)
@@ -242,68 +289,126 @@ class BoringGP(ConfidenceBoundModel):
             Y = np.concatenate((self.datasaver_gp.Y, Y), axis=0)
         self._set_datasaver_data(X, Y)
 
-        if self.i % 500 == 100 or self.calculate_always:
+        if self.i % 500 == 100:
 
-            print("Adding datapoint: ", self.i)
+            # self.W_hat, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
+            #     X, Y, load=False)
 
-            # print("Datasaver X is: ")
-            # print(self.datasaver_gp.X)
+            # self.A = np.asarray([
+            #     [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+            #     [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+            # ])
+        #     self.A = np.asarray([
+        #     [-0.46554187, -0.36224966, 0.80749362],
+        #     [0.69737806, -0.711918, 0.08268378]
+        # ])
+
+            # self.A, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
+            #     X, Y, load=False)
+            # self.A = self.A.T
+            # self.A = np.asarray([[0.39877165, 0.88585961],
+            #                          [-0.23390389, 0.0992073],
+            #                          [0.52560395, -0.03363714],
+            #                          [0.0815202, 0.06316191],
+            #                          [0.70948226, -0.44753746]]
+            #                         ).T
+            # # self.W_hat = np.asarray([
+            # #     [-0.41108301, 0.22853536, -0.51593653, -0.07373475, -0.71214818],
+            # #     [0.00412458, -0.95147725, -0.28612815, -0.06316891, -0.093885]
+            # # ])
+            # self.active_d = 2
+            # self.lengthscale = np.asarray([0.84471462, 4.75165394])
+            # self.variance = 2.3555752428329177
             #
-            # print("Datasaver Y is: ")
-            # print(self.datasaver_gp.Y)
+            # self.A = np.asarray([[-0.27219458],
+            #  [0.08779054],
+            #  [-0.28618016],
+            #  [0.16803416],
+            #  [0.89892623]]
+            # ).T
+            # self.lengthscale = [0.02285915]
+            # self.variance = 2.5731190248142437
+            # self.active_d = 1
+
+            self.A = np.asarray([[-0.13392005],
+                   [0.0898743],
+                   [-0.16831021],
+                   [-0.02586708],
+                   [0.97210627]]).T
+            # self.lengthscale = np.asarray([0.84471462, 4.75165394]) # np.asarray([0.05191368])
+            # self.variance = 1.7733784121415521
+            self.active_d = 1
+
+            self.lengthscale = 4.7 # np.asarray([0.84471462])
+            self.variance = 1.7733784121415521 # 2.3555752428329177
+
+            # PARABOLA:
+            # self.A = np.asarray([[0.49969147, 0.1939272]])
             #
-            # print("That's it")
-            # exit(0)
+            # self.noise_var = 0.005
+            # self.lengthscale = 6
+            # self.variance = 2.5
+            # self.active_d = 1
+            self.passive_d = 1
 
-            self.A, self.noise_var, self.lengthscale, self.variance, self.active_d = self.optimizer.find_active_subspace(
-                X, Y, load=False)
+            self.passive_d = max(self.passive_d , 0)
 
-            gc.collect()
+            # Generate the A^{\bot} if there's more dimensions
+            self.AT = generate_orthogonal_matrix_to_A(
+                A=self.A.T,
+                n=self.passive_d
+            ).T
 
-            passive_dimensions = max(self.domain.d - self.active_d, 0)
-            passive_dimensions = min(passive_dimensions, 1)
+            assert self.AT.shape[1] == self.A.shape[1], (self.AT.shape, self.A.shape)
 
-            # Generate the subspace projection
-            # Generate A^{bot} if there's more dimensions
-            if passive_dimensions > 0:
-                self.AT = generate_orthogonal_matrix_to_A(
-                    A=self.A,
-                    n=passive_dimensions
-                )
-                self.W_hat = np.concatenate(
-                    (self.A, self.AT),
-                    axis=1
-                )
-            else:
-                self.AT = None
-                self.W_hat = self.A
+            self.W_hat = np.concatenate(
+                (self.A, self.AT),
+                axis=0
+            )
 
-            assert not np.isnan(self.W_hat).all(), ("The projection matrix contains nan's!", self.Q)
-            assert self.W_hat.shape == (self.domain.d, self.active_d+passive_dimensions), ("Created wrong projectoin shape: ", self.At.shape, self.active_d, passive_dimensions)
+            # assert not np.isnan(self.W_hat).all(), ("The projection matrix contains nan's!", self.Q)
+            # assert self.W_hat.shape == (self.domain.d, self.active_d+passive_dimensions), ("Created wrong projectoin shape: ", self.At.shape, self.active_d, passive_dimensions)
 
-            print("Found parameters are: ")
-            print("W: ", self.W_hat)
-            print("noise_var: ", self.noise_var)
-            print("lengthscale: ", self.lengthscale)
-            print("variance: ", self.variance)
+            # self.W_hat = np.asarray([
+            #     [-0.50445148, -0.40016722, -0.48737089, -0.58980041],
+            #     [-0.20042413, -0.65288502, -0.12700055, 0.71933454]
+            # ])
 
-            # For the sake of creating a kernel with new dimensions!
+
+            print("Resulting matrix has shape: ", self.active_d, self.passive_d, self.W_hat.shape)
+
             self.create_new_gp_and_kernel(
                 active_d=self.active_d,
-                passive_d=passive_dimensions,
-                W=self.W_hat,
+                passive_d=self.passive_d,
                 variance=self.variance,
-                lengtscale=self.lengthscale,
+                lengthscale=self.lengthscale,
                 noise_var=self.noise_var
             )
 
-        if self.W_hat is None:
-            self._set_data(X, Y)
-        else:
-            Z = np.dot(X, self.W_hat)
-            self._set_data(Z, Y)
+        #     self.W_hat = np.asarray([
+        #         [-0.31894555, 0.78400512, 0.38970008, 0.06119476, 0.35776912],
+        #         [-0.27150973, 0.066002, 0.42761931, -0.32079484, -0.79759551]
+        #     ])
+        #     self.noise_var = 0.005
+        #     self.lengthscale = 2.5
+        #     self.variance = 1.0
+        #     self.active_d = 2
+        #     print("Changed values")
 
-        # self.gp.optimize()
+        if self.i % 500 == 299:
+            print("TRIPATHY :: Likelihood of the current GP is: ", self.gp.log_likelihood())
+
+        Z = np.dot(X, self.W_hat.T)
+        assert Z.shape[1] == self.active_d + self.passive_d, ("Projected Z does not conform to active dimension", (Z.shape, self.active_d + self.passive_d))
+        self._set_data(Z, Y)
+
+        # if self.i % 500 == 101:
+            # print("Optimizing!")
+            # print(self.gp)
+            # print(self.gp.kern.parts[0].variance)
+            # self.gp.optimize(optimizer="lbfgs") # lbfgs # config['max_iter_parameter_optimization'])
+            # print(self.gp.kern.parts[0].variance)
+            # print("Optimized")
 
     def _set_datasaver_data(self, X, Y):
         self.datasaver_gp.set_XY(X, Y)
@@ -314,6 +419,8 @@ class BoringGP(ConfidenceBoundModel):
         self._update_cache()
 
     def _raw_predict(self, Xnew):
+
+        assert Xnew.shape[1] == self.active_d + self.passive_d, ("Somehow, the input was not project", Xnew.shape, self.active_d, self.passive_d)
 
         Kx = self.kernel.K(self._X, Xnew)
         mu = np.dot(Kx.T, self._woodbury_vector)

@@ -11,24 +11,17 @@
     \graphicspath{{Chapter7/Figs/Vector/}{Chapter7/Figs/}}
 \fi
 
-\section{Main Contributions}
-I present this thesis as a result of a systematic treatment of the topic "Bayesian Optimization in High Dimensions".
 
-\begin{enumerate}
-\item BORING allows the number of dimensions to be smaller than the real active subspace.
-Additional vector elements can be added at a very small cost, keeping the major principal axis untouched.
-\item BORING is more robust to smaller perturbations, as it does not rely on finding the exact active subspace (which can be ambigious if we want the "major" active subspace).
-It allows to optimize over smaller perturbations aswell, whereas current algorithms usually don't take these into consideration.
-\end{enumerate}
+\section{Future work}
 
-After doing a throughout literature review, I was able to identify shortcomings of current methods.
-Together with my supervisors, were able to come up with the new algorithm "BORING" that improves on the state-of-the-art for Bayesian Optimization algorithms that are able to identify the subspace projection matrix as part of the optimization procedure.
-In contrast to other algorithms that solely focus on finding a projection, "BORING" takes into consideration smaller perturbations, and makes the GP process more robust by allowing addition projection matrices to optimize over other axis of the subspace. \\
-
-\section{Conclusion}
-
-Our empirical results show that "BORING" provides a new state-of-the-art for Bayesian Optimization algorithms that use subspace projection as the main feature.
-This allows for interpretable future work
+Future work could incorporate the synthesis of different methods, including additive GPs and Tripathy's method.
+Although Tripathy's method is unbeaten in identifying the active subspace dimension, heuristics could be easily implemented to speed up the calculation time.
+To avoid the (small) possibility of identifying a bad subspace, one could make use of the idea of interleaved runs as used in REMBO on Tripathy's method to marginalize this probability even further.
+One of the most critical aspects is hyperparameter tuning for the GP models itself.
+These can make or break the identification of the subspace.
+Choosing bad hyperparameters does not allow us to compare different methods effectively.
+In the future, it would be beneficial to address this issue to a stronger extent.
+Recalculating the search space for each new point may be too time-consuming, with which REMBO would still be considered state of the art regarding Bayesian Black Box Optimization.
  
 
 

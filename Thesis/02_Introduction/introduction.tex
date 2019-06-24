@@ -15,19 +15,19 @@
 %********************************** %First Section  **************************************
 \section{Bayesian Optimization in high dimensions} %Section - 1.1 
 
-Many of today's problems can be boiled down to some flavour of black box optimization. 
+Many of today's problems can be boiled down to some flavor of black box optimization. 
 Such problems include neural architecture search, hyper-parameter search for neural networks, parameter optimization for electron accelerators, or drone parameter optimization using safety constraints (CITE Johannes). \\
 
-Bayesian optimization methods are a class of sequential black box optimization methods, where we learn a surrogate function surface using a Gaussian prior, and a Gaussian likelihood function.
+Bayesian optimization methods are a class of sequential black-box optimization methods, where we learn a surrogate function surface using a Gaussian prior, and a Gaussian likelihood function.
 Combining the prior and the likelihood results in the Gaussian Posterior, which we then can be used as a surface over which we try to optimize. \\
 
 Bayesian optimization is a method that has increasingly gained attention in the last decades, as it requires relatively few points to find an appropriate response surface for the function over which we want to optimize over.
 It is a sequential model based optimization function, which means that we choose the best point $x^*_i$ given all previous points $x^*_{i-1}, x^*_{i-2}, \ldots, x^*_{0}$.
-Given certain acquisition functions, it offers a good mixture between exploration and exploitation from an empirical standpoint. \\
+Given certain acquisition functions, it offers a good mixture of exploration and exploitation from an empirical standpoint. \\
 
 Bayesian optimization is a method that has increasingly gained success in finding a good mixture between exploration the search space (finding new hyper-parameter configurations that outperform all existing configurations), and exploiting currently found best configurations (using the best learned hyper-parameter configurations to get utility out of the system). \\
 
-However, as machine learning algorithm, and other problems become more complex, bayesian optimization needs to cope with the increasing number of dimensions that define the search space of possible configurations.
+However, as machine learning algorithms and other problems become more complex, Bayesian optimization needs to cope with the increasing number of dimensions that define the search space of possible configurations.
 Because BO methods loose effectiveness in higher dimensions, this work deals with methods that work in higher dimensions.
 
 \section{Gaussian Processes}
@@ -51,7 +51,7 @@ We predict any new point $y_*$, (given all previously sampled points $y$) by est
 This, in turn, can be used to build an acquisition function. 
 This acquisition function describes where to best sample points next.
 Some popular acquisition functions include GP-UCB, Most probable improvement (MPI) and Expected Improvement (EI).
-The choice of the acquisition function has great influence on the performance of the optimization procedure.\\
+The choice of the acquisition function has significant influence on the performance of the optimization procedure.\\
 
 We will talk about the problems and possible solutions for the task at hand in the next section.
 
@@ -79,14 +79,14 @@ p(y | x, u) = N (u, \sigma^2 I)
 % https://stats.stackexchange.com/questions/84058/derivation-of-predictive-distribution-of-gaussian-process
 
 Now we want to derive the posterior of the Gaussian Process, given the likelihood and the prior.
-We use Bayes rule to derive this
+We use Bayes rule to derive this.
 
 \begin{align}
 p(u | x, y) &= \frac{ p(y | x, u) p(u) }{p(y | x)}
 & = N( K(K +\sigma^2 I)^{-1}y, \sigma^2 (K + \sigma^2 I)^{-1} K )
 \end{align}
 
-At this point, we want to create a surrogate embeddings, that predicts $y_*$ for any possible given $x_*$. 
+At this point, we want to create a surrogate embedding, which predicts $y_*$ for any possible given $x_*$. 
 We refer to this as the surrogate response surface.
 
 We use the following formula to derive the posterior distribution for a given predictor $y_*$.
@@ -108,7 +108,7 @@ We quickly present some of the most common acquisition functions.
 % Most formulae taken from "A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning
 
 \subsection{Upper Confident Bound (UCB)}
-(CITE Krause Srinivas) about how acquisition function is guaranteed to find best config after awhile.
+(CITE Krause Srinivas) about how acquisition function is guaranteed to find the best config after awhile.
 
 The upper confidence bound allows the user to control exploitation and exploration through a parameter $\beta > 0$, which can be chosen as CITE PAPER, to offer optimality guarantees.
 
@@ -119,7 +119,7 @@ UCB(x) = \mu(x) + \beta \sigma(x)
 Here, the functions $\mu$ and $\sigma$ are the predicted mean and variance of the Gaussian Process Posterior.
 
 \subsection{Probability of Improvement (PI)}
-The (maximum) probability of improvement always selects the point which has the highest potential to maximise the function. 
+The (maximum) probability of improvement always selects the point which has the highest potential to maximize the function. 
 The downside to this policy is that this leads to exploitation, which can be controlled by a parameter $\xi > 0$.
 
 \begin{align}
@@ -130,7 +130,7 @@ The downside to this policy is that this leads to exploitation, which can be con
 
 \subsection{Expected Improvement (EI)}
 
-"CITE A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning"
+"CITE A tutorial on Bayesian optimization of expensive cost functions, with application to active user modeling and hierarchical reinforcement learning."
 \begin{align}
     EI(x) =
     \begin{dcases}
@@ -144,7 +144,7 @@ The downside to this policy is that this leads to exploitation, which can be con
 \end{equation}
 
 Given one of the above acquisition functions, we then use an optimizer such as $L-BFGS$, to find an approximate global maximum of the respective function.
-The combination of Gaussian Processes and Acquisition function together result in a Bayesian Optimization algorithm, which has a prior assumption about the function to be learned, and uses datasamples to create a likelihood to further refine the posterior of the function assumption.
+The combination of Gaussian Processes and Acquisition function together result in a Bayesian Optimization algorithm, which has a prior assumption about the function to be learned and uses data samples to create a likelihood to refine the posterior of the function assumption further.
 
 \section{Resources}
 (CITE https://github.com/SheffieldML/GPy)

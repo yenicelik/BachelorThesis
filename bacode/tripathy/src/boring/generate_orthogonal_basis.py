@@ -22,6 +22,7 @@ def generate_orthogonal_matrix_to_A(A, n):
     :return:
     """
     dims = A.shape[0]
+    assert A.shape[0] > A.shape[1], "Cannot find more columns if the matrix is full!"
 
     # We will need this to compute the norm between two vectors later
     normed_A = create_colwise_normed_A(A)

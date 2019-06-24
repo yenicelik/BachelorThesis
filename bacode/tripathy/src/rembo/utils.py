@@ -30,3 +30,15 @@ def sample_orthogonal_matrix(real_dim, active_dim, seed=None):
     assert Q.shape[1] == active_dim, ("Shapes are: ", Q.shape, active_dim)
     return Q
 
+def sample_random_matrix(real_dim, active_dim, seed=None):
+    """
+    :return: An orthogonal matrix
+    """
+    # np.random.seed(seed)
+    A = np.zeros((real_dim, active_dim), dtype=np.float64)
+    for i in range(real_dim):
+        for j in range(active_dim):
+            A[i, j] = np.random.normal(0, 1)
+
+    return A
+

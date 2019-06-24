@@ -52,10 +52,6 @@ Garnett, R., Osborne, M.~A., and Hennig, P. (2013).
 Graepel, T. and Herbrich, R. (2001).
 \newblock {The Kernel Gibbs Sampler}.
 
-\bibitem[GSeshadri et~al., 2018]{AngleMeasurement}
-GSeshadri, P., Yuchi, S., and Parks, G.~T. (2018).
-\newblock {Dimension Reduction via Gaussian Ridge Functions}.
-
 \bibitem[Hemant and Cevher, 2012]{CevherSubspaceIdentificationKrause}
 Hemant, T. and Cevher, V. (2012).
 \newblock Active learning of multi-index function models.
@@ -121,6 +117,14 @@ Rolland, P., Scarlett, J., Bogunovic, I., and Cevher, V. (2018).
 \newblock {High-Dimensional Bayesian Optimization via Additive Models with
   Overlapping Groups}.
 
+\bibitem[Scarlett, 2018]{RegretDef}
+Scarlett, J. (2018).
+\newblock {Tight Regret Bounds for Bayesian Optimization in One Dimension}.
+
+\bibitem[Seshadri et~al., 2018]{AngleMeasurement}
+Seshadri, P., Yuchi, S., and Parks, G.~T. (2018).
+\newblock {Dimension Reduction via Gaussian Ridge Functions}.
+
 \bibitem[Srinivas et~al., 2009]{UCBRegretProof}
 Srinivas, N., Krause, A., Kakade, S., and Seeger, M. (2009).
 \newblock {Gaussian Process Optimization in the Bandit Setting: No Regret and
@@ -144,6 +148,11 @@ Wang, Z., Gehring, C., Kohli, P., and Jegelka, S. (2017).
 \bibitem[Wang et~al., 2013]{Wang2013}
 Wang, Z., Hutter, F., Zoghi, M., Matheson, D., and De~Freitas, N. (2013).
 \newblock {Bayesian Optimization in High Dimensions via Random Embeddings}.
+
+\bibitem[Weston et~al., 2000]{SVMFeature}
+Weston, J., Mukherjee, S., Chapelle, O., Pontil, M., Poggio, T., and Vapnik, V.
+  (2000).
+\newblock {Feature Selection for SVMs}.
 
 \bibitem[Wilson et~al., 2018]{AcquisitionFunctionsMaximizing}
 Wilson, J.~T., Hutter, F., and Deisenroth, M.~P. (2018).

@@ -1,0 +1,150 @@
+\begin{thebibliography}{10}
+
+\bibitem{makens65}
+James Makens.
+\newblock Effect of brand preference upon consumers perceived taste of turkey
+  meat.
+\newblock {\em Journal of Applied Psychology}, 49, 1965.
+
+\bibitem{almenberg14}
+Johan Almenberg, Anna Dreber, and Robin Goldstein.
+\newblock Hide the label, hide the difference?
+\newblock {\em American Association of Wine Economist}, 165, 2014.
+
+\bibitem{mantonakis13}
+Antonia Mantonakis, Bryan Galiffi, Ummugulsum Aysan, and Randi Beckett.
+\newblock The effects of the metacognitive cue of fluency on evaluations about
+  taste perception.
+\newblock {\em Psychology}, 4, 2013.
+
+\bibitem{kuehn76}
+Alfred Kuehn.
+\newblock Consumer brand choice--a learning process?
+\newblock In {\em Mathematical Models in Marketing}, volume 132 of {\em Lecture
+  Notes in Economics and Mathematical Systems}. 1976.
+
+\bibitem{gupta88}
+Sunil Gupta.
+\newblock Impact of sales promotions on when, what, and how much to buy.
+\newblock {\em Journal of Marketing Research}, 25, 1988.
+
+\bibitem{trusov13}
+Michael Trusov, William Rand, and Yogesh~V. Joshi.
+\newblock Improving prelaunch diffusion forecasts: Using synthetic networks as
+  simulated priors.
+\newblock {\em Journal of Marketing Research}, 50, 2013.
+
+\bibitem{tirunillai14}
+Seshadri Tirunillai and Gerard~J. Tellis.
+\newblock Mining marketing meaning from online chatter: Strategic brand
+  analysis of big data using latent dirichlet allocation.
+\newblock {\em Journal of Marketing Research}, 51, 2014.
+
+\bibitem{tirunillai12}
+Seshadri Tirunillai and Gerard~J. Tellis.
+\newblock Does chatter really matter? dynamics of user-generated content and
+  stock performance.
+\newblock {\em Marketing Science}, 31, 2012.
+
+\bibitem{thomas06}
+Matt Thomas, Bo~Pang, and Lillian Lee.
+\newblock Get out the vote: Determining support or opposition from
+  {Congressional} floor-debate transcripts.
+\newblock In {\em Proceedings of EMNLP}, pages 327--335, 2006.
+
+\bibitem{ashok13}
+Vikas Ashok, Song Feng, and Yejin Choi.
+\newblock {Success with Style: Using Writing Style to Predict the Success of
+  Novels}.
+\newblock In {\em Empirical Methods in Natural Language Processing (EMNLP
+  2013)}, 2013.
+
+\bibitem{harris54}
+Zellig Harris.
+\newblock Distributional structure.
+\newblock {\em Word}, 10, 1954.
+
+\bibitem{bengio03}
+Yoshua Bengio, Réjean Ducharme, Pascal Vincent, and Christian Jauvin.
+\newblock A neural probabilistic language model.
+\newblock {\em Journal of Machine Learning Research}, 3:1137--1155, 2003.
+
+\bibitem{rumelhart88}
+David~E. Rumelhart, Geoffrey~E. Hinton, and Ronald~J. Williams.
+\newblock Neurocomputing: Foundations of research.
+\newblock chapter Learning Representations by Back-propagating Errors, pages
+  696--699. 1988.
+
+\bibitem{mikolov13}
+Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean.
+\newblock Efficient estimation of word representations in vector space.
+\newblock {\em CoRR}, 2013.
+
+\bibitem{le14}
+Quoc~V. Le and Tomas Mikolov.
+\newblock Distributed representations of sentences and documents.
+\newblock {\em CoRR}, 2014.
+
+\bibitem{vilnis14}
+Luke Vilnis and Andrew McCallum.
+\newblock Word representations via gaussian embedding.
+\newblock {\em CoRR}, abs/1412.6623, 2014.
+
+\bibitem{yang13}
+Yi~Yang and Jacob Eisenstein.
+\newblock A log-linear model for unsupervised text normalization, 2013.
+
+\bibitem{morin05}
+Frederic Morin and Yoshua Bengio.
+\newblock Hierarchical probabilistic neural network language model.
+\newblock In {\em AISTATS?05}, pages 246--252, 2005.
+
+\bibitem{mikolov13b}
+Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg Corrado, and Jeffrey Dean.
+\newblock Distributed representations of words and phrases and their
+  compositionality.
+\newblock {\em CoRR}, abs/1310.4546, 2013.
+
+\bibitem{huffman52}
+David~A. Huffman.
+\newblock A method for the construction of minimum-redundancy codes.
+\newblock {\em Proceedings of the IRE}, 40(9):1098--1101, Sept 1952.
+
+\bibitem{hinton12}
+Geoffrey~E. Hinton, Nitish Srivastava, Alex Krizhevsky, Ilya Sutskever, and
+  Ruslan Salakhutdinov.
+\newblock Improving neural networks by preventing co-adaptation of feature
+  detectors.
+\newblock {\em CoRR}, abs/1207.0580, 2012.
+
+\bibitem{bamman14}
+David Bamman, Chris Dyer, and Noah~A. Smith.
+\newblock Distributed representations of geographically situated language.
+\newblock In {\em Proceedings of the 52nd Annual Meeting of the Association for
+  Computational Linguistics (Volume 2: Short Papers)}, 2014.
+
+\bibitem{finkelstein02}
+Lev Finkelstein, Evgeniy Gabrilovich, Yossi Matias, Ehud Rivlin, Zach Solan,
+  Gadi Wolfman, and Eytan Ruppin.
+\newblock Placing search in context: The concept revisited.
+\newblock {\em ACM Trans. Inf. Syst.}, 20(1), 2002.
+
+\bibitem{hill14}
+Felix Hill, Roi Reichart, and Anna Korhonen.
+\newblock Simlex-999: Evaluating semantic models with (genuine) similarity
+  estimation.
+\newblock {\em CoRR}, abs/1408.3456, 2014.
+
+\bibitem{mikolov13c}
+Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg~S Corrado, and Jeff Dean.
+\newblock Distributed representations of words and phrases and their
+  compositionality.
+\newblock In {\em Advances in Neural Information Processing Systems 26}, pages
+  3111--3119. 2013.
+
+\bibitem{mitchell10}
+Jeff Mitchell and Mirella Lapata.
+\newblock Composition in distributional models of semantics.
+\newblock {\em Cognitive Science}, 34(8):1388--1429, 2010.
+
+\end{thebibliography}

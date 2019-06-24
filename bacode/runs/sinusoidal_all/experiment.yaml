@@ -38,8 +38,8 @@ experiment.benchmark:
     experiment.simple:environment: febo.environment.benchmarks.functions.DecreasingSinusoidalEmbedded5D
   # - experiment.simple:algorithm: bacode.tripathy.src.rembo.rembo_algorithm.RemboAlgorithm
   #   experiment.simple:environment: febo.environment.benchmarks.functions.DecreasingSinusoidalEmbedded5D
-  # - experiment.simple:algorithm: bacode.tripathy.src.boring.boring_algorithm.BoringAlgorithm # febo.algorithms.ucb.UCB
-  #   experiment.simple:environment: febo.environment.benchmarks.functions.DecreasingSinusoidalEmbedded5D
+  - experiment.simple:algorithm: bacode.tripathy.src.boring.boring_algorithm.BoringAlgorithm # febo.algorithms.ucb.UCB
+    experiment.simple:environment: febo.environment.benchmarks.functions.DecreasingSinusoidalEmbedded5D
   - experiment.simple:algorithm: febo.algorithms.ucb.UCB # TODO: there is a bug, when we move this element to the top of the list!
     algorithm:model: bacode.tripathy.src.tripathy__.TripathyGP
     experiment.simple:environment: febo.environment.benchmarks.functions.DecreasingSinusoidalEmbedded5D
@@ -63,8 +63,8 @@ models.gp:
   noise_var: 0.005
   kernels:
   - - GPy.kern.Matern32 #Matern32
-    - variance: 0.15
-      lengthscale: 1.3 # tripath found: 1.3 # angle 6° found by tripathy
+    - variance: 2.3555752428329177
+      lengthscale: 4.8 # tripath found: 1.3 # angle 6° found by tripathy
       ARD: true
 optimizer.grid:
   points_per_dimension: 100
